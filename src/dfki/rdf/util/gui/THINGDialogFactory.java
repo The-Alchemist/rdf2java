@@ -1155,6 +1155,9 @@ protected static JComponent getSpecificElement(THING p_thing, PropertyInfo  p_pi
             com = getListElement(p_thing,p_pi,p_populate);
             break;
         case PropertyInfo.VT_SYMBOL:    // symbol fields
+            if (p_pi.hasMultiValue())
+                com = getSymbolList(p_pi, p_editable, p_populate);
+            else
                 com = getSymbolElement(p_pi, p_editable, p_populate);
         break;
         case PropertyInfo.VT_UNKNOWN: debug().error("getSpecificElement: PropertyInfo.VT_UNKNOWN of " + p_pi.getName());
@@ -1313,6 +1316,71 @@ protected static JComboBox getSymbolElement(PropertyInfo  p_pi, boolean p_editab
 
 }
 
+
+/**
+ * use it only for symbols (VT_SYMBOL) and multi value PropertyInfos (otherwise use getSymbolElement) ! 
+ * @param p_pi
+ * @param p_editable
+ * @param p_populate
+ * @return
+ */
+protected static JList getSymbolList(PropertyInfo  p_pi, boolean p_editable, boolean p_populate)
+{
+    if (!p_pi.hasMultiValue())
+    {
+        debug().error("getSymbolList: PropertyInfo " + p_pi.getName() + " is not multi value: use  getSymbolElement instead. Ignoring this PropertyInfo!");
+        return new JList();
+    }
+            
+    if (p_pi.getValueType() != PropertyInfo.VT_SYMBOL)
+    {
+        debug().error("getSymbolList: value type of PropertyInfo " + p_pi.getName() + " is no VT_SYMBOL. Ignoring this PropertyInfo!");
+        return new JList();
+    }
+  
+     
+     //list.setCellRenderer(new ResourceObjectNode.ResourceObjectNodeCellRenderer());
+     DefaultListModel elements =  new DefaultListModel();
+     
+     String[] allowedSymbols = p_pi.getAllowedSymbols();
+     
+
+     for (int i=0; i < allowedSymbols.length; i++)
+         elements.addElement(allowedSymbols[i]);
+
+     JList list = null;
+     list.putClientProperty(COMPONENT_PROPERTYINFO,p_pi);
+     list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+     list.setEnabled(p_editable);
+     
+     list = new JList(elements);
+     
+      if (p_populate)
+      {
+          
+        ArrayList symValues = new ArrayList((Collection)p_pi.getValue());
+       
+        Iterator it = symValues.iterator();
+        
+        int[] indices = new int[symValues.size()];
+        int i = 0;
+        while (it.hasNext())
+        {
+            indices[i++] = elements.indexOf(it.next());
+            
+        }
+        list.setSelectedIndices(indices);
+      }
+
+      Dimension dim = new Dimension(INPUTFIELD_WIDTH,INPUTFIELD_HEIGHT * Math.max(elements.size(), LIST_DEFAULT_MIN_ELEMENTS));
+      list.setSize(dim);
+ 
+
+      return list;     
+}
+
+
+
 /**
  * Assigns the information in the THINGDialog to the PropertyInfos attached to the components
  * @param p_dialog
@@ -1399,16 +1467,27 @@ protected static void fillPropertyInfo(Component p_com, PropertyInfo p_pi)
 
         if (p_pi.hasMultiValue())
         {
-             Vector values = new Vector();
-             Enumeration e = lm.elements();
-             while (e.hasMoreElements())
-             {
-                values.add( ((DefaultMutableTreeNode)e.nextElement()).getUserObject() );
-             }
-             if (values.isEmpty())
-               p_pi.clearValue();
-             else
-               p_pi.setValues( values );
+            
+            Vector values = new Vector();
+            
+            
+            if (p_pi.getValueType() == PropertyInfo.VT_SYMBOL)
+            {
+                values.add( ((JList)p_com).getSelectedValues() );
+            }
+            else
+            {
+               Enumeration e = lm.elements();
+               while (e.hasMoreElements())
+                {
+                    values.add( ((DefaultMutableTreeNode)e.nextElement()).getUserObject() );
+                }
+            }
+            
+            if (values.isEmpty())
+                p_pi.clearValue();
+            else
+                p_pi.setValues( values );
         }
         else
         {
