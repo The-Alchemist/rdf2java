@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>xerces-1_3_1</fullname>
+  <class>
+    <path>[import/xerces-1_3_1.jar]</path>
+  </class>
+  <source>
+    <path>[import/xerces-1_3_1.jar]</path>
+  </source>
+</library>

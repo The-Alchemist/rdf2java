@@ -93,10 +93,16 @@ public String makeNewURI ()
   */
 public String makeNewURI (String sNamespace)
 {
-    Date date = new Date();
-    String sNewURI = sNamespace + "id_" + date.getTime() + "_" + getAddressOnlyHex();
+    String sNewURI = sNamespace + "id_" + prefixForToday() + "_" + getAddressOnlyHex();
     putURI(sNewURI);
     return sNewURI;
+}
+
+//----------------------------------------------------------------------------------------------------
+public static String prefixForToday ()
+{
+    java.text.SimpleDateFormat dateFormatter = new java.text.SimpleDateFormat( "yyyyMMdd'_'HHmmss" );
+    return dateFormatter.format( new Date() );
 }
 
 //----------------------------------------------------------------------------------------------------

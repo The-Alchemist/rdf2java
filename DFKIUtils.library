@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>DFKIUtils</fullname>
+  <class>
+    <path>[import/DFKIUtils.jar]</path>
+  </class>
+  <source>
+    <path>[import/DFKIUtils.jar]</path>
+  </source>
+  <documentation>
+    <path>[import/DFKIUtilsApidoc.jar]</path>
+  </documentation>
+</library>

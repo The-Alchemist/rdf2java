@@ -140,11 +140,15 @@ public void updateRDFResourceSlots ()
 //---------------------------------------------------------------------------
 public void assign (THING thingToAssign)
 {
-    THING thingOld = (THING)get(thingToAssign.getURI());
+    THING thingOld = (THING)get( thingToAssign.getURI() );
     if (thingOld != null)
-        thingOld.assign(thingToAssign, this);
+        thingOld.assign( thingToAssign, this );
     else
-        put(thingToAssign);
+    {
+        put( thingToAssign );
+        //SS:2002.10.09: the following is needed for the slots inside!
+        updateRDFResourceSlots();
+    }
 
     updateRDFResourceSlots();
 }
