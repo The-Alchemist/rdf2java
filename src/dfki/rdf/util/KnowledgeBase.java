@@ -10,7 +10,7 @@ public class KnowledgeBase
 //---------------------------------------------------------------------------
 public final static String DEBUG_MODULE = "KnowledgeBase";
 HashMap m_mapObjects = new HashMap();
-private final static boolean MEASURE_TIME = true;
+private final static boolean MEASURE_TIME = false;
 
 private Map/*String->String*/ m_mapNS2Pkg;
 private Map/*String->String*/ m_mapPkg2NS;
