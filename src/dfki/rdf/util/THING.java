@@ -83,9 +83,9 @@ public String toString_userDefined (String sIndent, boolean bIndentDirectly)
   */
 public String toStringShort ()                          // overload this method
 {
-    return getClassNameShort() + " " +
+    return "<" + getClassNameShort() + " " +
            getAddress() +
-           ( getURI() != null  ?  " URI=\"" + getURI() + "\""  :  "");
+           ( getURI() != null  ?  " URI=\"" + getURI() + "\""  :  ">");
 }
 
 //----------------------------------------------------------------------------------------------------
