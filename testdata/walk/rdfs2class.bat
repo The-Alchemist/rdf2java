@@ -10,8 +10,8 @@ REM *************************************************************
 set RDFS_FILE=%RDF2JAVA_PATH%\testdata\walk\walk.rdfs
 set OUTPUTDIR=%RDF2JAVA_PATH%\src
 
-set FLAGS=-i
-REM set FLAGS=-is
+REM set FLAGS=-i
+set FLAGS=-is
 
 set N1=http://dfki.rdf.test/walk#
 set P1=dfki.rdf.test.walk

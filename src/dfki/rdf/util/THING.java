@@ -49,7 +49,7 @@ private long m_lLastUpdateNumber = 0;
 public String toString ()
 {
     return super.toString();
-    //SS:2004-08-05:    return toString("");
+    //SS:2004-08-05: return toString("");
 }
 
 //----------------------------------------------------------------------------------------------------

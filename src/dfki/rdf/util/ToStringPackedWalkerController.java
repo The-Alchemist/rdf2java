@@ -7,57 +7,47 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import dfki.rdf.util.ToStringAsRdfWalkerController.ToStringController;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLTextNode;
 import dfki.util.rdf.RDF;
 
 
-public class ToStringWalkerController extends JavaGraphWalker.WalkerController
+public class ToStringPackedWalkerController extends JavaGraphWalker.WalkerController
 {
-    RDFResource resPredAbout = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "about" );
-    RDFResource resPredResource = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "resource" );
-    
-    TinyXMLDocument xmlDoc;
-    TinyXMLElement elDoc;
+    StringBuffer sb;
     ToStringController tsc;
-    
     Map/*String->String*/ mapPkg2NS;
-    Map/*RDFResource->TinyXMLElement*/ mapResource2XMLElement = new HashMap();
 
     
-    public ToStringWalkerController( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace, 
+    public ToStringPackedWalkerController( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace, 
                                      ToStringController tsc )
     {
-        xmlDoc = new TinyXMLDocument( null, sRdfsNamespace );
-        elDoc = xmlDoc.createElement( RDF.DEFAULT_SYNTAX_NAMESPACE + "RDF" );
-        xmlDoc.setDocumentElement( elDoc );
+        sb = new StringBuffer();
         this.tsc = tsc;
         this.mapPkg2NS = mapPkg2NS;
     }
     
-    public TinyXMLDocument getXMLDocument()
+    public String serialzeAsString()
     {
-        return xmlDoc;
+        return sb.toString();
     }
     
-    public String serialzeXMLDocumentAsString()
+    private void indent( int n )
     {
-        return xmlDoc.serialize();
+        for( int i = 0; i < n; i++ )
+        {
+            sb.append( "    " );
+        }
     }
     
     public boolean arriving( RDFResource currentResource )
     {
-        TinyXMLElement elParent = elDoc;
         RDFResource penultimateResource = null;
         if( lstPath.size() > 3 ) 
-        {
             penultimateResource = (RDFResource)lstPath.get( lstPath.size()-3 );
-            elParent = (TinyXMLElement)mapResource2XMLElement.get( penultimateResource );
-        }
         
-        TinyXMLElement elAppendHere = elParent;
-
         Class cls = currentResource.getClass();
         String sClsPackage = RDFResource.getClassPackage( cls );
         String sClsName = RDFResource.getClassName( cls );
@@ -72,26 +62,22 @@ public class ToStringWalkerController extends JavaGraphWalker.WalkerController
                 arrivingAgain( currentResource );
                 return false;
             }
-            RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
-            TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
-            elParent.appendChild( elLastProperty );
-            elAppendHere = elLastProperty;
+            indent( lstPath.size()-4 );
+            sb.append( "->  " + sLastProperty + ":\n" );
         }
 
-        RDFResource resCls = new RDFResource( sNamespace, sClsName );
+        indent( lstPath.size()-2 );
+        sb.append( sClsName + " (" + sClsPackage + "." + sClsName + ") " + currentResource.getAddress() );
+        if( currentResource.getURI() != null )
+            sb.append( " URI=\"" + currentResource.getURI() + "\"" );
+        sb.append( "\n" );
         
-        TinyXMLElement elInst = xmlDoc.createElement( resCls.getURI() );
-        elInst.setAttribute( resPredAbout.getURI(), currentResource );
-        elAppendHere.appendChild( elInst );
-        
-        mapResource2XMLElement.put( currentResource, elInst );
-
         if(     currentResource.getLabel() != null                              &&
                 !currentResource.getLabel().equals( currentResource.getURI() )  &&
                 !tsc.hideProperty( currentResource, "label" )                   )
         {
-            RDFResource resProperty = new RDFResource( xmlDoc.RDFS_NAMESPACE, "label" );
-            elInst.setAttribute( resProperty.getURI(), currentResource.getLabel() );
+            indent( lstPath.size()-2 );
+            sb.append( "->  label: " + currentResource.getLabel() + "\n" );
         }
         Collection/*PropertyInfo*/ collPropInfos = currentResource.getPropertyStore().getPropertyInfos();
         for( Iterator it = collPropInfos.iterator(); it.hasNext(); )
@@ -102,36 +88,14 @@ public class ToStringWalkerController extends JavaGraphWalker.WalkerController
             if(     pi.getValueType() == PropertyInfo.VT_STRING ||
                     pi.getValueType() == PropertyInfo.VT_SYMBOL )
             {
-                RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
-                appendSlot( elInst, resProperty, (String)pi.getValue() );
+                indent( lstPath.size()-2 );
+                sb.append( "->  " + pi.getName() + ": " + (String)pi.getValue() + "\n" );
             }
         }
         
         return true;
     }
 
-    private void appendSlot( TinyXMLElement elInst, RDFResource resPred, String sValue )
-    {
-        if( TinyXMLTextNode.containsIllegalChars( sValue ) )
-        {
-            TinyXMLElement elSlot = xmlDoc.createElement( resPred.getURI() );
-            elInst.appendChild( elSlot );
-            TinyXMLTextNode txtValue = createTextNode( sValue );
-            elSlot.appendChild( txtValue );
-        }
-        else
-        {
-            elInst.setAttribute( resPred.getNamespace() + resPred.getLocalName(), sValue );
-        }
-    }
-
-    private TinyXMLTextNode createTextNode( String sText )
-    {
-        if( TinyXMLTextNode.containsIllegalChars( sText ) )
-            return xmlDoc.createCDATA( sText );
-        else
-            return xmlDoc.createTextNode( sText );
-    }
 
     Set/*RDFResource*/ setProcessedResources = new HashSet();
         
@@ -159,20 +123,24 @@ public class ToStringWalkerController extends JavaGraphWalker.WalkerController
             return false;
 
         RDFResource penultimateResource = (RDFResource)lstPath.get( lstPath.size()-3 );
-        TinyXMLElement elParent = (TinyXMLElement)mapResource2XMLElement.get( penultimateResource );
         
         String sLastProperty = getLastProperty();
         if( sLastProperty != null ) 
         {
             Class cls = currentResource.getClass();
             String sClsPackage = RDFResource.getClassPackage( cls );
+            String sClsName = RDFResource.getClassName( cls );
             String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  :  "http://" + sClsPackage + "#" );
             RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
             
-            TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
-            elParent.appendChild( elLastProperty );
+            indent( lstPath.size()-4 );
+            sb.append( "->  " + sLastProperty + ":\n" );
             
-            elLastProperty.setAttribute( resPredResource.getURI(), currentResource );
+            indent( lstPath.size()-2 );
+            sb.append( "<" + sClsName + " " + currentResource.getAddress() );
+            if( currentResource.getURI() != null )
+                sb.append( " URI=\"" + currentResource.getURI() + "\"" );
+            sb.append( "\n" );
         }
         else
             throw new Error( "failure in RDFResource.walk" );
@@ -238,5 +206,5 @@ public class ToStringWalkerController extends JavaGraphWalker.WalkerController
 
     
     
-} // end of class ToStringWalkerController
+} // end of class ToStringPackedWalkerController
 

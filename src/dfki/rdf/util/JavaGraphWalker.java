@@ -54,7 +54,7 @@ public class JavaGraphWalker
 
         boolean bProceedFurther;
         boolean bAlreadyVisited = wc.alreadyVisitedOnWalk( currentResource ); 
-        boolean bNotFirstResource = ( wc.lstPath.indexOf( currentResource ) > 1 ); 
+        boolean bNotFirstResource = ( wc.lstPath.size() > 2 ); 
         if( bAlreadyVisited && bNotFirstResource )
             bProceedFurther = wc.arrivingAgain( currentResource );
         else
@@ -243,7 +243,7 @@ public class JavaGraphWalker
          * a resource.
          * that resource will never be arrived again, but maybe it
          * will be revisited.
-         * @see #revisiting
+         * @see #arrivingAgain
          */
         public void leaving( RDFResource currentResource )
         {

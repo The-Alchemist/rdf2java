@@ -241,14 +241,14 @@ public PropertyStore getPropertyStore()
 //----------------------------------------------------------------------------------------------------
 public String toStringAsRDF()
 {
-    return toStringAsRDF( null, null, ToStringWalkerController.DEFAULT_TO_STRING_CONTROLLER );
+    return toStringAsRDF( null, null, ToStringAsRdfWalkerController.DEFAULT_TO_STRING_CONTROLLER );
 }
 
 public String toStringAsRDF( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
-                             ToStringWalkerController.ToStringController tsc )
+                             ToStringAsRdfWalkerController.ToStringController tsc )
 {
     
-    ToStringWalkerController wc = new ToStringWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
+    ToStringAsRdfWalkerController wc = new ToStringAsRdfWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
     JavaGraphWalker walker = new JavaGraphWalker( wc );
     walker.walk( this );
     
@@ -257,9 +257,9 @@ public String toStringAsRDF( Map/*String->String*/ mapPkg2NS, String sRdfsNamesp
 
 static public String toStringAsRDF( Collection/*RDFResource*/ collResources,
                                     Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
-                                    ToStringWalkerController.ToStringController tsc )
+                                    ToStringAsRdfWalkerController.ToStringController tsc )
 {
-    ToStringWalkerController wc = new ToStringWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
+    ToStringAsRdfWalkerController wc = new ToStringAsRdfWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
     JavaGraphWalker walker = new JavaGraphWalker( wc );
 
     for( Iterator it = collResources.iterator(); it.hasNext(); )
@@ -270,6 +270,41 @@ static public String toStringAsRDF( Collection/*RDFResource*/ collResources,
     
     return wc.xmlDoc.serialize();
 }
+
+
+//----------------------------------------------------------------------------------------------------
+public String toStringPacked()
+{
+    return toStringPacked( null, null, ToStringPackedWalkerController.DEFAULT_TO_STRING_CONTROLLER );
+}
+
+public String toStringPacked( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
+                              ToStringPackedWalkerController.ToStringController tsc )
+{
+    
+    ToStringPackedWalkerController wc = new ToStringPackedWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
+    JavaGraphWalker walker = new JavaGraphWalker( wc );
+    walker.walk( this );
+    
+    return wc.serialzeAsString();
+}
+
+static public String toStringPacked( Collection/*RDFResource*/ collResources,
+                                     Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
+                                     ToStringPackedWalkerController.ToStringController tsc )
+{
+    ToStringPackedWalkerController wc = new ToStringPackedWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
+    JavaGraphWalker walker = new JavaGraphWalker( wc );
+
+    for( Iterator it = collResources.iterator(); it.hasNext(); )
+    {
+        RDFResource res = (RDFResource)it.next();
+        walker.walk( res );
+    }
+    
+    return wc.serialzeAsString();
+}
+
 
 //----------------------------------------------------------------------------------------------------
 public static String getClassPackage( Class cls )

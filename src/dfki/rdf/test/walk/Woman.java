@@ -40,6 +40,18 @@ public  class Woman
     // RDFS2Class: end of getter for slot hasHusband
 
     //------------------------------------------------------------------------------
+    /** RDFS2Class: toString()-stuff **/
+    public void toString (StringBuffer sb, String sIndent)
+    {
+        super.toString(sb, sIndent);
+        if (m_hasHusband.getValue() != null) {
+            sb.append(sIndent+"-> hasHusband:\n"+sIndent+"       "+((dfki.rdf.util.RDFResource)m_hasHusband.getValue()).toStringShort() + "\n");
+            // sb.append(sIndent+"-> hasHusband:\n"+((dfki.rdf.util.RDFResource)m_hasHusband.getValue()).toString(sIndent+"       "));
+        }
+    }
+    // RDFS2Class: end of toString()-stuff
+
+    //------------------------------------------------------------------------------
     /** RDFS2Class: sub class information **/
     public final static Class[] KNOWN_SUBCLASSES = {};
 

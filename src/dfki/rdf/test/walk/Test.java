@@ -19,7 +19,8 @@ import dfki.rdf.util.PropertyInfo;
 import dfki.rdf.util.RDFExport;
 import dfki.rdf.util.RDFImport;
 import dfki.rdf.util.RDFResource;
-import dfki.rdf.util.ToStringWalkerController;
+import dfki.rdf.util.ToStringAsRdfWalkerController;
+import dfki.rdf.util.ToStringPackedWalkerController;
 
 public class Test
 {
@@ -70,8 +71,9 @@ void go ()
 //    go_3();
 //    go_4();
 //    go_5();
-    go_5b();
-//    go_6();
+//    go_5b();
+    go_6();
+    go_7();
 }
 
 //---------------------------------------------------------------------------
@@ -365,7 +367,7 @@ void go_4()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new ToStringWalkerController.ToStringController() {
+            new ToStringAsRdfWalkerController.ToStringController() {
                 public int propertyImportance( RDFResource source, String prop )
                 {
                     return 0;
@@ -406,7 +408,7 @@ void go_5()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new ToStringWalkerController.ToStringController() {
+            new ToStringAsRdfWalkerController.ToStringController() {
                 public int propertyImportance( RDFResource source, String prop )
                 {
                     if( prop.equals( "hasChild" ) )         return 10;
@@ -455,7 +457,7 @@ void go_5b()
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     RDFResource resMarch = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "March" );
     
-    ToStringWalkerController.ToStringController tsc = new ToStringWalkerController.ToStringController() {
+    ToStringAsRdfWalkerController.ToStringController tsc = new ToStringAsRdfWalkerController.ToStringController() {
         public int propertyImportance( RDFResource source, String prop )
         {
             return 0;
@@ -505,10 +507,10 @@ void go_6()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new ToStringWalkerController.ToStringController() {
+            new ToStringAsRdfWalkerController.ToStringController() {
                 public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
                 {
-                    return false;
+                    return true;
                 }
             } );
     
@@ -525,6 +527,27 @@ void go_6()
     {
         e.printStackTrace();
     }
+}
+
+
+//---------------------------------------------------------------------------
+void go_7()
+{
+    System.out.println( "\n\n\ngo_7:\n" );
+    RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
+    
+    ToStringPackedWalkerController.ToStringController tsc = new ToStringPackedWalkerController.ToStringController() {
+        public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
+        {
+            return true;
+        }
+    };
+    
+    Collection collResources = new LinkedList();
+    collResources.add( resHomer );
+
+    String sAsRDF = RDFResource.toStringPacked( collResources, m_mapPkg2NS, RDFS._Namespace, tsc ); 
+    System.out.println( "resHomer.toStringAsRDF():\n" + sAsRDF );
 }
 
 
