@@ -344,7 +344,7 @@ public void createClasses ()   throws Exception
 protected void loadRDFS ()   throws Exception
 {
     m_modelRDFS = m_rdfFactory.createModel();
-    RDF.parse("file://" + m_sRDFSFile, m_rdfParser, m_modelRDFS);
+    RDF.parse("file:" + m_sRDFSFile, m_rdfParser, m_modelRDFS);
 }
 
 //----------------------------------------------------------------------------------------------------
