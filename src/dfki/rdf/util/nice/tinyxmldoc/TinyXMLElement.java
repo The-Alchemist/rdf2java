@@ -113,7 +113,8 @@ public void serializeAttr( TinyXMLSerializer s, String sAttr, Object value )   t
     else
         throw new Error( "implementation error" );
 
-    s.putAttribute( getDocument().uri2qname( sAttr ), sValue );
+    if( sValue != null )
+        s.putAttribute( getDocument().uri2qname( sAttr ), sValue );
 }
 
 //------------------------------------------------------------------------------

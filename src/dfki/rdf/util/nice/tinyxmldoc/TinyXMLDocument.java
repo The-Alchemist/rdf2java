@@ -127,6 +127,7 @@ private String calcPrefix( String sNamespace )
 //------------------------------------------------------------------------------
 String uri2qname( String sURI )
 {
+    if( sURI == null ) return null;
     String sPrefix = getPrefix( getNamespace( sURI ) );
     String sLocalName = getLocalName( sURI );
     if( sPrefix != null )
@@ -138,6 +139,7 @@ String uri2qname( String sURI )
 //------------------------------------------------------------------------------
 String uri2entityref( String sURI )
 {
+    if( sURI == null ) return null;
     String sPrefix = getPrefix( getNamespace( sURI ) );
     String sLocalName = getLocalName( sURI );
     if( sPrefix != null )
@@ -149,12 +151,20 @@ String uri2entityref( String sURI )
 //------------------------------------------------------------------------------
 public String serialize()
 {
-     TinyXMLSerializer s = new TinyXMLSerializerImpl();
-     TinyXMLElement el = getDocumentElement();
-     el.serialize( s );
-     declareNamespaces( s );
-     s.flush();
-     return s.toString();
+    try
+    {
+        TinyXMLSerializer s = new TinyXMLSerializerImpl();
+        TinyXMLElement el = getDocumentElement();
+        el.serialize( s );
+        declareNamespaces( s );
+        s.flush();
+        return s.toString();
+    }
+    catch( Error e )
+    {
+        e.printStackTrace();
+        throw e;
+    }
 }
 
 //------------------------------------------------------------------------------
