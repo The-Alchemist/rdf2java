@@ -183,6 +183,7 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                 }
             }
             else
+            if ( !(objPropValue instanceof String) )
                 throw new Error("Wrong class for objValue in dfki.rdf.util.THING . updateRDFResourceSlots; class=" + objPropValue.getClass());
         }
     }
