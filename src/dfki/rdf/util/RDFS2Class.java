@@ -588,7 +588,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                                        sIndent + "    }\n");
             }
         }
-        else
+        else  // !(pi.bMultiple) => single value slot
         {
             ////2002.02.05:old: pwClsFile.println(sIndent + sRangePkgAndCls + " m_" + pi.sSlotName + ";");
             String sRealSlotType = ( sRangePkgAndCls.equals("String")  ?  "String"  :  "dfki.rdf.util.RDFResource" );
@@ -602,7 +602,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                                   sIndent + "{");
                 if (pi.bNeedsRangeInterface)
                 {
-                    pwClsFile.print(sIndent + "    if (");
+                    pwClsFile.print(sIndent + "    if( p_" + pi.sSlotName + " != null && " );
                     Iterator it = pi.setResRange.iterator();
                     while (it.hasNext())
                     {
