@@ -38,7 +38,7 @@
   <property category="sys" name="Version" value="1.0" />
   <property category="sys" name="VersionLabel" value="@version" />
   <property category="sys" name="WorkingDirectory" value="." />
-  <node type="Archive" name="Archive">
+  <node type="Archive" name="rdf2java">
     <property category="archiving" name="targetPath" value="lib/rdf2java.jar" />
   </node>
 </project>

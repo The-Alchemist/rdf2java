@@ -102,13 +102,13 @@ public void putAll (Map map)
 //---------------------------------------------------------------------------
 public Collection values ()
 {
-    return m_mapObjects.values();
+    return new HashSet( m_mapObjects.values() );
 }
 
 //---------------------------------------------------------------------------
 public Set keySet ()
 {
-    return m_mapObjects.keySet();
+    return new HashSet( m_mapObjects.keySet() );
 }
 
 //---------------------------------------------------------------------------
@@ -116,7 +116,7 @@ public String toString ()
 {
     StringBuffer sb = new StringBuffer();
     sb.append("----  KB [begin]  ---------------------------------------------------------\n");
-    for (Iterator it = m_mapObjects.keySet().iterator(); it.hasNext(); )
+    for (Iterator it = keySet().iterator(); it.hasNext(); )
     {
         Object key = it.next();
         Object obj = m_mapObjects.get(key);
@@ -129,7 +129,7 @@ public String toString ()
 //---------------------------------------------------------------------------
 public void updateRDFResourceSlots ()
 {
-    for (Iterator it = m_mapObjects.values().iterator(); it.hasNext(); )
+    for (Iterator it = values().iterator(); it.hasNext(); )
     {
         Object obj = it.next();
         if (obj instanceof THING)
