@@ -13,6 +13,7 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 import dfki.util.debug.Debug;
@@ -353,6 +354,13 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ 
     
     if( mapPkg2NS == null )
         return res;
+    
+    String sClassNamespace = (String)mapPkg2NS.get( RDFResource.getClassPackage( getClass() ) );    
+    String sClassURI = sClassNamespace + RDFResource.getClassName( getClass() );    
+    com.hp.hpl.jena.rdf.model.Resource resClass = ms_serializationModel.getResource( sClassURI );
+    if( resClass == null )
+        resClass = ms_serializationModel.createResource( sClassURI );
+    res.addProperty( RDF.type, resClass );
     
     PropertyStore ps = getPropertyStore();
     for( Iterator it = ps.getPropertyInfos().iterator(); it.hasNext(); )
