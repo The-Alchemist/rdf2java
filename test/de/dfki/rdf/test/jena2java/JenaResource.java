@@ -12,6 +12,8 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+import de.dfki.rdf.util.RDFTool;
+
 
 /**
  * A JenaResource is a wrapper around some real jena resource.
@@ -84,7 +86,7 @@ public class JenaResource implements Resource
      * Sets this resource. As a JenaResource is just a wrapper around a 
      * jena resource, that resource has to be set somewhen.
      */
-	public void setResource( Resource res )
+	protected void setResource( Resource res )
 	{
 		m_res = res;
 	}
@@ -97,6 +99,25 @@ public class JenaResource implements Resource
 	{
 		return m_res;
 	}
+    
+    /**
+     * Returns the rdfs:label of this resource. 
+     * If no label has been set, null will be returned.
+     */
+    public String getRdfsLabel()
+    {
+        String sLabel = RDFTool.readValue( m_res, RDFS.label );
+        return sLabel;
+    }
+
+    /**
+     * Sets the rdfs:label of this resource. 
+     * A previously set label will be overwritten.
+     */
+    public void setRdfsLabel( String label )
+    {
+        RDFTool.setSingleValue( m_res, RDFS.label, label );
+    }
 
 	/**
 	 * Returns a short string representation of this JenaResource.<br>
@@ -109,7 +130,7 @@ public class JenaResource implements Resource
 	{
 	    try
 	    {
-	        String sLabel = getProperty( RDFS.label ).getString();
+	        String sLabel = getRdfsLabel();
 	        if( sLabel != null ) 
 	            return sLabel;
 	        String sURI = getURI();

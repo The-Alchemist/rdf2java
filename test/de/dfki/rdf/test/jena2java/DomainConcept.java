@@ -30,7 +30,7 @@ public class DomainConcept   extends JenaResource
     }
     
 	
-    public void putName (String name)
+    public void setName (String name)
     {
         RDFTool.setSingleValue( m_res, DOMAIN.name, name );
         RDFTool.setSingleValue( m_res, RDFS.label, name );				// this is too specific !?
@@ -42,7 +42,7 @@ public class DomainConcept   extends JenaResource
     }
 
     
-    public void putDirectSubConcepts( DomainConcept domainConcept )
+    public void addDirectSubConcept( DomainConcept domainConcept )
     {
         m_res.addProperty( DOMAIN.directSubConcepts, domainConcept );
     }
@@ -51,6 +51,26 @@ public class DomainConcept   extends JenaResource
     {
         Collection/*JenaResource*/ result = new LinkedList();
         StmtIterator it = m_res.listProperties( DOMAIN.directSubConcepts );
+        while( it.hasNext() )
+        {
+            Statement stmt = (Statement)it.nextStatement();
+            Resource res = stmt.getResource();
+            if( !(res instanceof JenaResource) )
+                res = new DomainConcept( res );
+            result.add( res );
+        }
+        return result;
+    }
+
+    public void addDirectSuperConcepts( DomainConcept domainConcept )
+    {
+        m_res.addProperty( DOMAIN.directSuperConcepts, domainConcept );
+    }
+    
+    public Collection/*DomainConcept*/ getDirectSuperConcepts()
+    {
+        Collection/*JenaResource*/ result = new LinkedList();
+        StmtIterator it = m_res.listProperties( DOMAIN.directSuperConcepts );
         while( it.hasNext() )
         {
             Statement stmt = (Statement)it.nextStatement();
