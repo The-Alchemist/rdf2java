@@ -129,11 +129,13 @@ public String toString ()
 //---------------------------------------------------------------------------
 public void updateRDFResourceSlots ()
 {
+    Date dateNow = new Date();
+    long lUpdateNumber = dateNow.getTime();
     for (Iterator it = values().iterator(); it.hasNext(); )
     {
         Object obj = it.next();
         if (obj instanceof THING)
-            ((THING)obj).updateRDFResourceSlots(this);
+            ((THING)obj).updateRDFResourceSlots( this, lUpdateNumber );
     }
 }
 

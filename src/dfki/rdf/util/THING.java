@@ -24,6 +24,12 @@ public class THING   extends RDFResource
 final static protected String DEFAULT_NAMESPACE = "http://dfki.rdf.util.rdf2java/default#";
 
 //----------------------------------------------------------------------------------------------------
+/** used in method <code>updateRDFResourceSlots</code> --
+  * shows if this THING has already been visited **/
+private long m_lLastUpdateNumber = 0;
+
+
+//----------------------------------------------------------------------------------------------------
 /** <code>toString()<code> stuff...
   */
 public String toString ()
@@ -138,10 +144,13 @@ public Object getPropertyValue (String sPropertyName)
 }
 
 //----------------------------------------------------------------------------------------------------
-public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
+public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateNumber)
 {
     try
     {
+        if (m_lLastUpdateNumber == lUpdateNumber) return;  // already visited this THING
+        m_lLastUpdateNumber = lUpdateNumber;
+
         Class cls = getClass();
         Collection collProperties = getProperties();
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
@@ -173,6 +182,7 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                             Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
                             if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + cachedObject.getClass() + ")");
                             methodPut.invoke( this, new Object[] { cachedObject } );
+                            ((THING)cachedObject).updateRDFResourceSlots( kbCachedObjects, lUpdateNumber );
                             continue;
                         }
                     }
@@ -180,13 +190,19 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                     Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValueElement.getClass() } );
                     if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValueElement.getClass() + ")");
                     methodPut.invoke( this, new Object[] { objPropValueElement } );
+                    if (objPropValueElement instanceof THING)
+                        ((THING)objPropValueElement).updateRDFResourceSlots( kbCachedObjects, lUpdateNumber );
                 }
             }
             else
             if (objPropValue instanceof RDFResource)
             {
                 if (objPropValue instanceof THING)
+                {
+                    ((THING)objPropValue).updateRDFResourceSlots( kbCachedObjects, lUpdateNumber );
                     continue;
+                }
+
                 try {
                     RDFResource propValue = (RDFResource)objPropValue;
                     Object cachedObject = kbCachedObjects.get(propValue.getURI());
@@ -195,6 +211,7 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                         Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
                         if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + cachedObject.getClass() + ")");
                         methodPut.invoke( this, new Object[] { cachedObject } );
+                        ((THING)cachedObject).updateRDFResourceSlots( kbCachedObjects, lUpdateNumber );
                         continue;
                     }
                     // nothing better available => take the old slot value again
