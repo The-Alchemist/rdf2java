@@ -74,6 +74,8 @@ void go ()
 //    go_2();
 //    go_3();
     go_4();
+    go_5();
+    go_6();
 }
 
 //---------------------------------------------------------------------------
@@ -83,7 +85,7 @@ void go_1()
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     resHomer.walk( new RDFResource.WalkerController() {
 
-        public void arriving( RDFResource currentResource )
+        public boolean arriving( RDFResource currentResource )
         {
             System.out.print( "arriving   : " );
             for( int i = 0; i < lstPath.size(); i++ )
@@ -93,6 +95,8 @@ void go_1()
             }
             System.out.println();
             // System.out.println( "action( " + currentResource.getLocalName() + " )" );
+            
+            return true;
         }
 
         public void leaving( RDFResource currentResource )
@@ -107,7 +111,7 @@ void go_1()
             // System.out.println( "action( " + currentResource.getLocalName() + " )" );
         }
 
-        public void arrivingAgain( RDFResource currentResource )
+        public boolean arrivingAgain( RDFResource currentResource )
         {
             System.out.print( "arriving2  : " );
             for( int i = 0; i < lstPath.size(); i++ )
@@ -117,6 +121,8 @@ void go_1()
             }
             System.out.println();
             // System.out.println( "action( " + currentResource.getLocalName() + " )" );
+            
+            return true;
         }
         
         public void leavingAgain( RDFResource currentResource )
@@ -148,7 +154,7 @@ void go_2()
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     RDFResource.WalkerController wc = new RDFResource.WalkerController() {
 
-        public void arriving( RDFResource currentResource )
+        public boolean arriving( RDFResource currentResource )
         {
             System.out.print( "arriving   : " );
             for( int i = 0; i < lstPath.size(); i++ )
@@ -166,6 +172,8 @@ void go_2()
                 }
             }
             System.out.println();
+            
+            return true;
         }
         
         public void leaving( RDFResource currentResource )
@@ -188,7 +196,7 @@ void go_2()
             System.out.println();
         }
         
-        public void arrivingAgain( RDFResource currentResource )
+        public boolean arrivingAgain( RDFResource currentResource )
         {
             System.out.print( "arriving2  : " );
             for( int i = 0; i < lstPath.size(); i++ )
@@ -206,6 +214,8 @@ void go_2()
                 }
             }
             System.out.println();
+            
+            return true;
         }
         
         public void leavingAgain( RDFResource currentResource )
@@ -255,7 +265,7 @@ void go_3()
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     RDFResource.WalkerController wc = new RDFResource.WalkerController() {
 
-        public void arriving( RDFResource currentResource )
+        public boolean arriving( RDFResource currentResource )
         {
             for( int i = 0; i < lstPath.size(); i++ )
             {
@@ -272,6 +282,8 @@ void go_3()
                     System.out.print( " " + pi.getName() + "=\"" + (String)pi.getValue() + "\"" );
             }
             System.out.println( ">" );
+            
+            return true;
         }
         
         Set/*RDFResource*/ setLeftResources = new HashSet();
@@ -307,13 +319,15 @@ void go_3()
             System.out.println( "    [/" + prop + "]" );
         }
         
-        public void arrivingAgain( RDFResource currentResource )
+        public boolean arrivingAgain( RDFResource currentResource )
         {
             for( int i = 0; i < lstPath.size(); i++ )
             {
                 System.out.print( "    " );
             }
             System.out.println( "(" + currentResource.getLocalName() + ")" );
+            
+            return true;
         }
         
         public void leavingAgain( RDFResource currentResource )
@@ -350,12 +364,110 @@ void go_4()
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
-    String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace );
+    String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
+            new RDFResource.ToStringController() {
+                public int propertyImportance( RDFResource source, String prop )
+                {
+                    return 0;
+                }
+
+                public boolean hideProperty( RDFResource source, String prop )
+                {
+                    return false;
+                }
+
+                public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
+                {
+                    return true;
+                }
+            } );
+    
     System.out.println( "resHomer.toStringAsRDF():\n" + sAsRDF );
 
     try
     {
         String sFilename = "testdata/walk/walk_go4.rdf";
+        PrintWriter w = new PrintWriter( new FileOutputStream( sFilename ) );
+        w.write( sAsRDF );
+        w.close();
+    }
+    catch( FileNotFoundException e )
+    {
+        e.printStackTrace();
+    }
+}
+
+
+//---------------------------------------------------------------------------
+void go_5()
+{
+    System.out.println( "\n\n\ngo_5:\n" );
+    RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
+    
+    // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
+    String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
+            new RDFResource.ToStringController() {
+                public int propertyImportance( RDFResource source, String prop )
+                {
+                    if( prop.equals( "hasChild" ) )         return 10;
+                    if( prop.equals( "hasHusband" ) )       return 100;
+                    if( prop.equals( "hasWife" ) )          return 100;
+                    return 0;
+                }
+
+                public boolean hideProperty( RDFResource source, String prop )
+                {
+                    if( prop.equals( "hasFather" ) || prop.equals( "hasMother" ) )
+                        return true;
+                    if( prop.equals( "label" ) )
+                        return true;
+                    return false;
+                }
+
+                public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
+                {
+                    if( prop.equals( "hasHusband" ) || prop.equals( "hasWife" ) )
+                        return false;
+                    return true;
+                }
+            } );
+    
+    System.out.println( "resHomer.toStringAsRDF():\n" + sAsRDF );
+
+    try
+    {
+        String sFilename = "testdata/walk/walk_go5.rdf";
+        PrintWriter w = new PrintWriter( new FileOutputStream( sFilename ) );
+        w.write( sAsRDF );
+        w.close();
+    }
+    catch( FileNotFoundException e )
+    {
+        e.printStackTrace();
+    }
+}
+
+
+//---------------------------------------------------------------------------
+void go_6()
+{
+    System.out.println( "\n\n\ngo_6:\n" );
+    RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
+    
+    // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
+    String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
+            new RDFResource.ToStringController() {
+                public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
+                {
+                    return false;
+                }
+            } );
+    
+    System.out.println( "resHomer.toStringAsRDF():\n" + sAsRDF );
+
+    try
+    {
+        String sFilename = "testdata/walk/walk_go6.rdf";
         PrintWriter w = new PrintWriter( new FileOutputStream( sFilename ) );
         w.write( sAsRDF );
         w.close();

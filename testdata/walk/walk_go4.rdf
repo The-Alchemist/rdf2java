@@ -22,7 +22,6 @@
                     <walk:Woman  rdf:about="&walk;March"
                          walk:name="March"
                          rdfs:label="March">
-                        <walk:hasHusband  rdf:resource="&walk;Homer"/>
                         <walk:hasChild  rdf:resource="&walk;Lisa"/>
                         <walk:hasChild>
                             <walk:Man  rdf:about="&walk;Bart"
@@ -32,6 +31,7 @@
                                 <walk:hasMother  rdf:resource="&walk;March"/>
                             </walk:Man>
                         </walk:hasChild>
+                        <walk:hasHusband  rdf:resource="&walk;Homer"/>
                     </walk:Woman>
                 </walk:hasMother>
             </walk:Woman>

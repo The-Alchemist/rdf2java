@@ -114,32 +114,6 @@ public abstract class Human
     // RDFS2Class: end of getter for slot hasChild
 
     //------------------------------------------------------------------------------
-    /** RDFS2Class: toString()-stuff **/
-    public void toString (StringBuffer sb, String sIndent)
-    {
-        super.toString(sb, sIndent);
-        if (m_name.getValue() != null) {
-            sb.append(sIndent+"-> name: "+m_name.getValue() + "\n");
-        }
-        if (m_hasFather.getValue() != null) {
-            sb.append(sIndent+"-> hasFather:\n"+sIndent+"       "+((dfki.rdf.util.RDFResource)m_hasFather.getValue()).toStringShort() + "\n");
-            // sb.append(sIndent+"-> hasFather:\n"+((dfki.rdf.util.RDFResource)m_hasFather.getValue()).toString(sIndent+"       "));
-        }
-        if (m_hasMother.getValue() != null) {
-            sb.append(sIndent+"-> hasMother:\n"+sIndent+"       "+((dfki.rdf.util.RDFResource)m_hasMother.getValue()).toStringShort() + "\n");
-            // sb.append(sIndent+"-> hasMother:\n"+((dfki.rdf.util.RDFResource)m_hasMother.getValue()).toString(sIndent+"       "));
-        }
-        if (!m_hasChild.isEmpty()) {
-            sb.append(sIndent+"-> hasChild:\n");
-            for (Iterator it_hasChild = ((java.util.Collection)m_hasChild.getValue()).iterator(); it_hasChild.hasNext(); ) {
-                sb.append( sIndent+"       " + ((dfki.rdf.util.RDFResource)it_hasChild.next()).toStringShort() + "\n" );
-                // sb.append( ((dfki.rdf.util.RDFResource)it_hasChild.next()).toString(sIndent+"       ") );
-            }
-        }
-    }
-    // RDFS2Class: end of toString()-stuff
-
-    //------------------------------------------------------------------------------
     /** RDFS2Class: sub class information **/
     public final static Class[] KNOWN_SUBCLASSES = {Woman.class, Man.class};
 

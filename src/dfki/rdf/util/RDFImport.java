@@ -475,7 +475,7 @@ public class RDFImport
                 String propertyPackage = getPackage( propertyNamespace );
                 boolean bAccept = ( propertyPackage != null );
                 //SS:2004-08-05
-                if(     propertyNamespace.equals( RDFS._Namespace ) || 
+                if(     propertyNamespace.equals( "http://www.w3.org/2000/01/rdf-schema#" ) || 
                         propertyNamespace.equals( "http://www.w3.org/TR/1999/PR-rdf-schema-19990303#" ) )
                 {
                     if( propertyName.equals( "label" ) )

@@ -2,6 +2,8 @@ package dfki.rdf.util;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -118,7 +120,10 @@ public String getLabel ()
 //----------------------------------------------------------------------------------------------------
 public String toString ()
 {
-    return "RDFResource(" + getURI() + ")";
+    if( getLabel() != null )
+        return getLabel();
+    else
+        return "RDFResource(" + getURI() + ")";
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -315,8 +320,10 @@ abstract public static class WalkerController
     /**
      * override this method to specify the behavior of the walker -
      * this method is what a walker is about.<br>
+     * return true if walking should proceed beyond the current resource;
+     * returning false will result in going back.
      */
-    abstract public void arriving( RDFResource currentResource );
+    abstract public boolean arriving( RDFResource currentResource );
 
     /**
      * you only need to override this method in special cases:
@@ -331,11 +338,16 @@ abstract public static class WalkerController
     }
 
     /**
-     * this method is called when a resource is visited once again. 
+     * this method is called when a resource is visited once again.<br>
+     * return true if walking should proceed beyond the current resource;
+     * returning false will result in going back. 
+     * default behavior is returning false, i.e. not to proceed when
+     * arriving again at the same resource.
      * @see #leavingAgain
      */
-    public void arrivingAgain( RDFResource currentResource )
+    public boolean arrivingAgain( RDFResource currentResource )
     {
+        return false;
     }
 
     /**
@@ -344,6 +356,15 @@ abstract public static class WalkerController
      */
     public void leavingAgain( RDFResource currentResource )
     {
+    }
+
+    /**
+     * override this method if you want to specify which properties to choose first -
+     * the higher the returned value, the earlier that property is chosen.
+     */
+    public int propertyImportance( RDFResource source, String prop )
+    {
+        return 0;
     }
 
     //-------------------------------------------------------------------------
@@ -405,14 +426,54 @@ public void walk( String sLastProperty, WalkerController wc )
     wc.lstWalk.addLast( sLastProperty );
     wc.lstWalk.addLast( this );
 
+    boolean bProceedFurther;
     boolean bAlreadyVisited = wc.alreadyVisitedOnWalk( this ); 
     if( bAlreadyVisited )
-        wc.arrivingAgain( this );
+        bProceedFurther = wc.arrivingAgain( this );
     else
-        wc.arriving( this );
+        bProceedFurther = wc.arriving( this );
+    
+
+    if( bProceedFurther )
+        walk_action( sLastProperty, wc );
     
     
+    if( bAlreadyVisited )
+        wc.leavingAgain( this );
+    else
+        wc.leaving( this );
+    
+    if( wc.lstPath.removeLast() !=  this )
+        debug().error( "implementation failure in THING.walk" );
+    if( wc.lstPath.removeLast() !=  sLastProperty )
+        debug().error( "implementation failure in THING.walk" );
+    
+    wc.lstWalk.addLast( "inv(" + sLastProperty + ")" );
+    if( wc.lstPath.size() > 0 ) wc.lstWalk.addLast( wc.lstPath.getLast() );
+}
+
+//----------------------------------------------------------------------------------------------------
+public void walk_action( String sLastProperty, WalkerController wc )
+{
+    final Map/*String->int*/ mapProperties2Importance = new HashMap();
     for( Iterator itProperties = m_propertyStore.getProperties().iterator(); itProperties.hasNext(); )
+    {
+        String sPropName = (String)itProperties.next();
+        int val = wc.propertyImportance( this, sPropName );
+        mapProperties2Importance.put( sPropName, new Integer( val ) );
+    }
+    LinkedList/*String*/ lstProperties = new LinkedList( mapProperties2Importance.keySet() );
+    Collections.sort( lstProperties, new Comparator() {
+        public int compare( Object o1, Object o2 )
+        {
+            int i1 = ((Integer)mapProperties2Importance.get( o1 )).intValue();
+            int i2 = ((Integer)mapProperties2Importance.get( o2 )).intValue();
+            if( i1 != i2 ) return i2 - i1;
+            return ((String)o1).compareTo( (String)o2 );
+        }
+    });
+    
+    for( Iterator itProperties = lstProperties.iterator(); itProperties.hasNext(); )
     {
         String sPropName = (String)itProperties.next();
         if( !wc.walkingAllowed( this, sPropName ) )
@@ -455,163 +516,240 @@ public void walk( String sLastProperty, WalkerController wc )
         }
          
     }
-    
-    if( bAlreadyVisited )
-        wc.leavingAgain( this );
-    else
-        wc.leaving( this );
-    
-    if( wc.lstPath.removeLast() !=  this )
-        debug().error( "implementation failure in THING.walk" );
-    if( wc.lstPath.removeLast() !=  sLastProperty )
-        debug().error( "implementation failure in THING.walk" );
-    
-    wc.lstWalk.addLast( "inv(" + sLastProperty + ")" );
-    if( wc.lstPath.size() > 0 ) wc.lstWalk.addLast( wc.lstPath.getLast() );
 }
-
 
 //----------------------------------------------------------------------------------------------------
 public String toStringAsRDF()
 {
-    return toStringAsRDF( null, null );
+    return toStringAsRDF( null, null, DEFAULT_TO_STRING_CONTROLLER );
 }
 
-public String toStringAsRDF( final Map/*String->String*/ mapPkg2NS, String sRdfsNamespace )
+public String toStringAsRDF( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
+                             ToStringController tsc )
 {
-    final RDFResource resPredAbout = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "about" );
-    final RDFResource resPredResource = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "resource" );
     
-    final TinyXMLDocument xmlDoc = new TinyXMLDocument( null, sRdfsNamespace );
-    final TinyXMLElement elDoc = xmlDoc.createElement( RDF.DEFAULT_SYNTAX_NAMESPACE + "RDF" );
-    xmlDoc.setDocumentElement( elDoc );
-    
-    final Map/*RDFResource->TinyXMLElement*/ mapResource2XMLElement = new HashMap();
-    
-    RDFResource.WalkerController wc = new RDFResource.WalkerController() {
-
-        public void arriving( RDFResource currentResource )
-        {
-            TinyXMLElement elParent = elDoc;
-            if( lstPath.size() > 2 ) 
-                elParent = (TinyXMLElement)mapResource2XMLElement.get( lstPath.get( lstPath.size()-3 ) );
-            
-            TinyXMLElement elAppendHere = elParent;
-
-            Class cls = currentResource.getClass();
-            String sClsPackage = getClassPackage( cls );
-            String sClsName = getClassName( cls );
-            String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  :  "http://" + sClsPackage + "#" );
-
-            String sLastProperty = getLastProperty();
-            if( sLastProperty != null ) 
-            {
-                RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
-                TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
-                elParent.appendChild( elLastProperty );
-                elAppendHere = elLastProperty;
-            }
-
-            RDFResource resCls = new RDFResource( sNamespace, sClsName );
-            
-            TinyXMLElement elInst = xmlDoc.createElement( resCls.getURI() );
-            elInst.setAttribute( resPredAbout.getURI(), currentResource );
-            elAppendHere.appendChild( elInst );
-            
-            mapResource2XMLElement.put( currentResource, elInst );
-
-            if(     currentResource.getLabel() != null &&
-                    !currentResource.getLabel().equals( currentResource.getURI() ) )
-            {
-                RDFResource resProperty = new RDFResource( xmlDoc.RDFS_NAMESPACE, "label" );
-                elInst.setAttribute( resProperty.getURI(), currentResource.getLabel() );
-            }
-            Collection/*PropertyInfo*/ collPropInfos = currentResource.getPropertyStore().getPropertyInfos();
-            for( Iterator it = collPropInfos.iterator(); it.hasNext(); )
-            {
-                PropertyInfo pi = (PropertyInfo)it.next();
-                if( pi.getValue() == null ) continue;
-                if(     pi.getValueType() == PropertyInfo.VT_STRING ||
-                        pi.getValueType() == PropertyInfo.VT_SYMBOL )
-                {
-                    RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
-                    appendSlot( elInst, resProperty, (String)pi.getValue() );
-                }
-            }
-        }
-
-        private void appendSlot( TinyXMLElement elInst, RDFResource resPred, String sValue )
-        {
-            if( TinyXMLTextNode.containsIllegalChars( sValue ) )
-            {
-                TinyXMLElement elSlot = xmlDoc.createElement( resPred.getURI() );
-                elInst.appendChild( elSlot );
-                TinyXMLTextNode txtValue = createTextNode( sValue );
-                elSlot.appendChild( txtValue );
-            }
-            else
-            {
-                elInst.setAttribute( resPred.getNamespace() + resPred.getLocalName(), sValue );
-            }
-        }
-
-        private TinyXMLTextNode createTextNode( String sText )
-        {
-            if( TinyXMLTextNode.containsIllegalChars( sText ) )
-                return xmlDoc.createCDATA( sText );
-            else
-                return xmlDoc.createTextNode( sText );
-        }
-
-        Set/*RDFResource*/ setProcessedResources = new HashSet();
-        
-        public void leaving( RDFResource currentResource )
-        {
-            setProcessedResources.add( currentResource );
-        }
-        
-        public void arrivingAgain( RDFResource currentResource )
-        {
-            if( lstPath.size() <= 3 )
-                throw new Error( "failure in RDFResource.walk" );
-            
-            TinyXMLElement elParent = (TinyXMLElement)mapResource2XMLElement.get( lstPath.get( lstPath.size()-3 ) );
-            
-            String sLastProperty = getLastProperty();
-            if( sLastProperty != null ) 
-            {
-                Class cls = currentResource.getClass();
-                String sClsPackage = getClassPackage( cls );
-                String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  :  "http://" + sClsPackage + "#" );
-                RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
-                
-                TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
-                elParent.appendChild( elLastProperty );
-                
-                elLastProperty.setAttribute( resPredResource.getURI(), currentResource );
-            }
-            else
-                throw new Error( "failure in RDFResource.walk" );
-        }
-        
-        public boolean walkingAllowed( RDFResource source, String prop, RDFResource dest )
-        {
-            if( alreadyVisitedOnWalk( source ) )
-            {
-                if( alreadyVisitedOnPath( source ) )
-                    return false;
-                else
-                    return !setProcessedResources.contains( source );
-            }
-            return true;
-        }
-    };
+    ToStringWalkerController wc = new ToStringWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
     this.walk( wc );
     
-    return xmlDoc.serialize();
+    return wc.xmlDoc.serialize();
 
 }
 
+
+static public class ToStringWalkerController extends WalkerController
+{
+    RDFResource resPredAbout = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "about" );
+    RDFResource resPredResource = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "resource" );
+    
+    TinyXMLDocument xmlDoc;
+    TinyXMLElement elDoc;
+    ToStringController tsc;
+    
+    Map/*String->String*/ mapPkg2NS;
+    Map/*RDFResource->TinyXMLElement*/ mapResource2XMLElement = new HashMap();
+
+    
+    public ToStringWalkerController( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace, 
+                                     ToStringController tsc )
+    {
+        xmlDoc = new TinyXMLDocument( null, sRdfsNamespace );
+        elDoc = xmlDoc.createElement( RDF.DEFAULT_SYNTAX_NAMESPACE + "RDF" );
+        xmlDoc.setDocumentElement( elDoc );
+        this.tsc = tsc;
+        this.mapPkg2NS = mapPkg2NS;
+    }
+    
+    public boolean arriving( RDFResource currentResource )
+    {
+        TinyXMLElement elParent = elDoc;
+        RDFResource penultimateResource = null;
+        if( lstPath.size() > 3 ) 
+        {
+            penultimateResource = (RDFResource)lstPath.get( lstPath.size()-3 );
+            elParent = (TinyXMLElement)mapResource2XMLElement.get( penultimateResource );
+        }
+        
+        TinyXMLElement elAppendHere = elParent;
+
+        Class cls = currentResource.getClass();
+        String sClsPackage = getClassPackage( cls );
+        String sClsName = getClassName( cls );
+        String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  
+                                                 :  "http://" + sClsPackage + "#" );
+
+        String sLastProperty = getLastProperty();
+        if( sLastProperty != null ) 
+        {
+            if( !tsc.expandProperty( penultimateResource, sLastProperty, currentResource ) )
+            {
+                arrivingAgain( currentResource );
+                return false;
+            }
+            RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
+            TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
+            elParent.appendChild( elLastProperty );
+            elAppendHere = elLastProperty;
+        }
+
+        RDFResource resCls = new RDFResource( sNamespace, sClsName );
+        
+        TinyXMLElement elInst = xmlDoc.createElement( resCls.getURI() );
+        elInst.setAttribute( resPredAbout.getURI(), currentResource );
+        elAppendHere.appendChild( elInst );
+        
+        mapResource2XMLElement.put( currentResource, elInst );
+
+        if(     currentResource.getLabel() != null                              &&
+                !currentResource.getLabel().equals( currentResource.getURI() )  &&
+                !tsc.hideProperty( currentResource, "label" )                   )
+        {
+            RDFResource resProperty = new RDFResource( xmlDoc.RDFS_NAMESPACE, "label" );
+            elInst.setAttribute( resProperty.getURI(), currentResource.getLabel() );
+        }
+        Collection/*PropertyInfo*/ collPropInfos = currentResource.getPropertyStore().getPropertyInfos();
+        for( Iterator it = collPropInfos.iterator(); it.hasNext(); )
+        {
+            PropertyInfo pi = (PropertyInfo)it.next();
+            if( pi.getValue() == null ) continue;
+            if( tsc.hideProperty( currentResource, pi.getName() ) ) continue;
+            if(     pi.getValueType() == PropertyInfo.VT_STRING ||
+                    pi.getValueType() == PropertyInfo.VT_SYMBOL )
+            {
+                RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
+                appendSlot( elInst, resProperty, (String)pi.getValue() );
+            }
+        }
+        
+        return true;
+    }
+
+    private void appendSlot( TinyXMLElement elInst, RDFResource resPred, String sValue )
+    {
+        if( TinyXMLTextNode.containsIllegalChars( sValue ) )
+        {
+            TinyXMLElement elSlot = xmlDoc.createElement( resPred.getURI() );
+            elInst.appendChild( elSlot );
+            TinyXMLTextNode txtValue = createTextNode( sValue );
+            elSlot.appendChild( txtValue );
+        }
+        else
+        {
+            elInst.setAttribute( resPred.getNamespace() + resPred.getLocalName(), sValue );
+        }
+    }
+
+    private TinyXMLTextNode createTextNode( String sText )
+    {
+        if( TinyXMLTextNode.containsIllegalChars( sText ) )
+            return xmlDoc.createCDATA( sText );
+        else
+            return xmlDoc.createTextNode( sText );
+    }
+
+    Set/*RDFResource*/ setProcessedResources = new HashSet();
+        
+    public void leaving( RDFResource currentResource )
+    {
+        boolean bAddResourceAsProcessed = true;
+        if( lstPath.size() > 3 ) 
+        {
+            RDFResource penultimateResource = (RDFResource)lstPath.get( lstPath.size()-3 );
+            String sLastProperty = getLastProperty();
+            if( sLastProperty != null ) 
+            {
+                if( !tsc.expandProperty( penultimateResource, sLastProperty, currentResource ) )
+                    bAddResourceAsProcessed = false;
+            }
+        }
+        
+        if( bAddResourceAsProcessed )
+            setProcessedResources.add( currentResource );
+    }
+    
+    public boolean arrivingAgain( RDFResource currentResource )
+    {
+        if( lstPath.size() <= 3 )
+            throw new Error( "failure in RDFResource.walk" );
+
+        RDFResource penultimateResource = (RDFResource)lstPath.get( lstPath.size()-3 );
+        TinyXMLElement elParent = (TinyXMLElement)mapResource2XMLElement.get( penultimateResource );
+        
+        String sLastProperty = getLastProperty();
+        if( sLastProperty != null ) 
+        {
+            Class cls = currentResource.getClass();
+            String sClsPackage = getClassPackage( cls );
+            String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  :  "http://" + sClsPackage + "#" );
+            RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
+            
+            TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
+            elParent.appendChild( elLastProperty );
+            
+            elLastProperty.setAttribute( resPredResource.getURI(), currentResource );
+        }
+        else
+            throw new Error( "failure in RDFResource.walk" );
+        
+        return false;
+    }
+    
+    public boolean walkingAllowed( RDFResource source, String prop, RDFResource dest )
+    {
+        if( tsc.hideProperty( source, prop ) )
+            return false;
+        
+        if( lstPath.size() > 3 ) 
+        {
+            RDFResource penultimateResource = (RDFResource)lstPath.get( lstPath.size()-3 );
+            String sLastProperty = getLastProperty();
+            if( sLastProperty != null ) 
+            {
+                if( !tsc.expandProperty( penultimateResource, sLastProperty, source ) )
+                    return false;
+            }
+        }
+        
+        if( alreadyVisitedOnWalk( source ) )
+        {
+            if( alreadyVisitedOnPath( source ) )
+                return false;
+            else
+                return !setProcessedResources.contains( source );
+        }
+        return true;
+    }
+    
+    public int propertyImportance( RDFResource source, String prop )
+    {
+        return tsc.propertyImportance( source, prop );
+    }
+}
+
+static public class ToStringController
+{
+    public int propertyImportance( RDFResource source, String prop )
+    {
+        return 0;
+    }    
+    
+    public boolean hideProperty( RDFResource source, String prop )
+    {
+        return false;
+    }
+
+    public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
+    {
+        return true;
+    }
+    
+} // end of class ToStringController
+
+
+public final static ToStringController DEFAULT_TO_STRING_CONTROLLER = new ToStringController();
+
+
+
+//----------------------------------------------------------------------------------------------------
 public static String getClassPackage( Class cls )
 {
     String className = cls.getName();
