@@ -12,7 +12,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 import de.dfki.rdf.util.RDFTool;
 
 
-public class DomainConcept   extends JenaResource
+public class DomainConcept   extends JenaResourceWrapper
 {
     public DomainConcept( Resource res )
     {
@@ -44,7 +44,7 @@ public class DomainConcept   extends JenaResource
     
     public void addDirectSubConcept( DomainConcept domainConcept )
     {
-        m_res.addProperty( DOMAIN.directSubConcepts, domainConcept );
+        addProperty( DOMAIN.directSubConcepts, domainConcept );
     }
     
     public Collection/*DomainConcept*/ getDirectSubConcepts()
@@ -55,7 +55,7 @@ public class DomainConcept   extends JenaResource
         {
             Statement stmt = (Statement)it.nextStatement();
             Resource res = stmt.getResource();
-            if( !(res instanceof JenaResource) )
+            if( !(res instanceof JenaResourceWrapper) )
                 res = new DomainConcept( res );
             result.add( res );
         }
@@ -64,7 +64,7 @@ public class DomainConcept   extends JenaResource
 
     public void addDirectSuperConcepts( DomainConcept domainConcept )
     {
-        m_res.addProperty( DOMAIN.directSuperConcepts, domainConcept );
+        addProperty( DOMAIN.directSuperConcepts, domainConcept );
     }
     
     public Collection/*DomainConcept*/ getDirectSuperConcepts()
@@ -75,7 +75,7 @@ public class DomainConcept   extends JenaResource
         {
             Statement stmt = (Statement)it.nextStatement();
             Resource res = stmt.getResource();
-            if( !(res instanceof JenaResource) )
+            if( !(res instanceof JenaResourceWrapper) )
                 res = new DomainConcept( res );
             result.add( res );
         }

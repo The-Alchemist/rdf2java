@@ -16,13 +16,13 @@ import de.dfki.rdf.util.RDFTool;
 
 
 /**
- * A JenaResource is a wrapper around some real jena resource.
+ * A JenaResourceWrapper is a wrapper around some real jena resource.
  * The idea is to abstract as much as possible from low-level
  * RDF operations. Instead of thinking in triples or graph structures,
  * we think of types Java objects having typed properties. Access these
  * properties by simple invoking respective getters and putters.  
  */
-public class JenaResource implements Resource
+public class JenaResourceWrapper implements Resource
 {
     protected Resource m_res;
     
@@ -30,60 +30,60 @@ public class JenaResource implements Resource
     
     
     /**
-     * Creates a new JenaResource.
-     * As a JenaResource is just a wrapper around a jena resource, 
+     * Creates a new JenaResourceWrapper.
+     * As a JenaResourceWrapper is just a wrapper around a jena resource, 
      * we've got to create a new internal jena resource, too,
      * and that's just why we need a jena model to be given here.
      */
-    public JenaResource( Model model )
+    public JenaResourceWrapper( Model model )
     {
         m_res = model.createResource( new AnonId() );
     }
     
     /**
-     * Creates a new JenaResource with the specified URI.
-     * As a JenaResource is just a wrapper around a jena resource, 
+     * Creates a new JenaResourceWrapper with the specified URI.
+     * As a JenaResourceWrapper is just a wrapper around a jena resource, 
      * we've got to create a new internal jena resource, too,
      * and that's just why we need a jena model to be given here.
      */
-    public JenaResource( Model model, String uri )
+    public JenaResourceWrapper( Model model, String uri )
     {
         m_res = model.createResource( uri );
     }
     
     /**
-     * Creates a new JenaResource.
-     * As a JenaResource is just a wrapper around a jena resource, 
+     * Creates a new JenaResourceWrapper.
+     * As a JenaResourceWrapper is just a wrapper around a jena resource, 
      * we've got to create a new internal jena resource, too.
      * That new jena resource is created in the default model inhere.
      */
-    public JenaResource()
+    public JenaResourceWrapper()
     {
         m_res = m_defaultModel.createResource( new AnonId() );
     }
     
     /**
-     * Creates a new JenaResource with the specified URI.
-     * As a JenaResource is just a wrapper around a jena resource, 
+     * Creates a new JenaResourceWrapper with the specified URI.
+     * As a JenaResourceWrapper is just a wrapper around a jena resource, 
      * we've got to create a new internal jena resource, too.
      * That new jena resource is created in the default model inhere.
      */
-    public JenaResource( String uri )
+    public JenaResourceWrapper( String uri )
     {
         m_res = m_defaultModel.createResource( uri );
     }
     
     /**
-     * Initializes the internal jena resource of this JenaResource.
-     * Note: A JenaResource is just a wrapper around the real jena resource.
+     * Initializes the internal jena resource of this JenaResourceWrapper.
+     * Note: A JenaResourceWrapper is just a wrapper around the real jena resource.
      */
-    public JenaResource( Resource res )
+    public JenaResourceWrapper( Resource res )
     {
         m_res = res;
     }
     
     /**
-     * Sets this resource. As a JenaResource is just a wrapper around a 
+     * Sets this resource. As a JenaResourceWrapper is just a wrapper around a 
      * jena resource, that resource has to be set somewhen.
      */
 	protected void setResource( Resource res )
@@ -92,8 +92,8 @@ public class JenaResource implements Resource
 	}
 
 	/**
-	 * Gets the internal jena resource of this JenaResource.
-	 * Note: A JenaResource is just a wrapper around the real jena resource.
+	 * Gets the internal jena resource of this JenaResourceWrapper.
+	 * Note: A JenaResourceWrapper is just a wrapper around the real jena resource.
 	 */
 	public Resource getResource()
 	{
@@ -120,7 +120,7 @@ public class JenaResource implements Resource
     }
 
 	/**
-	 * Returns a short string representation of this JenaResource.<br>
+	 * Returns a short string representation of this JenaResourceWrapper.<br>
 	 * 1. If this resource has a rdfs:label, then this will be returned.<br>
 	 * 2. If a URI has been assigned to this resource, then this will be returned.<br>
 	 * 3. If all of these cases fail, then super.toString() is used providing at
@@ -256,7 +256,8 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, boolean o )
     {
-        return m_res.addProperty(p, o);
+        m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -267,7 +268,8 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, long o )
     {
-        return m_res.addProperty(p, o);
+        m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -278,7 +280,8 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, char o )
     {
-        return m_res.addProperty(p, o);
+        m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -289,7 +292,8 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, float o )
     {
-        return m_res.addProperty(p, o);
+        m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -300,7 +304,8 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, double o )
     {
-        return m_res.addProperty(p, o);
+        m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -311,7 +316,8 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, String o )
     {
-        return m_res.addProperty(p, o);
+        m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -322,7 +328,8 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, String o, String l )
     {
-        return m_res.addProperty(p, o, l);
+        m_res.addProperty(p, o, l);
+        return this;
     }
 
     /*
@@ -333,7 +340,11 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, Object o )
     {
-        return m_res.addProperty(p, o);
+        if( o instanceof JenaResourceWrapper )
+            m_res.addProperty( p, ((JenaResourceWrapper)o).getResource() );
+        else
+            m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -344,7 +355,11 @@ public class JenaResource implements Resource
      */
     public Resource addProperty( Property p, RDFNode o )
     {
-        return m_res.addProperty(p, o);
+        if( o instanceof JenaResourceWrapper )
+            m_res.addProperty( p, ((JenaResourceWrapper)o).getResource() );
+        else
+            m_res.addProperty(p, o);
+        return this;
     }
 
     /*
@@ -568,5 +583,5 @@ public class JenaResource implements Resource
 
     }
 
-} // end of class JenaResource
+} // end of class JenaResourceWrapper
 

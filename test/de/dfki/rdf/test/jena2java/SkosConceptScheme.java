@@ -14,7 +14,7 @@ import de.dfki.rdf.util.RDFTool;
 /**
  * A concept scheme is a collection of concepts.
  */
-public class SkosConceptScheme   extends JenaResource
+public class SkosConceptScheme   extends JenaResourceWrapper
 {
     public SkosConceptScheme( Resource res )
     {
@@ -82,7 +82,7 @@ public class SkosConceptScheme   extends JenaResource
      */
     public void addHasTopConcept( SkosConcept concept )
     {
-        m_res.addProperty( GNO_SKOS.hasTopConcept, concept );
+        addProperty( GNO_SKOS.hasTopConcept, concept );
     }
     
     /**

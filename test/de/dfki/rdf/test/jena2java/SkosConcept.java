@@ -14,7 +14,7 @@ import de.dfki.rdf.util.RDFTool;
 /**
  * A concept is any unit of thought that can be defined or described.
  */
-public class SkosConcept   extends JenaResource
+public class SkosConcept   extends JenaResourceWrapper
 {
     public SkosConcept( Resource res )
     {
@@ -81,7 +81,7 @@ public class SkosConcept   extends JenaResource
      */
     public void setInScheme( SkosConceptScheme scheme )
     {
-        m_res.addProperty( GNO_SKOS.inScheme, scheme );
+        addProperty( GNO_SKOS.inScheme, scheme );
     }
     
     /**
@@ -103,7 +103,7 @@ public class SkosConcept   extends JenaResource
      */
     public void addSemanticRelation( SkosConcept concept )
     {
-        m_res.addProperty( GNO_SKOS.semanticRelation, concept );
+        addProperty( GNO_SKOS.semanticRelation, concept );
     }
     
     /**
@@ -129,7 +129,7 @@ public class SkosConcept   extends JenaResource
      */
     public void addNarrower( SkosConcept concept )
     {
-        m_res.addProperty( GNO_SKOS.narrower, concept );
+        addProperty( GNO_SKOS.narrower, concept );
     }
     
     /**
@@ -155,7 +155,7 @@ public class SkosConcept   extends JenaResource
      */
     public void addBroader( SkosConcept concept )
     {
-        m_res.addProperty( GNO_SKOS.broader, concept );
+        addProperty( GNO_SKOS.broader, concept );
     }
     
     /**
@@ -181,7 +181,7 @@ public class SkosConcept   extends JenaResource
      */
     public void addRelated( SkosConcept concept )
     {
-        m_res.addProperty( GNO_SKOS.related, concept );
+        addProperty( GNO_SKOS.related, concept );
     }
     
     /**
@@ -207,7 +207,7 @@ public class SkosConcept   extends JenaResource
      */
     public void addIsSubjectOf( Resource res )
     {
-        m_res.addProperty( GNO_SKOS.isSubjectOf, res );
+        addProperty( GNO_SKOS.isSubjectOf, res );
     }
     
     /**
