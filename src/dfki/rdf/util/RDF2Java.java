@@ -110,10 +110,10 @@ public static Object getPropertyValue (THING thing, String sPropertyName)
 }
 
 //----------------------------------------------------------------------------------------------------
-public static Collection getPropertyValues (THING thing, String sPropertyName)
-{
-    return (Collection)getPropertyValue( thing, sPropertyName );
-}
+//public static Collection getPropertyValues (THING thing, String sPropertyName)
+//{
+//    return (Collection)getPropertyValue( thing, sPropertyName );
+//}
 
 //----------------------------------------------------------------------------------------------------
 public static void putPropertyValue (THING thing, String sPropertyName, Object value)

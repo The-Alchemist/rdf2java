@@ -142,19 +142,28 @@ public void addToMap (Map mapObjects)
 //----------------------------------------------------------------------------------------------------
 public Object getPropertyValue (String sPropertyName)
 {
-    return RDF2Java.getPropertyValue( this, sPropertyName );
+    if( m_propertyStore != null )
+        return m_propertyStore.getPropertyValue( sPropertyName );
+    else
+        return RDF2Java.getPropertyValue( this, sPropertyName );
 }
 
 //----------------------------------------------------------------------------------------------------
 public void putPropertyValue (String sPropertyName, Object value)
 {
-    RDF2Java.putPropertyValue( this, sPropertyName, value );
+    if( m_propertyStore != null )
+        m_propertyStore.putPropertyValue( sPropertyName, value );
+    else
+        RDF2Java.putPropertyValue( this, sPropertyName, value );
 }
 
 //----------------------------------------------------------------------------------------------------
 public void clearPropertyValues (String sPropertyName)
 {
-    RDF2Java.clearPropertyValues( this, sPropertyName );
+    if( m_propertyStore != null )
+        m_propertyStore.clearPropertyValue( sPropertyName );
+    else
+        RDF2Java.clearPropertyValues( this, sPropertyName );
 }
 
 //----------------------------------------------------------------------------------------------------

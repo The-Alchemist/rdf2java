@@ -2,11 +2,15 @@ package dfki.rdf.util;
 
 import java.util.*;
 
+import dfki.util.debug.Debug;
+
 
 public class KnowledgeBase
 {
 //---------------------------------------------------------------------------
+public final static String DEBUG_MODULE = "KnowledgeBase";
 HashMap m_mapObjects = new HashMap();
+private final static boolean MEASURE_TIME = true;
 
 //---------------------------------------------------------------------------
 public KnowledgeBase ()
@@ -131,11 +135,21 @@ public void updateRDFResourceSlots ()
 {
     Date dateNow = new Date();
     long lUpdateNumber = dateNow.getTime();
+
+    long iTimeBeginning = ( MEASURE_TIME  ?  lUpdateNumber  :  0 );
+
     for (Iterator it = values().iterator(); it.hasNext(); )
     {
         Object obj = it.next();
         if (obj instanceof THING)
             ((THING)obj).updateRDFResourceSlots( this, lUpdateNumber );
+    }
+
+    if( MEASURE_TIME )
+    {
+        long iTimeEnd = new Date().getTime();
+        if( iTimeEnd > iTimeBeginning )
+            debug().message( "updateRDFResourceSlots: " + (iTimeEnd - iTimeBeginning) + " millis" );
     }
 }
 
@@ -148,6 +162,8 @@ public void assign (THING thingToAssign)
 //---------------------------------------------------------------------------
 public void assign (THING thingToAssign, boolean bUpdateResourceSlots)
 {
+    long iTimeBeginning = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
+
     THING thingOld = (THING)get( thingToAssign.getURI() );
     if (thingOld != null)
         thingOld.assign( thingToAssign, this );
@@ -157,20 +173,51 @@ public void assign (THING thingToAssign, boolean bUpdateResourceSlots)
         // movebelow:    updateRDFResourceSlots();
     }
 
+    long iTimeAfterAssign = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
+
     if (bUpdateResourceSlots)
         updateRDFResourceSlots();
+
+    if( MEASURE_TIME )
+    {
+        long iTimeEnd = new Date().getTime();
+        if( iTimeEnd > iTimeBeginning )
+            debug().message( "assign: " + (iTimeEnd         - iTimeBeginning)   + " millis (assign only: "
+                                        + (iTimeAfterAssign - iTimeBeginning)   + " millis, updateRDFResourceSlots: "
+                                        + (iTimeEnd         - iTimeAfterAssign) + " millis)" );
+    }
 }
 
 //---------------------------------------------------------------------------
 public void assignAllThings (Collection coll)
 {
+    long iTimeBeginning = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
+    if( MEASURE_TIME ) debug().message( "\nassignAll: beginning..." );
+
     for (Iterator it = coll.iterator(); it.hasNext(); )
     {
         Object obj = it.next();
         if (obj instanceof THING)
             assign( (THING)obj, false /*defer resource slots*/ );
     }
+
+    long iTimeAfterAssign = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
+
     updateRDFResourceSlots();
+
+    if( MEASURE_TIME )
+    {
+        long iTimeEnd = new Date().getTime();
+        debug().message( "assignAll: " + (iTimeEnd         - iTimeBeginning)   + " millis (assign only: "
+                                       + (iTimeAfterAssign - iTimeBeginning)   + " millis, updateRDFResourceSlots: "
+                                       + (iTimeEnd         - iTimeAfterAssign) + " millis)" );
+    }
+}
+
+//---------------------------------------------------------------------------
+private Debug debug()
+{
+    return Debug.forModule( DEBUG_MODULE );
 }
 
 //---------------------------------------------------------------------------

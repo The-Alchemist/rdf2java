@@ -3,6 +3,7 @@ package dfki.rdf.util;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
 import org.w3c.rdf.model.Resource;
 
 
@@ -12,6 +13,7 @@ public class RDFResource   extends Object   implements Resource
 private String m_namespace;
 private String m_localName;
 private String m_uri;
+protected PropertyStore m_propertyStore;
 
 
 //----------------------------------------------------------------------------------------------------
@@ -181,10 +183,21 @@ protected Collection/*String*/ getPropertiesOfThisClass ()
     Collection collProps = (Collection)RDFResource.mapCls2PropertiesCache.get( cls );
     if (collProps == null)
     {
-        collProps = RDF2Java.getProperties( cls );
+        if( m_propertyStore != null )
+            collProps = m_propertyStore.getProperties();
+        else
+            collProps = RDF2Java.getProperties( cls );
         RDFResource.mapCls2PropertiesCache.put( cls, collProps );
     }
     return collProps;
+}
+
+//------------------------------------------------------------------------------
+public PropertyStore createPropertyStore()
+{
+    if( m_propertyStore == null )
+        m_propertyStore = new PropertyStore( getClass() );
+    return m_propertyStore;
 }
 
 //----------------------------------------------------------------------------------------------------
