@@ -357,6 +357,12 @@ public static String getClassName( Class cls )
 
 
 //----------------------------------------------------------------------------------------------------
+public com.hp.hpl.jena.rdf.model.Resource asJenaResource()
+{
+    return asJenaResource( null );
+}
+
+//----------------------------------------------------------------------------------------------------
 public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ mapPkg2NS )
 {
     com.hp.hpl.jena.rdf.model.Resource res;
