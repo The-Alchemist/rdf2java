@@ -69,7 +69,8 @@ public String getNamespace( String sURI )
     if( pos >= 0 )
         return sURI.substring( 0, pos+1 );  // namespace includes '#', too!
     else
-        throw new Error( "implementation error: no namespace for uri '" + sURI + "'" );
+        return sURI;  // assume: everything is namespace
+        ////old: throw new Error( "implementation error: no namespace for uri '" + sURI + "'" );
 }
 
 //------------------------------------------------------------------------------
