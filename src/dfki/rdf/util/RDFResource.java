@@ -5,59 +5,65 @@ import org.w3c.rdf.model.Resource;
 
 public class RDFResource   implements Resource
 {
-    String namespace;
-    String localName;
-    ////public Resource storedRes;
+
+    protected RDFResource ()
+    {
+        setURI( null, null );  // hope, this doesn't last for long...
+    }
 
     public RDFResource (Resource res)      throws org.w3c.rdf.model.ModelException
     {
-        namespace = res.getNamespace();
-        localName = res.getLocalName();
-        ////storedRes = res;
+        setURI(res.getNamespace(), res.getLocalName());
     }
 
     public RDFResource (String namespace, String localName)
     {
-        this.namespace = namespace;
-        this.localName = localName;
-        ////storedRes = null;  //FIXME: hope, this won't get critical somewhen...
+        setURI(namespace, localName);
     }
 
     public RDFResource (String uri)
     {
+        setURI(uri);
+    }
+
+
+    protected void setURI (String namespace, String localName)
+    {
+        m_namespace = namespace;
+        m_localName = localName;
+        m_uri = m_namespace + m_localName;
+    }
+
+    protected void setURI (String uri)
+    {
         // guess namespace and localname
         int pos = uri.indexOf("#");
         if (pos >= 0)
-        {
-            namespace = uri.substring(0, pos+1);
-            localName = uri.substring(pos+1);
-        }
-        else
-        {   // no namespace; this should NOT be allowed, really, should it?
-            namespace = null;
-            localName = uri;
-        }
+            setURI( uri.substring(0, pos+1), uri.substring(pos+1) );
+        else  // no namespace; this should NOT be allowed, really, should it?
+            setURI( null, uri );
     }
 
     public String getNamespace ()
     {
-        return namespace;
+        return m_namespace;
     }
 
     public String getLocalName ()
     {
-        return localName;
+        return m_localName;
     }
 
     public String getURI ()
     {
-        return namespace + localName;
+        return m_uri;
     }
 
     public String getLabel ()
     {
         return getURI();
     }
+
 
     public String toString ()
     {
@@ -68,5 +74,10 @@ public class RDFResource   implements Resource
     {
         return getURI();
     }
+
+
+    private String m_namespace;
+    private String m_localName;
+    private String m_uri;
 }
 

@@ -18,19 +18,14 @@ import java.lang.reflect.*;
   * @author  Sven.Schwarz@dfki.de
   * @version 1.0
   */
-public class THING
+public class THING   extends RDFResource
 {
-//----------------------------------------------------------------------------------------------------
-/** the <code>URI</code> of the corresponding RDF object
-  */
-String m_sURI;
-
 //----------------------------------------------------------------------------------------------------
 /** Sets the <code>URI</code> of the corresponding RDF object.
   */
 public void putURI (String sURI)
 {
-    m_sURI = sURI;
+    setURI(sURI);  // calls RDFResource.setURI
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -38,7 +33,7 @@ public void putURI (String sURI)
   */
 public String getURI ()
 {
-    return m_sURI;
+    return getURI();  // calls RDFResource.setURI
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -87,8 +82,8 @@ public String toString (String sIndent, boolean bIndentDirectly)
     if (bIndentDirectly)
         sb.append(sIndent);
     sb.append(getClassName() + " " + getAddress() + " ");
-    if (m_sURI != null)
-        sb.append("URI=\"" + m_sURI + "\" ");
+    if (getURI() != null)
+        sb.append("URI=\"" + getURI() + "\" ");
 //    sb.append("{");
     sb.append("\n");
     toString(sb, sIndent);
@@ -116,7 +111,7 @@ public String toStringShort ()                          // overload this method
 {
     return getClassNameShort() + " " +
            getAddress() +
-           ( m_sURI != null  ?  " URI=\"" + m_sURI + "\""  :  "");
+           ( getURI() != null  ?  " URI=\"" + getURI() + "\""  :  "");
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -225,15 +220,15 @@ public boolean equals (Object other)
     // objects are hereby declared as identical iff their URIs are equal
     if (other instanceof THING)
     {
-        if (m_sURI != null && ((THING)other).m_sURI != null)
-            return m_sURI.equals(((THING)other).m_sURI);
+        if (getURI() != null && ((THING)other).getURI() != null)
+            return getURI().equals(((THING)other).getURI());
         else
             return false;  // sorry, no chance left :-(
     }
     else
     if (other instanceof org.w3c.rdf.model.Resource)
     {
-        try { return m_sURI.equals(((org.w3c.rdf.model.Resource)other).getURI()); }
+        try { return getURI().equals(((org.w3c.rdf.model.Resource)other).getURI()); }
         catch (Exception ex) { return false; }
     }
     else
