@@ -262,7 +262,7 @@ public void updateRDFResourceSlots (dfki.rdf.util.KnowledgeBase kbCachedObjects)
         }
         if (objPropValueAsURI == null) continue;
         String sPropertyName = calcMethodNameToPropertyName(sMethodName);
-        String sPutMethodName = calcPropertyNameToMethodNameWithoutURI(sPropertyName);
+        String sPutMethodName = calcPropertyNameToMethodNameWithoutURI("put", sPropertyName);
         if (objPropValueAsURI instanceof dfki.rdf.util.RDFResource)
         {
             try {
@@ -302,27 +302,178 @@ public void updateRDFResourceSlots (dfki.rdf.util.KnowledgeBase kbCachedObjects)
 
 String calcMethodNameToPropertyName (String sMethodName)
 {
-    // GetXXYYZZ__asURI --> XXYYZZ
-    if (sMethodName.startsWith("Get_"))
-        return sMethodName.substring(4, sMethodName.length()-7);
+    // getXXYYZZ --> XXYYZZ
+    if (sMethodName.startsWith("get_"))
+        return sMethodName.substring(4);
     else
-        return Character.toLowerCase(sMethodName.charAt(3)) + sMethodName.substring(4, sMethodName.length()-7);
+        return Character.toLowerCase(sMethodName.charAt(3)) + sMethodName.substring(4);
 }
 
-String calcPropertyNameToMethodNameWithoutURI (String sPropName)
+String calcPropertyNameToMethodNameWithoutURI (String sMethodPrefix, String sPropName)
 {
     if (Character.isLowerCase(sPropName.charAt(0)))
-        return "put"  + Character.toUpperCase(sPropName.charAt(0))
-                      + sPropName.substring(1); // + "__asURI";
+        return sMethodPrefix + Character.toUpperCase(sPropName.charAt(0))
+                             + sPropName.substring(1);
     else
-        return "put_" + sPropName; // + "__asURI";
+        return sMethodPrefix + "_" + sPropName;
 }
 
 
 //----------------------------------------------------------------------------------------------------
-public void assign (THING thingToAssign, KnowledgeBase kb)
+public void assign (THING newThing, KnowledgeBase kb)
 {
-    throw new Error("Method dfki.rdf.util.THING.assign not yet implemented!");
+    try
+    {
+        Method[] aMethods = getClass().getMethods();
+        for (int i = 0; i < aMethods.length; i++)
+        {
+            Method method = aMethods[i];
+            String sMethodName = method.getName();
+            if (!sMethodName.startsWith("get"))
+                continue;
+            if (sMethodName.equals("getClass") || sMethodName.equals("getURI") || sMethodName.equals("getLabel"))
+                continue;
+            Class[] aParameterTypes = method.getParameterTypes();
+            if (aParameterTypes.length > 0)
+                continue;
+
+            String sPropertyName = calcMethodNameToPropertyName(sMethodName);
+            String sPutMethodName = calcPropertyNameToMethodNameWithoutURI("put", sPropertyName);
+            String sClearMethodName = calcPropertyNameToMethodNameWithoutURI("clear", sPropertyName);
+            String sGetMethodName = calcPropertyNameToMethodNameWithoutURI("get", sPropertyName);
+            String sGetAsURIMethodName = calcPropertyNameToMethodNameWithoutURI("Get", sPropertyName + "__asURI");
+
+            Method methodPutAsURI = getClass().getMethod( sPutMethodName, new Class[] { dfki.rdf.util.RDFResource.class } );
+            Method methodClear = getClass().getMethod( sClearMethodName, new Class[] { } );
+            Method methodGet = getClass().getMethod( sGetMethodName, new Class[] { } );
+            Method methodGetAsURI = getClass().getMethod( sGetAsURIMethodName, new Class[] { } );
+
+            Class clsReturnType = methodGet.getReturnType();
+            if (Collection.class.isAssignableFrom(clsReturnType))
+            {
+                Object value = methodGet.invoke( this, null );
+                LinkedList lstOldValues = new LinkedList( (Collection)value );
+                value = methodGetAsURI.invoke( this, null );
+                lstOldValues.addAll( (Collection)value );
+
+                methodClear.invoke( this, null );
+
+                value = methodGet.invoke( newThing, null );
+                LinkedList lstNewValues = new LinkedList( (Collection)value );
+                value = methodGetAsURI.invoke( newThing, null );
+                lstNewValues.addAll( (Collection)value );
+
+                assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
+            }
+            else
+            {
+                LinkedList lstOldValues = new LinkedList();
+                Object value = methodGet.invoke( this, null );
+                if (value != null) lstOldValues.add( value );
+                value = methodGetAsURI.invoke( this, null );
+                if (value != null) lstOldValues.add( value );
+                // assert( lstOldValues.size() > 1 )
+
+                methodClear.invoke( this, null );
+
+                LinkedList lstNewValues = new LinkedList();
+                value = methodGet.invoke( newThing, null );
+                if (value != null) lstNewValues.add( value );
+                value = methodGetAsURI.invoke( newThing, null );
+                if (value != null) lstNewValues.add( value );
+                // assert( lstNewValues.size() > 1 )
+
+                assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        throw new Error(ex.getMessage());
+    }
+}
+
+//----------------------------------------------------------------------------------------------------
+void assignValues (Collection collOldValues, Collection collNewValues,
+                   String sPutMethodName, KnowledgeBase kb)   throws Exception
+{
+    for (Iterator itOldValues = collOldValues.iterator(); itOldValues.hasNext(); )
+    {
+        Object oldValue = itOldValues.next();
+        Object newValue = find(collNewValues, getURI(oldValue));
+
+        // if newValue == null, then the old slot value (subA_this) has to be removed
+        // as this is already done (via method clearXXX), nothing has to be done in that case
+        if (newValue == null)
+            continue;
+
+        // if the new slot value gives us an increase of quality, we take it!
+        // this can only be the case iff newValue is a THING (and not an URI reference)
+        // as this case is handled deeper below, too, we only do the other case here:
+        // A L T H O U G H :   note, that this disturbs the order of the slot values !!!
+        // OR WELL... DOES IT REALLY ???????????????????????????????????????????????????
+        if ( !(newValue instanceof dfki.rdf.util.THING) )
+        {
+            Method methodPut = getClass().getMethod( sPutMethodName, new Class[] { newValue.getClass() } );
+            methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
+            // mark, that we've already handled that new slot value for later
+            remove(collNewValues, getURI(newValue));
+        }
+    }
+
+    // if collNewValues still contains some slot values => add them all
+    for (Iterator itNewValues = collNewValues.iterator(); itNewValues.hasNext(); )
+    {
+        Object newValue = itNewValues.next();
+
+        Method methodPut = getClass().getMethod( sPutMethodName, new Class[] { newValue.getClass() } );
+        methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
+
+        if (newValue instanceof dfki.rdf.util.THING)
+            kb.put( newValue );     // now the new Java object exists in the knowledge base, too
+    }
+}
+
+//----------------------------------------------------------------------------------------------------
+public static String getURI (Object obj)
+{
+    if (obj instanceof dfki.rdf.util.RDFResource)
+        return ((dfki.rdf.util.RDFResource)obj).getURI();
+    else
+    if (obj instanceof dfki.rdf.util.THING)
+        return ((dfki.rdf.util.THING)obj).getURI();
+    else
+        throw new Error("implementation error");
+}
+
+//----------------------------------------------------------------------------------------------------
+public static Object find (Collection collOther, String sURI)
+{
+    for (Iterator itOthers = collOther.iterator(); itOthers.hasNext(); )
+    {
+        Object other = itOthers.next();
+        if ( (other instanceof dfki.rdf.util.RDFResource) && getURI(other).equals(sURI) )
+            return other;
+        else
+        if ( (other instanceof dfki.rdf.util.THING) && getURI(other).equals(sURI) )
+            return other;
+    }
+    return null;  // not found
+}
+
+//----------------------------------------------------------------------------------------------------
+public static void remove (Collection coll, String sURI)
+{
+    for (Iterator it = coll.iterator(); it.hasNext(); )
+    {
+        Object obj = it.next();
+        if ( (obj instanceof dfki.rdf.util.RDFResource) &&
+             ((dfki.rdf.util.RDFResource)obj).getURI().equals(sURI) )
+        {
+            it.remove();
+            return;
+        }
+    }
 }
 
 //----------------------------------------------------------------------------------------------------

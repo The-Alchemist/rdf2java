@@ -542,6 +542,11 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             pwClsFile.print(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
                             sIndent + "{\n" +
                             sIndent + "    m_" + pi.sSlotName + SLOT_RES_APPENDIX + ".add(p_" + pi.sSlotName + ");\n" +
+                            sIndent + "}\n");
+            pwClsFile.print(sIndent + "public void " + makeMethodName("clear", pi.sSlotName) + " ()\n" +
+                            sIndent + "{\n" +
+                            sIndent + "    m_" + pi.sSlotName + " = new " + m_sCollectionType + "();\n" +
+                            sIndent + "    m_" + pi.sSlotName + SLOT_RES_APPENDIX + " = new " + m_sCollectionType + "();\n" +
                             sIndent + "}");
             if (m_bInsertIncrementalInfo)
                 pwClsFile.print("\n" + sIndent + "// RDFS2Class: end of putter for slot " + pi.sSlotName);
@@ -612,6 +617,11 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             pwClsFile.println(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
                               sIndent + "{");
             pwClsFile.print(sIndent + "    m_" + pi.sSlotName + SLOT_RES_APPENDIX + " = p_" + pi.sSlotName + ";\n" +
+                            sIndent + "}\n");
+            pwClsFile.print(sIndent + "public void " + makeMethodName("clear", pi.sSlotName) + " ()\n" +
+                            sIndent + "{\n" +
+                            sIndent + "    m_" + pi.sSlotName + " = null;\n" +
+                            sIndent + "    m_" + pi.sSlotName + SLOT_RES_APPENDIX + " = null;\n" +
                             sIndent + "}");
             if (m_bInsertIncrementalInfo)
                 pwClsFile.print("\n" + sIndent + "// RDFS2Class: end of putter for slot " + pi.sSlotName);

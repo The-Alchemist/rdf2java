@@ -1,4 +1,4 @@
-; Fri Feb 01 12:58:43 GMT+01:00 2002
+; Sat Feb 02 01:04:00 GMT+01:00 2002
 ; 
 ;+ (version "1.6.2")
 ;+ (build "Build 845")
@@ -7,29 +7,29 @@
 	(name ":ANNOTATED-INSTANCE"))
 
 ([ANNOTATION_TEXT_WIDGET] of Widget
-	(name ":ANNOTATION-TEXT")
-	(is_hidden FALSE)
-	(x 0)
 	(height 100)
+	(is_hidden FALSE)
+	(y 0)
+	(name ":ANNOTATION-TEXT")
 	(widget_class_name "edu.stanford.smi.protege.widget.YellowStickyWidget")
-	(width 200)
-	(y 0))
+	(x 0)
+	(width 200))
 
 ([assign_ProjectKB_00000] of Widget
-	(name ":THING")
-	(is_hidden FALSE)
-	(x 0)
 	(height 833)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 994)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [assign_ProjectKB_00001]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [assign_ProjectKB_00001])
+	(x 0)
+	(width 994))
 
 ([assign_ProjectKB_00001] of Property_List)
 
 ([assign_ProjectKB_00002] of Widget
-	(name "A")
 	(is_hidden FALSE)
+	(name "A")
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
 	(property_list [assign_ProjectKB_00003]))
 
@@ -41,22 +41,66 @@
 		[assign_ProjectKB_00230]))
 
 ([assign_ProjectKB_00029] of Widget
-	(name "B")
 	(is_hidden FALSE)
+	(name "B")
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
 	(property_list [assign_ProjectKB_00030]))
 
 ([assign_ProjectKB_00030] of Property_List)
 
-([assign_ProjectKB_00206] of Widget
-	(name "toB")
+([assign_ProjectKB_00101] of Widget
+	(height 833)
 	(is_hidden FALSE)
-	(x 250)
-	(height 240)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 250)
 	(y 0)
-	(property_list [assign_ProjectKB_00207]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [assign_ProjectKB_00201])
+	(x 0)
+	(width 994))
+
+([assign_ProjectKB_00201] of Property_List)
+
+([assign_ProjectKB_00202] of Widget
+	(is_hidden FALSE)
+	(name "A")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [assign_ProjectKB_00203]))
+
+([assign_ProjectKB_00203] of Property_List
+	(properties
+		[assign_ProjectKB_00204]
+		[assign_ProjectKB_00412]
+		[assign_ProjectKB_00420]
+		[assign_ProjectKB_00428]))
+
+([assign_ProjectKB_00204] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(y 0)
+	(name "toB")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [assign_ProjectKB_00205])
+	(x 250)
+	(width 250))
+
+([assign_ProjectKB_00205] of Property_List
+	(properties
+		[assign_ProjectKB_00307]
+		[assign_ProjectKB_00407]
+		[assign_ProjectKB_00408]
+		[assign_ProjectKB_00409]
+		[assign_ProjectKB_00410]
+		[assign_ProjectKB_00411]))
+
+([assign_ProjectKB_00206] of Widget
+	(height 240)
+	(is_hidden FALSE)
+	(y 0)
+	(name "toB")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [assign_ProjectKB_00207])
+	(x 250)
+	(width 250))
 
 ([assign_ProjectKB_00207] of Property_List
 	(properties
@@ -92,14 +136,14 @@
 	(name "ButtonDisplayed-Delete Selected Instances"))
 
 ([assign_ProjectKB_00214] of Widget
-	(name "subA")
-	(is_hidden FALSE)
-	(x 0)
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [assign_ProjectKB_00215]))
+	(name "subA")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [assign_ProjectKB_00215])
+	(x 0)
+	(width 250))
 
 ([assign_ProjectKB_00215] of Property_List
 	(properties
@@ -135,14 +179,14 @@
 	(name "ButtonDisplayed-Delete Selected Instances"))
 
 ([assign_ProjectKB_00222] of Widget
-	(name "superA")
-	(is_hidden FALSE)
-	(x 0)
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 120)
-	(property_list [assign_ProjectKB_00223]))
+	(name "superA")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [assign_ProjectKB_00223])
+	(x 0)
+	(width 250))
 
 ([assign_ProjectKB_00223] of Property_List
 	(properties
@@ -184,24 +228,137 @@
 	(name "OntovizTab.left_right")
 	(integer_value 313))
 
-([assign_ProjectKB_00232] of String
-	(string_value ":ANNOTATION-TEXT")
-	(name ":INSTANCE-ANNOTATION"))
+([assign_ProjectKB_00307] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
 
-([assign_ProjectKB_00233] of String
+([assign_ProjectKB_00407] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([assign_ProjectKB_00408] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([assign_ProjectKB_00409] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([assign_ProjectKB_00410] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([assign_ProjectKB_00411] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([assign_ProjectKB_00412] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(y 0)
+	(name "superA")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(property_list [assign_ProjectKB_00413])
+	(x 0)
+	(width 250))
+
+([assign_ProjectKB_00413] of Property_List
+	(properties
+		[assign_ProjectKB_00414]
+		[assign_ProjectKB_00415]
+		[assign_ProjectKB_00416]
+		[assign_ProjectKB_00417]
+		[assign_ProjectKB_00418]
+		[assign_ProjectKB_00419]))
+
+([assign_ProjectKB_00414] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([assign_ProjectKB_00415] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([assign_ProjectKB_00416] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([assign_ProjectKB_00417] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([assign_ProjectKB_00418] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([assign_ProjectKB_00419] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([assign_ProjectKB_00420] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(y 60)
+	(name "subA")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [assign_ProjectKB_00421])
+	(x 0)
+	(width 250))
+
+([assign_ProjectKB_00421] of Property_List
+	(properties
+		[assign_ProjectKB_00422]
+		[assign_ProjectKB_00423]
+		[assign_ProjectKB_00424]
+		[assign_ProjectKB_00425]
+		[assign_ProjectKB_00426]
+		[assign_ProjectKB_00427]))
+
+([assign_ProjectKB_00422] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([assign_ProjectKB_00423] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([assign_ProjectKB_00424] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([assign_ProjectKB_00425] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([assign_ProjectKB_00426] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([assign_ProjectKB_00427] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([assign_ProjectKB_00428] of Property_List
+	(name "layout properties"))
+
+([assign_ProjectKB_00429] of String
 	(string_value ":PAL-NAME")
 	(name ":PAL-CONSTRAINT"))
 
+([assign_ProjectKB_00430] of String
+	(string_value ":ANNOTATION-TEXT")
+	(name ":INSTANCE-ANNOTATION"))
+
 ([BROWSER_SLOT_NAMES] of Property_List
 	(properties
-		[assign_ProjectKB_00232]
-		[assign_ProjectKB_00233]))
+		[assign_ProjectKB_00429]
+		[assign_ProjectKB_00430]))
 
 ([CLSES_TAB] of Widget
+	(label "Classes")
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.ClsesTab")
-	(property_list [ProjectKB_8140_00007])
-	(label "Classes"))
+	(property_list [ProjectKB_8140_00007]))
 
 ([CREATION_TIMESTAMP_WIDGET] of Widget
 	(name ":CREATION-TIMESTAMP"))
@@ -210,20 +367,20 @@
 	(name ":CREATOR"))
 
 ([FORMS_TAB] of Widget
+	(label "Forms")
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.FormsTab")
-	(property_list [ProjectKB_8140_00037])
-	(label "Forms"))
+	(property_list [ProjectKB_8140_00037]))
 
 ([INSTANCE_ANNOTATION_FORM_WIDGET] of Widget
-	(name ":INSTANCE-ANNOTATION")
-	(is_hidden FALSE)
-	(x 0)
 	(height 476)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 603)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [INSTANCE_ANNOTATION_PROPERTY_LIST]))
+	(name ":INSTANCE-ANNOTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [INSTANCE_ANNOTATION_PROPERTY_LIST])
+	(x 0)
+	(width 603))
 
 ([INSTANCE_ANNOTATION_PROPERTY_LIST] of Property_List
 	(properties
@@ -233,10 +390,10 @@
 		[ANNOTATION_TEXT_WIDGET]))
 
 ([INSTANCES_TAB] of Widget
+	(label "Instances")
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab")
-	(property_list [ProjectKB_8140_00040])
-	(label "Instances"))
+	(property_list [ProjectKB_8140_00040]))
 
 ([LAYOUT_PROPERTIES] of Property_List
 	(name "layout properties")
@@ -250,14 +407,14 @@
 	(name "namespaces"))
 
 ([nontransitive_ProjectKB_00002] of Widget
-	(name ":THING")
-	(is_hidden FALSE)
-	(x 0)
 	(height 833)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 994)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [nontransitive_ProjectKB_00003]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [nontransitive_ProjectKB_00003])
+	(x 0)
+	(width 994))
 
 ([nontransitive_ProjectKB_00003] of Property_List)
 
@@ -295,32 +452,32 @@
 ([nontransitive_ProjectKB_00056] of Map)
 
 ([nontransitive_ProjectKB_00101] of Widget
-	(name ":THING")
-	(is_hidden FALSE)
-	(x 0)
 	(height 833)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 994)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [nontransitive_ProjectKB_00201]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [nontransitive_ProjectKB_00201])
+	(x 0)
+	(width 994))
 
 ([nontransitive_ProjectKB_00201] of Property_List)
 
 ([nontransitive_ProjectKB_00301] of Widget
-	(name ":THING")
-	(is_hidden FALSE)
-	(x 0)
 	(height 833)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 994)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [nontransitive_ProjectKB_00401]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [nontransitive_ProjectKB_00401])
+	(x 0)
+	(width 994))
 
 ([nontransitive_ProjectKB_00401] of Property_List)
 
 ([nontransitive_ProjectKB_00402] of Widget
-	(name "A")
 	(is_hidden FALSE)
+	(name "A")
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
 	(property_list [nontransitive_ProjectKB_00403]))
 
@@ -331,8 +488,8 @@
 		[nontransitive_ProjectKB_00490]))
 
 ([nontransitive_ProjectKB_00421] of Widget
-	(name "B")
 	(is_hidden FALSE)
+	(name "B")
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
 	(property_list [nontransitive_ProjectKB_00422]))
 
@@ -343,14 +500,14 @@
 		[nontransitive_ProjectKB_00558]))
 
 ([nontransitive_ProjectKB_00474] of Widget
-	(name "toA")
-	(is_hidden FALSE)
-	(x 0)
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [nontransitive_ProjectKB_00475]))
+	(name "toA")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [nontransitive_ProjectKB_00475])
+	(x 0)
+	(width 250))
 
 ([nontransitive_ProjectKB_00475] of Property_List
 	(properties
@@ -386,14 +543,14 @@
 	(name "ButtonDisplayed-Delete Selected Instances"))
 
 ([nontransitive_ProjectKB_00482] of Widget
-	(name "toB")
-	(is_hidden FALSE)
-	(x 0)
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 120)
-	(property_list [nontransitive_ProjectKB_00483]))
+	(name "toB")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [nontransitive_ProjectKB_00483])
+	(x 0)
+	(width 250))
 
 ([nontransitive_ProjectKB_00483] of Property_List
 	(properties
@@ -432,24 +589,24 @@
 	(name "layout properties"))
 
 ([nontransitive_ProjectKB_00501] of Widget
-	(name ":THING")
-	(is_hidden FALSE)
-	(x 0)
 	(height 833)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 994)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [nontransitive_ProjectKB_00601]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [nontransitive_ProjectKB_00601])
+	(x 0)
+	(width 994))
 
 ([nontransitive_ProjectKB_00542] of Widget
-	(name "toA")
-	(is_hidden FALSE)
-	(x 0)
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [nontransitive_ProjectKB_00543]))
+	(name "toA")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [nontransitive_ProjectKB_00543])
+	(x 0)
+	(width 250))
 
 ([nontransitive_ProjectKB_00543] of Property_List
 	(properties
@@ -485,14 +642,14 @@
 	(name "ButtonDisplayed-Delete Selected Instances"))
 
 ([nontransitive_ProjectKB_00550] of Widget
-	(name "toB")
-	(is_hidden FALSE)
-	(x 0)
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 120)
-	(property_list [nontransitive_ProjectKB_00551]))
+	(name "toB")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(property_list [nontransitive_ProjectKB_00551])
+	(x 0)
+	(width 250))
 
 ([nontransitive_ProjectKB_00551] of Property_List
 	(properties
@@ -533,46 +690,46 @@
 ([nontransitive_ProjectKB_00601] of Property_List)
 
 ([nontransitive_ProjectKB_00701] of Widget
-	(name ":THING")
-	(is_hidden FALSE)
-	(x 0)
 	(height 833)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 994)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [nontransitive_ProjectKB_00801]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [nontransitive_ProjectKB_00801])
+	(x 0)
+	(width 994))
 
 ([nontransitive_ProjectKB_00801] of Property_List)
 
 ([PAL_DESCRIPTION_WIDGET] of Widget
-	(name ":PAL-DESCRIPTION")
-	(is_hidden FALSE)
-	(x 275)
+	(label "Description")
 	(height 180)
-	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 0)
-	(label "Description"))
+	(name ":PAL-DESCRIPTION")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(x 275)
+	(width 250))
 
 ([PAL_FORM_WIDGET] of Widget
-	(name ":PAL-CONSTRAINT")
-	(is_hidden FALSE)
-	(x 0)
 	(height 476)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 603)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [PAL_PROPERTY_LIST]))
+	(name ":PAL-CONSTRAINT")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [PAL_PROPERTY_LIST])
+	(x 0)
+	(width 603))
 
 ([PAL_NAME_WIDGET] of Widget
-	(name ":PAL-NAME")
-	(is_hidden FALSE)
-	(x 0)
+	(label "Name")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 275)
+	(is_hidden FALSE)
 	(y 0)
-	(label "Name"))
+	(name ":PAL-NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(x 0)
+	(width 275))
 
 ([PAL_PROPERTY_LIST] of Property_List
 	(properties
@@ -582,34 +739,31 @@
 		[PAL_STATEMENT_WIDGET]))
 
 ([PAL_RANGE_WIDGET] of Widget
-	(name ":PAL-RANGE")
-	(is_hidden FALSE)
-	(x 275)
+	(label "Range")
 	(height 180)
-	(widget_class_name "edu.stanford.smi.protegex.widget.pal.constraint.PalRangeWidget")
-	(width 250)
+	(is_hidden FALSE)
 	(y 180)
-	(label "Range"))
+	(name ":PAL-RANGE")
+	(widget_class_name "edu.stanford.smi.protegex.widget.pal.constraint.PalRangeWidget")
+	(x 275)
+	(width 250))
 
 ([PAL_STATEMENT_WIDGET] of Widget
-	(name ":PAL-STATEMENT")
-	(is_hidden FALSE)
-	(x 0)
+	(label "Statement")
 	(height 300)
-	(widget_class_name "edu.stanford.smi.protegex.widget.pal.constraint.PalConstraintWidget")
-	(width 275)
+	(is_hidden FALSE)
 	(y 60)
-	(label "Statement"))
+	(name ":PAL-STATEMENT")
+	(widget_class_name "edu.stanford.smi.protegex.widget.pal.constraint.PalConstraintWidget")
+	(x 0)
+	(width 275))
 
 ([PROJECT] of Project
+	(options [ProjectKB_8140_00008])
+	(default_facet_metaclass ":STANDARD-FACET")
 	(next_frame_number 23)
-	(customized_instance_widgets
-		[STANDARD_SLOT_FORM_WIDGET]
-		[INSTANCE_ANNOTATION_FORM_WIDGET]
-		[STANDARD_FACET_FORM_WIDGET]
-		[STANDARD_CLASS_FORM_WIDGET]
-		[PAL_FORM_WIDGET])
-	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(default_slot_metaclass ":STANDARD-SLOT")
+	(property_map [nontransitive_ProjectKB_00056])
 	(tabs
 		[CLSES_TAB]
 		[SLOTS_TAB]
@@ -619,13 +773,16 @@
 		[ProjectKB_8140_00001]
 		[ProjectKB_8140_00003]
 		[ProjectKB_8140_00005])
-	(property_map [nontransitive_ProjectKB_00056])
-	(browser_slot_names [BROWSER_SLOT_NAMES])
-	(default_slot_metaclass ":STANDARD-SLOT")
-	(default_facet_metaclass ":STANDARD-FACET")
-	(sources [SOURCES])
 	(default_cls_metaclass ":STANDARD-CLASS")
-	(options [ProjectKB_8140_00008]))
+	(browser_slot_names [BROWSER_SLOT_NAMES])
+	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(sources [SOURCES])
+	(customized_instance_widgets
+		[PAL_FORM_WIDGET]
+		[STANDARD_FACET_FORM_WIDGET]
+		[STANDARD_CLASS_FORM_WIDGET]
+		[STANDARD_SLOT_FORM_WIDGET]
+		[INSTANCE_ANNOTATION_FORM_WIDGET]))
 
 ([ProjectKB_8140_00000] of String
 	(string_value "edu.stanford.smi.protegex.storage.rdf.configurable.RDFCBackend")
@@ -639,10 +796,10 @@
 ([ProjectKB_8140_00002] of Property_List)
 
 ([ProjectKB_8140_00003] of Widget
+	(label "Ontoviz")
 	(is_hidden FALSE)
 	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab")
-	(property_list [ProjectKB_8140_00004])
-	(label "Ontoviz"))
+	(property_list [ProjectKB_8140_00004]))
 
 ([ProjectKB_8140_00004] of Property_List
 	(properties [assign_ProjectKB_00231]))
@@ -661,11 +818,11 @@
 
 ([ProjectKB_8140_00008] of Options
 	(display_abstract_class_icon TRUE)
-	(is_readonly FALSE)
-	(confirm_on_remove FALSE)
-	(update_modification_slots FALSE)
+	(display_hidden_classes TRUE)
 	(display_multi_parent_class_icon TRUE)
-	(display_hidden_classes TRUE))
+	(update_modification_slots FALSE)
+	(confirm_on_remove FALSE)
+	(is_readonly FALSE))
 
 ([ProjectKB_8140_00009] of Property_List
 	(properties
@@ -801,14 +958,14 @@
 	(properties [nontransitive_ProjectKB_00050]))
 
 ([ProjectKB_8140_00038] of Widget
-	(name ":THING")
-	(is_hidden FALSE)
-	(x 0)
 	(height 833)
-	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
-	(width 994)
+	(is_hidden FALSE)
 	(y 0)
-	(property_list [ProjectKB_8140_00039]))
+	(name ":THING")
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(property_list [ProjectKB_8140_00039])
+	(x 0)
+	(width 994))
 
 ([ProjectKB_8140_00039] of Property_List)
 
@@ -837,16 +994,16 @@
 	(name "use_roundtrip"))
 
 ([QUERIES_TAB] of Widget
+	(label "Queries")
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protegex.queries_tab.QueriesTab")
-	(property_list [ProjectKB_8140_00041])
-	(label "Queries"))
+	(property_list [ProjectKB_8140_00041]))
 
 ([SLOTS_TAB] of Widget
+	(label "Slots")
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.SlotsTab")
-	(property_list [ProjectKB_8140_00025])
-	(label "Slots"))
+	(property_list [ProjectKB_8140_00025]))
 
 ([SOURCES] of Property_List
 	(properties
@@ -859,14 +1016,14 @@
 		[nontransitive_ProjectKB_00001]))
 
 ([STANDARD_CLASS_CONSTRAINTS_WIDGET] of Widget
-	(name ":SLOT-CONSTRAINTS")
-	(x 400)
+	(label "Constraints")
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.ConstraintsWidget")
-	(width 200)
 	(y 0)
+	(name ":SLOT-CONSTRAINTS")
+	(widget_class_name "edu.stanford.smi.protege.widget.ConstraintsWidget")
 	(property_list [ProjectKB_8140_00009])
-	(label "Constraints"))
+	(x 400)
+	(width 200))
 
 ([STANDARD_CLASS_DIRECT_INSTANCES_WIDGET] of Widget
 	(name ":DIRECT-INSTANCES"))
@@ -881,13 +1038,13 @@
 	(name ":DIRECT-TYPE"))
 
 ([STANDARD_CLASS_DOCUMENTATION_WIDGET] of Widget
-	(name ":DOCUMENTATION")
-	(x 200)
+	(label "Documentation")
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
-	(width 200)
 	(y 0)
-	(label "Documentation"))
+	(name ":DOCUMENTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
+	(x 200)
+	(width 200))
 
 ([STANDARD_CLASS_FORM_WIDGET] of Widget
 	(name ":STANDARD-CLASS")
@@ -895,32 +1052,32 @@
 	(property_list [STANDARD_CLASS_WIDGETS]))
 
 ([STANDARD_CLASS_NAME_WIDGET] of Widget
-	(name ":NAME")
-	(x 0)
+	(label "Name")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
-	(width 200)
 	(y 0)
-	(label "Name"))
+	(name ":NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
+	(x 0)
+	(width 200))
 
 ([STANDARD_CLASS_ROLE_WIDGET] of Widget
-	(name ":ROLE")
-	(x 0)
+	(label "Role")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.RoleWidget")
-	(width 200)
 	(y 60)
-	(label "Role"))
+	(name ":ROLE")
+	(widget_class_name "edu.stanford.smi.protege.widget.RoleWidget")
+	(x 0)
+	(width 200))
 
 ([STANDARD_CLASS_TEMPLATE_SLOTS_WIDGET] of Widget
-	(name ":DIRECT-TEMPLATE-SLOTS")
-	(x 0)
+	(label "Template Slots")
 	(height 150)
-	(widget_class_name "edu.stanford.smi.protege.widget.TemplateSlotsWidget")
-	(width 600)
 	(y 120)
+	(name ":DIRECT-TEMPLATE-SLOTS")
+	(widget_class_name "edu.stanford.smi.protege.widget.TemplateSlotsWidget")
 	(property_list [ProjectKB_8140_00016])
-	(label "Template Slots"))
+	(x 0)
+	(width 600))
 
 ([STANDARD_CLASS_WIDGETS] of Property_List
 	(name "class widget properties")
@@ -937,22 +1094,22 @@
 		[LAYOUT_PROPERTIES]))
 
 ([STANDARD_FACET_ASSOCIATED_SLOT_WIDGET] of Widget
-	(name ":ASSOCIATED-SLOT")
-	(x 0)
+	(label "Associated Slot")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
-	(width 200)
 	(y 60)
-	(label "Associated Slot"))
+	(name ":ASSOCIATED-SLOT")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(x 0)
+	(width 200))
 
 ([STANDARD_FACET_DOCUMENTATION_WIDGET] of Widget
-	(name ":DOCUMENTATION")
-	(x 200)
+	(label "Documentation")
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
-	(width 200)
 	(y 0)
-	(label "Documentation"))
+	(name ":DOCUMENTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
+	(x 200)
+	(width 200))
 
 ([STANDARD_FACET_FORM_WIDGET] of Widget
 	(name ":STANDARD-FACET")
@@ -960,13 +1117,13 @@
 	(property_list [STANDARD_FACET_WIDGETS]))
 
 ([STANDARD_FACET_NAME_WIDGET] of Widget
-	(name ":NAME")
-	(x 0)
+	(label "Name")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
-	(width 200)
 	(y 0)
-	(label "Name"))
+	(name ":NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
+	(x 0)
+	(width 200))
 
 ([STANDARD_FACET_WIDGETS] of Property_List
 	(name "facet widget properties")
@@ -982,26 +1139,26 @@
 	(name ":SLOT-CONSTRAINTS"))
 
 ([STANDARD_SLOT_DEFAULT_VALUE_WIDGET] of Widget
-	(name ":SLOT-DEFAULTS")
-	(x 400)
+	(label "Default")
 	(height 150)
-	(widget_class_name "edu.stanford.smi.protege.widget.DefaultValuesWidget")
-	(width 200)
 	(y 120)
+	(name ":SLOT-DEFAULTS")
+	(widget_class_name "edu.stanford.smi.protege.widget.DefaultValuesWidget")
 	(property_list [ProjectKB_8140_00031])
-	(label "Default"))
+	(x 400)
+	(width 200))
 
 ([STANDARD_SLOT_DIRECT_TYPE_WIDGET] of Widget
 	(name ":DIRECT-TYPE"))
 
 ([STANDARD_SLOT_DOCUMENTATION_WIDGET] of Widget
-	(name ":DOCUMENTATION")
-	(x 200)
+	(label "Documentation")
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
-	(width 200)
 	(y 0)
-	(label "Documentation"))
+	(name ":DOCUMENTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
+	(x 200)
+	(width 200))
 
 ([STANDARD_SLOT_FORM_WIDGET] of Widget
 	(name ":STANDARD-SLOT")
@@ -1009,57 +1166,57 @@
 	(property_list [STANDARD_SLOT_WIDGETS]))
 
 ([STANDARD_SLOT_INVERSE_WIDGET] of Widget
-	(name ":SLOT-INVERSE")
-	(x 200)
+	(label "Inverse Slot")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.InverseSlotWidget")
-	(width 200)
 	(y 210)
-	(label "Inverse Slot"))
+	(name ":SLOT-INVERSE")
+	(widget_class_name "edu.stanford.smi.protege.widget.InverseSlotWidget")
+	(x 200)
+	(width 200))
 
 ([STANDARD_SLOT_MAXIMUM_CARDINALITY_WIDGET] of Widget
-	(name ":SLOT-MAXIMUM-CARDINALITY")
-	(x 200)
 	(height 35)
+	(y 175)
+	(name ":SLOT-MAXIMUM-CARDINALITY")
 	(widget_class_name "edu.stanford.smi.protege.widget.MaximumCardinalityWidget")
-	(width 200)
-	(y 175))
+	(x 200)
+	(width 200))
 
 ([STANDARD_SLOT_MAXIMUM_VALUE_WIDGET] of Widget
-	(name ":SLOT-NUMERIC-MAXIMUM")
-	(x 100)
+	(label "Maximum")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.NumericMaximumWidget")
-	(width 100)
 	(y 210)
-	(label "Maximum"))
+	(name ":SLOT-NUMERIC-MAXIMUM")
+	(widget_class_name "edu.stanford.smi.protege.widget.NumericMaximumWidget")
+	(x 100)
+	(width 100))
 
 ([STANDARD_SLOT_MINIMUM_CARDINALITY_WIDGET] of Widget
-	(name ":SLOT-MINIMUM-CARDINALITY")
-	(x 200)
+	(label "Cardinality")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.MinimumCardinalityWidget")
-	(width 200)
 	(y 120)
-	(label "Cardinality"))
+	(name ":SLOT-MINIMUM-CARDINALITY")
+	(widget_class_name "edu.stanford.smi.protege.widget.MinimumCardinalityWidget")
+	(x 200)
+	(width 200))
 
 ([STANDARD_SLOT_MINIMUM_VALUE_WIDGET] of Widget
-	(name ":SLOT-NUMERIC-MINIMUM")
-	(x 0)
+	(label "Minimum")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.NumericMinimumWidget")
-	(width 100)
 	(y 210)
-	(label "Minimum"))
+	(name ":SLOT-NUMERIC-MINIMUM")
+	(widget_class_name "edu.stanford.smi.protege.widget.NumericMinimumWidget")
+	(x 0)
+	(width 100))
 
 ([STANDARD_SLOT_NAME_WIDGET] of Widget
-	(name ":NAME")
-	(x 0)
+	(label "Name")
 	(height 60)
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
-	(width 200)
 	(y 0)
-	(label "Name"))
+	(name ":NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
+	(x 0)
+	(width 200))
 
 ([STANDARD_SLOT_SUBSLOTS_WIDGET] of Widget
 	(name ":DIRECT-SUBSLOTS"))
@@ -1068,23 +1225,23 @@
 	(name ":DIRECT-SUPERSLOTS"))
 
 ([STANDARD_SLOT_TYPE_WIDGET] of Widget
-	(name ":SLOT-VALUE-TYPE")
-	(x 0)
+	(label "Value Type")
 	(height 150)
-	(widget_class_name "edu.stanford.smi.protege.widget.ValueTypeWidget")
-	(width 200)
 	(y 60)
-	(label "Value Type"))
+	(name ":SLOT-VALUE-TYPE")
+	(widget_class_name "edu.stanford.smi.protege.widget.ValueTypeWidget")
+	(x 0)
+	(width 200))
 
 ([STANDARD_SLOT_VALUES_WIDGET] of Widget
-	(name ":SLOT-VALUES")
-	(x 400)
+	(label "Template Values")
 	(height 120)
-	(widget_class_name "edu.stanford.smi.protege.widget.SlotValuesWidget")
-	(width 200)
 	(y 0)
+	(name ":SLOT-VALUES")
+	(widget_class_name "edu.stanford.smi.protege.widget.SlotValuesWidget")
 	(property_list [ProjectKB_8140_00026])
-	(label "Template Values"))
+	(x 400)
+	(width 200))
 
 ([STANDARD_SLOT_WIDGETS] of Property_List
 	(name "slot widget properties")

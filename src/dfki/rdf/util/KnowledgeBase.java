@@ -50,7 +50,16 @@ public Object put (dfki.rdf.util.THING obj)
 {
     String sURI = obj.getURI();
     if (sURI == null) throw new Error("tried to put an obj in the map w/o URI in dfki.rdf.util.KnowledgeBase . put");
-    return put (sURI, obj);
+    return put(sURI, obj);
+}
+
+//---------------------------------------------------------------------------
+Object put (Object obj)
+{
+    if (obj instanceof dfki.rdf.util.THING)
+        return put( (dfki.rdf.util.THING)obj );
+    else
+        throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . put; class should have been dfki.rdf.util.THING");
 }
 
 //---------------------------------------------------------------------------

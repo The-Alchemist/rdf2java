@@ -29,6 +29,7 @@
 	<a:inverseProperty rdf:resource="&assign;superA"/>
 </rdf:Property>
 <rdf:Property rdf:about="&assign;superA"
+	 a:maxCardinality="1"
 	 rdfs:label="superA">
 	<rdfs:range rdf:resource="&assign;A"/>
 	<rdfs:domain rdf:resource="&assign;A"/>
