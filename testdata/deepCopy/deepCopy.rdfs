@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY deepCopyExample 'http://dfki.org/rdf2java/deepCopyExample#'>
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://protege.stanford.edu/system#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:deepCopyExample="&deepCopyExample;"
+	 xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:rdfs="&rdfs;">
+<rdfs:Class rdf:about="&deepCopyExample;ComplexClass"
+	 rdfs:label="ComplexClass">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&deepCopyExample;ComplexClass2"
+	 rdfs:label="ComplexClass2">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&deepCopyExample;SimpleClass"
+	 rdfs:label="SimpleClass">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdf:Property rdf:about="&deepCopyExample;complexMultiValueSlot"
+	 rdfs:label="complexMultiValueSlot">
+	<rdfs:domain rdf:resource="&deepCopyExample;ComplexClass"/>
+	<rdfs:range rdf:resource="&deepCopyExample;ComplexClass"/>
+</rdf:Property>
+<rdf:Property rdf:about="&deepCopyExample;complexSingleValueSlot"
+	 a:maxCardinality="1"
+	 rdfs:label="complexSingleValueSlot">
+	<rdfs:range rdf:resource="&deepCopyExample;ComplexClass"/>
+	<rdfs:domain rdf:resource="&deepCopyExample;ComplexClass"/>
+</rdf:Property>
+<rdf:Property rdf:about="&deepCopyExample;complexSingleValueSlot2"
+	 a:maxCardinality="1"
+	 rdfs:label="complexSingleValueSlot2">
+	<rdfs:range rdf:resource="&deepCopyExample;ComplexClass2"/>
+	<rdfs:domain rdf:resource="&deepCopyExample;ComplexClass2"/>
+</rdf:Property>
+<rdf:Property rdf:about="&deepCopyExample;simpleMultiValueSlot"
+	 rdfs:label="simpleMultiValueSlot">
+	<rdfs:domain rdf:resource="&deepCopyExample;ComplexClass"/>
+	<rdfs:domain rdf:resource="&deepCopyExample;SimpleClass"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+<rdf:Property rdf:about="&deepCopyExample;simpleSingleValueSlot"
+	 a:maxCardinality="1"
+	 rdfs:label="simpleSingleValueSlot">
+	<rdfs:domain rdf:resource="&deepCopyExample;ComplexClass"/>
+	<rdfs:domain rdf:resource="&deepCopyExample;ComplexClass2"/>
+	<rdfs:domain rdf:resource="&deepCopyExample;SimpleClass"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+</rdf:RDF>

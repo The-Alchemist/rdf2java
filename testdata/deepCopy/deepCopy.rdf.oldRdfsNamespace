@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY deepCopyExample 'http://dfki.org/rdf2java/deepCopyExample#'>
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:deepCopyExample="&deepCopyExample;"
+	 xmlns:rdf="&rdf;"
+	 xmlns:rdfs="&rdfs;">
+<deepCopyExample:SimpleClass rdf:about="&deepCopyExample;deepCopy_00007"
+	 deepCopyExample:simpleMultiValueSlot="two"
+	 deepCopyExample:simpleSingleValueSlot="just a simple string"
+	 rdfs:label="just a simple string">
+	<deepCopyExample:simpleMultiValueSlot>one</deepCopyExample:simpleMultiValueSlot>
+	<deepCopyExample:simpleMultiValueSlot>three</deepCopyExample:simpleMultiValueSlot>
+</deepCopyExample:SimpleClass>
+<deepCopyExample:ComplexClass rdf:about="&deepCopyExample;deepCopy_00008"
+	 deepCopyExample:simpleSingleValueSlot="this is homer"
+	 rdfs:label="this is homer">
+	<deepCopyExample:complexSingleValueSlot rdf:resource="&deepCopyExample;deepCopy_00009"/>
+	<deepCopyExample:complexMultiValueSlot rdf:resource="&deepCopyExample;deepCopy_00010"/>
+	<deepCopyExample:complexMultiValueSlot rdf:resource="&deepCopyExample;deepCopy_00011"/>
+	<deepCopyExample:simpleMultiValueSlot>homer loves duff beer</deepCopyExample:simpleMultiValueSlot>
+	<deepCopyExample:simpleMultiValueSlot>homer loves his wife</deepCopyExample:simpleMultiValueSlot>
+</deepCopyExample:ComplexClass>
+<deepCopyExample:ComplexClass rdf:about="&deepCopyExample;deepCopy_00009"
+	 deepCopyExample:simpleMultiValueSlot="march loves homer"
+	 deepCopyExample:simpleSingleValueSlot="this is march"
+	 rdfs:label="this is march">
+	<deepCopyExample:complexSingleValueSlot rdf:resource="&deepCopyExample;deepCopy_00008"/>
+	<deepCopyExample:complexMultiValueSlot rdf:resource="&deepCopyExample;deepCopy_00010"/>
+	<deepCopyExample:complexMultiValueSlot rdf:resource="&deepCopyExample;deepCopy_00011"/>
+	<deepCopyExample:simpleMultiValueSlot>march loves her daughter</deepCopyExample:simpleMultiValueSlot>
+	<deepCopyExample:simpleMultiValueSlot>march loves her son</deepCopyExample:simpleMultiValueSlot>
+</deepCopyExample:ComplexClass>
+<deepCopyExample:ComplexClass rdf:about="&deepCopyExample;deepCopy_00010"
+	 deepCopyExample:simpleMultiValueSlot="bart is cool"
+	 deepCopyExample:simpleSingleValueSlot="this is bart"
+	 rdfs:label="this is bart"/>
+<deepCopyExample:ComplexClass rdf:about="&deepCopyExample;deepCopy_00011"
+	 deepCopyExample:simpleSingleValueSlot="this is lisa"
+	 rdfs:label="this is lisa">
+	<deepCopyExample:simpleMultiValueSlot>lisa likes school</deepCopyExample:simpleMultiValueSlot>
+	<deepCopyExample:simpleMultiValueSlot>lisa loves her family</deepCopyExample:simpleMultiValueSlot>
+</deepCopyExample:ComplexClass>
+</rdf:RDF>

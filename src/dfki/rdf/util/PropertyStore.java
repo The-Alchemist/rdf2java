@@ -30,7 +30,7 @@ public void removeProperty( String sPropertyName )
 }
 
 //------------------------------------------------------------------------------
-public Set getProperties()
+public Set/*PropertyInfo*/ getProperties()
 {
     return m_mapProperty2Info.keySet();
 }

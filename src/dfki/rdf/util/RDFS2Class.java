@@ -45,6 +45,14 @@ import org.w3c.rdf.util.RDFFactory;
 public class RDFS2Class
 {
 //----------------------------------------------------------------------------------------------------
+static String RDFS_NAMESPACE          = "http://www.w3.org/TR/1999/PR-rdf-schema-19990303#";
+static String RDF_NAMESPACE           = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+static boolean PRINTOUT_RDFS_URIS     = false;
+
+static String PROTEGE_NS              = "http://protege.stanford.edu/system#";
+static boolean PRINTOUT_PROTEGE_URIS  = false;
+
+//----------------------------------------------------------------------------------------------------
 String m_sRDFSFile;
 Map m_mapNamespaceToPackage;
 String m_sClsPath;
@@ -60,15 +68,12 @@ boolean m_bInsertIncrementalInfo;
 boolean m_bIncrementalGeneration;
 boolean m_bGenerateMethodsAboveUserMethods;
 
-RDF.Syntax m_rdfURIs = RDF.syntax();
-RDFS.URIs m_rdfsURIs = RDFS.getURIs();
 RDFFactory m_rdfFactory;
 RDFParser m_rdfParser;
 NodeFactory m_nodeFactory;
 Resource m_resRDFSClass;
 Resource m_resRDFSResource;
 Resource m_resRDFSLiteral;
-Resource m_resRDFSResCls;
 Resource m_resRDFSPredSubClassOf;
 Resource m_resRDFSPredDomain;
 Resource m_resRDFSPredRange;
@@ -85,14 +90,258 @@ Resource m_resProtegePredRole;
 LinkedList m_lstFormerFile;  // list of strings (lines) of the former java-file
 boolean m_bIncrementalGenerationForActualFile;
 
-protected static final String PROTEGE_NS = "http://protege.stanford.edu/system#";
-
 final static String LIST_CLASS = "java.util.LinkedList";
 final static String SET_CLASS  = "java.util.HashSet";
 
 private static int m_iNrMessages = 0;
 private static int m_iNrWarnings = 0;
 private static int m_iNrErrors = 0;
+
+
+//----------------------------------------------------------------------------------------------------
+/** Usage (the given String <code>args</code> should be like everything after "RDFS2Class"):<br>
+ * <code>
+ * RDFS2Class [options] &lt;file.rdfs&gt; &lt;outputSrcDir&gt; {&lt;namespace&gt; &lt;package&gt;}+<br>
+ * options:<br>
+ *           -q: quiet operation, no output<br>
+ *           -s: include toString()-stuff in generated java-files<br>
+ *           -S: (used instead of -s) include recursive toString()-stuff in generated java-files<br>
+ *           -o: retain ordering of triples (usage of rdf:Seq in rdf-file)
+ *               by using arrays instead of sets<br>
+ *           -I: insert stuff for incremental file-generation
+ *               (needed for potential later usage of -i)<br>
+ *           -i: incremental generation of java-files, i.e. user added slots
+ *               are kept in the re-generated java-files
+ *               (this option includes already -I)
+ * </code>
+ */
+public static void main (String[] args)
+{
+   try {
+       boolean bQuiet = false;
+       boolean bIncludeToStringStuff = false;
+       boolean bIncludeToStringStuffRecursive = false;
+       boolean bRetainOrdering = false;
+       boolean bInsertIncrementalInfo = false;
+       boolean bIncrementalGeneration = false;
+
+       int iArg = 0;
+       while (args[iArg].startsWith("-"))
+       {
+           String sFlags = args[iArg].substring(1);
+           for (int i = 0; i < sFlags.length(); i++)
+           {
+               if (sFlags.charAt(i) == 'q')
+                   bQuiet = true;
+               else if (sFlags.charAt(i) == 's')
+                   bIncludeToStringStuff = true;
+               else if (sFlags.charAt(i) == 'S')
+                   bIncludeToStringStuffRecursive = true;
+               else if (sFlags.charAt(i) == 'o')
+                   bRetainOrdering = true;
+               else if (sFlags.charAt(i) == 'I')
+                   bInsertIncrementalInfo = true;
+               else if (sFlags.charAt(i) == 'i')
+                   bIncrementalGeneration = true;
+               else
+                   throw new Exception("RDFS2Class: Option '"+sFlags.charAt(i)+"' unknown.");
+           }
+           iArg++;
+       }
+       
+       final String CHANGE_RDFS_NS = "rdfs=";
+       if( args[iArg].toLowerCase().startsWith( CHANGE_RDFS_NS ) )
+       {
+           RDFS_NAMESPACE = args[ iArg++ ].substring( CHANGE_RDFS_NS.length() );
+           System.out.println( "RDFS namespace: " + RDFS_NAMESPACE );
+       }
+
+       final String CHANGE_RDF_NS = "rdf=";
+       if( args[iArg].toLowerCase().startsWith( CHANGE_RDF_NS ) )
+       {
+           RDF_NAMESPACE = args[ iArg++ ].substring( CHANGE_RDF_NS.length() );
+           System.out.println( "RDF namespace : " + RDF_NAMESPACE );
+       }
+
+       final String CHANGE_PROTEGE_NS = "protege=";
+       if( args[iArg].toLowerCase().startsWith( CHANGE_PROTEGE_NS ) )
+       {
+           PROTEGE_NS = args[ iArg++ ].substring( CHANGE_PROTEGE_NS.length() );
+           System.out.println( "Protege namespace: " + PROTEGE_NS );
+       }
+
+       String sRDFSFile = null;
+       String sOutputSrcDir = null;
+       if (args.length - iArg > 0)
+           sRDFSFile = args[iArg++];
+       else
+           throw new Exception("RDFS2Class: Missing parameter: RDFS-File.");
+
+       if (args.length - iArg > 0)
+           sOutputSrcDir = args[iArg++];
+       else
+           throw new Exception("RDFS2Class: Missing parameter: output directory.");
+
+       if (args.length - iArg <= 0)
+           throw new Exception("RDFS2Class: Missing mapping parameters.");
+       if ( ((args.length - iArg) % 2) != 0 )
+           throw new Exception("RDFS2Class: Mapping parameters not correct.");
+
+       if (!bQuiet)
+       {
+           message("sRDFSFile     : "+sRDFSFile);
+           message("sOutputSrcDir : "+sOutputSrcDir);
+           message("maping:");
+       }
+       HashMap mapNS2Pkg = new HashMap();
+       while (iArg < args.length)
+       {
+           String sNamespace = args[iArg++];
+           String sPackage   = args[iArg++];
+           if (!bQuiet)
+               message("  " + sNamespace + " -> " + sPackage);
+           mapNS2Pkg.put(sNamespace, sPackage);
+       }
+       if (!bQuiet)
+           message("");
+
+       RDFS2Class gen = new RDFS2Class(sRDFSFile, sOutputSrcDir, mapNS2Pkg);
+       gen.setQuiet(bQuiet);
+       gen.setIncludeToStringStuff(bIncludeToStringStuff);
+       gen.setIncludeToStringStuffRecursive(bIncludeToStringStuffRecursive);
+       gen.setRetainOrdering(bRetainOrdering);
+       gen.setInsertIncrementalInfo(bInsertIncrementalInfo);
+       gen.setIncrementalGeneration(bIncrementalGeneration);
+       gen.createClasses();
+   }
+   catch (Exception ex)
+   {
+       String sMsg = ex.getMessage();
+       if (sMsg != null && sMsg.startsWith("RDFS2Class:"))
+       {
+           System.out.println( "\n" + sMsg + "\nusage: RDFS2Class [options] <file.rdfs> <outputSrcDir> {<namespace> <package>}+\n" +
+                               "options:  -q: quiet operation, no output\n" +
+                               "          -s: include toString()-stuff in generated java-files\n" +
+                               "          -S: include recursive toString()-stuff in generated java-files\n" +
+                               "              (used instead of -s)\n" +
+                               "          -o: retain ordering of triples (usage of rdf:Seq in rdf-file)\n" +
+                               "              by using arrays instead of sets\n" +
+                               "          -I: insert stuff for incremental file-generation\n" +
+                               "              (needed for potential later usage of -i)\n" +
+                               "              ATTENTION: this option completely re-creates java-files and erases every\n" +
+                               "              user-defined methods and slots, maybe you'd better use \"-i\" ? !\n" +
+                               "          -i: incremental generation of java-files, i.e. user added slots\n" +
+                               "              are kept in the re-generated java-files\n" +
+                               "          rdfs=<namespace>    : set different RDFS namespace\n" +
+                               "          rdf=<namespace>     : set different RDF namespace\n" +
+                               "          protege=<namespace> : set different Protege namespace\n" );
+          System.exit(0);
+       }
+       else
+           debug().error(ex);
+   }
+
+   // print out #warnings and #errors
+   System.out.println();
+   if( m_iNrWarnings > 0 )
+       System.out.println( "" + m_iNrWarnings + " warnings" );
+   if( m_iNrErrors > 0 )
+       System.out.println( "" + m_iNrErrors + " errors" );
+   if( m_iNrWarnings <= 0 && m_iNrErrors <= 0 )
+       System.out.println( "ok (no warnings, no errors)" );
+   System.out.println();
+
+   System.exit(0);
+}
+
+//----------------------------------------------------------------------------------------------------
+/** Constructs a new RDFS2Class generator.
+  * <br>
+  * Start the generation using the {@link #createClasses createClasses} method.
+  * @see #setRetainOrdering
+  * @see #setIncludeToStringStuff
+  * @see #setQuiet
+  */
+public RDFS2Class (String sRDFSFile, String sClsPath, Map mapNamespaceToPackage)   throws Exception
+{
+    m_sRDFSFile = sRDFSFile;
+    m_mapNamespaceToPackage = mapNamespaceToPackage;
+    m_sClsPath = sClsPath;
+
+    m_rdfFactory = RDF.factory();
+    m_rdfParser = m_rdfFactory.createParser();
+    m_nodeFactory = m_rdfFactory.getNodeFactory();
+    
+    initRdfsUris();
+    if( PRINTOUT_RDFS_URIS ) printoutRdfsUris();
+
+    initProtegeUris();
+    if( PRINTOUT_PROTEGE_URIS ) printoutProtegeUris();
+
+    setRetainOrdering(false);
+    setIncludeToStringStuff(false);
+    setIncludeToStringStuffRecursive(false);
+    setQuiet(false);
+    setInsertIncrementalInfo(false);
+    setIncrementalGeneration(false);
+    setGenerateMethodsAboveUserMethods(false);
+
+    m_bIncrementalGenerationForActualFile = false;
+}
+
+//----------------------------------------------------------------------------------------------------
+protected void initRdfsUris()   throws Exception
+{
+    m_resRDFSClass          = m_nodeFactory.createResource( RDFS_NAMESPACE + "Class"        );
+    m_resRDFSResource       = m_nodeFactory.createResource( RDFS_NAMESPACE + "Resource"     );
+    m_resRDFSLiteral        = m_nodeFactory.createResource( RDFS_NAMESPACE + "Literal"      );
+    
+    m_resRDFSPredSubClassOf = m_nodeFactory.createResource( RDFS_NAMESPACE + "subClassOf"   );
+    m_resRDFSPredDomain     = m_nodeFactory.createResource( RDFS_NAMESPACE + "domain"       );
+    m_resRDFSPredRange      = m_nodeFactory.createResource( RDFS_NAMESPACE + "range"        );
+    
+    m_resRDFPredType        = m_nodeFactory.createResource( RDF_NAMESPACE  + "type"         );
+    m_resRDFResProperty     = m_nodeFactory.createResource( RDF_NAMESPACE  + "Property"     );
+}
+
+//----------------------------------------------------------------------------------------------------
+protected void printoutRdfsUris()
+{
+    System.out.println( "RDF/S URIs are as follows:\n" );
+    System.out.println( "m_resRDFSClass          = \"" + m_resRDFSClass          + "\";" );
+    System.out.println( "m_resRDFSResource       = \"" + m_resRDFSResource       + "\";" );
+    System.out.println( "m_resRDFSLiteral        = \"" + m_resRDFSLiteral        + "\";" );
+    System.out.println( "m_resRDFSPredSubClassOf = \"" + m_resRDFSPredSubClassOf + "\";" );
+    System.out.println( "m_resRDFSPredDomain     = \"" + m_resRDFSPredDomain     + "\";" );
+    System.out.println( "m_resRDFSPredRange      = \"" + m_resRDFSPredRange      + "\";" );
+    System.out.println( "m_resRDFPredType        = \"" + m_resRDFPredType        + "\";" );
+    System.out.println( "m_resRDFResProperty     = \"" + m_resRDFResProperty     + "\";" );
+    System.out.println();
+}
+
+//----------------------------------------------------------------------------------------------------
+protected void initProtegeUris()   throws Exception
+{
+    m_resProtegeMaxCardinality = m_nodeFactory.createResource( PROTEGE_NS, "maxCardinality" );
+    m_resProtegeAllowedClasses = m_nodeFactory.createResource( PROTEGE_NS, "allowedClasses" );
+    m_resProtegeAllowedSymbols = m_nodeFactory.createResource( PROTEGE_NS, "allowedValues"  );
+    m_resProtegeDefaultValues  = m_nodeFactory.createResource( PROTEGE_NS, "defaultValues"  );
+    m_resProtegePredRole       = m_nodeFactory.createResource( PROTEGE_NS, "role"           );
+    m_resProtegeRange          = m_nodeFactory.createResource( PROTEGE_NS, "range"          );
+}
+
+//----------------------------------------------------------------------------------------------------
+protected void printoutProtegeUris()
+{
+    System.out.println( "Protege URIs are as follows:\n" );
+    System.out.println( "m_resProtegeMaxCardinality = \"" + m_resProtegeMaxCardinality  + "\";" );
+    System.out.println( "m_resProtegeAllowedClasses = \"" + m_resProtegeAllowedClasses  + "\";" );
+    System.out.println( "m_resProtegeAllowedSymbols = \"" + m_resProtegeAllowedSymbols  + "\";" );
+    System.out.println( "m_resProtegeDefaultValues  = \"" + m_resProtegeDefaultValues   + "\";" );
+    System.out.println( "m_resProtegePredRole       = \"" + m_resProtegePredRole        + "\";" );
+    System.out.println( "m_resProtegeRange          = \"" + m_resProtegeRange           + "\";" );
+    System.out.println();
+}
 
 //----------------------------------------------------------------------------------------------------
 private static void message( String s )
@@ -113,50 +362,6 @@ private static void error( String s )
 {
     System.out.println( "ERROR: " + s );
     m_iNrErrors++;
-}
-
-//----------------------------------------------------------------------------------------------------
-/** Constructs a new RDFS2Class generator.
-  * <br>
-  * Start the generation using the {@link #createClasses createClasses} method.
-  * @see #setRetainOrdering
-  * @see #setIncludeToStringStuff
-  * @see #setQuiet
-  */
-public RDFS2Class (String sRDFSFile, String sClsPath, Map mapNamespaceToPackage)   throws Exception
-{
-    m_sRDFSFile = sRDFSFile;
-    m_mapNamespaceToPackage = mapNamespaceToPackage;
-    m_sClsPath = sClsPath;
-
-    m_rdfFactory = RDF.factory();
-    m_rdfParser = m_rdfFactory.createParser();
-    m_nodeFactory = m_rdfFactory.getNodeFactory();
-    m_resRDFSClass = m_nodeFactory.createResource(m_rdfsURIs.namespace(), "Class");         //FIXME!!!
-    m_resRDFSResource = m_nodeFactory.createResource(m_rdfsURIs.namespace(), "Resource");   //FIXME!!!
-    m_resRDFSLiteral = m_nodeFactory.createResource(m_rdfsURIs.literal());
-    m_resRDFSResCls = m_nodeFactory.createResource(m_rdfsURIs._class());
-    m_resRDFSPredSubClassOf = m_nodeFactory.createResource(m_rdfsURIs.subClassOf());
-    m_resRDFSPredDomain = m_nodeFactory.createResource(m_rdfsURIs.domain());
-    m_resRDFSPredRange = m_nodeFactory.createResource(m_rdfsURIs.range());
-    m_resRDFPredType = m_rdfURIs.type();
-    m_resRDFResProperty = m_rdfURIs.property();
-    m_resProtegeMaxCardinality = m_nodeFactory.createResource(PROTEGE_NS, "maxCardinality");
-    m_resProtegeAllowedClasses = m_nodeFactory.createResource(PROTEGE_NS, "allowedClasses");
-    m_resProtegeAllowedSymbols = m_nodeFactory.createResource(PROTEGE_NS, "allowedValues");
-    m_resProtegeDefaultValues  = m_nodeFactory.createResource(PROTEGE_NS, "defaultValues");
-    m_resProtegePredRole       = m_nodeFactory.createResource(PROTEGE_NS, "role");
-    m_resProtegeRange = m_nodeFactory.createResource(PROTEGE_NS, "range");
-
-    setRetainOrdering(false);
-    setIncludeToStringStuff(false);
-    setIncludeToStringStuffRecursive(false);
-    setQuiet(false);
-    setInsertIncrementalInfo(false);
-    setIncrementalGeneration(false);
-    setGenerateMethodsAboveUserMethods(false);
-
-    m_bIncrementalGenerationForActualFile = false;
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -220,138 +425,6 @@ public void setGenerateMethodsAboveUserMethods (boolean bGenerateMethodsAboveUse
     m_bGenerateMethodsAboveUserMethods = bGenerateMethodsAboveUserMethods;
 }
 
-//----------------------------------------------------------------------------------------------------
-/** Usage (the given String <code>args</code> should be like everything after "RDFS2Class"):<br>
-  * <code>
-  * RDFS2Class [options] &lt;file.rdfs&gt; &lt;outputSrcDir&gt; {&lt;namespace&gt; &lt;package&gt;}+<br>
-  * options:<br>
-  *           -q: quiet operation, no output<br>
-  *           -s: include toString()-stuff in generated java-files<br>
-  *           -S: (used instead of -s) include recursive toString()-stuff in generated java-files<br>
-  *           -o: retain ordering of triples (usage of rdf:Seq in rdf-file)
-  *               by using arrays instead of sets<br>
-  *           -I: insert stuff for incremental file-generation
-  *               (needed for potential later usage of -i)<br>
-  *           -i: incremental generation of java-files, i.e. user added slots
-  *               are kept in the re-generated java-files
-  *               (this option includes already -I)
-  * </code>
-  */
-public static void main (String[] args)
-{
-    try {
-        boolean bQuiet = false;
-        boolean bIncludeToStringStuff = false;
-        boolean bIncludeToStringStuffRecursive = false;
-        boolean bRetainOrdering = false;
-        boolean bInsertIncrementalInfo = false;
-        boolean bIncrementalGeneration = false;
-
-        int iArg = 0;
-        while (args[iArg].startsWith("-"))
-        {
-            String sFlags = args[iArg].substring(1);
-            for (int i = 0; i < sFlags.length(); i++)
-            {
-                if (sFlags.charAt(i) == 'q')
-                    bQuiet = true;
-                else if (sFlags.charAt(i) == 's')
-                    bIncludeToStringStuff = true;
-                else if (sFlags.charAt(i) == 'S')
-                    bIncludeToStringStuffRecursive = true;
-                else if (sFlags.charAt(i) == 'o')
-                    bRetainOrdering = true;
-                else if (sFlags.charAt(i) == 'I')
-                    bInsertIncrementalInfo = true;
-                else if (sFlags.charAt(i) == 'i')
-                    bIncrementalGeneration = true;
-                else
-                    throw new Exception("RDFS2Class: Option '"+sFlags.charAt(i)+"' unknown.");
-            }
-            iArg++;
-        }
-
-        String sRDFSFile = null;
-        String sOutputSrcDir = null;
-        if (args.length - iArg > 0)
-            sRDFSFile = args[iArg++];
-        else
-            throw new Exception("RDFS2Class: Missing parameter: RDFS-File.");
-
-        if (args.length - iArg > 0)
-            sOutputSrcDir = args[iArg++];
-        else
-            throw new Exception("RDFS2Class: Missing parameter: output directory.");
-
-        if (args.length - iArg <= 0)
-            throw new Exception("RDFS2Class: Missing mapping parameters.");
-        if ( ((args.length - iArg) % 2) != 0 )
-            throw new Exception("RDFS2Class: Mapping parameters not correct.");
-
-        if (!bQuiet)
-        {
-            message("sRDFSFile     : "+sRDFSFile);
-            message("sOutputSrcDir : "+sOutputSrcDir);
-            message("maping:");
-        }
-        HashMap mapNS2Pkg = new HashMap();
-        while (iArg < args.length)
-        {
-            String sNamespace = args[iArg++];
-            String sPackage   = args[iArg++];
-            if (!bQuiet)
-                message("  " + sNamespace + " -> " + sPackage);
-            mapNS2Pkg.put(sNamespace, sPackage);
-        }
-        if (!bQuiet)
-            message("");
-
-        RDFS2Class gen = new RDFS2Class(sRDFSFile, sOutputSrcDir, mapNS2Pkg);
-        gen.setQuiet(bQuiet);
-        gen.setIncludeToStringStuff(bIncludeToStringStuff);
-        gen.setIncludeToStringStuffRecursive(bIncludeToStringStuffRecursive);
-        gen.setRetainOrdering(bRetainOrdering);
-        gen.setInsertIncrementalInfo(bInsertIncrementalInfo);
-        gen.setIncrementalGeneration(bIncrementalGeneration);
-        gen.createClasses();
-    }
-    catch (Exception ex)
-    {
-        String sMsg = ex.getMessage();
-        if (sMsg != null && sMsg.startsWith("RDFS2Class:"))
-        {
-            System.out.println( "\n" + sMsg + "\nusage: RDFS2Class [options] <file.rdfs> <outputSrcDir> {<namespace> <package>}+\n" +
-                                "options:  -q: quiet operation, no output\n" +
-                                "          -s: include toString()-stuff in generated java-files\n" +
-                                "          -S: include recursive toString()-stuff in generated java-files\n" +
-                                "              (used instead of -s)\n" +
-                                "          -o: retain ordering of triples (usage of rdf:Seq in rdf-file)\n" +
-                                "              by using arrays instead of sets\n" +
-                                "          -I: insert stuff for incremental file-generation\n" +
-                                "              (needed for potential later usage of -i)\n" +
-                                "              ATTENTION: this option completely re-creates java-files and erases every\n" +
-                                "              user-defined methods and slots, maybe you'd better use \"-i\" ? !\n" +
-                                "          -i: incremental generation of java-files, i.e. user added slots\n" +
-                                "              are kept in the re-generated java-files\n" +
-                                "              (this option includes already -I)" );
-           System.exit(0);
-        }
-        else
-            debug().error(ex);
-    }
-
-    // print out #warnings and #errors
-    System.out.println();
-    if( m_iNrWarnings > 0 )
-        System.out.println( "" + m_iNrWarnings + " warnings" );
-    if( m_iNrErrors > 0 )
-        System.out.println( "" + m_iNrErrors + " errors" );
-    if( m_iNrWarnings <= 0 && m_iNrErrors <= 0 )
-        System.out.println( "ok (no warnings, no errors)" );
-    System.out.println();
-
-    System.exit(0);
-}
 
 //----------------------------------------------------------------------------------------------------
 /** Starts the generation of the class files.
@@ -403,7 +476,7 @@ protected void examineProperties ()   throws Exception
 //----------------------------------------------------------------------------------------------------
 protected void createTheClasses ()   throws Exception
 {
-    Model modelClasses = m_modelRDFS.find(null, m_resRDFPredType, m_resRDFSResCls);
+    Model modelClasses = m_modelRDFS.find(null, m_resRDFPredType, m_resRDFSClass);
     Enumeration enumClasses = modelClasses.elements();
     while (enumClasses.hasMoreElements())
     {
