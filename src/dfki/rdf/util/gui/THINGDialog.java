@@ -17,8 +17,8 @@ import dfki.rdf.util.THING;
 
 /**
  * <p>Title: THINGDialog</p>
- * <p>Description: the Dialog object returnd by THINGDialogFactory<b>
- *  *  please note that an instance of this object can only used once if you will
+ * <p>Description: the Dialog object returned by THINGDialogFactory<b>
+ *  *  please note that an instance of this object can only used once if you want to
  *  rely on the modified THING, Class or if the dialog has been cancelled (== dialogObject is <code>null</code>) </b></p>
  * <p>Copyright: Copyright (c) 2002</p>
  * <p>Company: DFKI </p>
@@ -40,9 +40,9 @@ private int m_result = JOptionPane.CANCEL_OPTION;
 //------------------------------------------------------------------------------
 /**
  * @param p_thing
+ * @param p_knowledgeBase
  * @param p_owner
- * @param p_browser a browser which is used to show URLs
- * @see THINGDialogFactory.TDBrowser
+ * @param p_thingDHelper
  */
 public THINGDialog (THING p_thing, KnowledgeBase p_knowledgeBase, Frame p_owner, THINGDialogFactory.THINGDialogHelper p_thingDHelper)
 {
@@ -51,12 +51,12 @@ public THINGDialog (THING p_thing, KnowledgeBase p_knowledgeBase, Frame p_owner,
     
 }
 
+
 /**
- *
  * @param p_thing
+ * @param p_knowledgeBase
  * @param p_owner
- * @param p_browser a browser which is used to show URLs
- * @see THINGDialogFactory.TDBrowser
+ * @param p_thingDHelper
  */
 public THINGDialog (THING p_thing, KnowledgeBase p_knowledgeBase, Dialog p_owner, THINGDialogFactory.THINGDialogHelper p_thingDHelper)
 {
@@ -64,8 +64,10 @@ public THINGDialog (THING p_thing, KnowledgeBase p_knowledgeBase, Dialog p_owner
     m_thingDHelper = p_thingDHelper;
 }
 
+
 /**
  * @param p_thing
+ * @param p_knowledgeBase
  * @param p_owner
  */
 public THINGDialog (THING p_thing, KnowledgeBase p_knowledgeBase, Frame p_owner)
@@ -74,9 +76,10 @@ public THINGDialog (THING p_thing, KnowledgeBase p_knowledgeBase, Frame p_owner)
     initialize(p_knowledgeBase);
 }
 
+
 /**
- *
  * @param p_thing
+ * @param p_knowledgeBase
  * @param p_owner
  */
 public THINGDialog (THING p_thing, KnowledgeBase p_knowledgeBase, Dialog p_owner)
@@ -199,6 +202,10 @@ public void browse2Url(String p_url)
     
 }
 
+/**
+ * delivers the THINGDialogHelper of this THINGDialog instance
+ * @return
+ */
 public THINGDialogFactory.THINGDialogHelper getTHINGDialogHelper()
 {
     return m_thingDHelper;

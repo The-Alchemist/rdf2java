@@ -141,8 +141,8 @@ public class IconLoader
     * delivers the ImageIcon associated with the given URI resp. string<br>
      * if no icon is found, the iconPath is tested if it is a URI with a local name, then the local name is taken as<br>
      * see also class documentation
-   * @param sURI URI or string 
-    * @return
+    * @param sURI URI or string 
+    * @return the respective icon
     * @see #ICON_UNKNOWN
     * @see #ICON_CLASS
     * @see #ICON_RDFRESOURCE

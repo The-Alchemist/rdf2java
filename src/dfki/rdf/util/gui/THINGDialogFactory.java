@@ -3,9 +3,6 @@
  */
 package dfki.rdf.util.gui;
 
-/**
- * @author maus
- */
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -46,13 +43,10 @@ import org.w3c.rdf.model.Resource;
  * <p>Title: </p>
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
- * <p>Company: </p>
+ * <p>Company: DFKI GmbH</p>
  * @author Heiko Maus
  * @version 1.0
- */
 
-
-/**
  * Usage<br>
 *<br><code>
 *    MyTestClass implements THINGDialogHelper<br>
@@ -110,11 +104,6 @@ import org.w3c.rdf.model.Resource;
  */
 public class THINGDialogFactory
 {
-// protected static HashMap m_mapPropertyName2AllowedInstances;
-// protected static ResourceObjectNode.ResourceObjectNodeCellRenderer m_cellRenderer;
-
- protected static final int DEBUG_MODE = 0;
- protected static final int USER_MODE = 1;
 
  protected static int MODIFY_BUTTON_WIDTH = 300;
  protected static int MODIFY_BUTTON_HEIGHT = 100;
@@ -173,10 +162,14 @@ public static void addIcons(String p_iconResourceBundleClass)
 }
 
 
+
 /**
- *
  * @param p_res for convenience it's RDFResource, but should be THING to be shown
- * @param p_owner
+ * @param p_knowledgeBase
+ * @param p_thingDHelper
+ * @param p_owner type has to be JFrame or JDialog, or  <code>null</code>
+ * @see THINGDialogFactory.THINGDialogHelper
+ * @see THINGDialog 
  */
 public static void showViewDialog(RDFResource p_res, KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
 {
@@ -200,18 +193,17 @@ public static void showViewDialog(RDFResource p_res, KnowledgeBase p_knowledgeBa
 
 }
 
- /**
-  *
-  * @param p_thing
-  * @param p_owner type has to be Frame or Dialog
-  * @return
-  */
-public static THINGDialog createViewDialog(THING p_thing, KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
-{
-   return createViewDialog(DEBUG_MODE, p_thing, p_knowledgeBase, p_thingDHelper, p_owner);
-}
 
-public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBase p_knowledgeBase, THINGDialogHelper p_thingDHelper, Window p_owner)
+/**
+ * @param p_thing
+ * @param p_knowledgeBase
+ * @param p_thingDHelper
+ * @param p_owner type has to be JFrame or JDialog, or <code>null</code>
+ * @return
+ * @see THINGDialogFactory.THINGDialogHelper
+ * @see THINGDialog 
+ */
+public static THINGDialog createViewDialog(THING p_thing, KnowledgeBase p_knowledgeBase, THINGDialogHelper p_thingDHelper, Window p_owner)
 {
    THINGDialog dialog;
    if (p_owner instanceof Dialog)
@@ -219,14 +211,11 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
    else
     dialog = new THINGDialog(p_thing,p_knowledgeBase, (Frame)p_owner, p_thingDHelper);
 
-   if(mode==DEBUG_MODE)
-        dialog.setTitle("View " + p_thing.getClass().getName());
-   else
-        dialog.setTitle("View " + getString(p_thing.getClass().getName()));
+   dialog.setTitle("View " + p_thing.getClass().getName());
 
    try
    {
-    dialog.getContentPane().add(getMainPane(mode, p_thing,false,true,dialog), BorderLayout.CENTER);
+    dialog.getContentPane().add(getMainPane(p_thing,false,true,dialog), BorderLayout.CENTER);
    }
    catch (Exception e)
    {
@@ -239,18 +228,17 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
    return dialog;
 }
 
-/**
- *
- * @param p_thing
-  * @param p_owner type has to be JFrame or JDialog
- * @return
- */
- public static THINGDialog createModifyDialog(THING p_thing, KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
- {
-    return createModifyDialog(DEBUG_MODE, p_thing,  p_knowledgeBase,p_thingDHelper, p_owner);
- }
 
- public static THINGDialog createModifyDialog(int mode, THING p_thing, KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
+ /**
+ * @param p_thing
+ * @param p_knowledgeBase
+ * @param p_thingDHelper
+ * @param p_owner type has to be JFrame or JDialog, or <code>null</code>
+ * @return
+ * @see THINGDialogFactory.THINGDialogHelper
+ * @see THINGDialog 
+*/
+public static THINGDialog createModifyDialog(THING p_thing, KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
  {
     boolean bModifyable = true;
 
@@ -261,14 +249,11 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
      dialog = new THINGDialog(p_thing,p_knowledgeBase, (Frame)p_owner,  p_thingDHelper);
     
     
-    if(mode == DEBUG_MODE)
-        dialog.setTitle("Modify " + p_thing.getClass().getName());
-    else
-        dialog.setTitle("Modify " + getString(p_thing.getClass().getName()));
+    dialog.setTitle("Modify " + p_thing.getClass().getName());
 
     try
     {
-     dialog.getContentPane().add(getMainPane(mode, p_thing,true,true,dialog), BorderLayout.CENTER);
+     dialog.getContentPane().add(getMainPane(p_thing,true,true,dialog), BorderLayout.CENTER);
     }
     catch (Exception e)
     {
@@ -286,50 +271,24 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
     return dialog;
  }
 
- /**
-  * TODO if ResourceBundle should be used, uncomment here
-  * @param string
-  * @return
-  */
- public static String getString(String string)
- {
-//    try
-//    {
-//        return bundle.getString(string);
-//    }
-//    catch(Exception ex)
-//    {
-        return string;
-//    }
- }
 
-/**
- *
- * @param p_classThing
-  * @param p_owner type has to be JFrame or JDialog
- * @return
- */
- public static THINGDialog createNewDialog(Class p_classThing, KnowledgeBase p_knowledgeBase, THINGDialogHelper p_thingDHelper, Window p_owner)
- {
-    return createNewDialog(DEBUG_MODE, p_classThing, p_knowledgeBase, p_thingDHelper, p_owner);
-
- }
 
  /**
   * 
-  * @param mode
   * @param p_classThing
   * @param p_knowledgeBase
   * @param p_thingDHelper can be null
-  * @param p_owner
+  * @param p_owner type has to be JFrame or JDialog, or <code>null</code>
   * @return
+  * @see THINGDialogFactory.THINGDialogHelper
+  * @see THINGDialog 
   */
- public static THINGDialog createNewDialog(int mode, Class p_classThing, KnowledgeBase p_knowledgeBase, THINGDialogHelper p_thingDHelper, Window p_owner)
+ public static THINGDialog createNewDialog(Class p_classThing, KnowledgeBase p_knowledgeBase, THINGDialogHelper p_thingDHelper, Window p_owner) 
  {
     boolean bModifyable = true;
     THINGDialog dialog = null;
     THING thing = null;
-    Object o = null;
+     
 
     if (Modifier.isAbstract(p_classThing.getModifiers()))
     {
@@ -339,7 +298,11 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
     }
     try
     {
-       o = p_classThing.newInstance();
+        Object o = p_classThing.newInstance();
+        if (!(o instanceof THING))
+            throw new Exception("Given class is not a subclass of THING: " + p_classThing);
+        
+        thing = (THING) o;
     }
     catch (Exception e)
     {
@@ -351,18 +314,18 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
     }
 
 
-    return createNewDialog(mode, o,  p_knowledgeBase, p_thingDHelper, p_owner);
+    return createNewDialog(thing,  p_knowledgeBase, p_thingDHelper, p_owner);
  }
 /**
  * 
- * @param mode
- * @param o
+ * @param p_thing an instance of THING to be modified now; if no URI has been generated for the THING we will do this :)
  * @param p_knowledgeBase
  * @param p_thingDHelper  can be <code>null</code>
- * @param p_owner
+  * @param p_owner type has to be JFrame or JDialog, or <code>null</code>
  * @return
+ * @see THINGDialogFactory.THINGDialogHelper
  */
- public static THINGDialog createNewDialog(int mode, Object o, KnowledgeBase p_knowledgeBase,THINGDialogHelper p_thingDHelper, Window p_owner)
+ public static THINGDialog createNewDialog(THING p_thing, KnowledgeBase p_knowledgeBase,THINGDialogHelper p_thingDHelper, Window p_owner)
  {
     boolean bModifyable = true;
     THINGDialog dialog = null;
@@ -371,29 +334,18 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
 
     try
     {
-
-        if ( !(o instanceof THING) )
-        {
-            // implementation error: no big hussle for this case
-            JOptionPane.showMessageDialog(p_owner,"Implementation error: class of new element not a subclass of THING. - please consult the system administrator","createNewDialog",JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-
-        thing = (THING)o;
-        thing.makeNewURI();
+        if (thing.getURI() == null)
+            thing.makeNewURI();
 
         if (p_owner instanceof Dialog)
          dialog = new THINGDialog(thing,p_knowledgeBase,(Dialog)p_owner, p_thingDHelper);
         else
          dialog = new THINGDialog(thing, p_knowledgeBase,(Frame)p_owner, p_thingDHelper);
 
-        if(mode == DEBUG_MODE)
-            dialog.setTitle("New - (" + thing.getClass().getName() +")");
-        else
-            dialog.setTitle("New " + getString(thing.getClass().getName()));
+        dialog.setTitle("New - (" + thing.getClass().getName() +")");
 
 
-        dialog.getContentPane().add(getMainPane(mode, thing,true,true,dialog), BorderLayout.CENTER);
+        dialog.getContentPane().add(getMainPane(thing,true,true,dialog), BorderLayout.CENTER);
     }
     catch (Exception e)
     {
@@ -423,7 +375,7 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
  }
 
 
- protected static JComponent getMainPane(int mode, THING p_thing, boolean p_editable,boolean p_populate, THINGDialog p_dialog)
+ protected static JComponent getMainPane(THING p_thing, boolean p_editable,boolean p_populate, THINGDialog p_dialog)
  {
      
     PropertyStore ps = p_thing.getPropertyStore();
@@ -437,8 +389,7 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
 //      box.add(Box.createHorizontalStrut(50));
 //      box.add(Box.createHorizontalStrut(50));
     
-    if(mode==DEBUG_MODE)
-        box.add(getURIPanel(p_thing, false,p_dialog));
+    box.add(getURIPanel(p_thing, false,p_dialog));
     
     box.add(getRDFSLabelPanel(p_thing,p_editable,p_populate,p_dialog));
     
@@ -446,8 +397,7 @@ public static THINGDialog createViewDialog(int mode, THING p_thing, KnowledgeBas
     while (it.hasNext())
     {
         PropertyInfo pi = (PropertyInfo) it.next();
-        if(mode==DEBUG_MODE) // || editableFieldsList.contains(pi.getName().toUpperCase()))
-            box.add(getInputElementPanel(mode, p_thing, pi, p_editable, p_populate, p_dialog ));
+        box.add(getInputElementPanel(p_thing, pi, p_editable, p_populate, p_dialog ));
     }
 
 
@@ -512,9 +462,9 @@ protected static JComponent getMainDialogButtons(final THINGDialog p_dialog, fin
 }
 
 /**
- *
- * @param p_pi
- * @param p_editable false if the element should only be for viewing purposes; true otherwise
+ * @param p_thing
+* @param p_editable false if the element should only be for viewing purposes; true otherwise
+ * @param p_dialog
  * @return
  */
 public static JPanel getURIPanel(THING p_thing, boolean p_editable,JDialog p_dialog)
@@ -608,6 +558,13 @@ public static JDialog getRDFSourceDialog(RDFResource p_res, JDialog p_dialog)
 
 
 
+/**
+ * @param p_thing
+* @param p_editable false if the element should only be for viewing purposes; true otherwise
+ * @param p_populate true if the values should be inserted; false otherwise (e.g. for a creating a new element)
+ * @param p_dialog
+ * @return
+ */
 public static JPanel getRDFSLabelPanel(THING p_thing, boolean p_editable, boolean p_populate, THINGDialog p_dialog)
 {
 
@@ -638,62 +595,66 @@ public static JPanel getRDFSLabelPanel(THING p_thing, boolean p_editable, boolea
    
    return panel;
 }
+
+
 /**
- *
+ * @param p_thing
  * @param p_pi
  * @param p_editable false if the element should only be for viewing purposes; true otherwise
  * @param p_populate true if the values should be inserted; false otherwise (e.g. for a creating a new element)
+ * @param p_dialog
  * @return
  */
- public static JPanel getInputElementPanel(int mode, THING p_thing, PropertyInfo p_pi, boolean p_editable, boolean p_populate, THINGDialog p_dialog)
+public static JPanel getInputElementPanel( THING p_thing, PropertyInfo p_pi, boolean p_editable, boolean p_populate, THINGDialog p_dialog)
  {
 
     JPanel panel = new JPanel();
     panel.setLayout(new BorderLayout());
 
-    String fieldTitle;
-    if(mode==USER_MODE)
-    {
-        fieldTitle = getString(p_pi.getName());
-    }
-    else
-        fieldTitle = p_pi.getName();
-    JLabel label = new JLabel(fieldTitle+":   ");
+    String fieldTitle = p_pi.getName();
+    JLabel label = new JLabel(fieldTitle + ":   ");
     label.setSize(LABEL_WIDTH,LABEL_HEIGHT);
     label.setPreferredSize(m_dimPanel);
     label.setHorizontalAlignment(SwingConstants.RIGHT);
     panel.add(label,BorderLayout.WEST);
-    panel.add(getValueComponent(mode, p_thing, p_pi,p_editable,p_populate, p_dialog),BorderLayout.CENTER);
+    panel.add(getValueComponent( p_thing, p_pi,p_editable,p_populate, p_dialog),BorderLayout.CENTER);
     panel.setSize(PANEL_WIDTH,PANEL_HEIGHT);
 //    panel.setPreferredSize(m_dimPanel);
     return panel;
  }
 
 
-public static JPanel getValueComponent(int mode, THING p_thing, PropertyInfo  p_pi, boolean p_editable, boolean p_populate,  THINGDialog p_dialog)
+/**
+ * @param p_thing
+ * @param p_pi
+* @param p_editable false if the element should only be for viewing purposes; true otherwise
+ * @param p_populate true if the values should be inserted; false otherwise (e.g. for a creating a new element)
+ * @param p_dialog
+ * @return
+ */
+public static JPanel getValueComponent( THING p_thing, PropertyInfo  p_pi, boolean p_editable, boolean p_populate,  THINGDialog p_dialog)
 {
     //Box boxValue = new Box(BoxLayout.X_AXIS);
     //boxValue.add(Box.createHorizontalStrut(PANEL_WIDTH - LABEL_WIDTH));
     JPanel boxValue = new JPanel();
     boxValue.setLayout(new BorderLayout());
 
-    JComponent specElement = getSpecificElement(mode, p_thing, p_pi, p_editable, p_populate);
+    JComponent specElement = getSpecificElement(p_thing, p_pi, p_editable, p_populate);
     JPanel panelButtons = new JPanel();
     panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.Y_AXIS));
     if (p_editable && specElement instanceof JList)
     {
         // here specElement is definetly a JList
-        panelButtons.add(getListModifyButtons(mode, p_thing,(JList)specElement,p_pi, p_dialog));
+        panelButtons.add(getListModifyButtons(p_thing,(JList)specElement,p_pi, p_dialog));
     }
 
     if (specElement instanceof JList)
     {
         // this is the case for all instance typed properties
         // add a view and modify button
-        panelButtons.add(getViewButton(mode, (JList)specElement,p_dialog));
-        if(mode==DEBUG_MODE)
-            panelButtons.add(getHelpButton(p_pi,p_dialog));
-        if (p_editable) panelButtons.add(getModifyButton(mode, (JList)specElement,p_dialog));
+        panelButtons.add(getViewButton((JList)specElement,p_dialog));
+        panelButtons.add(getHelpButton(p_pi,p_dialog));
+        if (p_editable) panelButtons.add(getModifyButton((JList)specElement,p_dialog));
     }
 
     if (specElement instanceof JList && p_pi.hasMultiValue())
@@ -711,7 +672,7 @@ public static JPanel getValueComponent(int mode, THING p_thing, PropertyInfo  p_
 
     }
 
-    if (specElement instanceof JComboBox && !p_editable && mode==DEBUG_MODE)
+    if (specElement instanceof JComboBox && !p_editable)
     {
         panelButtons.add(getHelpButton(p_pi,p_dialog));
     }
@@ -768,7 +729,12 @@ private static Component getBrowserButton(final JTextField p_field, final THINGD
     return browse;
 }
 
-protected static JButton getViewButton(final int mode, final JList p_list, final THINGDialog p_dialog)
+/**
+ * @param p_list
+ * @param p_dialog
+ * @return
+ */
+protected static JButton getViewButton(final JList p_list, final THINGDialog p_dialog)
 {
    final JButton  view = new JButton("V");
    view.setMinimumSize(new Dimension(MODIFY_BUTTON_WIDTH, MODIFY_BUTTON_HEIGHT));
@@ -817,7 +783,7 @@ protected static JButton getViewButton(final int mode, final JList p_list, final
 
          if (res instanceof THING)
          {
-          THINGDialogFactory.createViewDialog(mode, (THING)res , p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(), p_dialog).setVisible(true);
+          THINGDialogFactory.createViewDialog((THING)res , p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(), p_dialog).setVisible(true);
          }
          else
          {
@@ -886,7 +852,7 @@ protected static JButton getHelpButton(final PropertyInfo  p_pi, final THINGDial
 
 
 
-protected static JButton getModifyButton(final int mode, final JList p_list, final THINGDialog p_dialog)
+protected static JButton getModifyButton(final JList p_list, final THINGDialog p_dialog)
 {
    final JButton  modify = new JButton("M");
    modify.setSize(MODIFY_BUTTON_WIDTH, MODIFY_BUTTON_HEIGHT);
@@ -936,7 +902,7 @@ protected static JButton getModifyButton(final int mode, final JList p_list, fin
 
          if (res instanceof THING)
          {
-           THINGDialog modDialog = THINGDialogFactory.createModifyDialog(mode, (THING)res ,p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(), p_dialog);
+           THINGDialog modDialog = THINGDialogFactory.createModifyDialog( (THING)res ,p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(), p_dialog);
            modDialog.setVisible(true);
            if (modDialog.hasModifiedTHINGs())
            {
@@ -980,7 +946,7 @@ protected static JButton getModifyButton(final int mode, final JList p_list, fin
     return modify;
 }
 
-protected static JButton getCreateButton(final int mode, final THING p_thing, final JList p_list, final PropertyInfo  p_pi, final THINGDialog p_dialog)
+protected static JButton getCreateButton(final THING p_thing, final JList p_list, final PropertyInfo  p_pi, final THINGDialog p_dialog)
 {
    final JButton  create = new JButton("C");
    create.setMinimumSize(new Dimension(MODIFY_BUTTON_WIDTH, MODIFY_BUTTON_HEIGHT));
@@ -990,12 +956,6 @@ protected static JButton getCreateButton(final int mode, final THING p_thing, fi
     {
      Object[] allowedClasses = p_pi.getAllowedValueClasses().toArray();
      
-     for(int i=0;i<allowedClasses.length;i++)
-     {
-        String readableName = THINGDialogFactory.getString(((Class)allowedClasses[i]).getName());
-        
-     }
-
      if (allowedClasses == null)
      {
       debug().error("getCreateButton: no allowed classes given for property " + p_pi.getName());
@@ -1021,7 +981,7 @@ protected static JButton getCreateButton(final int mode, final THING p_thing, fi
        else
         instanceOfClass = (Class)allowedClasses[0];
 
-       THINGDialog dialog = THINGDialogFactory.createNewDialog(mode, instanceOfClass, p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(), p_dialog);
+       THINGDialog dialog = THINGDialogFactory.createNewDialog(instanceOfClass, p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(), p_dialog);
        if (dialog == null ) return;
        dialog.setVisible(true);
 
@@ -1052,14 +1012,13 @@ protected static JButton getCreateButton(final int mode, final THING p_thing, fi
 
 /**
  * 
- * @param mode
  * @param p_thing
  * @param p_list
  * @param p_pi
  * @param p_dialog
  * @return
  */
-protected static JComponent getListModifyButtons(final int mode, final THING p_thing, final JList p_list, final PropertyInfo  p_pi, final THINGDialog p_dialog)
+protected static JComponent getListModifyButtons(final THING p_thing, final JList p_list, final PropertyInfo  p_pi, final THINGDialog p_dialog)
 {
   JPanel buttonPanel = new JPanel();
   buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
@@ -1071,7 +1030,7 @@ protected static JComponent getListModifyButtons(final int mode, final THING p_t
   add.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent e)
     {
-     InstanceChooseDialog dialog = new InstanceChooseDialog(mode, (Class[])p_pi.getAllowedValueClasses().toArray(), p_pi.hasMultiValue(), p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(),p_dialog);
+     InstanceChooseDialog dialog = new InstanceChooseDialog((Class[])p_pi.getAllowedValueClasses().toArray(), p_pi.hasMultiValue(), p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(),p_dialog);
      
      
      DefaultListModel lm = (DefaultListModel) p_list.getModel();
@@ -1156,18 +1115,25 @@ protected static JComponent getListModifyButtons(final int mode, final THING p_t
 
   buttonPanel.add(add);
   buttonPanel.add(remove);
-  buttonPanel.add(getCreateButton(mode, p_thing,p_list,p_pi,p_dialog));
+  buttonPanel.add(getCreateButton( p_thing,p_list,p_pi,p_dialog));
   return buttonPanel;
 }
 
 
-protected static JComponent getSpecificElement(int mode, THING p_thing, PropertyInfo  p_pi,boolean p_editable, boolean p_populate)
+/**
+ * @param p_thing
+ * @param p_pi
+ * @param p_editable false if the element should only be for viewing purposes; true otherwise
+ * @param p_populate true if the values should be inserted; false otherwise (e.g. for a creating a new element)
+ * @return
+ */
+protected static JComponent getSpecificElement(THING p_thing, PropertyInfo  p_pi,boolean p_editable, boolean p_populate)
 {
  JComponent com = null;
 
  if (p_pi.hasMultiValue())
  {
-    com = getListElement(mode, p_thing,p_pi,p_populate);
+    com = getListElement(p_thing,p_pi,p_populate);
  }
  else
  {
@@ -1175,7 +1141,7 @@ protected static JComponent getSpecificElement(int mode, THING p_thing, Property
     {
 
         case PropertyInfo.VT_INSTANCE:    // single instance fields
-            com = getListElement(mode,p_thing,p_pi,p_populate);
+            com = getListElement(p_thing,p_pi,p_populate);
             break;
         case PropertyInfo.VT_SYMBOL:    // symbol fields
                 com = getSymbolElement(p_pi, p_editable, p_populate);
@@ -1193,7 +1159,13 @@ protected static JComponent getSpecificElement(int mode, THING p_thing, Property
 
 }
 
-protected static JList getListElement(int mode, THING p_thing, PropertyInfo  p_pi, boolean p_populate)
+/**
+ * @param p_thing
+ * @param p_pi
+ * @param p_populate true if the values should be inserted; false otherwise (e.g. for a creating a new element)
+ * @return
+ */
+protected static JList getListElement(THING p_thing, PropertyInfo  p_pi, boolean p_populate)
 {
 
     DefaultListModel elements =  new DefaultListModel();
@@ -1203,10 +1175,7 @@ protected static JList getListElement(int mode, THING p_thing, PropertyInfo  p_p
     list.putClientProperty(COMPONENT_PROPERTYINFO,p_pi);
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     if (p_pi.getValueType() == PropertyInfo.VT_INSTANCE)
-        if(mode == DEBUG_MODE)
-            list.setCellRenderer(new ResourceObjectNode.ResourceObjectNodeCellRenderer());
-        else
-            list.setCellRenderer(new ResourceObjectNode.ResourceObjectNodeUserCellRenderer());
+        list.setCellRenderer(new ResourceObjectNode.ResourceObjectNodeCellRenderer());
 
     if (p_populate)
     {
@@ -1288,6 +1257,12 @@ protected static JList getListElement(int mode, THING p_thing, PropertyInfo  p_p
 //}
 
 
+/**
+ * @param p_pi
+ * @param p_editable false if the element should only be for viewing purposes; true otherwise
+ * @param p_populate true if the values should be inserted; false otherwise (e.g. for a creating a new element)
+ * @return
+ */
 protected static JTextField getStringElement(PropertyInfo  p_pi, boolean p_editable, boolean p_populate)
 {
     JTextField textField = new JTextField(TEXTFIELD_COLUMNS);
@@ -1298,60 +1273,6 @@ protected static JTextField getStringElement(PropertyInfo  p_pi, boolean p_edita
     return textField;
 }
 
-//protected static JTextArea getTextElement(int mode, PropertyInfo  p_pi, boolean p_editable, boolean p_populate)
-//{
-//    JTextArea textArea = new JTextArea(5, TEXTFIELD_COLUMNS);
-//    textArea.setBorder(BorderFactory.createEtchedBorder());
-//    textArea.putClientProperty(COMPONENT_PROPERTYINFO,p_pi);
-//    textArea.setEditable(p_editable);
-//    dfki.km.model.infotype.Text text = (dfki.km.model.infotype.Text)p_pi.getValue();
-//    if(text==null)
-//    {
-//        text = new dfki.km.model.infotype.Text();
-//        text.makeNewURI();
-//        p_pi.putValue(text);
-//    }
-//    if (p_populate) textArea.setText(text.getValue());
-//
-//    return textArea;
-//}
-//
-//protected static JUrlTextField getUrlElement(int mode, PropertyInfo  p_pi, boolean p_editable, boolean p_populate)
-//{
-//    JUrlTextField urlField = new JUrlTextField(TEXTFIELD_COLUMNS);
-//    urlField.putClientProperty(COMPONENT_PROPERTYINFO,p_pi);
-//    urlField.setEditable(p_editable);
-//    dfki.km.model.infotype.Url url = (dfki.km.model.infotype.Url)p_pi.getValue();
-//    if(url==null)
-//    {
-//        url = new dfki.km.model.infotype.Url();
-//        url.makeNewURI();
-//        p_pi.putValue(url);
-//    }
-//    if (p_populate) urlField.setText(url.getValue());
-//
-//    return urlField;
-//}
-//
-//protected static JPanel getFileElement(int mode, PropertyInfo  p_pi, boolean p_editable, boolean p_populate)
-//{
-//    JFilePanel panel = new JFilePanel(TEXTFIELD_COLUMNS, p_editable);
-//    panel.putClientProperty(COMPONENT_PROPERTYINFO,p_pi);
-//
-//    dfki.km.model.infotype.File file = (dfki.km.model.infotype.File)p_pi.getValue();
-//    if(file==null)
-//    {
-//        file = new dfki.km.model.infotype.File();
-//        file.makeNewURI();
-//        p_pi.putValue(file);
-//    }
-//    
-//    if (p_populate)
-//    {
-//        panel.setFileName(file.getValue());
-//    }
-//    return panel;
-//}
 
 public static java.io.File getFile(JComponent frame)
 {
@@ -1364,6 +1285,12 @@ public static java.io.File getFile(JComponent frame)
 }
 
 
+/**
+ * @param p_pi
+ * @param p_editable false if the element should only be for viewing purposes; true otherwise
+ * @param p_populate true if the values should be inserted; false otherwise (e.g. for a creating a new element)
+ * @return
+ */
 protected static JComboBox getSymbolElement(PropertyInfo  p_pi, boolean p_editable, boolean p_populate)
 {
     JComboBox comboBox = new JComboBox(p_pi.getAllowedSymbols());
@@ -1375,6 +1302,10 @@ protected static JComboBox getSymbolElement(PropertyInfo  p_pi, boolean p_editab
 
 }
 
+/**
+ * Assigns the information in the THINGDialog to the PropertyInfos attached to the components
+ * @param p_dialog
+ */
 protected static void assignInfo(THINGDialog p_dialog)
 {
  Iterator it = Arrays.asList(p_dialog.getContentPane().getComponents()).iterator();
@@ -1557,15 +1488,31 @@ private static Class chooseSubclassForAbstractClass(Class p_classThing, Window p
 
 
 
+/**
+ * select one class from the given array of classes via showInputDialog
+ * @param p_classes
+ * @param p_owner
+ * @return chosen class
+ * @see JOptionPane#showInputDialog
+ */
 public static Class chooseClass(Class[] p_classes, Window p_owner)
 {
  return (Class)JOptionPane.showInputDialog(p_owner,"Please choose a class to instantiate","Choose class",JOptionPane.QUESTION_MESSAGE,ResourceObjectNode.getIconClass(),p_classes,p_classes[0]);
 }
 
 
+/**
+ * Choose an instance from the KnowledgeBase. Allowed classes to choose from are retrieved from the THINGDialogHelper
+ * @param p_knowledgeBase
+ * @param p_thingDHelper  must not be null, from here the allowed classes are retrieved
+ * @param p_owner
+ * @return
+ * @see THINGDialogFactory.THINGDialogHelper
+ * @see InstanceChooseDialog 
+ */
 public static THING chooseAnyInstance(KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
 {
-  InstanceChooseDialog dialog = new InstanceChooseDialog(DEBUG_MODE, p_thingDHelper.getAllClasses(),false,p_knowledgeBase, p_thingDHelper,p_owner);
+  InstanceChooseDialog dialog = new InstanceChooseDialog( p_thingDHelper.getAllClasses(),false,p_knowledgeBase, p_thingDHelper,p_owner);
 
   DefaultMutableTreeNode node = dialog.selectInstance();
 
@@ -1576,9 +1523,18 @@ public static THING chooseAnyInstance(KnowledgeBase p_knowledgeBase, THINGDialog
 
 }
 
-public static THING chooseInstanceOfClass(int mode, Class p_class,KnowledgeBase p_knowledgeBase,THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
+/**
+ * Choose an instance of the given class from the KnowledgeBase
+ * @param p_class
+ * @param p_knowledgeBase
+ * @param p_thingDHelper
+ * @param p_owner
+ * @return
+ * @see InstanceChooseDialog
+ */
+public static THING chooseInstanceOfClass(Class p_class,KnowledgeBase p_knowledgeBase,THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
 {
-  InstanceChooseDialog dialog = new InstanceChooseDialog(mode, new Class[]{ p_class },false,p_knowledgeBase, p_thingDHelper, p_owner);
+  InstanceChooseDialog dialog = new InstanceChooseDialog( new Class[]{ p_class },false,p_knowledgeBase, p_thingDHelper, p_owner);
 
   DefaultMutableTreeNode node = dialog.selectInstance();
 
@@ -1592,9 +1548,18 @@ public static THING chooseInstanceOfClass(int mode, Class p_class,KnowledgeBase 
 
 
 
-public static THING chooseInstanceOfClasses(int mode, Collection p_colClasses,KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
+/**
+ * Choose an instance of the given classes from the KnowledgeBase
+ * @param p_colClasses classes as Collection of Class
+ * @param p_knowledgeBase
+ * @param p_thingDHelper
+ * @param p_owner
+ * @return
+ * @see InstanceChooseDialog
+ */
+public static THING chooseInstanceOfClasses(Collection p_colClasses,KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
 {
-    InstanceChooseDialog dialog = new InstanceChooseDialog(mode, (Class[]) p_colClasses.toArray(),false,p_knowledgeBase, p_thingDHelper,p_owner);
+    InstanceChooseDialog dialog = new InstanceChooseDialog((Class[]) p_colClasses.toArray(),false,p_knowledgeBase, p_thingDHelper,p_owner);
     
    DefaultMutableTreeNode node = dialog.selectInstance();
         
@@ -1606,9 +1571,19 @@ public static THING chooseInstanceOfClasses(int mode, Collection p_colClasses,Kn
 }
 
 
-public static Collection chooseInstancesOfClasses(int mode, Class[] p_classes,KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
+/**
+ * Choose multiple instances of classes from the KnowledgeBase
+ * @param p_classes array of Class
+ * @param p_knowledgeBase
+ * @param p_thingDHelper
+ * @param p_owner
+ * @return Collection of selected instances; could be empty but not <code>null</code>
+ * @see InstanceChooseDialog
+ * 
+ */
+public static Collection chooseInstancesOfClasses(Class[] p_classes,KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
 {
-    InstanceChooseDialog dialog  = new InstanceChooseDialog(mode, p_classes,true, p_knowledgeBase, p_thingDHelper, p_owner);
+    InstanceChooseDialog dialog  = new InstanceChooseDialog(p_classes,true, p_knowledgeBase, p_thingDHelper, p_owner);
     
     Collection nodes = dialog.selectInstances();
     
@@ -1666,23 +1641,6 @@ public static String getClassName(RDFResource p_res)
   
  return className;
 }
-
-///**
-// * the registered browser for all THINGDialogs
-// * @see THINGDialogFactory#setBrowser(THINGDialogFactory.TDBrowser)
-// */
-//private static TDBrowser m_browser = null;
-
-///**
-// * allows to register a browser for the dialogs. 
-// * @param p_browser
-// * @see THINGDialogFactory.TDBrowser
-// */
-//public static void setBrowser(THINGDialogFactory.THINGDialogHelper p_browser)
-//{
-// m_browser = p_browser;
-//}
-
 
 
     /**

@@ -85,7 +85,15 @@ private boolean m_hasMultiValue;
 
  
  
-public InstanceChooseDialog (int mode, Class[] p_allowedClasses, boolean p_hasMultiValue, KnowledgeBase p_knowledgeBase,THINGDialogFactory.THINGDialogHelper p_thingDialogHelper, Window p_owner)
+/**
+ * Choose one or multiple  instance(s) from the given classes found in the KnowledgeBase
+ * @param p_allowedClasses
+ * @param p_hasMultiValue select one instance or multiple instances 
+ * @param p_knowledgeBase
+ * @param p_thingDialogHelper
+ * @param p_owner parent window; can be <code>null</code> 
+ */
+public InstanceChooseDialog (Class[] p_allowedClasses, boolean p_hasMultiValue, KnowledgeBase p_knowledgeBase,THINGDialogFactory.THINGDialogHelper p_thingDialogHelper, Window p_owner)
 {
 
    m_thingDialogHelper = p_thingDialogHelper;
@@ -110,39 +118,19 @@ public InstanceChooseDialog (int mode, Class[] p_allowedClasses, boolean p_hasMu
     //throw new Error("InstanceChooseDialog: window owner of dialog is neither JDialog nor JFrame");
    }
 
-   init(mode, p_allowedClasses,p_hasMultiValue);
+   init( p_allowedClasses,p_hasMultiValue);
 }
 
 
-//public InstanceChooseDialog (int mode, Class[] p_allowedClasses,boolean p_hasMultiValue, KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDialogHelper, JDialog p_owner)
-//{
-//   m_thingDialogHelper = p_thingDialogHelper;
-//   m_knowledgeBase = p_knowledgeBase;
-//   m_dialogOwner = p_owner;
-//   m_frameOwner=null;
-//
-//   init(mode, p_allowedClasses,p_hasMultiValue);
-//}
-//
-//
-//public InstanceChooseDialog (int mode, Class[] p_allowedClasses,boolean p_hasMultiValue, KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDialogHelper, JFrame p_owner)
-//{
-//   m_thingDialogHelper = p_thingDialogHelper;
-//   m_knowledgeBase = p_knowledgeBase;
-//   m_dialogOwner = null;
-//   m_frameOwner = p_owner;
-//   init(mode, p_allowedClasses,p_hasMultiValue);
-//}
-
-private void init (int mode, Class[] p_allowedClasses, boolean p_hasMultiValue)
+private void init (Class[] p_allowedClasses, boolean p_hasMultiValue)
 {
 
     
     m_currentSelectedInstances = new DefaultListModel();
-    if(mode == THINGDialogFactory.DEBUG_MODE)
+//    if(mode == THINGDialogFactory.DEBUG_MODE)
         m_listCellrenderer = new ResourceObjectCellRenderer();
-    else
-        m_listCellrenderer = new ResourceObjectUserCellRenderer();
+//    else
+//        m_listCellrenderer = new ResourceObjectUserCellRenderer();
     m_treeCellRenderer = new ResourceObjectTreeCellRenderer();
     m_hasMultiValue = p_hasMultiValue;
 
@@ -449,7 +437,7 @@ public ResourceObjectNode selectInstance()
 
 /**
  *
- * @return Collection of ResourceObjectNode
+ * @return Collection of ResourceObjectNode; could be empty but not <code>null</code>
  */
 public Collection selectInstances()
 {
