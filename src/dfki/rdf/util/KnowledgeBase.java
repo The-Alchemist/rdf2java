@@ -170,36 +170,23 @@ public void updateRDFResourceSlots ()
 }
 
 //---------------------------------------------------------------------------
-public Collection/*THING*/ findSubjects( RDFResource resPred, Object value )
+public Collection/*THING*/ findSubjects( String sPropertyPkg, String sPropertyName, Object value )
 {
-    return findSubjects( resPred, value, false );
+    return findSubjects( sPropertyPkg, sPropertyName, value, false );
 }
 
 //---------------------------------------------------------------------------
-public THING findFirstSubject( RDFResource resPred, Object value )
+public THING findFirstSubject( String sPropertyPkg, String sPropertyName, Object value )
 {
-    Collection coll = findSubjects( resPred, value, true );
-    if( coll == null ) return null;
+    Collection coll = findSubjects( sPropertyPkg, sPropertyName, value, true );
+    if( coll == null  ||  coll.isEmpty() ) return null;
     return (THING)coll.iterator().next();
 }
 
 //---------------------------------------------------------------------------
-private Collection/*THING*/ findSubjects( RDFResource resPred, Object value, boolean bOnlyOneResultNeeded )
+private Collection/*THING*/ findSubjects( String sPropertyPkg, String sPropertyName, Object value, boolean bOnlyOneResultNeeded )
 {
     long iTimeBeginning = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
-
-    if( m_mapNS2Pkg == null )
-    {
-        debug().error( "no Namespace-to-Package map set in KnowledgeBase.findSubjects()" );
-        return null;
-    }
-    String sPropertyPackage = (String)m_mapNS2Pkg.get( resPred.getNamespace() );
-    String sPropertyName = resPred.getLocalName();
-    if( sPropertyPackage == null )
-    {
-        debug().error( "package for namespace of resPred '"+  resPred.getURI() +"'not found in KnowledgeBase.findSubjects()" );
-        return null;
-    }
 
     HashSet setSubjects = new HashSet();
     boolean bFoundOne = false;
@@ -208,14 +195,14 @@ private Collection/*THING*/ findSubjects( RDFResource resPred, Object value, boo
         Object obj = it.next();
         if ( !(obj instanceof THING) )
             continue;
-        if( !obj.getClass().getPackage().equals( sPropertyPackage ) )
+        if( sPropertyPkg != null  &&  !obj.getClass().getPackage().equals( sPropertyPkg ) )
             continue;
         THING thing = (THING)obj;
         Collection collProperties = thing.getProperties();
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
             String sThingPropertyName = (String)itProperties.next();
-            if( !sThingPropertyName.equals( sPropertyName ) )
+            if( sPropertyName != null  &&  !sThingPropertyName.equals( sPropertyName ) )
                 continue;
             Object objThingPropertyValue = thing.getPropertyValue( sThingPropertyName );
             if( objThingPropertyValue instanceof Collection )
