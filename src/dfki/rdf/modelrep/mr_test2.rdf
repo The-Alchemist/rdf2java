@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY mr 'http://dfki.uni-kl.de/schwarz/ModelRep#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:mr="&mr;">
+
+<mr:ModelRep>
+
+
+
+<mr:object>
+    <mr:Task   mr:name="Diplomarbeit">
+        <mr:subtask>
+            <mr:Task   mr:name="State of the art"   rdf:about="StateOfTheArt"/>
+        </mr:subtask>
+        <mr:subtask>
+            <mr:Task   mr:name="Design">
+                <mr:pred rdf:resource="StateOfTheArt"/>
+            </mr:Task>
+        </mr:subtask>
+    </mr:Task>
+</mr:object>
+
+
+</mr:ModelRep>
+
+</rdf:RDF>
+

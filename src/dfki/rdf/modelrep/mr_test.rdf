@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY mr 'http://dfki.uni-kl.de/schwarz/ModelRep#'>
+	 <!ENTITY mr2 'http://dfki.uni-kl.de/schwarz/ModelRep2#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:mr="&mr;"
+     xmlns:mr2="&mr2;">
+
+<mr:ModelRep>
+
+<mr:object>
+    <mr:Task   mr:name="A"   mr:state="finished"   rdf:about="MR_01.06.21_Task_A">
+        <mr:subtask>
+            <mr:Task   mr:name="A1"   mr:state="finished"   rdf:about="MR_01.06.21_Task_A1"/>
+        </mr:subtask>
+        <mr:subtask>
+            <mr:Task   mr:name="A2"   mr:state="unactivated">
+                <mr:pred> <mr:Task rdf:about="MR_01.06.21_Task_A1"/>  </mr:pred>
+                <mr:precond>das ist eine vorbedingung</mr:precond>
+            </mr:Task>
+        </mr:subtask>
+    </mr:Task>
+</mr:object>
+
+<mr:object>
+    <mr:Task   mr:name="B"   mr:state="finished"   rdf:about="MR_01.06.21_Task_B">
+        <mr:pred> <mr:Task rdf:about="MR_01.06.21_Task_A"/> </mr:pred>
+    </mr:Task>
+</mr:object>
+
+<mr:object>
+    <mr:ANDSplit   mr:name="Split1"   rdf:about="MR_01.06.21_Task_Split1">
+        <mr:pred> <mr:Task rdf:about="MR_01.06.21_Task_B"/> </mr:pred>
+        <mr:splits> <mr:Task rdf:about="MR_01.06.21_Task_C1"/> </mr:splits>
+        <mr:splits> <mr:Task rdf:about="MR_01.06.21_Task_C2"/> </mr:splits>
+    </mr:ANDSplit>
+</mr:object>
+
+<mr:object>
+    <mr:Task   mr:name="C1"   mr:state="activated"   rdf:about="MR_01.06.21_Task_C1">
+        <mr:pred> <mr:ANDSplit rdf:about="MR_01.06.21_Task_Split1"/> </mr:pred>
+    </mr:Task>
+</mr:object>
+
+<mr:object>
+    <mr:Task   mr:name="C2"   mr:state="unactivated"   rdf:about="MR_01.06.21_Task_C2">
+        <mr:pred> <mr:ANDSplit rdf:about="MR_01.06.21_Task_Split1"/> </mr:pred>
+    </mr:Task>
+</mr:object>
+
+<mr:object>
+    <mr:ORJoin   mr:name="Join1"   rdf:about="MR_01.06.21_Task_Join1">
+        <mr:joins> <mr:Task rdf:about="MR_01.06.21_Task_C1"/> </mr:joins>
+        <mr:joins> <mr:Task rdf:about="MR_01.06.21_Task_C2"/> </mr:joins>
+    </mr:ORJoin>
+</mr:object>
+
+<mr:object>
+    <mr:Task   mr:name="D"   mr:state="unactivated"   rdf:about="MR_01.06.21_Task_D">
+        <mr:pred> <mr:ORJoin rdf:about="MR_01.06.21_Task_Join1"/> </mr:pred>
+    </mr:Task>
+</mr:object>
+
+<mr:object>
+    <mr:RemoteTask   mr:name="E"   mr:state="unactivated"   rdf:about="MR_01.06.21_Task_E">
+        <mr:pred> <mr:Task rdf:about="MR_01.06.21_Task_D"/> </mr:pred>
+    </mr:RemoteTask>
+</mr:object>
+
+<mr:object>
+    <mr:Task   mr:name="F"   mr:state="unactivated">
+        <mr:pred> <mr:RemoteTask rdf:about="MR_01.06.21_Task_E"/> </mr:pred>
+    </mr:Task>
+</mr:object>
+
+</mr:ModelRep>
+
+</rdf:RDF>
+
+

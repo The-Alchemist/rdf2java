@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY example2 'http://dfki.rdf.util/rdfs2class/example2#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:example2="&example2;">
+<example2:Person rdf:about="&example2;example2_00013"
+	 example2:firstName="Rita"
+	 example2:lastName="Riemen">
+	<example2:relatedTo rdf:resource="&example2;example2_00014"/>
+	<example2:loves rdf:resource="&example2;example2_00015"/>
+	<example2:loves rdf:resource="&example2;example2_00018"/>
+</example2:Person>
+<example2:Person rdf:about="&example2;example2_00014"
+	 example2:firstName="Manfred"
+	 example2:lastName="Riemen">
+	<example2:loves rdf:resource="&example2;example2_00013"/>
+	<example2:relatedTo rdf:resource="&example2;example2_00013"/>
+</example2:Person>
+<example2:Person rdf:about="&example2;example2_00015"
+	 example2:firstName="Hans"
+	 example2:lastName="Dampf">
+	<example2:dateOfBirth rdf:resource="&example2;example2_00016"/>
+	<example2:loves rdf:resource="&example2;example2_00017"/>
+</example2:Person>
+<example2:Date rdf:about="&example2;example2_00016"
+	 example2:dayOfMonth="1"
+	 example2:month="2"
+	 example2:year="1973"/>
+<example2:Animal rdf:about="&example2;example2_00017"
+	 example2:name="Wuffi"/>
+<example2:Animal rdf:about="&example2;example2_00018"
+	 example2:name="Cheesy"/>
+</rdf:RDF>

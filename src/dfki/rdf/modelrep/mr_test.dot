@@ -1,0 +1,17 @@
+digraph ModelRep {
+	graph [	rankdir = LR ];
+	node [	label = "\N" ];
+	graph [bb= "0,0,886,108"];
+	"Search the Web" [label="Search the Web|state: finished|isProcessible: false", style=filled, color=lightblue, shape=record, pos="61,58", rects="1,66,122,82 1,50,122,66 1,34,122,50", width="1.67", height="0.67"];
+	"Search the DFKI-Bib" [label="Search the DFKI-Bib|state: unactivated|isProcessible: true", style=filled, color=yellow, shape=record, pos="225,32", rects="158,40,292,56 158,24,292,40 158,8,292,24", width="1.86", height="0.67"];
+	"Compare different existing WfMS" [label="Compare different existing WfMS|state: unactivated|isProcessible: true", style=filled, color=yellow, shape=record, pos="625,84", rects="522,92,728,108 522,76,728,92 522,60,728,76", width="2.86", height="0.67"];
+	"" [label="(ORJoin) ", shape=ellipse, pos="407,84", width="1.06", height="0.50"];
+	"Results?" [label="Results?|state: unactivated|isProcessible: false", style=filled, color=lightgray, shape=record, pos="825,84", rects="765,92,886,108 765,76,886,92 765,60,886,76", width="1.67", height="0.67"];
+	"Search the Info-Bib (Uni)" [label="Search the Info-Bib (Uni)|state: unactivated|isProcessible: false", style=filled, color=lightgray, shape=record, pos="407,24", rects="328,32,486,48 328,16,486,32 328,0,486,16", width="2.19", height="0.67"];
+	"Search the Web" -> "Search the DFKI-Bib" [pos="e,158,37 122,52 132,50 140,44 149,40"];
+	"" -> "Compare different existing WfMS" [pos="e,522,84 445,84 464,84 487,84 511,84"];
+	"Compare different existing WfMS" -> "Results?" [pos="e,764,84 728,84 737,84 746,84 754,84"];
+	"Search the DFKI-Bib" -> "Search the Info-Bib (Uni)" [pos="e,328,28 292,29 301,29 309,28 318,28"];
+	"Search the Web" -> "" [pos="e,369,81 122,63 190,68 300,76 361,80"];
+	"Search the DFKI-Bib" -> "" [pos="e,374,75 292,37 306,41 315,55 328,60 338,64 353,69 367,73"];
+}

@@ -1,0 +1,51 @@
+digraph ModelRep {
+	graph[rankdir=LR];
+
+	subgraph cluster0 {
+	  color=white;
+	  "A" [style=filled, color=lightblue, shape=record, label="A|state: finished|isProcessible: false"];
+	  "A1" [style=filled, color=lightblue, shape=record, label="A1|state: finished|isProcessible: false"];
+	  "A2" [style=filled, color=yellow, shape=record, label="A2|state: unactivated|isProcessible: true"];
+	}
+
+	subgraph cluster1 {
+	  color=white;
+	  "Split1" [shape=ellipse, label="(ANDSplit) Split1"];
+        }
+
+	subgraph cluster2 {
+	  color=white;
+	  "Join1" [shape=ellipse, label="(ORJoin) Join1"];
+        }
+
+	subgraph cluster3 {
+	  color=white;
+	  "C2" [style=filled, color=yellow, shape=record, label="C2|state: unactivated|isProcessible: true"];
+	}
+
+	subgraph cluster4 {
+	  color=white;
+	  "C1" [style=filled, color=orange, shape=record, label="C1|state: activated|isProcessible: false"];
+        }
+
+	subgraph cluster5 {
+	  color=white;
+	  "D" [style=filled, color=lightgray, shape=record, label="D|state: unactivated|isProcessible: false"];
+        }
+
+	subgraph cluster6 {
+	  color=white;
+	  "B" [style=filled, color=lightblue, shape=record, label="B|state: finished|isProcessible: false"];
+	}
+
+	"A" -> "A1" [style=dashed, label="sub"];
+	"A1" -> "A2";
+	"A" -> "A2" [style=dashed, label="sub"];
+	"B" -> "Split1";
+	"C2" -> "Join1";
+	"C1" -> "Join1";
+	"Split1" -> "C2";
+	"Split1" -> "C1";
+	"Join1" -> "D";
+	"A" -> "B";
+}

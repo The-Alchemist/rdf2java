@@ -1,0 +1,16 @@
+digraph ModelRep {
+	graph[rankdir=LR];
+
+	"Search the Web" [style=filled, color=lightblue, shape=record, label="Search the Web|state: finished|isProcessible: false"];
+	"Search the DFKI-Bib" [style=filled, color=yellow, shape=record, label="Search the DFKI-Bib|state: unactivated|isProcessible: true"];
+	"Search the Web" -> "Search the DFKI-Bib";
+	"Compare different existing WfMS" [style=filled, color=yellow, shape=record, label="Compare different existing WfMS|state: unactivated|isProcessible: true"];
+	"" -> "Compare different existing WfMS";
+	"Results?" [style=filled, color=lightgray, shape=record, label="Results?|state: unactivated|isProcessible: false"];
+	"Compare different existing WfMS" -> "Results?";
+	"Search the Info-Bib (Uni)" [style=filled, color=lightgray, shape=record, label="Search the Info-Bib (Uni)|state: unactivated|isProcessible: false"];
+	"Search the DFKI-Bib" -> "Search the Info-Bib (Uni)";
+	"" [shape=ellipse, label="(ORJoin) "];
+	"Search the Web" -> "";
+	"Search the DFKI-Bib" -> "";
+}

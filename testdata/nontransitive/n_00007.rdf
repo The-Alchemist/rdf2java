@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY n 'http://dfki.rdf.test/nontransitive#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:n="&n;"
+	 xmlns:rdfs="&rdfs;">
+
+
+
+
+
+<n:B rdf:about="&n;n_00007"
+	 rdfs:label="n_00007">
+	<n:toA rdf:resource="&n;n_00005"/>
+	<n:toA rdf:resource="&n;n_00008"/>
+	<n:toA rdf:resource="&n;n_00009"/>
+	<n:toB rdf:resource="&n;n_00010"/>
+	<n:toB rdf:resource="&n;n_00011"/>
+</n:B>
+
+
+
+
+
+</rdf:RDF>

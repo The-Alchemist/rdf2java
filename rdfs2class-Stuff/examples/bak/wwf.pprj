@@ -1,0 +1,2857 @@
+; Fri Aug 10 17:08:45 GMT+02:00 2001
+; 
+;+ (version "1.5")
+;+ (build "Build 673")
+
+([BROWSER_SLOT_NAMES] of Property_List
+	(properties
+		[wwf_ProjectKB_01379]
+		[wwf_ProjectKB_01380]
+		[wwf_ProjectKB_01381]
+		[wwf_ProjectKB_01382]
+		[wwf_ProjectKB_01383]
+		[wwf_ProjectKB_01384]
+		[wwf_ProjectKB_01385]
+		[wwf_ProjectKB_01386]
+		[wwf_ProjectKB_01387]
+		[wwf_ProjectKB_01388]
+		[wwf_ProjectKB_01389]
+		[wwf_ProjectKB_01390]
+		[wwf_ProjectKB_01391]
+		[wwf_ProjectKB_01392]
+		[wwf_ProjectKB_01393]
+		[wwf_ProjectKB_01394]))
+
+([CLSES_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Classes")
+	(property_list [ProjectKB_2045_00015])
+	(widget_class_name "edu.stanford.smi.protege.widget.ClsesTab"))
+
+([FORMS_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Forms")
+	(property_list [ProjectKB_2045_00044])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormsTab"))
+
+([INSTANCES_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Instances")
+	(property_list [ProjectKB_2045_00047])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
+
+([PAL_DESCRIPTION_WIDGET] of Widget
+	(height 200)
+	(is_hidden FALSE)
+	(label "Description")
+	(name ":PAL-DESCRIPTION")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(width 250)
+	(x 250)
+	(y 0))
+
+([PAL_FORM_WIDGET] of Widget
+	(height 476)
+	(is_hidden FALSE)
+	(name ":PAL-CONSTRAINT")
+	(property_list [PAL_PROPERTY_LIST])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 603)
+	(x 0)
+	(y 0))
+
+([PAL_NAME_WIDGET] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":PAL-NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([PAL_PROPERTY_LIST] of Property_List
+	(properties
+		[PAL_NAME_WIDGET]
+		[PAL_RANGE_WIDGET]
+		[PAL_DESCRIPTION_WIDGET]
+		[PAL_STATEMENT_WIDGET]))
+
+([PAL_RANGE_WIDGET] of Widget
+	(height 160)
+	(is_hidden FALSE)
+	(label "Range")
+	(name ":PAL-RANGE")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(width 250)
+	(x 250)
+	(y 200))
+
+([PAL_STATEMENT_WIDGET] of Widget
+	(height 300)
+	(is_hidden FALSE)
+	(label "Statement")
+	(name ":PAL-STATEMENT")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([PROJECT] of Project
+	(browser_slot_names [BROWSER_SLOT_NAMES])
+	(customized_instance_widgets
+		[wwf_ProjectKB_00684]
+		[wwf_ProjectKB_00178]
+		[wwf_ProjectKB_00598]
+		[wwf_ProjectKB_00172]
+		[wwf_ProjectKB_00208]
+		[wwf_ProjectKB_00506]
+		[wwf_ProjectKB_00564]
+		[wwf_ProjectKB_00542]
+		[wwf_ProjectKB_00413]
+		[wwf_ProjectKB_00238]
+		[wwf_ProjectKB_00646]
+		[wwf_ProjectKB_00152]
+		[wwf_ProjectKB_00303]
+		[wwf_ProjectKB_00608]
+		[PAL_FORM_WIDGET]
+		[wwf_ProjectKB_00280]
+		[wwf_ProjectKB_00578])
+	(default_cls_metaclass ":STANDARD-CLASS")
+	(default_facet_metaclass ":STANDARD-FACET")
+	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(default_slot_metaclass ":STANDARD-SLOT")
+	(next_frame_number 84)
+	(options [ProjectKB_2045_00016])
+	(sources [SOURCES])
+	(tabs
+		[CLSES_TAB]
+		[SLOTS_TAB]
+		[FORMS_TAB]
+		[INSTANCES_TAB]
+		[QUERIES_TAB]
+		[ProjectKB_2045_00007]
+		[ProjectKB_2045_00009]
+		[ProjectKB_2045_00011]
+		[ProjectKB_2045_00013]
+		[wwf_ProjectKB_00000]
+		[wwf_ProjectKB_00003]
+		[wwf_ProjectKB_00104]))
+
+([ProjectKB_2045_00000] of String
+	(name "rdfs_file_name")
+	(string_value "wwf.rdfs"))
+
+([ProjectKB_2045_00001] of String
+	(name "rdf_file_name")
+	(string_value "wwf.rdf"))
+
+([ProjectKB_2045_00002] of String
+	(name "namespace_name")
+	(string_value "http://dfki.frodo.wwf/wwf#"))
+
+([ProjectKB_2045_00003] of Boolean
+	(boolean_value TRUE)
+	(name "use_roundtrip"))
+
+([ProjectKB_2045_00004] of String
+	(name "factory_class_name")
+	(string_value "edu.stanford.smi.protegex.storage.rdf.configurable.RDFCBackend"))
+
+([ProjectKB_2045_00005] of String
+	(name "renaming_namespaces"))
+
+([ProjectKB_2045_00006] of String
+	(name "namespaces")
+	(string_value "TaskConcept http://dfki.frodo.wwf/TaskConcept# rdf http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs http://www.w3.org/TR/1999/PR-rdf-schema-19990303# OrganisationalModel http://dfki.frodo.wwf/OrganisationalModel# Task http://dfki.frodo.wwf/Task# "))
+
+([ProjectKB_2045_00007] of Widget
+	(is_hidden FALSE)
+	(label "Ontoviz")
+	(property_list [ProjectKB_2045_00008])
+	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
+
+([ProjectKB_2045_00008] of Property_List
+	(properties [wwf_ProjectKB_00998]))
+
+([ProjectKB_2045_00009] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_2045_00010])
+	(widget_class_name "edu.stanford.smi.protege.widget.KAToolTab"))
+
+([ProjectKB_2045_00010] of Property_List)
+
+([ProjectKB_2045_00011] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_2045_00012])
+	(widget_class_name "tab_plugin_example.FrameCounterTab"))
+
+([ProjectKB_2045_00012] of Property_List)
+
+([ProjectKB_2045_00013] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_2045_00014])
+	(widget_class_name "edu.stanford.smi.protege.widget.ClsesAndInstancesTab"))
+
+([ProjectKB_2045_00014] of Property_List)
+
+([ProjectKB_2045_00015] of Property_List
+	(properties
+		[wwf_ProjectKB_00049]
+		[wwf_ProjectKB_00050]))
+
+([ProjectKB_2045_00016] of Options
+	(confirm_on_remove FALSE)
+	(display_abstract_class_icon TRUE)
+	(display_hidden_classes TRUE)
+	(display_multi_parent_class_icon TRUE)
+	(is_readonly FALSE))
+
+([ProjectKB_2045_00032] of Property_List
+	(properties
+		[wwf_ProjectKB_00051]
+		[wwf_ProjectKB_00052]))
+
+([ProjectKB_2045_00044] of Property_List
+	(properties [wwf_ProjectKB_00053]))
+
+([ProjectKB_2045_00047] of Property_List
+	(properties
+		[wwf_ProjectKB_00054]
+		[wwf_ProjectKB_00055]))
+
+([ProjectKB_2045_00048] of Property_List
+	(properties [wwf_ProjectKB_00056]))
+
+([QUERIES_TAB] of Widget
+	(is_hidden TRUE)
+	(label "Queries")
+	(property_list [ProjectKB_2045_00048])
+	(widget_class_name "edu.stanford.smi.protegex.queries_tab.QueriesTab"))
+
+([SLOTS_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Slots")
+	(property_list [ProjectKB_2045_00032])
+	(widget_class_name "edu.stanford.smi.protege.widget.SlotsTab"))
+
+([SOURCES] of Property_List
+	(properties
+		[ProjectKB_2045_00000]
+		[ProjectKB_2045_00001]
+		[ProjectKB_2045_00002]
+		[ProjectKB_2045_00003]
+		[ProjectKB_2045_00004]
+		[ProjectKB_2045_00005]
+		[ProjectKB_2045_00006]
+		[wwf_ProjectKB_00002]))
+
+([wwf_ProjectKB_00000] of Widget
+	(is_hidden TRUE)
+	(property_list [wwf_ProjectKB_00001])
+	(widget_class_name "dms.ElemTab"))
+
+([wwf_ProjectKB_00001] of Property_List)
+
+([wwf_ProjectKB_00002] of String
+	(name "included_projects")
+	(string_value "OrganisationalModel http://dfki.frodo.wwf/OrganisationalModel# "))
+
+([wwf_ProjectKB_00003] of Widget
+	(is_hidden TRUE)
+	(property_list [wwf_ProjectKB_00103])
+	(widget_class_name "dfki.protege.oil_tab.OilTab"))
+
+([wwf_ProjectKB_00049] of Integer
+	(integer_value 320)
+	(name "ClsesTab.left_right"))
+
+([wwf_ProjectKB_00050] of Integer
+	(integer_value 699)
+	(name "ClsesTab.left.top_bottom"))
+
+([wwf_ProjectKB_00051] of Integer
+	(integer_value 250)
+	(name "SlotsTab.left_right"))
+
+([wwf_ProjectKB_00052] of Integer
+	(integer_value 400)
+	(name "SlotTab.left.top_bottom"))
+
+([wwf_ProjectKB_00053] of Integer
+	(integer_value 364)
+	(name "FormsTab.left_right"))
+
+([wwf_ProjectKB_00054] of Integer
+	(integer_value 338)
+	(name "InstancesTab.left_right"))
+
+([wwf_ProjectKB_00055] of Integer
+	(integer_value 205)
+	(name "InstancesTab.right.left_right"))
+
+([wwf_ProjectKB_00056] of String
+	(name "SearchTab_Query"))
+
+([wwf_ProjectKB_00103] of Property_List)
+
+([wwf_ProjectKB_00104] of Widget
+	(is_hidden TRUE)
+	(property_list [wwf_ProjectKB_00105])
+	(widget_class_name "dfki.protege.graphviz_tab.GraphvizTab"))
+
+([wwf_ProjectKB_00105] of Property_List)
+
+([wwf_ProjectKB_00152] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Experience")
+	(property_list [wwf_ProjectKB_00153])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00153] of Property_List
+	(properties
+		[wwf_ProjectKB_00154]
+		[wwf_ProjectKB_00156]
+		[wwf_ProjectKB_00164]))
+
+([wwf_ProjectKB_00154] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:experienceLevel")
+	(property_list [wwf_ProjectKB_00155])
+	(widget_class_name "edu.stanford.smi.protege.widget.ComboBoxWidget")
+	(width 240)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00155] of Property_List)
+
+([wwf_ProjectKB_00156] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:experienceObject")
+	(property_list [wwf_ProjectKB_00157])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 330)
+	(y 0))
+
+([wwf_ProjectKB_00157] of Property_List
+	(properties
+		[wwf_ProjectKB_00158]
+		[wwf_ProjectKB_00159]
+		[wwf_ProjectKB_00160]
+		[wwf_ProjectKB_00161]
+		[wwf_ProjectKB_00162]
+		[wwf_ProjectKB_00163]))
+
+([wwf_ProjectKB_00158] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00159] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00160] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00161] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00162] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00163] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00164] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:experiencedUser")
+	(property_list [wwf_ProjectKB_00165])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 330)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00165] of Property_List
+	(properties
+		[wwf_ProjectKB_00166]
+		[wwf_ProjectKB_00167]
+		[wwf_ProjectKB_00168]
+		[wwf_ProjectKB_00169]
+		[wwf_ProjectKB_00170]
+		[wwf_ProjectKB_00171]))
+
+([wwf_ProjectKB_00166] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00167] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00168] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00169] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00170] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00171] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00172] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:InformationDescription")
+	(property_list [wwf_ProjectKB_00173])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00173] of Property_List
+	(properties
+		[wwf_ProjectKB_00174]
+		[wwf_ProjectKB_00176]))
+
+([wwf_ProjectKB_00174] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:infoObjectURI")
+	(property_list [wwf_ProjectKB_00175])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 490)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00175] of Property_List)
+
+([wwf_ProjectKB_00176] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [wwf_ProjectKB_00177])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 500)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00177] of Property_List)
+
+([wwf_ProjectKB_00178] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:ProcessRole")
+	(property_list [wwf_ProjectKB_00179])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00179] of Property_List
+	(properties
+		[wwf_ProjectKB_00180]
+		[wwf_ProjectKB_00182]
+		[wwf_ProjectKB_00190]
+		[wwf_ProjectKB_00192]
+		[wwf_ProjectKB_00200]))
+
+([wwf_ProjectKB_00180] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [wwf_ProjectKB_00181])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 10)
+	(y 90))
+
+([wwf_ProjectKB_00181] of Property_List)
+
+([wwf_ProjectKB_00182] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:andCondition")
+	(property_list [wwf_ProjectKB_00183])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 370)
+	(x 430)
+	(y 250))
+
+([wwf_ProjectKB_00183] of Property_List
+	(properties
+		[wwf_ProjectKB_00184]
+		[wwf_ProjectKB_00185]
+		[wwf_ProjectKB_00186]
+		[wwf_ProjectKB_00187]
+		[wwf_ProjectKB_00188]
+		[wwf_ProjectKB_00189]))
+
+([wwf_ProjectKB_00184] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00185] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00186] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00187] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00188] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00189] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00190] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [wwf_ProjectKB_00191])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 10)
+	(y 10))
+
+([wwf_ProjectKB_00191] of Property_List)
+
+([wwf_ProjectKB_00192] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:notCondition")
+	(property_list [wwf_ProjectKB_00193])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 430)
+	(y 0))
+
+([wwf_ProjectKB_00193] of Property_List
+	(properties
+		[wwf_ProjectKB_00194]
+		[wwf_ProjectKB_00195]
+		[wwf_ProjectKB_00196]
+		[wwf_ProjectKB_00197]
+		[wwf_ProjectKB_00198]
+		[wwf_ProjectKB_00199]))
+
+([wwf_ProjectKB_00194] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00195] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00196] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00197] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00198] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00199] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00200] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:orCondition")
+	(property_list [wwf_ProjectKB_00201])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 430)
+	(y 120))
+
+([wwf_ProjectKB_00201] of Property_List
+	(properties
+		[wwf_ProjectKB_00202]
+		[wwf_ProjectKB_00203]
+		[wwf_ProjectKB_00204]
+		[wwf_ProjectKB_00205]
+		[wwf_ProjectKB_00206]
+		[wwf_ProjectKB_00207]))
+
+([wwf_ProjectKB_00202] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00203] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00204] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00205] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00206] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00207] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00208] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:User")
+	(property_list [wwf_ProjectKB_00209])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00209] of Property_List
+	(properties
+		[wwf_ProjectKB_00210]
+		[wwf_ProjectKB_00218]
+		[wwf_ProjectKB_00226]
+		[wwf_ProjectKB_00234]
+		[wwf_ProjectKB_00236]
+		[wwf_ProjectKB_00907]))
+
+([wwf_ProjectKB_00210] of Widget
+	(height 190)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:enactsRole")
+	(property_list [wwf_ProjectKB_00211])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 410)
+	(x 0)
+	(y 300))
+
+([wwf_ProjectKB_00211] of Property_List
+	(properties
+		[wwf_ProjectKB_00212]
+		[wwf_ProjectKB_00213]
+		[wwf_ProjectKB_00214]
+		[wwf_ProjectKB_00215]
+		[wwf_ProjectKB_00216]
+		[wwf_ProjectKB_00217]))
+
+([wwf_ProjectKB_00212] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00213] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00214] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00215] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00216] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00217] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00218] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasPersonalProfile")
+	(property_list [wwf_ProjectKB_00219])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 410)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00219] of Property_List
+	(properties
+		[wwf_ProjectKB_00220]
+		[wwf_ProjectKB_00221]
+		[wwf_ProjectKB_00222]
+		[wwf_ProjectKB_00223]
+		[wwf_ProjectKB_00224]
+		[wwf_ProjectKB_00225]))
+
+([wwf_ProjectKB_00220] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00221] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00222] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00223] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00224] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00225] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00226] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:belongsToUnit")
+	(property_list [wwf_ProjectKB_00227])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 410)
+	(x 0)
+	(y 180))
+
+([wwf_ProjectKB_00227] of Property_List
+	(properties
+		[wwf_ProjectKB_00228]
+		[wwf_ProjectKB_00229]
+		[wwf_ProjectKB_00230]
+		[wwf_ProjectKB_00231]
+		[wwf_ProjectKB_00232]
+		[wwf_ProjectKB_00233]))
+
+([wwf_ProjectKB_00228] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00229] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00230] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00231] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00232] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00233] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00234] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:firstName")
+	(property_list [wwf_ProjectKB_00235])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00235] of Property_List)
+
+([wwf_ProjectKB_00236] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:lastName")
+	(property_list [wwf_ProjectKB_00237])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00237] of Property_List)
+
+([wwf_ProjectKB_00238] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:PersonalProfile")
+	(property_list [wwf_ProjectKB_00239])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00239] of Property_List
+	(properties
+		[wwf_ProjectKB_00240]
+		[wwf_ProjectKB_00248]
+		[wwf_ProjectKB_00256]
+		[wwf_ProjectKB_00272]
+		[wwf_ProjectKB_01174]
+		[wwf_ProjectKB_00803]))
+
+([wwf_ProjectKB_00240] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInfoNeed")
+	(property_list [wwf_ProjectKB_00241])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 330)
+	(y 0))
+
+([wwf_ProjectKB_00241] of Property_List
+	(properties
+		[wwf_ProjectKB_00242]
+		[wwf_ProjectKB_00243]
+		[wwf_ProjectKB_00244]
+		[wwf_ProjectKB_00245]
+		[wwf_ProjectKB_00246]
+		[wwf_ProjectKB_00247]))
+
+([wwf_ProjectKB_00242] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00243] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00244] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00245] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00246] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00247] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00248] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:user")
+	(property_list [wwf_ProjectKB_00249])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 320)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00249] of Property_List
+	(properties
+		[wwf_ProjectKB_00250]
+		[wwf_ProjectKB_00251]
+		[wwf_ProjectKB_00252]
+		[wwf_ProjectKB_00253]
+		[wwf_ProjectKB_00254]
+		[wwf_ProjectKB_00255]))
+
+([wwf_ProjectKB_00250] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00251] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00252] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00253] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00254] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00255] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00256] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasExperience")
+	(property_list [wwf_ProjectKB_00257])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 320)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00257] of Property_List
+	(properties
+		[wwf_ProjectKB_00258]
+		[wwf_ProjectKB_00259]
+		[wwf_ProjectKB_00260]
+		[wwf_ProjectKB_00261]
+		[wwf_ProjectKB_00262]
+		[wwf_ProjectKB_00263]))
+
+([wwf_ProjectKB_00258] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00259] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00260] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00261] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00262] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00263] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00272] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInterest")
+	(property_list [wwf_ProjectKB_00273])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 330)
+	(y 120))
+
+([wwf_ProjectKB_00273] of Property_List
+	(properties
+		[wwf_ProjectKB_00274]
+		[wwf_ProjectKB_00275]
+		[wwf_ProjectKB_00276]
+		[wwf_ProjectKB_00277]
+		[wwf_ProjectKB_00278]
+		[wwf_ProjectKB_00279]))
+
+([wwf_ProjectKB_00274] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00275] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00276] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00277] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00278] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00279] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00280] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:RoleProfile")
+	(property_list [wwf_ProjectKB_00281])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00281] of Property_List
+	(properties
+		[wwf_ProjectKB_00282]
+		[wwf_ProjectKB_00290]
+		[wwf_ProjectKB_00298]))
+
+([wwf_ProjectKB_00282] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInfoNeed")
+	(property_list [wwf_ProjectKB_00283])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 440)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00283] of Property_List
+	(properties
+		[wwf_ProjectKB_00284]
+		[wwf_ProjectKB_00285]
+		[wwf_ProjectKB_00286]
+		[wwf_ProjectKB_00287]
+		[wwf_ProjectKB_00288]
+		[wwf_ProjectKB_00289]))
+
+([wwf_ProjectKB_00284] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00285] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00286] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00287] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00288] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00289] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00290] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:role")
+	(property_list [wwf_ProjectKB_00291])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 440)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00291] of Property_List
+	(properties
+		[wwf_ProjectKB_00292]
+		[wwf_ProjectKB_00293]
+		[wwf_ProjectKB_00294]
+		[wwf_ProjectKB_00295]
+		[wwf_ProjectKB_00296]
+		[wwf_ProjectKB_00297]))
+
+([wwf_ProjectKB_00292] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00293] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00294] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00295] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00296] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00297] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00298] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInterest")
+	(property_list [wwf_ProjectKB_00299])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 300)
+	(x 530)
+	(y 0))
+
+([wwf_ProjectKB_00299] of Property_List
+	(properties
+		[wwf_ProjectKB_00300]
+		[wwf_ProjectKB_00301]
+		[wwf_ProjectKB_00302]
+		[wwf_ProjectKB_00404]
+		[wwf_ProjectKB_00504]
+		[wwf_ProjectKB_00505]))
+
+([wwf_ProjectKB_00300] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00301] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00302] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00303] of Widget
+	(height 476)
+	(name ":STANDARD-SLOT")
+	(property_list [wwf_ProjectKB_00304])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 626)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00304] of Property_List
+	(name "slow widget properties")
+	(properties
+		[wwf_ProjectKB_00305]
+		[wwf_ProjectKB_00306]
+		[wwf_ProjectKB_00307]
+		[wwf_ProjectKB_00308]
+		[wwf_ProjectKB_00314]
+		[wwf_ProjectKB_00315]
+		[wwf_ProjectKB_00316]
+		[wwf_ProjectKB_00322]
+		[wwf_ProjectKB_00323]
+		[wwf_ProjectKB_00324]
+		[wwf_ProjectKB_00325]
+		[wwf_ProjectKB_00326]
+		[wwf_ProjectKB_00327]
+		[wwf_ProjectKB_00328]))
+
+([wwf_ProjectKB_00305] of Widget
+	(height 60)
+	(label "Cardinality")
+	(name ":SLOT-MINIMUM-CARDINALITY")
+	(widget_class_name "edu.stanford.smi.protege.widget.MinimumCardinalityWidget")
+	(width 200)
+	(x 200)
+	(y 120))
+
+([wwf_ProjectKB_00306] of Widget
+	(height 35)
+	(name ":SLOT-MAXIMUM-CARDINALITY")
+	(widget_class_name "edu.stanford.smi.protege.widget.MaximumCardinalityWidget")
+	(width 200)
+	(x 200)
+	(y 175))
+
+([wwf_ProjectKB_00307] of Widget
+	(name ":SLOT-CONSTRAINTS"))
+
+([wwf_ProjectKB_00308] of Widget
+	(height 120)
+	(label "Values")
+	(name ":SLOT-VALUES")
+	(property_list [wwf_ProjectKB_00309])
+	(widget_class_name "edu.stanford.smi.protege.widget.SlotValuesWidget")
+	(width 200)
+	(x 400)
+	(y 0))
+
+([wwf_ProjectKB_00309] of Property_List
+	(properties
+		[wwf_ProjectKB_00310]
+		[wwf_ProjectKB_00311]
+		[wwf_ProjectKB_00312]
+		[wwf_ProjectKB_00313]))
+
+([wwf_ProjectKB_00310] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View the selected value"))
+
+([wwf_ProjectKB_00311] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00312] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create a new value"))
+
+([wwf_ProjectKB_00313] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00314] of Widget
+	(name ":DIRECT-SUPERSLOTS"))
+
+([wwf_ProjectKB_00315] of Widget
+	(name ":DIRECT-SUBSLOTS"))
+
+([wwf_ProjectKB_00316] of Widget
+	(height 150)
+	(label "Default")
+	(name ":SLOT-DEFAULTS")
+	(property_list [wwf_ProjectKB_00317])
+	(widget_class_name "edu.stanford.smi.protege.widget.DefaultValuesWidget")
+	(width 200)
+	(x 400)
+	(y 120))
+
+([wwf_ProjectKB_00317] of Property_List
+	(properties
+		[wwf_ProjectKB_00318]
+		[wwf_ProjectKB_00319]
+		[wwf_ProjectKB_00320]
+		[wwf_ProjectKB_00321]))
+
+([wwf_ProjectKB_00318] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View the selected value"))
+
+([wwf_ProjectKB_00319] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00320] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create a new value"))
+
+([wwf_ProjectKB_00321] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00322] of Widget
+	(height 120)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
+	(width 200)
+	(x 200)
+	(y 0))
+
+([wwf_ProjectKB_00323] of Widget
+	(height 60)
+	(label "Maximum")
+	(name ":SLOT-NUMERIC-MAXIMUM")
+	(widget_class_name "edu.stanford.smi.protege.widget.NumericMaximumWidget")
+	(width 100)
+	(x 100)
+	(y 210))
+
+([wwf_ProjectKB_00324] of Widget
+	(height 60)
+	(label "Minimum")
+	(name ":SLOT-NUMERIC-MINIMUM")
+	(widget_class_name "edu.stanford.smi.protege.widget.NumericMinimumWidget")
+	(width 100)
+	(x 0)
+	(y 210))
+
+([wwf_ProjectKB_00325] of Widget
+	(height 60)
+	(label "Name")
+	(name ":NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00326] of Widget
+	(height 60)
+	(label "Inverse Slot")
+	(name ":SLOT-INVERSE")
+	(widget_class_name "edu.stanford.smi.protege.widget.InverseSlotWidget")
+	(width 200)
+	(x 200)
+	(y 210))
+
+([wwf_ProjectKB_00327] of Widget
+	(height 150)
+	(label "Value Type")
+	(name ":SLOT-VALUE-TYPE")
+	(widget_class_name "edu.stanford.smi.protege.widget.ValueTypeWidget")
+	(width 200)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00328] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_00404] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00413] of Widget
+	(height 476)
+	(name ":STANDARD-CLASS")
+	(property_list [wwf_ProjectKB_00414])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 662)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00414] of Property_List
+	(name "class widget properties")
+	(properties
+		[wwf_ProjectKB_00415]
+		[wwf_ProjectKB_00423]
+		[wwf_ProjectKB_00424]
+		[wwf_ProjectKB_00425]
+		[wwf_ProjectKB_00426]
+		[wwf_ProjectKB_00427]
+		[wwf_ProjectKB_00428]
+		[wwf_ProjectKB_00429]
+		[wwf_ProjectKB_00430]
+		[wwf_ProjectKB_00438]))
+
+([wwf_ProjectKB_00415] of Widget
+	(height 120)
+	(label "Constraints")
+	(name ":SLOT-CONSTRAINTS")
+	(property_list [wwf_ProjectKB_00416])
+	(widget_class_name "edu.stanford.smi.protege.widget.ConstraintsWidget")
+	(width 200)
+	(x 400)
+	(y 0))
+
+([wwf_ProjectKB_00416] of Property_List
+	(properties
+		[wwf_ProjectKB_00417]
+		[wwf_ProjectKB_00418]
+		[wwf_ProjectKB_00419]
+		[wwf_ProjectKB_00420]
+		[wwf_ProjectKB_00421]
+		[wwf_ProjectKB_00422]))
+
+([wwf_ProjectKB_00417] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00418] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00419] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00420] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00421] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00422] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00423] of Widget
+	(name ":DIRECT-INSTANCES"))
+
+([wwf_ProjectKB_00424] of Widget
+	(name ":DIRECT-SUBCLASSES"))
+
+([wwf_ProjectKB_00425] of Widget
+	(name ":DIRECT-SUPERCLASSES"))
+
+([wwf_ProjectKB_00426] of Widget
+	(height 120)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
+	(width 200)
+	(x 200)
+	(y 0))
+
+([wwf_ProjectKB_00427] of Widget
+	(height 60)
+	(label "Name")
+	(name ":NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00428] of Widget
+	(height 60)
+	(label "Role")
+	(name ":ROLE")
+	(widget_class_name "edu.stanford.smi.protege.widget.RoleWidget")
+	(width 200)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00429] of Widget
+	(name ":DIRECT-TYPE"))
+
+([wwf_ProjectKB_00430] of Widget
+	(height 300)
+	(label "Template Slots")
+	(name ":DIRECT-TEMPLATE-SLOTS")
+	(property_list [wwf_ProjectKB_00431])
+	(widget_class_name "edu.stanford.smi.protege.widget.TemplateSlotsWidget")
+	(width 600)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00431] of Property_List
+	(properties
+		[wwf_ProjectKB_00432]
+		[wwf_ProjectKB_00433]
+		[wwf_ProjectKB_00434]
+		[wwf_ProjectKB_00435]
+		[wwf_ProjectKB_00436]
+		[wwf_ProjectKB_00437]))
+
+([wwf_ProjectKB_00432] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View selected slots"))
+
+([wwf_ProjectKB_00433] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View selected slots at class"))
+
+([wwf_ProjectKB_00434] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create slot and attach to class"))
+
+([wwf_ProjectKB_00435] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove overrides from selected slots"))
+
+([wwf_ProjectKB_00436] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00437] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00438] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_00502] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "secretary")
+	(property_list [wwf_ProjectKB_00503])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 0)
+	(y 240))
+
+([wwf_ProjectKB_00503] of Property_List
+	(properties
+		[wwf_ProjectKB_00805]
+		[wwf_ProjectKB_00905]
+		[wwf_ProjectKB_00906]
+		[wwf_ProjectKB_01008]
+		[wwf_ProjectKB_01108]
+		[wwf_ProjectKB_01109]))
+
+([wwf_ProjectKB_00504] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00505] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00506] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:UnitProfile")
+	(property_list [wwf_ProjectKB_00507])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00507] of Property_List
+	(properties
+		[wwf_ProjectKB_00508]
+		[wwf_ProjectKB_00516]
+		[wwf_ProjectKB_00524]))
+
+([wwf_ProjectKB_00508] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInfoNeed")
+	(property_list [wwf_ProjectKB_00509])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00509] of Property_List
+	(properties
+		[wwf_ProjectKB_00510]
+		[wwf_ProjectKB_00511]
+		[wwf_ProjectKB_00512]
+		[wwf_ProjectKB_00513]
+		[wwf_ProjectKB_00514]
+		[wwf_ProjectKB_00515]))
+
+([wwf_ProjectKB_00510] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00511] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00512] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00513] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00514] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00515] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00516] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:unit")
+	(property_list [wwf_ProjectKB_00517])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 390)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00517] of Property_List
+	(properties
+		[wwf_ProjectKB_00518]
+		[wwf_ProjectKB_00519]
+		[wwf_ProjectKB_00520]
+		[wwf_ProjectKB_00521]
+		[wwf_ProjectKB_00522]
+		[wwf_ProjectKB_00523]))
+
+([wwf_ProjectKB_00518] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00519] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00520] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00521] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00522] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00523] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00524] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInterest")
+	(property_list [wwf_ProjectKB_00525])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 400)
+	(y 0))
+
+([wwf_ProjectKB_00525] of Property_List
+	(properties
+		[wwf_ProjectKB_00526]
+		[wwf_ProjectKB_00527]
+		[wwf_ProjectKB_00528]
+		[wwf_ProjectKB_00529]
+		[wwf_ProjectKB_00530]
+		[wwf_ProjectKB_00531]))
+
+([wwf_ProjectKB_00526] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00527] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00528] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00529] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00530] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00531] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00542] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Role")
+	(property_list [wwf_ProjectKB_00543])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00543] of Property_List
+	(properties
+		[wwf_ProjectKB_00544]
+		[wwf_ProjectKB_00552]
+		[wwf_ProjectKB_00554]
+		[wwf_ProjectKB_00562]
+		[wwf_ProjectKB_00927]))
+
+([wwf_ProjectKB_00544] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasRoleProfile")
+	(property_list [wwf_ProjectKB_00545])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 350)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00545] of Property_List
+	(properties
+		[wwf_ProjectKB_00546]
+		[wwf_ProjectKB_00547]
+		[wwf_ProjectKB_00548]
+		[wwf_ProjectKB_00549]
+		[wwf_ProjectKB_00550]
+		[wwf_ProjectKB_00551]))
+
+([wwf_ProjectKB_00546] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00547] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00548] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00549] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00550] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00551] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00552] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [wwf_ProjectKB_00553])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00553] of Property_List)
+
+([wwf_ProjectKB_00554] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:enactedBy")
+	(property_list [wwf_ProjectKB_00555])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 430)
+	(x 370)
+	(y 0))
+
+([wwf_ProjectKB_00555] of Property_List
+	(properties
+		[wwf_ProjectKB_00556]
+		[wwf_ProjectKB_00557]
+		[wwf_ProjectKB_00558]
+		[wwf_ProjectKB_00559]
+		[wwf_ProjectKB_00560]
+		[wwf_ProjectKB_00561]))
+
+([wwf_ProjectKB_00556] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00557] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00558] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00559] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00560] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00561] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00562] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [wwf_ProjectKB_00563])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00563] of Property_List)
+
+([wwf_ProjectKB_00564] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Skill")
+	(property_list [wwf_ProjectKB_00565])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00565] of Property_List
+	(properties
+		[wwf_ProjectKB_00566]
+		[wwf_ProjectKB_00568]
+		[wwf_ProjectKB_00570]
+		[wwf_ProjectKB_01165]
+		[wwf_ProjectKB_01173]))
+
+([wwf_ProjectKB_00566] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [wwf_ProjectKB_00567])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 530)
+	(x 0)
+	(y 70))
+
+([wwf_ProjectKB_00567] of Property_List)
+
+([wwf_ProjectKB_00568] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [wwf_ProjectKB_00569])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 450)
+	(x 0)
+	(y 10))
+
+([wwf_ProjectKB_00569] of Property_List)
+
+([wwf_ProjectKB_00570] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:neededFor")
+	(property_list [wwf_ProjectKB_00571])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 540)
+	(x 0)
+	(y 140))
+
+([wwf_ProjectKB_00571] of Property_List
+	(properties
+		[wwf_ProjectKB_00572]
+		[wwf_ProjectKB_00573]
+		[wwf_ProjectKB_00574]
+		[wwf_ProjectKB_00575]
+		[wwf_ProjectKB_00576]
+		[wwf_ProjectKB_00577]))
+
+([wwf_ProjectKB_00572] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00573] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00574] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00575] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00576] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00577] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00578] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Interest")
+	(property_list [wwf_ProjectKB_00579])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00579] of Property_List
+	(properties
+		[wwf_ProjectKB_00580]
+		[wwf_ProjectKB_00582]
+		[wwf_ProjectKB_00590]))
+
+([wwf_ProjectKB_00580] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:strength")
+	(property_list [wwf_ProjectKB_00581])
+	(widget_class_name "edu.stanford.smi.protege.widget.ComboBoxWidget")
+	(width 370)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00581] of Property_List)
+
+([wwf_ProjectKB_00582] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:inTopic")
+	(property_list [wwf_ProjectKB_00583])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 370)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00583] of Property_List
+	(properties
+		[wwf_ProjectKB_00584]
+		[wwf_ProjectKB_00585]
+		[wwf_ProjectKB_00586]
+		[wwf_ProjectKB_00587]
+		[wwf_ProjectKB_00588]
+		[wwf_ProjectKB_00589]))
+
+([wwf_ProjectKB_00584] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00585] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00586] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00587] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00588] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00589] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00590] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:interestBy")
+	(property_list [wwf_ProjectKB_00591])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 370)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00591] of Property_List
+	(properties
+		[wwf_ProjectKB_00592]
+		[wwf_ProjectKB_00593]
+		[wwf_ProjectKB_00594]
+		[wwf_ProjectKB_00595]
+		[wwf_ProjectKB_00596]
+		[wwf_ProjectKB_00597]))
+
+([wwf_ProjectKB_00592] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00593] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00594] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00595] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00596] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00597] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00598] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:InformationNeed")
+	(property_list [wwf_ProjectKB_00599])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00599] of Property_List
+	(properties [wwf_ProjectKB_00600]))
+
+([wwf_ProjectKB_00600] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:describedBy")
+	(property_list [wwf_ProjectKB_00601])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 500)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00601] of Property_List
+	(properties
+		[wwf_ProjectKB_00602]
+		[wwf_ProjectKB_00603]
+		[wwf_ProjectKB_00604]
+		[wwf_ProjectKB_00605]
+		[wwf_ProjectKB_00606]
+		[wwf_ProjectKB_00607]))
+
+([wwf_ProjectKB_00602] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00603] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00604] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00605] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00606] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00607] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00608] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Department")
+	(property_list [wwf_ProjectKB_00609])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00609] of Property_List
+	(properties
+		[wwf_ProjectKB_00610]
+		[wwf_ProjectKB_00618]
+		[wwf_ProjectKB_00626]
+		[wwf_ProjectKB_00628]
+		[wwf_ProjectKB_00636]
+		[wwf_ProjectKB_00638]
+		[wwf_ProjectKB_00926]
+		[wwf_ProjectKB_00502]))
+
+([wwf_ProjectKB_00610] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:managedBy")
+	(property_list [wwf_ProjectKB_00611])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 430)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00611] of Property_List
+	(properties
+		[wwf_ProjectKB_00612]
+		[wwf_ProjectKB_00613]
+		[wwf_ProjectKB_00614]
+		[wwf_ProjectKB_00615]
+		[wwf_ProjectKB_00616]
+		[wwf_ProjectKB_00617]))
+
+([wwf_ProjectKB_00612] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00613] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00614] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00615] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00616] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00617] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00618] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasProfile")
+	(property_list [wwf_ProjectKB_00619])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 430)
+	(x 0)
+	(y 180))
+
+([wwf_ProjectKB_00619] of Property_List
+	(properties
+		[wwf_ProjectKB_00620]
+		[wwf_ProjectKB_00621]
+		[wwf_ProjectKB_00622]
+		[wwf_ProjectKB_00623]
+		[wwf_ProjectKB_00624]
+		[wwf_ProjectKB_00625]))
+
+([wwf_ProjectKB_00620] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00621] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00622] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00623] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00624] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00625] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00626] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [wwf_ProjectKB_00627])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00627] of Property_List)
+
+([wwf_ProjectKB_00628] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:partOf")
+	(property_list [wwf_ProjectKB_00629])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 340)
+	(x 440)
+	(y 0))
+
+([wwf_ProjectKB_00629] of Property_List
+	(properties
+		[wwf_ProjectKB_00630]
+		[wwf_ProjectKB_00631]
+		[wwf_ProjectKB_00632]
+		[wwf_ProjectKB_00633]
+		[wwf_ProjectKB_00634]
+		[wwf_ProjectKB_00635]))
+
+([wwf_ProjectKB_00630] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00631] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00632] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00633] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00634] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00635] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00636] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [wwf_ProjectKB_00637])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 430)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00637] of Property_List)
+
+([wwf_ProjectKB_00638] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:containsMember")
+	(property_list [wwf_ProjectKB_00639])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 340)
+	(x 440)
+	(y 60))
+
+([wwf_ProjectKB_00639] of Property_List
+	(properties
+		[wwf_ProjectKB_00640]
+		[wwf_ProjectKB_00641]
+		[wwf_ProjectKB_00642]
+		[wwf_ProjectKB_00643]
+		[wwf_ProjectKB_00644]
+		[wwf_ProjectKB_00645]))
+
+([wwf_ProjectKB_00640] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00641] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00642] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00643] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00644] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00645] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00646] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Group")
+	(property_list [wwf_ProjectKB_00647])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00647] of Property_List
+	(properties
+		[wwf_ProjectKB_00648]
+		[wwf_ProjectKB_00656]
+		[wwf_ProjectKB_00664]
+		[wwf_ProjectKB_00672]
+		[wwf_ProjectKB_00674]
+		[wwf_ProjectKB_00676]
+		[wwf_ProjectKB_00925]))
+
+([wwf_ProjectKB_00648] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:managedBy")
+	(property_list [wwf_ProjectKB_00649])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 370)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00649] of Property_List
+	(properties
+		[wwf_ProjectKB_00650]
+		[wwf_ProjectKB_00651]
+		[wwf_ProjectKB_00652]
+		[wwf_ProjectKB_00653]
+		[wwf_ProjectKB_00654]
+		[wwf_ProjectKB_00655]))
+
+([wwf_ProjectKB_00650] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00651] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00652] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00653] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00654] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00655] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00656] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:belongsTo")
+	(property_list [wwf_ProjectKB_00657])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 300)
+	(x 370)
+	(y 0))
+
+([wwf_ProjectKB_00657] of Property_List
+	(properties
+		[wwf_ProjectKB_00658]
+		[wwf_ProjectKB_00659]
+		[wwf_ProjectKB_00660]
+		[wwf_ProjectKB_00661]
+		[wwf_ProjectKB_00662]
+		[wwf_ProjectKB_00663]))
+
+([wwf_ProjectKB_00658] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00659] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00660] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00661] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00662] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00663] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00664] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasProfile")
+	(property_list [wwf_ProjectKB_00665])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 370)
+	(x 0)
+	(y 190))
+
+([wwf_ProjectKB_00665] of Property_List
+	(properties
+		[wwf_ProjectKB_00666]
+		[wwf_ProjectKB_00667]
+		[wwf_ProjectKB_00668]
+		[wwf_ProjectKB_00669]
+		[wwf_ProjectKB_00670]
+		[wwf_ProjectKB_00671]))
+
+([wwf_ProjectKB_00666] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00667] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00668] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00669] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00670] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00671] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00672] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [wwf_ProjectKB_00673])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 300)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00673] of Property_List)
+
+([wwf_ProjectKB_00674] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [wwf_ProjectKB_00675])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 370)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00675] of Property_List)
+
+([wwf_ProjectKB_00676] of Widget
+	(height 170)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:containsMember")
+	(property_list [wwf_ProjectKB_00677])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 300)
+	(x 370)
+	(y 120))
+
+([wwf_ProjectKB_00677] of Property_List
+	(properties
+		[wwf_ProjectKB_00678]
+		[wwf_ProjectKB_00679]
+		[wwf_ProjectKB_00680]
+		[wwf_ProjectKB_00681]
+		[wwf_ProjectKB_00682]
+		[wwf_ProjectKB_00683]))
+
+([wwf_ProjectKB_00678] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00679] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00680] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00681] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00682] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00683] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00684] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Project")
+	(property_list [wwf_ProjectKB_00685])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00685] of Property_List
+	(properties
+		[wwf_ProjectKB_00686]
+		[wwf_ProjectKB_00694]
+		[wwf_ProjectKB_00702]
+		[wwf_ProjectKB_00710]
+		[wwf_ProjectKB_00712]
+		[wwf_ProjectKB_00714]
+		[wwf_ProjectKB_00908]))
+
+([wwf_ProjectKB_00686] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:managedBy")
+	(property_list [wwf_ProjectKB_00687])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 380)
+	(x 0)
+	(y 120))
+
+([wwf_ProjectKB_00687] of Property_List
+	(properties
+		[wwf_ProjectKB_00688]
+		[wwf_ProjectKB_00689]
+		[wwf_ProjectKB_00690]
+		[wwf_ProjectKB_00691]
+		[wwf_ProjectKB_00692]
+		[wwf_ProjectKB_00693]))
+
+([wwf_ProjectKB_00688] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00689] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00690] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00691] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00692] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00693] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00694] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:belongsTo")
+	(property_list [wwf_ProjectKB_00695])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 390)
+	(y 0))
+
+([wwf_ProjectKB_00695] of Property_List
+	(properties
+		[wwf_ProjectKB_00696]
+		[wwf_ProjectKB_00697]
+		[wwf_ProjectKB_00698]
+		[wwf_ProjectKB_00699]
+		[wwf_ProjectKB_00700]
+		[wwf_ProjectKB_00701]))
+
+([wwf_ProjectKB_00696] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00697] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00698] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00699] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00700] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00701] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00702] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasProfile")
+	(property_list [wwf_ProjectKB_00703])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 380)
+	(x 0)
+	(y 200))
+
+([wwf_ProjectKB_00703] of Property_List
+	(properties
+		[wwf_ProjectKB_00704]
+		[wwf_ProjectKB_00705]
+		[wwf_ProjectKB_00706]
+		[wwf_ProjectKB_00707]
+		[wwf_ProjectKB_00708]
+		[wwf_ProjectKB_00709]))
+
+([wwf_ProjectKB_00704] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([wwf_ProjectKB_00705] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00706] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00707] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00708] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00709] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([wwf_ProjectKB_00710] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [wwf_ProjectKB_00711])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([wwf_ProjectKB_00711] of Property_List)
+
+([wwf_ProjectKB_00712] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [wwf_ProjectKB_00713])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 380)
+	(x 0)
+	(y 60))
+
+([wwf_ProjectKB_00713] of Property_List)
+
+([wwf_ProjectKB_00714] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:containsMember")
+	(property_list [wwf_ProjectKB_00715])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 390)
+	(y 120))
+
+([wwf_ProjectKB_00715] of Property_List
+	(properties
+		[wwf_ProjectKB_00716]
+		[wwf_ProjectKB_00717]
+		[wwf_ProjectKB_00718]
+		[wwf_ProjectKB_00719]
+		[wwf_ProjectKB_00720]
+		[wwf_ProjectKB_00721]))
+
+([wwf_ProjectKB_00716] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00717] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00718] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00719] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_00720] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_00721] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_00803] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasSkill")
+	(property_list [wwf_ProjectKB_00903])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 0)
+	(y 240))
+
+([wwf_ProjectKB_00805] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00903] of Property_List
+	(properties
+		[wwf_ProjectKB_00904]
+		[wwf_ProjectKB_01006]
+		[wwf_ProjectKB_01106]
+		[wwf_ProjectKB_01107]
+		[wwf_ProjectKB_01209]
+		[wwf_ProjectKB_01309]))
+
+([wwf_ProjectKB_00904] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_00905] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_00906] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_00907] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_00908] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_00925] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_00926] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_00927] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_00998] of Integer
+	(integer_value 282)
+	(name "OntovizTab.left_right"))
+
+([wwf_ProjectKB_01006] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_01008] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_01106] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_01107] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_01108] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_01109] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_01165] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:partOfSkill")
+	(property_list [wwf_ProjectKB_01166])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 520)
+	(x 0)
+	(y 270))
+
+([wwf_ProjectKB_01166] of Property_List
+	(properties
+		[wwf_ProjectKB_01167]
+		[wwf_ProjectKB_01168]
+		[wwf_ProjectKB_01169]
+		[wwf_ProjectKB_01170]
+		[wwf_ProjectKB_01171]
+		[wwf_ProjectKB_01172]))
+
+([wwf_ProjectKB_01167] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([wwf_ProjectKB_01168] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([wwf_ProjectKB_01169] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([wwf_ProjectKB_01170] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([wwf_ProjectKB_01171] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_01172] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_01173] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_01174] of Property_List
+	(name "layout properties"))
+
+([wwf_ProjectKB_01209] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([wwf_ProjectKB_01309] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([wwf_ProjectKB_01379] of String
+	(name "OrganisationalModel:Skill")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_01380] of String
+	(name "OrganisationalModel:UnitProfile")
+	(string_value "OrganisationalModel:unit"))
+
+([wwf_ProjectKB_01381] of String
+	(name "OrganisationalModel:Role")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_01382] of String
+	(name "Task:Condition")
+	(string_value "Task:condTerm"))
+
+([wwf_ProjectKB_01383] of String
+	(name "OrganisationalModel:ProcessRole")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_01384] of String
+	(name "Task:Task")
+	(string_value "Task:name"))
+
+([wwf_ProjectKB_01385] of String
+	(name "OrganisationalModel:Experience")
+	(string_value "OrganisationalModel:experienceObject"))
+
+([wwf_ProjectKB_01386] of String
+	(name "OrganisationalModel:User")
+	(string_value "OrganisationalModel:lastName"))
+
+([wwf_ProjectKB_01387] of String
+	(name "TaskConcept:TaskConcept")
+	(string_value "TaskConcept:name"))
+
+([wwf_ProjectKB_01388] of String
+	(name "OrganisationalModel:OrganisationalUnit")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_01389] of String
+	(name ":STANDARD-SLOT")
+	(string_value ":NAME"))
+
+([wwf_ProjectKB_01390] of String
+	(name ":STANDARD-CLASS")
+	(string_value ":NAME"))
+
+([wwf_ProjectKB_01391] of String
+	(name "OrganisationalModel:RoleProfile")
+	(string_value "OrganisationalModel:role"))
+
+([wwf_ProjectKB_01392] of String
+	(name "OrganisationalModel:PersonalProfile")
+	(string_value "OrganisationalModel:user"))
+
+([wwf_ProjectKB_01393] of String
+	(name ":PAL-CONSTRAINT")
+	(string_value ":PAL-NAME"))
+
+([wwf_ProjectKB_01394] of String
+	(name "OrganisationalModel:InformationDescription")
+	(string_value "OrganisationalModel:informalDescription"))

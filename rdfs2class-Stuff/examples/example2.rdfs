@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://protege.stanford.edu/system#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+	 <!ENTITY example2 'http://dfki.rdf.util/rdfs2class/example2#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:example2="&example2;"
+	 xmlns:rdfs="&rdfs;">
+<rdfs:Class rdf:about="&example2;Animal">
+	<rdfs:subClassOf rdf:resource="&example2;LivingBeing"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&example2;Date">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&example2;LivingBeing">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&example2;Person">
+	<rdfs:subClassOf rdf:resource="&example2;LivingBeing"/>
+</rdfs:Class>
+<rdf:Property rdf:about="&example2;dateOfBirth"
+	 a:maxCardinality="1">
+	<rdfs:range rdf:resource="&example2;Date"/>
+	<rdfs:domain rdf:resource="&example2;Person"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;dayOfMonth"
+	 a:maxCardinality="1">
+	<rdfs:domain rdf:resource="&example2;Date"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;firstName"
+	 a:maxCardinality="1"
+	 a:minCardinality="1">
+	<rdfs:domain rdf:resource="&example2;Person"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;lastName"
+	 a:maxCardinality="1"
+	 a:minCardinality="1">
+	<rdfs:domain rdf:resource="&example2;Person"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;loves">
+	<rdfs:range rdf:resource="&example2;LivingBeing"/>
+	<rdfs:domain rdf:resource="&example2;Person"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;month"
+	 a:maxCardinality="1">
+	<rdfs:domain rdf:resource="&example2;Date"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;name"
+	 a:maxCardinality="1">
+	<rdfs:domain rdf:resource="&example2;Animal"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;relatedTo">
+	<rdfs:domain rdf:resource="&example2;Person"/>
+	<rdfs:range rdf:resource="&example2;Person"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example2;year"
+	 a:maxCardinality="1">
+	<rdfs:domain rdf:resource="&example2;Date"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+</rdf:RDF>

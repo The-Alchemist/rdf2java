@@ -1,0 +1,3699 @@
+; Wed Aug 15 15:33:30 GMT+02:00 2001
+; 
+;+ (version "1.5")
+;+ (build "Build 673")
+
+([AuditRepository_ProjectKB_00000] of String
+	(name "renaming_namespaces"))
+
+([AuditRepository_ProjectKB_00051] of Integer
+	(integer_value 207)
+	(name "ClsesTab.left_right"))
+
+([AuditRepository_ProjectKB_00052] of Integer
+	(integer_value 400)
+	(name "ClsesTab.left.top_bottom"))
+
+([AuditRepository_ProjectKB_00053] of Integer
+	(integer_value 250)
+	(name "SlotsTab.left_right"))
+
+([AuditRepository_ProjectKB_00054] of Integer
+	(integer_value 400)
+	(name "SlotTab.left.top_bottom"))
+
+([AuditRepository_ProjectKB_00055] of Integer
+	(integer_value 250)
+	(name "FormsTab.left_right"))
+
+([AuditRepository_ProjectKB_00056] of Integer
+	(integer_value 285)
+	(name "InstancesTab.left_right"))
+
+([AuditRepository_ProjectKB_00057] of Integer
+	(integer_value 250)
+	(name "InstancesTab.right.left_right"))
+
+([AuditRepository_ProjectKB_00058] of String
+	(name "SearchTab_Query"))
+
+([AuditRepository_ProjectKB_00061] of String
+	(name "included_projects")
+	(string_value "wwf http://dfki.frodo.wwf/wwf# "))
+
+([AuditRepository_ProjectKB_00062] of String
+	(name "namespaces")
+	(string_value "wwf http://dfki.frodo.wwf/wwf# TaskConcept http://dfki.frodo.wwf/TaskConcept# rdf http://www.w3.org/1999/02/22-rdf-syntax-ns# Time http://dfki.frodo.wwf/Time# rdfs http://www.w3.org/TR/1999/PR-rdf-schema-19990303# Audit http://dfki.frodo.wwf/Audit# OrganisationalModel http://dfki.frodo.wwf/OrganisationalModel# Task http://dfki.frodo.wwf/Task# "))
+
+([AuditRepository_ProjectKB_00320] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "Task:TaskModel")
+	(property_list [AuditRepository_ProjectKB_00321])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00321] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00322]
+		[AuditRepository_ProjectKB_00324]
+		[AuditRepository_ProjectKB_00332]
+		[AuditRepository_ProjectKB_00340]
+		[AuditRepository_ProjectKB_00342]
+		[AuditRepository_ProjectKB_00350]
+		[AuditRepository_ProjectKB_00358]
+		[AuditRepository_ProjectKB_00366]
+		[AuditRepository_ProjectKB_00374]
+		[AuditRepository_ProjectKB_00382]
+		[AuditRepository_ProjectKB_00390]))
+
+([AuditRepository_ProjectKB_00322] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:name")
+	(property_list [AuditRepository_ProjectKB_00323])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00323] of Property_List)
+
+([AuditRepository_ProjectKB_00324] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:parentTask")
+	(property_list [AuditRepository_ProjectKB_00325])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 250)
+	(y 120))
+
+([AuditRepository_ProjectKB_00325] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00326]
+		[AuditRepository_ProjectKB_00327]
+		[AuditRepository_ProjectKB_00328]
+		[AuditRepository_ProjectKB_00329]
+		[AuditRepository_ProjectKB_00330]
+		[AuditRepository_ProjectKB_00331]))
+
+([AuditRepository_ProjectKB_00326] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00327] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00328] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00329] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00330] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00331] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00332] of Widget
+	(height 300)
+	(is_hidden FALSE)
+	(name "Task:subTask")
+	(property_list [AuditRepository_ProjectKB_00333])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 250)
+	(y 240))
+
+([AuditRepository_ProjectKB_00333] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00334]
+		[AuditRepository_ProjectKB_00335]
+		[AuditRepository_ProjectKB_00336]
+		[AuditRepository_ProjectKB_00337]
+		[AuditRepository_ProjectKB_00338]
+		[AuditRepository_ProjectKB_00339]))
+
+([AuditRepository_ProjectKB_00334] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00335] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00336] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00337] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00338] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00339] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00340] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00341])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00341] of Property_List)
+
+([AuditRepository_ProjectKB_00342] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:postCondition")
+	(property_list [AuditRepository_ProjectKB_00343])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 250)
+	(x 0)
+	(y 180))
+
+([AuditRepository_ProjectKB_00343] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00344]
+		[AuditRepository_ProjectKB_00345]
+		[AuditRepository_ProjectKB_00346]
+		[AuditRepository_ProjectKB_00347]
+		[AuditRepository_ProjectKB_00348]
+		[AuditRepository_ProjectKB_00349]))
+
+([AuditRepository_ProjectKB_00344] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00345] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00346] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00347] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00348] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00349] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00350] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:preCondition")
+	(property_list [AuditRepository_ProjectKB_00351])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 250)
+	(x 0)
+	(y 240))
+
+([AuditRepository_ProjectKB_00351] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00352]
+		[AuditRepository_ProjectKB_00353]
+		[AuditRepository_ProjectKB_00354]
+		[AuditRepository_ProjectKB_00355]
+		[AuditRepository_ProjectKB_00356]
+		[AuditRepository_ProjectKB_00357]))
+
+([AuditRepository_ProjectKB_00352] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00353] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00354] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00355] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00356] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00357] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00358] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:needsInfo")
+	(property_list [AuditRepository_ProjectKB_00359])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 0)
+	(y 420))
+
+([AuditRepository_ProjectKB_00359] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00360]
+		[AuditRepository_ProjectKB_00361]
+		[AuditRepository_ProjectKB_00362]
+		[AuditRepository_ProjectKB_00363]
+		[AuditRepository_ProjectKB_00364]
+		[AuditRepository_ProjectKB_00365]))
+
+([AuditRepository_ProjectKB_00360] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00361] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00362] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00363] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00364] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00365] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00366] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:needsSkill")
+	(property_list [AuditRepository_ProjectKB_00367])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 250)
+	(y 0))
+
+([AuditRepository_ProjectKB_00367] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00368]
+		[AuditRepository_ProjectKB_00369]
+		[AuditRepository_ProjectKB_00370]
+		[AuditRepository_ProjectKB_00371]
+		[AuditRepository_ProjectKB_00372]
+		[AuditRepository_ProjectKB_00373]))
+
+([AuditRepository_ProjectKB_00368] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00369] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00370] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00371] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00372] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00373] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00374] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:describedBy")
+	(property_list [AuditRepository_ProjectKB_00375])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 0)
+	(y 300))
+
+([AuditRepository_ProjectKB_00375] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00376]
+		[AuditRepository_ProjectKB_00377]
+		[AuditRepository_ProjectKB_00378]
+		[AuditRepository_ProjectKB_00379]
+		[AuditRepository_ProjectKB_00380]
+		[AuditRepository_ProjectKB_00381]))
+
+([AuditRepository_ProjectKB_00376] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00377] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00378] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00379] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00380] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00381] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00382] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:performedBy")
+	(property_list [AuditRepository_ProjectKB_00383])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 250)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00383] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00384]
+		[AuditRepository_ProjectKB_00385]
+		[AuditRepository_ProjectKB_00386]
+		[AuditRepository_ProjectKB_00387]
+		[AuditRepository_ProjectKB_00388]
+		[AuditRepository_ProjectKB_00389]))
+
+([AuditRepository_ProjectKB_00384] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00385] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00386] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00387] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00388] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00389] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00390] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00391] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Department")
+	(property_list [AuditRepository_ProjectKB_00392])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00392] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00393]
+		[AuditRepository_ProjectKB_00401]
+		[AuditRepository_ProjectKB_00409]
+		[AuditRepository_ProjectKB_00411]
+		[AuditRepository_ProjectKB_00419]
+		[AuditRepository_ProjectKB_00421]
+		[AuditRepository_ProjectKB_00429]
+		[AuditRepository_ProjectKB_00430]))
+
+([AuditRepository_ProjectKB_00393] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:managedBy")
+	(property_list [AuditRepository_ProjectKB_00394])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 430)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00394] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00395]
+		[AuditRepository_ProjectKB_00396]
+		[AuditRepository_ProjectKB_00397]
+		[AuditRepository_ProjectKB_00398]
+		[AuditRepository_ProjectKB_00399]
+		[AuditRepository_ProjectKB_00400]))
+
+([AuditRepository_ProjectKB_00395] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00396] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00397] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00398] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00399] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00400] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00401] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasProfile")
+	(property_list [AuditRepository_ProjectKB_00402])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 430)
+	(x 0)
+	(y 180))
+
+([AuditRepository_ProjectKB_00402] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00403]
+		[AuditRepository_ProjectKB_00404]
+		[AuditRepository_ProjectKB_00405]
+		[AuditRepository_ProjectKB_00406]
+		[AuditRepository_ProjectKB_00407]
+		[AuditRepository_ProjectKB_00408]))
+
+([AuditRepository_ProjectKB_00403] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00404] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00405] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00406] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00407] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00408] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00409] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [AuditRepository_ProjectKB_00410])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00410] of Property_List)
+
+([AuditRepository_ProjectKB_00411] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:partOf")
+	(property_list [AuditRepository_ProjectKB_00412])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 340)
+	(x 440)
+	(y 0))
+
+([AuditRepository_ProjectKB_00412] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00413]
+		[AuditRepository_ProjectKB_00414]
+		[AuditRepository_ProjectKB_00415]
+		[AuditRepository_ProjectKB_00416]
+		[AuditRepository_ProjectKB_00417]
+		[AuditRepository_ProjectKB_00418]))
+
+([AuditRepository_ProjectKB_00413] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00414] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00415] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00416] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00417] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00418] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00419] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00420])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 430)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00420] of Property_List)
+
+([AuditRepository_ProjectKB_00421] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:containsMember")
+	(property_list [AuditRepository_ProjectKB_00422])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 340)
+	(x 440)
+	(y 60))
+
+([AuditRepository_ProjectKB_00422] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00423]
+		[AuditRepository_ProjectKB_00424]
+		[AuditRepository_ProjectKB_00425]
+		[AuditRepository_ProjectKB_00426]
+		[AuditRepository_ProjectKB_00427]
+		[AuditRepository_ProjectKB_00428]))
+
+([AuditRepository_ProjectKB_00423] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00424] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00425] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00426] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00427] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00428] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00429] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00430] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "secretary")
+	(property_list [AuditRepository_ProjectKB_00431])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 0)
+	(y 240))
+
+([AuditRepository_ProjectKB_00431] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00432]
+		[AuditRepository_ProjectKB_00433]
+		[AuditRepository_ProjectKB_00434]
+		[AuditRepository_ProjectKB_00435]
+		[AuditRepository_ProjectKB_00436]
+		[AuditRepository_ProjectKB_00437]))
+
+([AuditRepository_ProjectKB_00432] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00433] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00434] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00435] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00436] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00437] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00438] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:PersonalProfile")
+	(property_list [AuditRepository_ProjectKB_00439])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00439] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00440]
+		[AuditRepository_ProjectKB_00448]
+		[AuditRepository_ProjectKB_00456]
+		[AuditRepository_ProjectKB_00464]
+		[AuditRepository_ProjectKB_00472]
+		[AuditRepository_ProjectKB_00473]))
+
+([AuditRepository_ProjectKB_00440] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInfoNeed")
+	(property_list [AuditRepository_ProjectKB_00441])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 330)
+	(y 0))
+
+([AuditRepository_ProjectKB_00441] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00442]
+		[AuditRepository_ProjectKB_00443]
+		[AuditRepository_ProjectKB_00444]
+		[AuditRepository_ProjectKB_00445]
+		[AuditRepository_ProjectKB_00446]
+		[AuditRepository_ProjectKB_00447]))
+
+([AuditRepository_ProjectKB_00442] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00443] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00444] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00445] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00446] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00447] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00448] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:user")
+	(property_list [AuditRepository_ProjectKB_00449])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 320)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00449] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00450]
+		[AuditRepository_ProjectKB_00451]
+		[AuditRepository_ProjectKB_00452]
+		[AuditRepository_ProjectKB_00453]
+		[AuditRepository_ProjectKB_00454]
+		[AuditRepository_ProjectKB_00455]))
+
+([AuditRepository_ProjectKB_00450] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00451] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00452] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00453] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00454] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00455] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00456] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasExperience")
+	(property_list [AuditRepository_ProjectKB_00457])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 320)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00457] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00458]
+		[AuditRepository_ProjectKB_00459]
+		[AuditRepository_ProjectKB_00460]
+		[AuditRepository_ProjectKB_00461]
+		[AuditRepository_ProjectKB_00462]
+		[AuditRepository_ProjectKB_00463]))
+
+([AuditRepository_ProjectKB_00458] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00459] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00460] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00461] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00462] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00463] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00464] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInterest")
+	(property_list [AuditRepository_ProjectKB_00465])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 330)
+	(y 120))
+
+([AuditRepository_ProjectKB_00465] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00466]
+		[AuditRepository_ProjectKB_00467]
+		[AuditRepository_ProjectKB_00468]
+		[AuditRepository_ProjectKB_00469]
+		[AuditRepository_ProjectKB_00470]
+		[AuditRepository_ProjectKB_00471]))
+
+([AuditRepository_ProjectKB_00466] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00467] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00468] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00469] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00470] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00471] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00472] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00473] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasSkill")
+	(property_list [AuditRepository_ProjectKB_00474])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 0)
+	(y 240))
+
+([AuditRepository_ProjectKB_00474] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00475]
+		[AuditRepository_ProjectKB_00476]
+		[AuditRepository_ProjectKB_00477]
+		[AuditRepository_ProjectKB_00478]
+		[AuditRepository_ProjectKB_00479]
+		[AuditRepository_ProjectKB_00480]))
+
+([AuditRepository_ProjectKB_00475] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00476] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00477] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00478] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00479] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00480] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00481] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Skill")
+	(property_list [AuditRepository_ProjectKB_00482])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00482] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00483]
+		[AuditRepository_ProjectKB_00485]
+		[AuditRepository_ProjectKB_00487]
+		[AuditRepository_ProjectKB_00495]
+		[AuditRepository_ProjectKB_00503]))
+
+([AuditRepository_ProjectKB_00483] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00484])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 530)
+	(x 0)
+	(y 70))
+
+([AuditRepository_ProjectKB_00484] of Property_List)
+
+([AuditRepository_ProjectKB_00485] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [AuditRepository_ProjectKB_00486])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 450)
+	(x 0)
+	(y 10))
+
+([AuditRepository_ProjectKB_00486] of Property_List)
+
+([AuditRepository_ProjectKB_00487] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:neededFor")
+	(property_list [AuditRepository_ProjectKB_00488])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 540)
+	(x 0)
+	(y 140))
+
+([AuditRepository_ProjectKB_00488] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00489]
+		[AuditRepository_ProjectKB_00490]
+		[AuditRepository_ProjectKB_00491]
+		[AuditRepository_ProjectKB_00492]
+		[AuditRepository_ProjectKB_00493]
+		[AuditRepository_ProjectKB_00494]))
+
+([AuditRepository_ProjectKB_00489] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00490] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00491] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00492] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00493] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00494] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00495] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:partOfSkill")
+	(property_list [AuditRepository_ProjectKB_00496])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 520)
+	(x 0)
+	(y 270))
+
+([AuditRepository_ProjectKB_00496] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00497]
+		[AuditRepository_ProjectKB_00498]
+		[AuditRepository_ProjectKB_00499]
+		[AuditRepository_ProjectKB_00500]
+		[AuditRepository_ProjectKB_00501]
+		[AuditRepository_ProjectKB_00502]))
+
+([AuditRepository_ProjectKB_00497] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00498] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00499] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00500] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00501] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00502] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00503] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00504] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:InformationNeed")
+	(property_list [AuditRepository_ProjectKB_00505])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00505] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00506]
+		[AuditRepository_ProjectKB_00514]))
+
+([AuditRepository_ProjectKB_00506] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:describedBy")
+	(property_list [AuditRepository_ProjectKB_00507])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 560)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00507] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00508]
+		[AuditRepository_ProjectKB_00509]
+		[AuditRepository_ProjectKB_00510]
+		[AuditRepository_ProjectKB_00511]
+		[AuditRepository_ProjectKB_00512]
+		[AuditRepository_ProjectKB_00513]))
+
+([AuditRepository_ProjectKB_00508] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00509] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00510] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00511] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00512] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00513] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00514] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00515] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "Task:TaskInstance")
+	(property_list [AuditRepository_ProjectKB_00516])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00516] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00517]
+		[AuditRepository_ProjectKB_00525]
+		[AuditRepository_ProjectKB_00533]
+		[AuditRepository_ProjectKB_00541]
+		[AuditRepository_ProjectKB_00543]
+		[AuditRepository_ProjectKB_00551]
+		[AuditRepository_ProjectKB_00559]
+		[AuditRepository_ProjectKB_00567]
+		[AuditRepository_ProjectKB_00575]
+		[AuditRepository_ProjectKB_00583]
+		[AuditRepository_ProjectKB_00585]
+		[AuditRepository_ProjectKB_00593]))
+
+([AuditRepository_ProjectKB_00517] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:preCondition")
+	(property_list [AuditRepository_ProjectKB_00518])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 250)
+	(x 0)
+	(y 300))
+
+([AuditRepository_ProjectKB_00518] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00519]
+		[AuditRepository_ProjectKB_00520]
+		[AuditRepository_ProjectKB_00521]
+		[AuditRepository_ProjectKB_00522]
+		[AuditRepository_ProjectKB_00523]
+		[AuditRepository_ProjectKB_00524]))
+
+([AuditRepository_ProjectKB_00519] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00520] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00521] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00522] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00523] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00524] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00525] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:parentTask")
+	(property_list [AuditRepository_ProjectKB_00526])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 250)
+	(y 240))
+
+([AuditRepository_ProjectKB_00526] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00527]
+		[AuditRepository_ProjectKB_00528]
+		[AuditRepository_ProjectKB_00529]
+		[AuditRepository_ProjectKB_00530]
+		[AuditRepository_ProjectKB_00531]
+		[AuditRepository_ProjectKB_00532]))
+
+([AuditRepository_ProjectKB_00527] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00528] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00529] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00530] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00531] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00532] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00533] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:instanceOf")
+	(property_list [AuditRepository_ProjectKB_00534])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 250)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00534] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00535]
+		[AuditRepository_ProjectKB_00536]
+		[AuditRepository_ProjectKB_00537]
+		[AuditRepository_ProjectKB_00538]
+		[AuditRepository_ProjectKB_00539]
+		[AuditRepository_ProjectKB_00540]))
+
+([AuditRepository_ProjectKB_00535] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00536] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00537] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00538] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00539] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00540] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00541] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00542])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00542] of Property_List)
+
+([AuditRepository_ProjectKB_00543] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:performedBy")
+	(property_list [AuditRepository_ProjectKB_00544])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 250)
+	(x 0)
+	(y 180))
+
+([AuditRepository_ProjectKB_00544] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00545]
+		[AuditRepository_ProjectKB_00546]
+		[AuditRepository_ProjectKB_00547]
+		[AuditRepository_ProjectKB_00548]
+		[AuditRepository_ProjectKB_00549]
+		[AuditRepository_ProjectKB_00550]))
+
+([AuditRepository_ProjectKB_00545] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00546] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00547] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00548] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00549] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00550] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00551] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:needsInfo")
+	(property_list [AuditRepository_ProjectKB_00552])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 250)
+	(y 0))
+
+([AuditRepository_ProjectKB_00552] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00553]
+		[AuditRepository_ProjectKB_00554]
+		[AuditRepository_ProjectKB_00555]
+		[AuditRepository_ProjectKB_00556]
+		[AuditRepository_ProjectKB_00557]
+		[AuditRepository_ProjectKB_00558]))
+
+([AuditRepository_ProjectKB_00553] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00554] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00555] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00556] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00557] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00558] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00559] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:subTask")
+	(property_list [AuditRepository_ProjectKB_00560])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 250)
+	(y 360))
+
+([AuditRepository_ProjectKB_00560] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00561]
+		[AuditRepository_ProjectKB_00562]
+		[AuditRepository_ProjectKB_00563]
+		[AuditRepository_ProjectKB_00564]
+		[AuditRepository_ProjectKB_00565]
+		[AuditRepository_ProjectKB_00566]))
+
+([AuditRepository_ProjectKB_00561] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00562] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00563] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00564] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00565] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00566] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00567] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:describedBy")
+	(property_list [AuditRepository_ProjectKB_00568])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 0)
+	(y 360))
+
+([AuditRepository_ProjectKB_00568] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00569]
+		[AuditRepository_ProjectKB_00570]
+		[AuditRepository_ProjectKB_00571]
+		[AuditRepository_ProjectKB_00572]
+		[AuditRepository_ProjectKB_00573]
+		[AuditRepository_ProjectKB_00574]))
+
+([AuditRepository_ProjectKB_00569] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00570] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00571] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00572] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00573] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00574] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00575] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:postCondition")
+	(property_list [AuditRepository_ProjectKB_00576])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 250)
+	(x 0)
+	(y 240))
+
+([AuditRepository_ProjectKB_00576] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00577]
+		[AuditRepository_ProjectKB_00578]
+		[AuditRepository_ProjectKB_00579]
+		[AuditRepository_ProjectKB_00580]
+		[AuditRepository_ProjectKB_00581]
+		[AuditRepository_ProjectKB_00582]))
+
+([AuditRepository_ProjectKB_00577] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00578] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00579] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00580] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00581] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00582] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00583] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "Task:name")
+	(property_list [AuditRepository_ProjectKB_00584])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00584] of Property_List)
+
+([AuditRepository_ProjectKB_00585] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "Task:needsSkill")
+	(property_list [AuditRepository_ProjectKB_00586])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 250)
+	(x 250)
+	(y 120))
+
+([AuditRepository_ProjectKB_00586] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00587]
+		[AuditRepository_ProjectKB_00588]
+		[AuditRepository_ProjectKB_00589]
+		[AuditRepository_ProjectKB_00590]
+		[AuditRepository_ProjectKB_00591]
+		[AuditRepository_ProjectKB_00592]))
+
+([AuditRepository_ProjectKB_00587] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00588] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00589] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00590] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00591] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00592] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00593] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00594] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Group")
+	(property_list [AuditRepository_ProjectKB_00595])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00595] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00596]
+		[AuditRepository_ProjectKB_00604]
+		[AuditRepository_ProjectKB_00612]
+		[AuditRepository_ProjectKB_00620]
+		[AuditRepository_ProjectKB_00622]
+		[AuditRepository_ProjectKB_00624]
+		[AuditRepository_ProjectKB_00632]))
+
+([AuditRepository_ProjectKB_00596] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:managedBy")
+	(property_list [AuditRepository_ProjectKB_00597])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 370)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00597] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00598]
+		[AuditRepository_ProjectKB_00599]
+		[AuditRepository_ProjectKB_00600]
+		[AuditRepository_ProjectKB_00601]
+		[AuditRepository_ProjectKB_00602]
+		[AuditRepository_ProjectKB_00603]))
+
+([AuditRepository_ProjectKB_00598] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00599] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00600] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00601] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00602] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00603] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00604] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:belongsTo")
+	(property_list [AuditRepository_ProjectKB_00605])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 300)
+	(x 370)
+	(y 0))
+
+([AuditRepository_ProjectKB_00605] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00606]
+		[AuditRepository_ProjectKB_00607]
+		[AuditRepository_ProjectKB_00608]
+		[AuditRepository_ProjectKB_00609]
+		[AuditRepository_ProjectKB_00610]
+		[AuditRepository_ProjectKB_00611]))
+
+([AuditRepository_ProjectKB_00606] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00607] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00608] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00609] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00610] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00611] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00612] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasProfile")
+	(property_list [AuditRepository_ProjectKB_00613])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 370)
+	(x 0)
+	(y 190))
+
+([AuditRepository_ProjectKB_00613] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00614]
+		[AuditRepository_ProjectKB_00615]
+		[AuditRepository_ProjectKB_00616]
+		[AuditRepository_ProjectKB_00617]
+		[AuditRepository_ProjectKB_00618]
+		[AuditRepository_ProjectKB_00619]))
+
+([AuditRepository_ProjectKB_00614] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00615] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00616] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00617] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00618] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00619] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00620] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [AuditRepository_ProjectKB_00621])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 300)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00621] of Property_List)
+
+([AuditRepository_ProjectKB_00622] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00623])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 370)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00623] of Property_List)
+
+([AuditRepository_ProjectKB_00624] of Widget
+	(height 170)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:containsMember")
+	(property_list [AuditRepository_ProjectKB_00625])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 300)
+	(x 370)
+	(y 120))
+
+([AuditRepository_ProjectKB_00625] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00626]
+		[AuditRepository_ProjectKB_00627]
+		[AuditRepository_ProjectKB_00628]
+		[AuditRepository_ProjectKB_00629]
+		[AuditRepository_ProjectKB_00630]
+		[AuditRepository_ProjectKB_00631]))
+
+([AuditRepository_ProjectKB_00626] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00627] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00628] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00629] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00630] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00631] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00632] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00633] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:InformationDescription")
+	(property_list [AuditRepository_ProjectKB_00634])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00634] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00635]
+		[AuditRepository_ProjectKB_00637]
+		[AuditRepository_ProjectKB_00639]))
+
+([AuditRepository_ProjectKB_00635] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:infoObjectURI")
+	(property_list [AuditRepository_ProjectKB_00636])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 490)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00636] of Property_List)
+
+([AuditRepository_ProjectKB_00637] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00638])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 500)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00638] of Property_List)
+
+([AuditRepository_ProjectKB_00639] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00640] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Experience")
+	(property_list [AuditRepository_ProjectKB_00641])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00641] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00642]
+		[AuditRepository_ProjectKB_00644]
+		[AuditRepository_ProjectKB_00652]))
+
+([AuditRepository_ProjectKB_00642] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:experienceLevel")
+	(property_list [AuditRepository_ProjectKB_00643])
+	(widget_class_name "edu.stanford.smi.protege.widget.ComboBoxWidget")
+	(width 240)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00643] of Property_List)
+
+([AuditRepository_ProjectKB_00644] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:experienceObject")
+	(property_list [AuditRepository_ProjectKB_00645])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 330)
+	(y 0))
+
+([AuditRepository_ProjectKB_00645] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00646]
+		[AuditRepository_ProjectKB_00647]
+		[AuditRepository_ProjectKB_00648]
+		[AuditRepository_ProjectKB_00649]
+		[AuditRepository_ProjectKB_00650]
+		[AuditRepository_ProjectKB_00651]))
+
+([AuditRepository_ProjectKB_00646] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00647] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00648] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00649] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00650] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00651] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00652] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:experiencedUser")
+	(property_list [AuditRepository_ProjectKB_00653])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 330)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00653] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00654]
+		[AuditRepository_ProjectKB_00655]
+		[AuditRepository_ProjectKB_00656]
+		[AuditRepository_ProjectKB_00657]
+		[AuditRepository_ProjectKB_00658]
+		[AuditRepository_ProjectKB_00659]))
+
+([AuditRepository_ProjectKB_00654] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00655] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00656] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00657] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00658] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00659] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00660] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Role")
+	(property_list [AuditRepository_ProjectKB_00661])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00661] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00662]
+		[AuditRepository_ProjectKB_00670]
+		[AuditRepository_ProjectKB_00672]
+		[AuditRepository_ProjectKB_00680]
+		[AuditRepository_ProjectKB_00682]))
+
+([AuditRepository_ProjectKB_00662] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasRoleProfile")
+	(property_list [AuditRepository_ProjectKB_00663])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 350)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00663] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00664]
+		[AuditRepository_ProjectKB_00665]
+		[AuditRepository_ProjectKB_00666]
+		[AuditRepository_ProjectKB_00667]
+		[AuditRepository_ProjectKB_00668]
+		[AuditRepository_ProjectKB_00669]))
+
+([AuditRepository_ProjectKB_00664] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00665] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00666] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00667] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00668] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00669] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00670] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00671])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00671] of Property_List)
+
+([AuditRepository_ProjectKB_00672] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:enactedBy")
+	(property_list [AuditRepository_ProjectKB_00673])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 430)
+	(x 370)
+	(y 0))
+
+([AuditRepository_ProjectKB_00673] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00674]
+		[AuditRepository_ProjectKB_00675]
+		[AuditRepository_ProjectKB_00676]
+		[AuditRepository_ProjectKB_00677]
+		[AuditRepository_ProjectKB_00678]
+		[AuditRepository_ProjectKB_00679]))
+
+([AuditRepository_ProjectKB_00674] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00675] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00676] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00677] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00678] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00679] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00680] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [AuditRepository_ProjectKB_00681])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00681] of Property_List)
+
+([AuditRepository_ProjectKB_00682] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00683] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Interest")
+	(property_list [AuditRepository_ProjectKB_00684])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00684] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00685]
+		[AuditRepository_ProjectKB_00687]
+		[AuditRepository_ProjectKB_00695]))
+
+([AuditRepository_ProjectKB_00685] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:strength")
+	(property_list [AuditRepository_ProjectKB_00686])
+	(widget_class_name "edu.stanford.smi.protege.widget.ComboBoxWidget")
+	(width 370)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00686] of Property_List)
+
+([AuditRepository_ProjectKB_00687] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:inTopic")
+	(property_list [AuditRepository_ProjectKB_00688])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 370)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00688] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00689]
+		[AuditRepository_ProjectKB_00690]
+		[AuditRepository_ProjectKB_00691]
+		[AuditRepository_ProjectKB_00692]
+		[AuditRepository_ProjectKB_00693]
+		[AuditRepository_ProjectKB_00694]))
+
+([AuditRepository_ProjectKB_00689] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00690] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00691] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00692] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00693] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00694] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00695] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:interestBy")
+	(property_list [AuditRepository_ProjectKB_00696])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 370)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00696] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00697]
+		[AuditRepository_ProjectKB_00698]
+		[AuditRepository_ProjectKB_00699]
+		[AuditRepository_ProjectKB_00700]
+		[AuditRepository_ProjectKB_00701]
+		[AuditRepository_ProjectKB_00702]))
+
+([AuditRepository_ProjectKB_00697] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00698] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00699] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00700] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00701] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00702] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00703] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:Project")
+	(property_list [AuditRepository_ProjectKB_00704])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00704] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00705]
+		[AuditRepository_ProjectKB_00713]
+		[AuditRepository_ProjectKB_00721]
+		[AuditRepository_ProjectKB_00729]
+		[AuditRepository_ProjectKB_00731]
+		[AuditRepository_ProjectKB_00733]
+		[AuditRepository_ProjectKB_00741]))
+
+([AuditRepository_ProjectKB_00705] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:managedBy")
+	(property_list [AuditRepository_ProjectKB_00706])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 380)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00706] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00707]
+		[AuditRepository_ProjectKB_00708]
+		[AuditRepository_ProjectKB_00709]
+		[AuditRepository_ProjectKB_00710]
+		[AuditRepository_ProjectKB_00711]
+		[AuditRepository_ProjectKB_00712]))
+
+([AuditRepository_ProjectKB_00707] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00708] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00709] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00710] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00711] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00712] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00713] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:belongsTo")
+	(property_list [AuditRepository_ProjectKB_00714])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 390)
+	(y 0))
+
+([AuditRepository_ProjectKB_00714] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00715]
+		[AuditRepository_ProjectKB_00716]
+		[AuditRepository_ProjectKB_00717]
+		[AuditRepository_ProjectKB_00718]
+		[AuditRepository_ProjectKB_00719]
+		[AuditRepository_ProjectKB_00720]))
+
+([AuditRepository_ProjectKB_00715] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00716] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00717] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00718] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00719] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00720] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00721] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasProfile")
+	(property_list [AuditRepository_ProjectKB_00722])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 380)
+	(x 0)
+	(y 200))
+
+([AuditRepository_ProjectKB_00722] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00723]
+		[AuditRepository_ProjectKB_00724]
+		[AuditRepository_ProjectKB_00725]
+		[AuditRepository_ProjectKB_00726]
+		[AuditRepository_ProjectKB_00727]
+		[AuditRepository_ProjectKB_00728]))
+
+([AuditRepository_ProjectKB_00723] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00724] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00725] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00726] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00727] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00728] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00729] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [AuditRepository_ProjectKB_00730])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00730] of Property_List)
+
+([AuditRepository_ProjectKB_00731] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00732])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 380)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00732] of Property_List)
+
+([AuditRepository_ProjectKB_00733] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:containsMember")
+	(property_list [AuditRepository_ProjectKB_00734])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 390)
+	(y 120))
+
+([AuditRepository_ProjectKB_00734] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00735]
+		[AuditRepository_ProjectKB_00736]
+		[AuditRepository_ProjectKB_00737]
+		[AuditRepository_ProjectKB_00738]
+		[AuditRepository_ProjectKB_00739]
+		[AuditRepository_ProjectKB_00740]))
+
+([AuditRepository_ProjectKB_00735] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00736] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00737] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00738] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00739] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00740] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00741] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00742] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:User")
+	(property_list [AuditRepository_ProjectKB_00743])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00743] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00744]
+		[AuditRepository_ProjectKB_00752]
+		[AuditRepository_ProjectKB_00760]
+		[AuditRepository_ProjectKB_00768]
+		[AuditRepository_ProjectKB_00770]
+		[AuditRepository_ProjectKB_00772]))
+
+([AuditRepository_ProjectKB_00744] of Widget
+	(height 190)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:enactsRole")
+	(property_list [AuditRepository_ProjectKB_00745])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 410)
+	(x 0)
+	(y 300))
+
+([AuditRepository_ProjectKB_00745] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00746]
+		[AuditRepository_ProjectKB_00747]
+		[AuditRepository_ProjectKB_00748]
+		[AuditRepository_ProjectKB_00749]
+		[AuditRepository_ProjectKB_00750]
+		[AuditRepository_ProjectKB_00751]))
+
+([AuditRepository_ProjectKB_00746] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00747] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00748] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00749] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00750] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00751] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00752] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasPersonalProfile")
+	(property_list [AuditRepository_ProjectKB_00753])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 410)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00753] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00754]
+		[AuditRepository_ProjectKB_00755]
+		[AuditRepository_ProjectKB_00756]
+		[AuditRepository_ProjectKB_00757]
+		[AuditRepository_ProjectKB_00758]
+		[AuditRepository_ProjectKB_00759]))
+
+([AuditRepository_ProjectKB_00754] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00755] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00756] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00757] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00758] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00759] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00760] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:belongsToUnit")
+	(property_list [AuditRepository_ProjectKB_00761])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 410)
+	(x 0)
+	(y 180))
+
+([AuditRepository_ProjectKB_00761] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00762]
+		[AuditRepository_ProjectKB_00763]
+		[AuditRepository_ProjectKB_00764]
+		[AuditRepository_ProjectKB_00765]
+		[AuditRepository_ProjectKB_00766]
+		[AuditRepository_ProjectKB_00767]))
+
+([AuditRepository_ProjectKB_00762] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00763] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00764] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00765] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00766] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00767] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00768] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:firstName")
+	(property_list [AuditRepository_ProjectKB_00769])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00769] of Property_List)
+
+([AuditRepository_ProjectKB_00770] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:lastName")
+	(property_list [AuditRepository_ProjectKB_00771])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00771] of Property_List)
+
+([AuditRepository_ProjectKB_00772] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00773] of Widget
+	(height 476)
+	(is_hidden FALSE)
+	(name ":PAL-CONSTRAINT")
+	(property_list [AuditRepository_ProjectKB_00774])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 603)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00774] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00775]
+		[AuditRepository_ProjectKB_00776]
+		[AuditRepository_ProjectKB_00777]
+		[AuditRepository_ProjectKB_00778]))
+
+([AuditRepository_ProjectKB_00775] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":PAL-NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00776] of Widget
+	(height 160)
+	(is_hidden FALSE)
+	(label "Range")
+	(name ":PAL-RANGE")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(width 250)
+	(x 250)
+	(y 200))
+
+([AuditRepository_ProjectKB_00777] of Widget
+	(height 200)
+	(is_hidden FALSE)
+	(label "Description")
+	(name ":PAL-DESCRIPTION")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(width 250)
+	(x 250)
+	(y 0))
+
+([AuditRepository_ProjectKB_00778] of Widget
+	(height 300)
+	(is_hidden FALSE)
+	(label "Statement")
+	(name ":PAL-STATEMENT")
+	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
+	(width 250)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00779] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:ProcessRole")
+	(property_list [AuditRepository_ProjectKB_00780])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00780] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00781]
+		[AuditRepository_ProjectKB_00783]
+		[AuditRepository_ProjectKB_00791]
+		[AuditRepository_ProjectKB_00793]
+		[AuditRepository_ProjectKB_00801]))
+
+([AuditRepository_ProjectKB_00781] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:informalDescription")
+	(property_list [AuditRepository_ProjectKB_00782])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 10)
+	(y 90))
+
+([AuditRepository_ProjectKB_00782] of Property_List)
+
+([AuditRepository_ProjectKB_00783] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:andCondition")
+	(property_list [AuditRepository_ProjectKB_00784])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 370)
+	(x 430)
+	(y 250))
+
+([AuditRepository_ProjectKB_00784] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00785]
+		[AuditRepository_ProjectKB_00786]
+		[AuditRepository_ProjectKB_00787]
+		[AuditRepository_ProjectKB_00788]
+		[AuditRepository_ProjectKB_00789]
+		[AuditRepository_ProjectKB_00790]))
+
+([AuditRepository_ProjectKB_00785] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00786] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00787] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00788] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00789] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00790] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00791] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:name")
+	(property_list [AuditRepository_ProjectKB_00792])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 10)
+	(y 10))
+
+([AuditRepository_ProjectKB_00792] of Property_List)
+
+([AuditRepository_ProjectKB_00793] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:notCondition")
+	(property_list [AuditRepository_ProjectKB_00794])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 430)
+	(y 0))
+
+([AuditRepository_ProjectKB_00794] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00795]
+		[AuditRepository_ProjectKB_00796]
+		[AuditRepository_ProjectKB_00797]
+		[AuditRepository_ProjectKB_00798]
+		[AuditRepository_ProjectKB_00799]
+		[AuditRepository_ProjectKB_00800]))
+
+([AuditRepository_ProjectKB_00795] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00796] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00797] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00798] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00799] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00800] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00801] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:orCondition")
+	(property_list [AuditRepository_ProjectKB_00802])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 380)
+	(x 430)
+	(y 120))
+
+([AuditRepository_ProjectKB_00802] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00803]
+		[AuditRepository_ProjectKB_00804]
+		[AuditRepository_ProjectKB_00805]
+		[AuditRepository_ProjectKB_00806]
+		[AuditRepository_ProjectKB_00807]
+		[AuditRepository_ProjectKB_00808]))
+
+([AuditRepository_ProjectKB_00803] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00804] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00805] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00806] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00807] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00808] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00809] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:UnitProfile")
+	(property_list [AuditRepository_ProjectKB_00810])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00810] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00811]
+		[AuditRepository_ProjectKB_00819]
+		[AuditRepository_ProjectKB_00827]))
+
+([AuditRepository_ProjectKB_00811] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInfoNeed")
+	(property_list [AuditRepository_ProjectKB_00812])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00812] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00813]
+		[AuditRepository_ProjectKB_00814]
+		[AuditRepository_ProjectKB_00815]
+		[AuditRepository_ProjectKB_00816]
+		[AuditRepository_ProjectKB_00817]
+		[AuditRepository_ProjectKB_00818]))
+
+([AuditRepository_ProjectKB_00813] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00814] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00815] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00816] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00817] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00818] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00819] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:unit")
+	(property_list [AuditRepository_ProjectKB_00820])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 390)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00820] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00821]
+		[AuditRepository_ProjectKB_00822]
+		[AuditRepository_ProjectKB_00823]
+		[AuditRepository_ProjectKB_00824]
+		[AuditRepository_ProjectKB_00825]
+		[AuditRepository_ProjectKB_00826]))
+
+([AuditRepository_ProjectKB_00821] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00822] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00823] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00824] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00825] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00826] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00827] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInterest")
+	(property_list [AuditRepository_ProjectKB_00828])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 390)
+	(x 400)
+	(y 0))
+
+([AuditRepository_ProjectKB_00828] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00829]
+		[AuditRepository_ProjectKB_00830]
+		[AuditRepository_ProjectKB_00831]
+		[AuditRepository_ProjectKB_00832]
+		[AuditRepository_ProjectKB_00833]
+		[AuditRepository_ProjectKB_00834]))
+
+([AuditRepository_ProjectKB_00829] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00830] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00831] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00832] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00833] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00834] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00835] of Widget
+	(height 833)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:RoleProfile")
+	(property_list [AuditRepository_ProjectKB_00836])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 880)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00836] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00837]
+		[AuditRepository_ProjectKB_00845]
+		[AuditRepository_ProjectKB_00853]))
+
+([AuditRepository_ProjectKB_00837] of Widget
+	(height 120)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInfoNeed")
+	(property_list [AuditRepository_ProjectKB_00838])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 440)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00838] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00839]
+		[AuditRepository_ProjectKB_00840]
+		[AuditRepository_ProjectKB_00841]
+		[AuditRepository_ProjectKB_00842]
+		[AuditRepository_ProjectKB_00843]
+		[AuditRepository_ProjectKB_00844]))
+
+([AuditRepository_ProjectKB_00839] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00840] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00841] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00842] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00843] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00844] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00845] of Widget
+	(height 60)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:role")
+	(property_list [AuditRepository_ProjectKB_00846])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 440)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00846] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00847]
+		[AuditRepository_ProjectKB_00848]
+		[AuditRepository_ProjectKB_00849]
+		[AuditRepository_ProjectKB_00850]
+		[AuditRepository_ProjectKB_00851]
+		[AuditRepository_ProjectKB_00852]))
+
+([AuditRepository_ProjectKB_00847] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Instance"))
+
+([AuditRepository_ProjectKB_00848] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00849] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00850] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00851] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00852] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([AuditRepository_ProjectKB_00853] of Widget
+	(height 180)
+	(is_hidden FALSE)
+	(name "OrganisationalModel:hasInterest")
+	(property_list [AuditRepository_ProjectKB_00854])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 300)
+	(x 530)
+	(y 0))
+
+([AuditRepository_ProjectKB_00854] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00855]
+		[AuditRepository_ProjectKB_00856]
+		[AuditRepository_ProjectKB_00857]
+		[AuditRepository_ProjectKB_00858]
+		[AuditRepository_ProjectKB_00859]
+		[AuditRepository_ProjectKB_00860]))
+
+([AuditRepository_ProjectKB_00855] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00856] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00857] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00858] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00859] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00860] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00861] of Widget
+	(height 476)
+	(name ":STANDARD-SLOT")
+	(property_list [AuditRepository_ProjectKB_00862])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 626)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00862] of Property_List
+	(name "slow widget properties")
+	(properties
+		[AuditRepository_ProjectKB_00863]
+		[AuditRepository_ProjectKB_00864]
+		[AuditRepository_ProjectKB_00865]
+		[AuditRepository_ProjectKB_00866]
+		[AuditRepository_ProjectKB_00872]
+		[AuditRepository_ProjectKB_00873]
+		[AuditRepository_ProjectKB_00874]
+		[AuditRepository_ProjectKB_00880]
+		[AuditRepository_ProjectKB_00881]
+		[AuditRepository_ProjectKB_00882]
+		[AuditRepository_ProjectKB_00883]
+		[AuditRepository_ProjectKB_00884]
+		[AuditRepository_ProjectKB_00885]
+		[AuditRepository_ProjectKB_00886]))
+
+([AuditRepository_ProjectKB_00863] of Widget
+	(height 60)
+	(label "Cardinality")
+	(name ":SLOT-MINIMUM-CARDINALITY")
+	(widget_class_name "edu.stanford.smi.protege.widget.MinimumCardinalityWidget")
+	(width 200)
+	(x 200)
+	(y 120))
+
+([AuditRepository_ProjectKB_00864] of Widget
+	(height 35)
+	(name ":SLOT-MAXIMUM-CARDINALITY")
+	(widget_class_name "edu.stanford.smi.protege.widget.MaximumCardinalityWidget")
+	(width 200)
+	(x 200)
+	(y 175))
+
+([AuditRepository_ProjectKB_00865] of Widget
+	(name ":SLOT-CONSTRAINTS"))
+
+([AuditRepository_ProjectKB_00866] of Widget
+	(height 120)
+	(label "Values")
+	(name ":SLOT-VALUES")
+	(property_list [AuditRepository_ProjectKB_00867])
+	(widget_class_name "edu.stanford.smi.protege.widget.SlotValuesWidget")
+	(width 200)
+	(x 400)
+	(y 0))
+
+([AuditRepository_ProjectKB_00867] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00868]
+		[AuditRepository_ProjectKB_00869]
+		[AuditRepository_ProjectKB_00870]
+		[AuditRepository_ProjectKB_00871]))
+
+([AuditRepository_ProjectKB_00868] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View the selected value"))
+
+([AuditRepository_ProjectKB_00869] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00870] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create a new value"))
+
+([AuditRepository_ProjectKB_00871] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00872] of Widget
+	(name ":DIRECT-SUPERSLOTS"))
+
+([AuditRepository_ProjectKB_00873] of Widget
+	(name ":DIRECT-SUBSLOTS"))
+
+([AuditRepository_ProjectKB_00874] of Widget
+	(height 150)
+	(label "Default")
+	(name ":SLOT-DEFAULTS")
+	(property_list [AuditRepository_ProjectKB_00875])
+	(widget_class_name "edu.stanford.smi.protege.widget.DefaultValuesWidget")
+	(width 200)
+	(x 400)
+	(y 120))
+
+([AuditRepository_ProjectKB_00875] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00876]
+		[AuditRepository_ProjectKB_00877]
+		[AuditRepository_ProjectKB_00878]
+		[AuditRepository_ProjectKB_00879]))
+
+([AuditRepository_ProjectKB_00876] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View the selected value"))
+
+([AuditRepository_ProjectKB_00877] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00878] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create a new value"))
+
+([AuditRepository_ProjectKB_00879] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00880] of Widget
+	(height 120)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
+	(width 200)
+	(x 200)
+	(y 0))
+
+([AuditRepository_ProjectKB_00881] of Widget
+	(height 60)
+	(label "Maximum")
+	(name ":SLOT-NUMERIC-MAXIMUM")
+	(widget_class_name "edu.stanford.smi.protege.widget.NumericMaximumWidget")
+	(width 100)
+	(x 100)
+	(y 210))
+
+([AuditRepository_ProjectKB_00882] of Widget
+	(height 60)
+	(label "Minimum")
+	(name ":SLOT-NUMERIC-MINIMUM")
+	(widget_class_name "edu.stanford.smi.protege.widget.NumericMinimumWidget")
+	(width 100)
+	(x 0)
+	(y 210))
+
+([AuditRepository_ProjectKB_00883] of Widget
+	(height 60)
+	(label "Name")
+	(name ":NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00884] of Widget
+	(height 60)
+	(label "Inverse Slot")
+	(name ":SLOT-INVERSE")
+	(widget_class_name "edu.stanford.smi.protege.widget.InverseSlotWidget")
+	(width 200)
+	(x 200)
+	(y 210))
+
+([AuditRepository_ProjectKB_00885] of Widget
+	(height 150)
+	(label "Value Type")
+	(name ":SLOT-VALUE-TYPE")
+	(widget_class_name "edu.stanford.smi.protege.widget.ValueTypeWidget")
+	(width 200)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00886] of Property_List
+	(name "layout properties"))
+
+([AuditRepository_ProjectKB_00887] of Widget
+	(height 476)
+	(name ":STANDARD-CLASS")
+	(property_list [AuditRepository_ProjectKB_00888])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(width 662)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00888] of Property_List
+	(name "class widget properties")
+	(properties
+		[AuditRepository_ProjectKB_00889]
+		[AuditRepository_ProjectKB_00897]
+		[AuditRepository_ProjectKB_00898]
+		[AuditRepository_ProjectKB_00899]
+		[AuditRepository_ProjectKB_00900]
+		[AuditRepository_ProjectKB_00901]
+		[AuditRepository_ProjectKB_00902]
+		[AuditRepository_ProjectKB_00903]
+		[AuditRepository_ProjectKB_00904]
+		[AuditRepository_ProjectKB_00912]))
+
+([AuditRepository_ProjectKB_00889] of Widget
+	(height 120)
+	(label "Constraints")
+	(name ":SLOT-CONSTRAINTS")
+	(property_list [AuditRepository_ProjectKB_00890])
+	(widget_class_name "edu.stanford.smi.protege.widget.ConstraintsWidget")
+	(width 200)
+	(x 400)
+	(y 0))
+
+([AuditRepository_ProjectKB_00890] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00891]
+		[AuditRepository_ProjectKB_00892]
+		[AuditRepository_ProjectKB_00893]
+		[AuditRepository_ProjectKB_00894]
+		[AuditRepository_ProjectKB_00895]
+		[AuditRepository_ProjectKB_00896]))
+
+([AuditRepository_ProjectKB_00891] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View Selected Instances"))
+
+([AuditRepository_ProjectKB_00892] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create Instance"))
+
+([AuditRepository_ProjectKB_00893] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-References"))
+
+([AuditRepository_ProjectKB_00894] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00895] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00896] of Boolean
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Selected Instances"))
+
+([AuditRepository_ProjectKB_00897] of Widget
+	(name ":DIRECT-INSTANCES"))
+
+([AuditRepository_ProjectKB_00898] of Widget
+	(name ":DIRECT-SUBCLASSES"))
+
+([AuditRepository_ProjectKB_00899] of Widget
+	(name ":DIRECT-SUPERCLASSES"))
+
+([AuditRepository_ProjectKB_00900] of Widget
+	(height 120)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(widget_class_name "edu.stanford.smi.protege.widget.DocumentationWidget")
+	(width 200)
+	(x 200)
+	(y 0))
+
+([AuditRepository_ProjectKB_00901] of Widget
+	(height 60)
+	(label "Name")
+	(name ":NAME")
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([AuditRepository_ProjectKB_00902] of Widget
+	(height 60)
+	(label "Role")
+	(name ":ROLE")
+	(widget_class_name "edu.stanford.smi.protege.widget.RoleWidget")
+	(width 200)
+	(x 0)
+	(y 60))
+
+([AuditRepository_ProjectKB_00903] of Widget
+	(name ":DIRECT-TYPE"))
+
+([AuditRepository_ProjectKB_00904] of Widget
+	(height 300)
+	(label "Template Slots")
+	(name ":DIRECT-TEMPLATE-SLOTS")
+	(property_list [AuditRepository_ProjectKB_00905])
+	(widget_class_name "edu.stanford.smi.protege.widget.TemplateSlotsWidget")
+	(width 600)
+	(x 0)
+	(y 120))
+
+([AuditRepository_ProjectKB_00905] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00906]
+		[AuditRepository_ProjectKB_00907]
+		[AuditRepository_ProjectKB_00908]
+		[AuditRepository_ProjectKB_00909]
+		[AuditRepository_ProjectKB_00910]
+		[AuditRepository_ProjectKB_00911]))
+
+([AuditRepository_ProjectKB_00906] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View selected slots"))
+
+([AuditRepository_ProjectKB_00907] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-View selected slots at class"))
+
+([AuditRepository_ProjectKB_00908] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Create slot and attach to class"))
+
+([AuditRepository_ProjectKB_00909] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove overrides from selected slots"))
+
+([AuditRepository_ProjectKB_00910] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Add"))
+
+([AuditRepository_ProjectKB_00911] of Boolean
+	(boolean_value TRUE)
+	(name "ButtonDisplayed-Remove"))
+
+([AuditRepository_ProjectKB_00912] of Property_List
+	(name "layout properties"))
+
+([BROWSER_SLOT_NAMES] of Property_List
+	(properties
+		[wwf_ProjectKB_00103]
+		[wwf_ProjectKB_00104]
+		[wwf_ProjectKB_00105]
+		[wwf_ProjectKB_00106]
+		[wwf_ProjectKB_00107]
+		[wwf_ProjectKB_00108]
+		[wwf_ProjectKB_00109]
+		[wwf_ProjectKB_00110]
+		[wwf_ProjectKB_00111]
+		[wwf_ProjectKB_00112]
+		[wwf_ProjectKB_00113]
+		[wwf_ProjectKB_00114]
+		[wwf_ProjectKB_00115]
+		[wwf_ProjectKB_00116]
+		[wwf_ProjectKB_00117]
+		[wwf_ProjectKB_00118]
+		[wwf_ProjectKB_00119]))
+
+([CLSES_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Classes")
+	(property_list [ProjectKB_7480_00013])
+	(widget_class_name "edu.stanford.smi.protege.widget.ClsesTab"))
+
+([FORMS_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Forms")
+	(property_list [ProjectKB_7480_00042])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormsTab"))
+
+([INSTANCES_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Instances")
+	(property_list [ProjectKB_7480_00045])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
+
+([PROJECT] of Project
+	(browser_slot_names [BROWSER_SLOT_NAMES])
+	(customized_instance_widgets
+		[AuditRepository_ProjectKB_00438]
+		[AuditRepository_ProjectKB_00742]
+		[AuditRepository_ProjectKB_00594]
+		[AuditRepository_ProjectKB_00861]
+		[AuditRepository_ProjectKB_00391]
+		[AuditRepository_ProjectKB_00660]
+		[AuditRepository_ProjectKB_00835]
+		[AuditRepository_ProjectKB_00320]
+		[AuditRepository_ProjectKB_00633]
+		[AuditRepository_ProjectKB_00515]
+		[AuditRepository_ProjectKB_00481]
+		[AuditRepository_ProjectKB_00683]
+		[AuditRepository_ProjectKB_00773]
+		[AuditRepository_ProjectKB_00779]
+		[AuditRepository_ProjectKB_00640]
+		[AuditRepository_ProjectKB_00887]
+		[AuditRepository_ProjectKB_00703]
+		[AuditRepository_ProjectKB_00809]
+		[AuditRepository_ProjectKB_00504])
+	(default_cls_metaclass ":STANDARD-CLASS")
+	(default_facet_metaclass ":STANDARD-FACET")
+	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
+	(default_slot_metaclass ":STANDARD-SLOT")
+	(next_frame_number 32)
+	(options [ProjectKB_7480_00014])
+	(sources [SOURCES])
+	(tabs
+		[CLSES_TAB]
+		[SLOTS_TAB]
+		[FORMS_TAB]
+		[INSTANCES_TAB]
+		[QUERIES_TAB]
+		[ProjectKB_7480_00001]
+		[ProjectKB_7480_00003]
+		[ProjectKB_7480_00005]
+		[ProjectKB_7480_00007]
+		[ProjectKB_7480_00009]
+		[ProjectKB_7480_00011]))
+
+([ProjectKB_7480_00000] of String
+	(name "factory_class_name")
+	(string_value "edu.stanford.smi.protegex.storage.rdf.configurable.RDFCBackend"))
+
+([ProjectKB_7480_00001] of Widget
+	(is_hidden FALSE)
+	(label "Ontoviz")
+	(property_list [ProjectKB_7480_00002])
+	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
+
+([ProjectKB_7480_00002] of Property_List
+	(properties [wwf_ProjectKB_00102]))
+
+([ProjectKB_7480_00003] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_7480_00004])
+	(widget_class_name "dms.ElemTab"))
+
+([ProjectKB_7480_00004] of Property_List)
+
+([ProjectKB_7480_00005] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_7480_00006])
+	(widget_class_name "dfki.protege.oil_tab.OilTab"))
+
+([ProjectKB_7480_00006] of Property_List)
+
+([ProjectKB_7480_00007] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_7480_00008])
+	(widget_class_name "dfki.protege.graphviz_tab.GraphvizTab"))
+
+([ProjectKB_7480_00008] of Property_List)
+
+([ProjectKB_7480_00009] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_7480_00010])
+	(widget_class_name "edu.stanford.smi.protege.widget.KAToolTab"))
+
+([ProjectKB_7480_00010] of Property_List)
+
+([ProjectKB_7480_00011] of Widget
+	(is_hidden TRUE)
+	(property_list [ProjectKB_7480_00012])
+	(widget_class_name "edu.stanford.smi.protege.widget.ClsesAndInstancesTab"))
+
+([ProjectKB_7480_00012] of Property_List)
+
+([ProjectKB_7480_00013] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00051]
+		[AuditRepository_ProjectKB_00052]))
+
+([ProjectKB_7480_00014] of Options
+	(confirm_on_remove FALSE)
+	(display_abstract_class_icon TRUE)
+	(display_hidden_classes TRUE)
+	(display_multi_parent_class_icon TRUE)
+	(is_readonly FALSE))
+
+([ProjectKB_7480_00030] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00053]
+		[AuditRepository_ProjectKB_00054]))
+
+([ProjectKB_7480_00042] of Property_List
+	(properties [AuditRepository_ProjectKB_00055]))
+
+([ProjectKB_7480_00045] of Property_List
+	(properties
+		[AuditRepository_ProjectKB_00056]
+		[AuditRepository_ProjectKB_00057]))
+
+([ProjectKB_7480_00046] of Property_List
+	(properties [AuditRepository_ProjectKB_00058]))
+
+([ProjectKB_7480_00047] of String
+	(name "rdfs_file_name")
+	(string_value "wwf.rdfs"))
+
+([ProjectKB_7480_00048] of String
+	(name "rdf_file_name")
+	(string_value "wwf.rdf"))
+
+([ProjectKB_7480_00049] of String
+	(name "namespace_name")
+	(string_value "http://dfki.frodo.wwf/wwf#"))
+
+([ProjectKB_7480_00050] of Boolean
+	(boolean_value TRUE)
+	(name "use_roundtrip"))
+
+([QUERIES_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Queries")
+	(property_list [ProjectKB_7480_00046])
+	(widget_class_name "edu.stanford.smi.protegex.queries_tab.QueriesTab"))
+
+([SLOTS_TAB] of Widget
+	(is_hidden FALSE)
+	(label "Slots")
+	(property_list [ProjectKB_7480_00030])
+	(widget_class_name "edu.stanford.smi.protege.widget.SlotsTab"))
+
+([SOURCES] of Property_List
+	(properties
+		[ProjectKB_7480_00000]
+		[ProjectKB_7480_00047]
+		[ProjectKB_7480_00048]
+		[ProjectKB_7480_00049]
+		[ProjectKB_7480_00050]
+		[AuditRepository_ProjectKB_00061]
+		[AuditRepository_ProjectKB_00062]
+		[AuditRepository_ProjectKB_00000]))
+
+([wwf_ProjectKB_00102] of Integer
+	(integer_value 7)
+	(name "OntovizTab.left_right"))
+
+([wwf_ProjectKB_00103] of String
+	(name "OrganisationalModel:OrganisationalUnit")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_00104] of String
+	(name "OrganisationalModel:User")
+	(string_value "OrganisationalModel:lastName"))
+
+([wwf_ProjectKB_00105] of String
+	(name ":PAL-CONSTRAINT")
+	(string_value ":PAL-NAME"))
+
+([wwf_ProjectKB_00106] of String
+	(name "Audit:AuditEvent")
+	(string_value "Audit:eventName"))
+
+([wwf_ProjectKB_00107] of String
+	(name "OrganisationalModel:Role")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_00108] of String
+	(name ":STANDARD-SLOT")
+	(string_value ":NAME"))
+
+([wwf_ProjectKB_00109] of String
+	(name "OrganisationalModel:Experience")
+	(string_value "OrganisationalModel:experienceObject"))
+
+([wwf_ProjectKB_00110] of String
+	(name "OrganisationalModel:UnitProfile")
+	(string_value "OrganisationalModel:unit"))
+
+([wwf_ProjectKB_00111] of String
+	(name "Task:Task")
+	(string_value "Task:name"))
+
+([wwf_ProjectKB_00112] of String
+	(name "OrganisationalModel:RoleProfile")
+	(string_value "OrganisationalModel:role"))
+
+([wwf_ProjectKB_00113] of String
+	(name "OrganisationalModel:InformationDescription")
+	(string_value "OrganisationalModel:informalDescription"))
+
+([wwf_ProjectKB_00114] of String
+	(name "OrganisationalModel:Skill")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_00115] of String
+	(name "OrganisationalModel:ProcessRole")
+	(string_value "OrganisationalModel:name"))
+
+([wwf_ProjectKB_00116] of String
+	(name "TaskConcept:TaskConcept")
+	(string_value "TaskConcept:name"))
+
+([wwf_ProjectKB_00117] of String
+	(name "Task:Condition")
+	(string_value "Task:condTerm"))
+
+([wwf_ProjectKB_00118] of String
+	(name ":STANDARD-CLASS")
+	(string_value ":NAME"))
+
+([wwf_ProjectKB_00119] of String
+	(name "OrganisationalModel:PersonalProfile")
+	(string_value "OrganisationalModel:user"))

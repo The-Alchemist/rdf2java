@@ -1,0 +1,585 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY a 'http://dfki.frodo.wwf/Audit#'>
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY b 'http://dfki.frodo.wwf/wwf#'>
+	 <!ENTITY c 'http://dfki.frodo.wwf/OrganisationalModel#'>
+	 <!ENTITY d 'http://dfki.frodo.wwf/TaskConcept#'>
+	 <!ENTITY e 'http://dfki.frodo.wwf/Task#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:b="&b;"
+	 xmlns:c="&c;"
+	 xmlns:d="&d;"
+	 xmlns:e="&e;">
+<c:User rdf:about="&c;OrganisationalModel_00075"
+	 c:firstName="Heiko"
+	 c:lastName="Maus">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00098"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00059"/>
+</c:User>
+<c:PersonalProfile rdf:about="&c;OrganisationalModel_00076">
+	<c:user rdf:resource="&c;OrganisationalModel_00075"/>
+	<c:hasSkill rdf:resource="&b;wwf_00080"/>
+	<c:hasSkill rdf:resource="&b;wwf_00081"/>
+</c:PersonalProfile>
+<c:User rdf:about="&c;OrganisationalModel_00077"
+	 c:firstName="Sven"
+	 c:lastName="Schwarz">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00098"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00059"/>
+</c:User>
+<c:PersonalProfile rdf:about="&c;OrganisationalModel_00078">
+	<c:user rdf:resource="&c;OrganisationalModel_00077"/>
+	<c:hasSkill rdf:resource="&b;wwf_00080"/>
+</c:PersonalProfile>
+<d:TaskConcept rdf:about="&c;OrganisationalModel_00080"
+	 d:informalDescription="Literatursuche im Web"
+	 d:name="LiteratursucheWeb"/>
+<c:Department rdf:about="&c;OrganisationalModel_00094"
+	 c:informalDescription="Deutsches Forschungszentrum für künstliche Intelligenz"
+	 c:name="DFKI"/>
+<c:Department rdf:about="&c;OrganisationalModel_00095"
+	 c:name="Knowledge Management">
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00075"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00077"/>
+	<c:partOf rdf:resource="&c;OrganisationalModel_00094"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00096"/>
+	<c:managedBy rdf:resource="&c;OrganisationalModel_00096"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00099"/>
+	<c:containsMember rdf:resource="&b;wwf_00050"/>
+	<c:containsMember rdf:resource="&b;wwf_00053"/>
+	<c:containsMember rdf:resource="&b;wwf_00054"/>
+	<c:containsMember rdf:resource="&b;wwf_00056"/>
+	<c:containsMember rdf:resource="&b;wwf_00058"/>
+	<c:containsMember rdf:resource="&b;wwf_00060"/>
+	<c:containsMember rdf:resource="&b;wwf_00061"/>
+	<c:containsMember rdf:resource="&b;wwf_00062"/>
+	<c:containsMember rdf:resource="&b;wwf_00064"/>
+	<c:containsMember rdf:resource="&b;wwf_00066"/>
+	<c:secretary rdf:resource="&b;wwf_00068"/>
+	<c:containsMember rdf:resource="&b;wwf_00068"/>
+	<c:secretary rdf:resource="&b;wwf_00070"/>
+	<c:containsMember rdf:resource="&b;wwf_00070"/>
+	<c:containsMember rdf:resource="&b;wwf_00077"/>
+	<c:containsMember rdf:resource="&b;wwf_00078"/>
+</c:Department>
+<c:User rdf:about="&c;OrganisationalModel_00096"
+	 c:firstName="Andreas"
+	 c:lastName="Dengel">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00097"/>
+</c:User>
+<c:Role rdf:about="&c;OrganisationalModel_00097"
+	 c:name="Scientific Director">
+	<c:enactedBy rdf:resource="&c;OrganisationalModel_00096"/>
+</c:Role>
+<c:Project rdf:about="&c;OrganisationalModel_00098"
+	 c:name="FRODO">
+	<c:informalDescription>bmbf-project FRODO (Framework for Distributed Organisational Memories)</c:informalDescription>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00075"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00077"/>
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00099"/>
+	<c:managedBy rdf:resource="&c;OrganisationalModel_00099"/>
+	<c:containsMember rdf:resource="&b;wwf_00050"/>
+	<c:containsMember rdf:resource="&b;wwf_00077"/>
+</c:Project>
+<c:User rdf:about="&c;OrganisationalModel_00099"
+	 c:firstName="Michael"
+	 c:lastName="Sintek">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00098"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00100"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+</c:User>
+<c:Role rdf:about="&c;OrganisationalModel_00100"
+	 c:name="Project Leader">
+	<c:enactedBy rdf:resource="&c;OrganisationalModel_00099"/>
+	<c:enactedBy rdf:resource="&b;wwf_00056"/>
+	<c:enactedBy rdf:resource="&b;wwf_00058"/>
+</c:Role>
+<c:Role rdf:about="&c;OrganisationalModel_00101"
+	 c:name="Scientist">
+	<c:enactedBy rdf:resource="&c;OrganisationalModel_00075"/>
+	<c:enactedBy rdf:resource="&c;OrganisationalModel_00077"/>
+	<c:enactedBy rdf:resource="&c;OrganisationalModel_00099"/>
+	<c:enactedBy rdf:resource="&b;wwf_00056"/>
+	<c:enactedBy rdf:resource="&b;wwf_00058"/>
+	<c:enactedBy rdf:resource="&b;wwf_00061"/>
+	<c:enactedBy rdf:resource="&b;wwf_00062"/>
+	<c:enactedBy rdf:resource="&b;wwf_00063"/>
+	<c:enactedBy rdf:resource="&b;wwf_00064"/>
+	<c:enactedBy rdf:resource="&b;wwf_00066"/>
+	<c:enactedBy rdf:resource="&b;wwf_00077"/>
+	<c:enactedBy rdf:resource="&b;wwf_00078"/>
+</c:Role>
+<c:DomainOntologyElement rdf:about="&c;OrganisationalModel_00104"
+	 c:description="Workflow"/>
+<a:TaskModelAuditEvent rdf:about="&b;AuditRepository_00006"
+	 a:eventName="CreatedTaskModel"
+	 a:informalDescription="a Task Model is created"/>
+<a:TaskModelAuditEvent rdf:about="&b;AuditRepository_00007"
+	 a:eventName="ChangedTaskModel"
+	 a:informalDescription="a Task Model is changed"/>
+<a:TaskModelAuditEvent rdf:about="&b;AuditRepository_00008"
+	 a:eventName="DeletedTaskModel"
+	 a:informalDescription="a TaskModel is deleted"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_00009"
+	 a:eventName="ChangedTaskInstanceDefinition"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_00010"
+	 a:eventName="EndedWorkOnTaskInstance"
+	 a:informalDescription="User ends work on task instance"/>
+<a:Event rdf:about="&b;AuditRepository_00017"
+	 a:eventName="TriggeredEvent"
+	 a:informalDescription="an event is triggered"/>
+<a:DataFlow rdf:about="&b;AuditRepository_00027"
+	 a:eventName="CreatedTaskVariable"
+	 a:informalDescription="a task variable has been created"/>
+<a:DataFlow rdf:about="&b;AuditRepository_00028"
+	 a:eventName="DeletedTaskVariable"
+	 a:informalDescription="a task variable has been deleted"/>
+<a:DataFlow rdf:about="&b;AuditRepository_00029"
+	 a:eventName="ChangedTaskVariableDefinition"
+	 a:informalDescription="the definition of a task variable has been deleted"/>
+<a:DataFlow rdf:about="&b;AuditRepository_00030"
+	 a:eventName="AssignedValueToTaskVariable"
+	 a:informalDescription="a value has been assigned to a task variable"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00004"
+	 a:eventName="CreatedTaskInstance"
+	 a:informalDescription="Task instance is created"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00005"
+	 a:eventName="StartedWorkOnTaskInstance"
+	 a:informalDescription="User started to work on task instance"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00010"
+	 a:eventName="WaitingOnEvent"
+	 a:informalDescription="Task is waiting on event(s) to occur"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00011"
+	 a:eventName="EventOccurred"
+	 a:informalDescription="Event(s) on which a task was waiting has occurred"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00013"
+	 a:eventName="ChangedTaskInstanceState">
+	<a:informalDescription>Task state has changed by API or internal event.This is also used to record the initial state of the task instance</a:informalDescription>
+</a:TaskInstanceAuditEvent>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00014"
+	 a:eventName="CompletedTaskInstance"
+	 a:informalDescription="Task instance has completed"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00016"
+	 a:eventName="AbortedTaskInstance"
+	 a:informalDescription="Task instance has been aborted"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00019"
+	 a:eventName="AssignTaskInstanceAttributes"
+	 a:informalDescription="TaskInstance Attributes have been changed"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00020"
+	 a:eventName="StartedWorkItem"
+	 a:informalDescription="Work item has been started"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00021"
+	 a:eventName="CompletedWorkItem"
+	 a:informalDescription="Work item has been completed"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00022"
+	 a:eventName="RejectedWorkItem"
+	 a:informalDescription="Work item has been rejected"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00023"
+	 a:eventName="SelectedWorkItem">
+	<a:informalDescription>User has selected work item off worklist. This includes get, select, reserve, checkout</a:informalDescription>
+</a:TaskInstanceAuditEvent>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00024"
+	 a:eventName="ChangedWorkItemState">
+	<a:informalDescription>Work item state has been changed by API or internal event. This is also used to record the initial state of the work item</a:informalDescription>
+</a:TaskInstanceAuditEvent>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00025"
+	 a:eventName="AssignedWorkItem"
+	 a:informalDescription="Work item is placed on user's worklist"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00026"
+	 a:eventName="ReassignedWorkItem"
+	 a:informalDescription="Work item has been reassigned to one or more users"/>
+<a:TaskInstanceAuditEvent rdf:about="&b;AuditRepository_org_00028"
+	 a:eventName="AssignedTaskInstanceAttribute"
+	 a:informalDescription="TaskInstance Attributes have been changed"/>
+<a:TaskModelAuditEvent rdf:about="&b;AuditRepository_org_00030"
+	 a:eventName="ChangedTaskModelState"
+	 a:informalDescription="State of TaskModel has been changed"/>
+<d:TaskConcept rdf:about="&b;wwf_00006"
+	 d:informalDescription="Search for literature"
+	 d:name="Search-Literature">
+	<d:isa rdf:resource="&b;wwf_00007"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00007"
+	 d:informalDescription="Search for things"
+	 d:name="Search"/>
+<e:TaskModel rdf:about="&b;wwf_00019"
+	 e:informalDescription="Execution of a bmb+f project"
+	 e:name="BMBF-Project">
+	<e:describedBy rdf:resource="&b;wwf_00020"/>
+</e:TaskModel>
+<d:TaskConcept rdf:about="&b;wwf_00020"
+	 d:informalDescription="Execution of a bmb+f project"
+	 d:name="Exe-BMBF-Project">
+	<d:realizedBy rdf:resource="&b;wwf_00019"/>
+	<d:isa rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00021"
+	 d:informalDescription="Execution of a research project"
+	 d:name="Exe-Research-Project"/>
+<d:TaskConcept rdf:about="&b;wwf_00022"
+	 d:informalDescription="Execution of an EU project"
+	 d:name="Exe-EU-Project">
+	<d:isa rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00023"
+	 d:informalDescription="Write a project proposal"
+	 d:name="Write-Project-Proposal">
+	<d:partOf rdf:resource="&b;wwf_00021"/>
+	<d:realizedBy rdf:resource="&b;wwf_00025"/>
+</d:TaskConcept>
+<e:TaskModel rdf:about="&b;wwf_00025"
+	 e:informalDescription="Write a project proposal for this project"
+	 e:name="Write project proposal">
+	<e:describedBy rdf:resource="&b;wwf_00023"/>
+</e:TaskModel>
+<e:TaskModel rdf:about="&b;wwf_00026"
+	 e:name="Write state-of-the-art">
+	<e:preCondition rdf:resource="&b;wwf_00033"/>
+</e:TaskModel>
+<d:TaskConcept rdf:about="&b;wwf_00027"
+	 d:informalDescription="Design something, e.g. something having to do with coding..."
+	 d:name="Design">
+	<d:partOf rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00028"
+	 d:name="Specify">
+	<d:partOf rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00029"
+	 d:name="Implement">
+	<d:partOf rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00030"
+	 d:name="Report">
+	<d:partOf rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00031"
+	 d:name="Milestone">
+	<d:partOf rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<d:TaskConcept rdf:about="&b;wwf_00032"
+	 d:name="State-of-the-Art">
+	<d:informalDescription>Search for, examine and write about the state-of-the-art in this context</d:informalDescription>
+	<d:partOf rdf:resource="&b;wwf_00021"/>
+</d:TaskConcept>
+<e:Condition rdf:about="&b;wwf_00033">
+	<e:condTerm rdf:resource="&b;wwf_00034"/>
+</e:Condition>
+<e:IsFinished rdf:about="&b;wwf_00034">
+	<e:object rdf:resource="&b;wwf_00025"/>
+</e:IsFinished>
+<c:Role rdf:about="&b;wwf_00049"
+	 c:name="Software Engineer">
+	<c:enactedBy rdf:resource="&b;wwf_00050"/>
+	<c:enactedBy rdf:resource="&b;wwf_00060"/>
+</c:Role>
+<c:User rdf:about="&b;wwf_00050"
+	 c:firstName="Andreas"
+	 c:lastName="Lauer">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00098"/>
+	<c:enactsRole rdf:resource="&b;wwf_00049"/>
+</c:User>
+<c:PersonalProfile rdf:about="&b;wwf_00051">
+	<c:user rdf:resource="&b;wwf_00050"/>
+	<c:hasSkill rdf:resource="&b;wwf_00080"/>
+</c:PersonalProfile>
+<c:User rdf:about="&b;wwf_00053"
+	 c:firstName="Ansgar"
+	 c:lastName="Bernardi">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+</c:User>
+<c:User rdf:about="&b;wwf_00054"
+	 c:firstName="Stefan"
+	 c:lastName="Klink">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00057"/>
+</c:User>
+<c:Project rdf:about="&b;wwf_00055"
+	 c:informalDescription="EU project DECOR"
+	 c:name="DECOR">
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:containsMember rdf:resource="&b;wwf_00056"/>
+	<c:managedBy rdf:resource="&b;wwf_00056"/>
+	<c:containsMember rdf:resource="&b;wwf_00060"/>
+</c:Project>
+<c:User rdf:about="&b;wwf_00056"
+	 c:firstName="Andreas"
+	 c:lastName="Abecker">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00100"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00055"/>
+</c:User>
+<c:Project rdf:about="&b;wwf_00057"
+	 c:informalDescription="bmbf-project Adaptive Read"
+	 c:name="AdaptiveRead">
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:containsMember rdf:resource="&b;wwf_00054"/>
+	<c:containsMember rdf:resource="&b;wwf_00058"/>
+	<c:managedBy rdf:resource="&b;wwf_00058"/>
+	<c:containsMember rdf:resource="&b;wwf_00061"/>
+	<c:containsMember rdf:resource="&b;wwf_00062"/>
+	<c:containsMember rdf:resource="&b;wwf_00063"/>
+</c:Project>
+<c:User rdf:about="&b;wwf_00058"
+	 c:firstName="Markus"
+	 c:lastName="Junker">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00100"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00057"/>
+</c:User>
+<c:Group rdf:about="&b;wwf_00059"
+	 c:name="Workflow Task Force">
+	<c:informalDescription>Gruppe zur Bereitstellung von Know-How zu Workflow Management</c:informalDescription>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00075"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00077"/>
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00098"/>
+</c:Group>
+<c:User rdf:about="&b;wwf_00060"
+	 c:firstName="Tino"
+	 c:lastName="Sarodnik">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&b;wwf_00049"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00055"/>
+</c:User>
+<c:User rdf:about="&b;wwf_00061"
+	 c:firstName="Armin"
+	 c:lastName="Hust">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00057"/>
+</c:User>
+<c:User rdf:about="&b;wwf_00062"
+	 c:firstName="Stevan"
+	 c:lastName="Agne">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00057"/>
+</c:User>
+<c:User rdf:about="&b;wwf_00063"
+	 c:firstName="Koichi"
+	 c:lastName="Kise">
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00057"/>
+</c:User>
+<c:User rdf:about="&b;wwf_00064"
+	 c:firstName="Sylvio"
+	 c:lastName="Tabor">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:belongsToUnit rdf:resource="&b;wwf_00065"/>
+</c:User>
+<c:Project rdf:about="&b;wwf_00065"
+	 c:informalDescription="bmbf-project KnowHow"
+	 c:name="KnowHow">
+	<c:containsMember rdf:resource="&b;wwf_00064"/>
+</c:Project>
+<c:User rdf:about="&b;wwf_00066"
+	 c:firstName="Harold"
+	 c:lastName="Boley">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+</c:User>
+<c:Role rdf:about="&b;wwf_00067"
+	 c:name="Secretary">
+	<c:enactedBy rdf:resource="&b;wwf_00068"/>
+	<c:enactedBy rdf:resource="&b;wwf_00070"/>
+</c:Role>
+<c:User rdf:about="&b;wwf_00068"
+	 c:firstName="Gundi"
+	 c:lastName="Hartmann">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&b;wwf_00067"/>
+</c:User>
+<c:User rdf:about="&b;wwf_00070"
+	 c:firstName="Jane"
+	 c:lastName="Bensch">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&b;wwf_00067"/>
+</c:User>
+<c:Group rdf:about="&b;wwf_00071"
+	 c:informalDescription="all manager of departments"
+	 c:name="Leitungskreis">
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00094"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00097"/>
+	<c:containsMember rdf:resource="&b;wwf_00072"/>
+</c:Group>
+<c:Role rdf:about="&b;wwf_00072"
+	 c:informalDescription="administrative manager of a department"
+	 c:name="Lab Manager">
+	<c:enactedBy rdf:resource="&b;wwf_00073"/>
+</c:Role>
+<c:User rdf:about="&b;wwf_00073"
+	 c:firstName="Thomas"
+	 c:lastName="Kieninger">
+	<c:enactsRole rdf:resource="&b;wwf_00072"/>
+</c:User>
+<c:Group rdf:about="&b;wwf_00074"
+	 c:informalDescription="Group of researchers within the KM department"
+	 c:name="KM Research Group">
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:containsMember rdf:resource="&c;OrganisationalModel_00101"/>
+	<c:managedBy rdf:resource="&b;wwf_00053"/>
+</c:Group>
+<c:User rdf:about="&b;wwf_00077"
+	 c:firstName="Ludger"
+	 c:lastName="van Elst">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00098"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+</c:User>
+<c:User rdf:about="&b;wwf_00078"
+	 c:firstName="Claudia"
+	 c:lastName="Wenzel">
+	<c:belongsToUnit rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:enactsRole rdf:resource="&c;OrganisationalModel_00101"/>
+</c:User>
+<c:Skill rdf:about="&b;wwf_00080"
+	 c:name="Programming"/>
+<c:Skill rdf:about="&b;wwf_00081"
+	 c:name="Websearch"/>
+<c:Department rdf:about="&b;wwf_00082"
+	 c:name="Intelligent User Interfaces">
+	<c:partOf rdf:resource="&c;OrganisationalModel_00094"/>
+</c:Department>
+<c:Project rdf:about="&b;wwf_00083"
+	 c:name="Clockwork">
+	<c:informalDescription>EU project Clockwork ( Web-based knowledge management for collaborative engineering)</c:informalDescription>
+	<c:belongsTo rdf:resource="&c;OrganisationalModel_00095"/>
+	<c:managedBy rdf:resource="&b;wwf_00066"/>
+</c:Project>
+<e:TaskInstance rdf:about="&b;wwf_00084"
+	 e:informalDescription="Einreichung zur Context'01 Dundee"
+	 e:name="Konferenz Context'01">
+	<e:subTask rdf:resource="&b;wwf_00086"/>
+	<e:subTask rdf:resource="&b;wwf_00089"/>
+	<e:subTask rdf:resource="&b;wwf_00098"/>
+	<e:subTask rdf:resource="&b;wwf_00102"/>
+	<e:subTask rdf:resource="&b;wwf_00105"/>
+	<e:subTask rdf:resource="&b;wwf_00108"/>
+</e:TaskInstance>
+<c:InformationNeed rdf:about="&b;wwf_00085">
+	<c:describedBy rdf:resource="&b;wwf_00088"/>
+</c:InformationNeed>
+<e:TaskInstance rdf:about="&b;wwf_00086"
+	 e:informalDescription="Lesen des Call for Papers"
+	 e:name="Call for Paper">
+	<e:parentTask rdf:resource="&b;wwf_00084"/>
+	<e:needsInfo rdf:resource="&b;wwf_00085"/>
+	<e:subTask rdf:resource="&b;wwf_00093"/>
+</e:TaskInstance>
+<c:InformationDescription rdf:about="&b;wwf_00088"
+	 c:infoObjectURI="http://context.umcs.maine.edu/CONTEXT-01/"
+	 c:informalDescription="Context'01 Webseite"/>
+<e:TaskInstance rdf:about="&b;wwf_00089"
+	 e:informalDescription="Vorbereiten und Produzieren einer Papiers für die Konferenz"
+	 e:name="Einreichung">
+	<e:parentTask rdf:resource="&b;wwf_00084"/>
+	<e:subTask rdf:resource="&b;wwf_00090"/>
+	<e:subTask rdf:resource="&b;wwf_00091"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00090"
+	 e:name="Papier schreiben">
+	<e:parentTask rdf:resource="&b;wwf_00089"/>
+	<e:subTask rdf:resource="&b;wwf_00092"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00091"
+	 e:name="Papier einreichen">
+	<e:parentTask rdf:resource="&b;wwf_00089"/>
+	<e:preCondition rdf:resource="&b;wwf_00094"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00092"
+	 e:informalDescription="Konzept und Inhalt festlegen"
+	 e:name="Outline">
+	<e:parentTask rdf:resource="&b;wwf_00090"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00093"
+	 e:informalDescription="Informationen hierzu finden">
+	<e:name xml:space='preserve'><![CDATA[Format & Deadline]]></e:name>
+	<e:needsInfo rdf:resource="&b;wwf_00085"/>
+	<e:parentTask rdf:resource="&b;wwf_00086"/>
+</e:TaskInstance>
+<e:Condition rdf:about="&b;wwf_00094">
+	<e:condTerm rdf:resource="&b;wwf_00097"/>
+</e:Condition>
+<e:IsFinished rdf:about="&b;wwf_00097">
+	<e:object rdf:resource="&b;wwf_00093"/>
+</e:IsFinished>
+<e:TaskInstance rdf:about="&b;wwf_00098"
+	 e:informalDescription="Überprüfen der Antwort des Programmkomitees"
+	 e:name="Antwort">
+	<e:parentTask rdf:resource="&b;wwf_00084"/>
+	<e:preCondition rdf:resource="&b;wwf_00099"/>
+	<e:subTask rdf:resource="&b;wwf_00101"/>
+</e:TaskInstance>
+<e:Condition rdf:about="&b;wwf_00099">
+	<e:condTerm rdf:resource="&b;wwf_00100"/>
+</e:Condition>
+<e:IsFinished rdf:about="&b;wwf_00100">
+	<e:object rdf:resource="&b;wwf_00091"/>
+</e:IsFinished>
+<e:TaskInstance rdf:about="&b;wwf_00101"
+	 e:name="Angenommen">
+	<e:informalDescription>Zusammenstellen der Kommentare des Reviews, finale Formatvorgaben und Deadline für finale Version</e:informalDescription>
+	<e:needsInfo rdf:resource="&b;wwf_00085"/>
+	<e:parentTask rdf:resource="&b;wwf_00098"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00102"
+	 e:informalDescription="Einreichen der finalen Version"
+	 e:name="Resubmission">
+	<e:parentTask rdf:resource="&b;wwf_00084"/>
+	<e:preCondition rdf:resource="&b;wwf_00103"/>
+</e:TaskInstance>
+<e:Condition rdf:about="&b;wwf_00103">
+	<e:condTerm rdf:resource="&b;wwf_00104"/>
+</e:Condition>
+<e:IsFinished rdf:about="&b;wwf_00104">
+	<e:object rdf:resource="&b;wwf_00101"/>
+</e:IsFinished>
+<e:TaskInstance rdf:about="&b;wwf_00105"
+	 e:informalDescription="Planung und Teilnahme an der Konferenz"
+	 e:name="Konferenzteilnahme">
+	<e:parentTask rdf:resource="&b;wwf_00084"/>
+	<e:subTask rdf:resource="&b;wwf_00106"/>
+	<e:subTask rdf:resource="&b;wwf_00107"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00106"
+	 e:informalDescription="alles zur Reise"
+	 e:name="Reise">
+	<e:needsInfo rdf:resource="&b;wwf_00085"/>
+	<e:parentTask rdf:resource="&b;wwf_00105"/>
+	<e:subTask rdf:resource="&b;wwf_00109"/>
+	<e:subTask rdf:resource="&b;wwf_00110"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00107"
+	 e:informalDescription="Erstellen des Vortrages"
+	 e:name="Vortrag">
+	<e:parentTask rdf:resource="&b;wwf_00105"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00108"
+	 e:informalDescription="Aufbereiten der Informationen zur Konferenz"
+	 e:name="Konferenznachbereitung">
+	<e:parentTask rdf:resource="&b;wwf_00084"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00109"
+	 e:name="Reiseantrag stellen">
+	<e:parentTask rdf:resource="&b;wwf_00106"/>
+</e:TaskInstance>
+<e:TaskInstance rdf:about="&b;wwf_00110"
+	 e:name="Reisekosten abrechnen">
+	<e:parentTask rdf:resource="&b;wwf_00106"/>
+</e:TaskInstance>
+</rdf:RDF>

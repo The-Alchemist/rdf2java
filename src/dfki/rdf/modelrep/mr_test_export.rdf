@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://www.anonymous.org/999700929118#'>
+	 <!ENTITY b 'http://dfki.uni-kl.de/schwarz/ModelRep#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:b="&b;">
+<b:ModelRep rdf:about="&a;genid1">
+	<b:object rdf:resource="&a;genid2"/>
+	<b:object rdf:resource="&a;genid3"/>
+	<b:object rdf:resource="&a;genid4"/>
+	<b:object rdf:resource="&a;genid5"/>
+	<b:object rdf:resource="&a;genid6"/>
+	<b:object rdf:resource="&a;genid7"/>
+</b:ModelRep>
+<b:Task rdf:about="&a;genid2"
+	 b:name="Search the Info-Bib (Uni)"
+	 b:state="unactivated">
+	<b:pred rdf:resource="&a;genid3"/>
+</b:Task>
+<b:Task rdf:about="&a;genid3"
+	 b:name="Search the DFKI-Bib"
+	 b:state="unactivated">
+	<b:pred rdf:resource="&a;genid4"/>
+</b:Task>
+<b:Task rdf:about="&a;genid4"
+	 b:name="Search the Web"
+	 b:state="finished"/>
+<b:ORJoin rdf:about="&a;genid5"
+	 b:name="">
+	<b:joins rdf:resource="&a;genid3"/>
+	<b:joins rdf:resource="&a;genid4"/>
+</b:ORJoin>
+<b:Task rdf:about="&a;genid6"
+	 b:name="Compare different existing WfMS"
+	 b:state="unactivated">
+	<b:pred rdf:resource="&a;genid5"/>
+</b:Task>
+<b:Task rdf:about="&a;genid7"
+	 b:name="Results?"
+	 b:state="unactivated">
+	<b:pred rdf:resource="&a;genid6"/>
+</b:Task>
+</rdf:RDF>

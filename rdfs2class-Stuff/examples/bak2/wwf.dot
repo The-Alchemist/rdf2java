@@ -1,0 +1,37 @@
+digraph wwf {
+	node [	label = "\N",
+		fontname = Arial ];
+	edge [	fontname = Arial ];
+	graph [bb= "0,0,1707,412"];
+	"Task:Term" [label="Task:Term", shape=box, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="1589,18", width="1.03", height="0.50"];
+	"Task:TaskInstance" [label="{Task:TaskInstance|{Task:instanceOf|Instance|{Task:TaskModel}}}", shape=record, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="137,144", rects="0,144,275,162 0,126,106,144 106,126,166,144 166,126,275,144", width="3.81", height="0.50"];
+	"Task:Task" [label="{Task:Task|{Task:describedBy|Instance*|{TaskConcept:TaskConcept}}|{Task:informalDescription|String}|{Task:name|String}|{Task:nee\
+dsInfo|Instance*|{OrganisationalModel:InformationNeed}}|{Task:needsSkill|Instance*|{OrganisationalModel:Skill}}|{Task:performedB\
+y|Instance|{OrganisationalModel:ProcessRole}}|{Task:postCondition|Instance|{Task:Condition}}|{Task:preCondition|Instance|{Task:C\
+ondition}}|{Task:subTask|Instance*|{Task:ExecutableObject}}}", shape=record, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="1045,332", rects="845,396,1245,412 845,380,977,396 977,380,1062,396 1062,380,1245,396 845,364,1100,380 1100,364,1245,380 845,348,1058,364 1058,348\
+,1245,364 845,332,945,348 945,332,1012,348 1012,332,1245,348 845,316,970,332 970,316,1059,332 1059,316,1245,332 845,300,969,316 \
+969,300,1034,316 1034,300,1245,316 845,284,1008,300 1008,284,1106,300 1106,284,1245,300 845,268,1004,284 1004,268,1104,284 1104,\
+268,1245,284 845,252,969,268 969,252,1068,268 1068,252,1245,268", width="5.56", height="2.22"];
+	"Task:TaskModel" [label="Task:TaskModel", shape=box, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="234,18", width="1.50", height="0.50"];
+	"TaskConcept:TaskConcept" [label="{TaskConcept:TaskConcept|{TaskConcept:informalDescription|String}|{TaskConcept:isa|Instance*|{TaskConcept:TaskConcept}}|{TaskCon\
+cept:name|String}|{TaskConcept:partOf|Instance*|{TaskConcept:TaskConcept}}|{TaskConcept:realizedBy|Instance*|{Task:Task}}|{TaskC\
+oncept:relatedTo|Instance*|{TaskConcept:TaskConcept}}}", shape=record, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="546,144", rects="358,184,735,200 358,168,625,184 625,168,735,184 358,152,477,168 477,152,557,168 557,152,735,168 358,136,583,152 583,136,735,152 \
+358,120,491,136 491,120,564,136 564,120,735,136 358,104,538,120 538,104,634,120 634,104,735,120 358,88,503,104 503,88,570,104 57\
+0,88,735,104", width="5.22", height="1.56"];
+	"Task:ExecutableObject" [label="{Task:ExecutableObject|{Task:parentTask|Instance*|{Task:Task}}}", shape=record, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="1330,144", rects="1207,144,1453,162 1207,126,1314,144 1314,126,1381,144 1381,126,1453,144", width="3.42", height="0.50"];
+	"Task:Condition" [label="{Task:Condition|{Task:condTerm|Instance|{Task:Term}}}", shape=record, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="1589,144", rects="1471,144,1708,162 1471,126,1573,144 1573,126,1633,144 1633,126,1708,144", width="3.28", height="0.50"];
+	"Task:Task" -> "Task:TaskInstance" [dir=back, label=isa, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="s,848,252 840,251 649,228 453,263 263,234 227,228 180,187 155,162", lp="278,226"];
+	"Task:TaskInstance" -> "Task:TaskModel" [label="Task:instanceOf", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,207,36 146,126 156,105 174,72 187,54 190,50 194,46 199,43", lp="240,62"];
+	"TaskConcept:TaskConcept" -> "TaskConcept:TaskConcept" [label="TaskConcept:isa*", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,735,153 735,135 746,137 752,140 752,144 752,147 749,149 744,151", lp="809,144"];
+	"TaskConcept:TaskConcept" -> "TaskConcept:TaskConcept" [label="TaskConcept:partOf*", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,735,171 735,117 806,116 866,125 866,144 866,162 811,171 744,171", lp="934,144"];
+	"TaskConcept:TaskConcept" -> "Task:Task" [label="TaskConcept:realizedBy*", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="s,848,252 840,249 802,234 753,217 705,200", lp="878,226"];
+	"TaskConcept:TaskConcept" -> "TaskConcept:TaskConcept" [label="TaskConcept:relatedTo*", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,735,180 735,108 868,96 1001,108 1001,144 1001,179 873,192 743,181", lp="1077,144"];
+	"Task:ExecutableObject" -> "Task:Task" [dir=back, label=isa, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="e,1327,162 1242,252 1261,244 1288,249 1301,234 1312,219 1320,191 1325,171", lp="1323,226"];
+	"Task:Task" -> "TaskConcept:TaskConcept" [label="Task:describedBy*", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,584,200 848,252 775,235 694,259 624,234 612,230 599,218 589,206", lp="685,226"];
+	"Task:Task" -> "Task:Condition" [label="Task:postCondition", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,1555,162 1242,252 1275,241 1310,241 1345,234 1388,224 1432,215 1474,200 1494,193 1523,179 1546,166", lp="1475,226"];
+	"Task:Task" -> "Task:Condition" [label="Task:preCondition", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,1585,162 1242,252 1341,232 1448,264 1545,234 1565,228 1576,195 1583,171", lp="1623,226"];
+	"Task:Task" -> "Task:ExecutableObject" [label="Task:subTask*", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,1296,162 1041,252 1043,237 1047,225 1056,218 1096,185 1160,213 1210,200 1231,194 1263,179 1287,167", lp="1105,226"];
+	"Task:Condition" -> "Task:Term" [label="Task:condTerm", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="e,1589,36 1589,126 1589,105 1589,69 1589,45", lp="1640,62"];
+	"Task:ExecutableObject" -> "Task:Task" [label="Task:parentTask*", color="0.6666667,1.0,1.0", fontcolor="0.6666667,1.0,1.0", style=filled, pos="s,1140,252 1146,247 1152,242 1157,238 1162,234 1168,228 1172,221 1180,218 1220,196 1270,187 1308,162", lp="1237,226"];
+	"Task:Task" -> "Task:TaskModel" [dir=back, label=isa, color="0.0,0.0,0.0", fontcolor="0.0,0.0,0.0", pos="s,848,252 841,251 668,216 466,292 316,200 275,174 321,98 300,54 297,47 290,41 281,36", lp="331,144"];
+}

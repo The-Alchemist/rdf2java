@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY mr 'http://dfki.uni-kl.de/schwarz/ModelRep#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:mr="&mr;">
+
+<mr:ModelRep>
+
+
+<mr:object>
+	<mr:Task   mr:name="Search the DFKI-Bib"   rdf:about="Search_DFKI_Bib"/>
+</mr:object>
+
+
+<mr:object>
+	<mr:Task   mr:name="Search the Info-Bib (Uni)"   rdf:about="Search_Info_Bib">
+		<mr:pred    rdf:resource="Search_DFKI_Bib"/>
+	</mr:Task>
+</mr:object>
+
+
+<mr:object>
+	<mr:Task   mr:name="Search the Web">
+		<mr:pred    rdf:resource="Search_DFKI_Bib"/>
+	</mr:Task>
+</mr:object>
+
+
+</mr:ModelRep>
+
+</rdf:RDF>
+

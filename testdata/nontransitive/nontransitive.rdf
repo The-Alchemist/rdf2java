@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY nontransitive 'http://dfki.rdf.test/nontransitive#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:nontransitive="&nontransitive;"
+	 xmlns:rdfs="&rdfs;">
+<nontransitive:A rdf:about="&nontransitive;n_00005"
+	 rdfs:label="n_00005">
+	<nontransitive:toB rdf:resource="&nontransitive;n_00006"/>
+</nontransitive:A>
+<nontransitive:B rdf:about="&nontransitive;n_00006"
+	 rdfs:label="n_00006">
+	<nontransitive:toB rdf:resource="&nontransitive;n_00007"/>
+</nontransitive:B>
+<nontransitive:B rdf:about="&nontransitive;n_00007"
+	 rdfs:label="n_00007">
+	<nontransitive:toA rdf:resource="&nontransitive;n_00005"/>
+	<nontransitive:toA rdf:resource="&nontransitive;n_00008"/>
+	<nontransitive:toA rdf:resource="&nontransitive;n_00009"/>
+	<nontransitive:toB rdf:resource="&nontransitive;n_00010"/>
+	<nontransitive:toB rdf:resource="&nontransitive;n_00011"/>
+</nontransitive:B>
+<nontransitive:A rdf:about="&nontransitive;n_00008"
+	 rdfs:label="n_00008"/>
+<nontransitive:A rdf:about="&nontransitive;n_00009"
+	 rdfs:label="n_00009"/>
+<nontransitive:B rdf:about="&nontransitive;n_00010"
+	 rdfs:label="n_00010"/>
+<nontransitive:B rdf:about="&nontransitive;n_00011"
+	 rdfs:label="n_00011"/>
+</rdf:RDF>

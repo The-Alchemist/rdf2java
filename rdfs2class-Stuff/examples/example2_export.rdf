@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://dfki.rdf.util/rdfs2class/example2#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;">
+<a:Person rdf:about="&a;example2_00013"
+	 a:firstName="Rita"
+	 a:lastName="Riemen">
+	<a:relatedTo rdf:resource="&a;example2_00014"/>
+	<a:loves rdf:resource="&a;example2_00015"/>
+	<a:loves rdf:resource="&a;example2_00018"/>
+</a:Person>
+<a:Person rdf:about="&a;example2_00014"
+	 a:firstName="Manfred"
+	 a:lastName="Riemen">
+	<a:loves rdf:resource="&a;example2_00013"/>
+	<a:relatedTo rdf:resource="&a;example2_00013"/>
+</a:Person>
+<a:Person rdf:about="&a;example2_00015"
+	 a:firstName="Hans"
+	 a:lastName="Dampf">
+	<a:dateOfBirth rdf:resource="&a;example2_00016"/>
+	<a:loves rdf:resource="&a;example2_00017"/>
+</a:Person>
+<a:Date rdf:about="&a;example2_00016"
+	 a:dayOfMonth="1"
+	 a:month="2"
+	 a:year="1973"/>
+<a:Animal rdf:about="&a;example2_00017"
+	 a:name="Wuffi"/>
+<a:Animal rdf:about="&a;example2_00018"
+	 a:name="Cheesy"/>
+</rdf:RDF>
