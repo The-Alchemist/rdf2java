@@ -174,9 +174,15 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                 try {
                     RDFResource propValue = (RDFResource)objPropValue;
                     Object cachedObject = kbCachedObjects.get(propValue.getURI());
-                    if (cachedObject == null || !(cachedObject instanceof THING)) continue;
-                    Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
-                    methodPut.invoke( this, new Object[] { cachedObject } );
+                    if (cachedObject != null && (cachedObject instanceof THING))
+                    {
+                        Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
+                        methodPut.invoke( this, new Object[] { cachedObject } );
+                        continue;
+                    }
+                    // nothing better available => take the old slot value again
+                    Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
+                    methodPut.invoke( this, new Object[] { propValue } );
                 }
                 catch (Exception ex) {
                     System.out.println("Exception occurred: "+ex.getMessage());
