@@ -78,11 +78,29 @@ public class ToStringPackedWalkerController extends JavaGraphWalker.WalkerContro
             PropertyInfo pi = (PropertyInfo)it.next();
             if( pi.getValue() == null ) continue;
             if( tsc.hideProperty( currentResource, pi.getName() ) ) continue;
-            if(     pi.getValueType() == PropertyInfo.VT_STRING ||
-                    pi.getValueType() == PropertyInfo.VT_SYMBOL )
+            if( pi.getValueType() == PropertyInfo.VT_STRING ||
+                pi.getValueType() == PropertyInfo.VT_SYMBOL )
             {
-                indent( lstPath.size()-2 );
-                sb.append( "->  " + pi.getName() + ": " + (String)pi.getValue() + "\n" );
+                if( pi.hasMultiValue() )
+                {
+                    Collection collValues = (Collection)pi.getValue();
+                    if( collValues.size() > 0 )
+                    {
+                        indent( lstPath.size()-2 );
+                        sb.append( "->  " + pi.getName() + ":\n" );
+                        for( Iterator itValues = collValues.iterator(); itValues.hasNext(); )
+                        {
+                            String sValue = (String)itValues.next();
+                            indent( lstPath.size()-0 );
+                            sb.append( sValue + "\n" );
+                        }
+                    }
+                }
+                else
+                {
+                    indent( lstPath.size()-2 );
+                    sb.append( "->  " + pi.getName() + ": " + (String)pi.getValue() + "\n" );
+                }
             }
         }
         

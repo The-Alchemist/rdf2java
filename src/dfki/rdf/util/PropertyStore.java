@@ -76,5 +76,17 @@ public void clearPropertyValue (String sPropertyName)
 }
 
 //------------------------------------------------------------------------------
+public String toString()
+{
+    StringBuffer sb = new StringBuffer();
+    for( Iterator it = getPropertyInfos().iterator(); it.hasNext(); )
+    {
+        PropertyInfo pi = (PropertyInfo)it.next();
+        sb.append( pi.toString() + "\n" );
+    }
+    return sb.toString();
+}
+
+//------------------------------------------------------------------------------
 } // end of class PropertyStore
 

@@ -102,8 +102,24 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
             if(     pi.getValueType() == PropertyInfo.VT_STRING ||
                     pi.getValueType() == PropertyInfo.VT_SYMBOL )
             {
-                RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
-                appendSlot( elInst, resProperty, (String)pi.getValue() );
+                if( pi.hasMultiValue() )
+                {
+                    Collection collValues = (Collection)pi.getValue();
+                    if( collValues.size() > 0 )
+                    {
+                        for( Iterator itValues = collValues.iterator(); itValues.hasNext(); )
+                        {
+                            String sValue = (String)itValues.next();
+                            RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
+                            appendSlot( elInst, resProperty, sValue );
+                        }
+                    }
+                }
+                else
+                {
+                    RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
+                    appendSlot( elInst, resProperty, (String)pi.getValue() );
+                }
             }
         }
         
