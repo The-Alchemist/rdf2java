@@ -15,13 +15,26 @@ public class TinyXMLDocument
 private TinyXMLElement m_docElement;
 private TreeMap/*String->String*/ m_mapNamespace2Prefix = new TreeMap();
 
+public String RDF_NAMESPACE     = null;
+public String RDFS_NAMESPACE    = null;
 
 //------------------------------------------------------------------------------
 public TinyXMLDocument()
 {
+    this( null, null );
+}
+
+public TinyXMLDocument( String sRdfNamespace, String sRdfsNamespace )
+{
     try {
-        declareNamespacePrefix( RDF.syntax().namespace(), "rdf" );
-        declareNamespacePrefix( RDFS.getURIs().namespace(), "rdfs" );
+        RDF_NAMESPACE     = sRdfNamespace;
+        RDFS_NAMESPACE    = sRdfsNamespace;
+
+        if( RDF_NAMESPACE == null )     RDF_NAMESPACE   = RDF.syntax().namespace();;
+        if( RDFS_NAMESPACE == null )    RDFS_NAMESPACE  = RDFS.getURIs().namespace();
+
+        declareNamespacePrefix( RDF_NAMESPACE, "rdf" );
+        declareNamespacePrefix( RDFS_NAMESPACE, "rdfs" );
     }
     catch( Exception ex )
     {

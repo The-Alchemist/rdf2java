@@ -8,7 +8,7 @@
 	 xmlns:walk="&walk;"
 	 xmlns:rdfs="&rdfs;">
 <walk:Man rdf:about="&walk;Homer"
-	 walk:name="Homer"
+     walk:name="Homer"
 	 rdfs:label="Homer">
 	<walk:hasWife rdf:resource="&walk;March"/>
 	<walk:hasChild rdf:resource="&walk;Bart"/>

@@ -349,7 +349,8 @@ void go_4()
     System.out.println( "\n\n\ngo_4:\n" );
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     
-    String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS );
+    // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
+    String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace );
     System.out.println( "resHomer.toStringAsRDF():\n" + sAsRDF );
 
     try

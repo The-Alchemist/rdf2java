@@ -15,6 +15,7 @@ import org.w3c.rdf.vocabulary.rdf_schema_200001.RDFS;
 
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
+import dfki.rdf.util.nice.tinyxmldoc.TinyXMLTextNode;
 import dfki.util.debug.Debug;
 import dfki.util.rdf.RDF;
 
@@ -28,8 +29,9 @@ public final static String DEBUG_MODULE = "rdf2java";
 private String m_namespace;
 private String m_localName;
 private String m_uri;
-protected PropertyStore m_propertyStore;
+private String m_label;     //SS:2004-08-05
 
+protected PropertyStore m_propertyStore;
 
 //----------------------------------------------------------------------------------------------------
 public static Debug debug()
@@ -43,6 +45,7 @@ protected RDFResource ()
     m_namespace = null;
     m_localName = null;
     m_uri = null;
+    m_label = null;
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -83,6 +86,12 @@ public void putURI (String uri)
 }
 
 //----------------------------------------------------------------------------------------------------
+public void putLabel (String label)
+{
+    m_label = label;
+}
+
+//----------------------------------------------------------------------------------------------------
 public String getNamespace ()
 {
     return m_namespace;
@@ -102,8 +111,8 @@ public String getURI ()
 
 //----------------------------------------------------------------------------------------------------
 public String getLabel ()
-{
-    return getURI();
+{    
+    return ( m_label != null  ?  m_label  :  getURI() );
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -465,15 +474,15 @@ public void walk( String sLastProperty, WalkerController wc )
 //----------------------------------------------------------------------------------------------------
 public String toStringAsRDF()
 {
-    return toStringAsRDF( null );
+    return toStringAsRDF( null, null );
 }
 
-public String toStringAsRDF( final Map/*String->String*/ mapPkg2NS )
+public String toStringAsRDF( final Map/*String->String*/ mapPkg2NS, String sRdfsNamespace )
 {
     final RDFResource resPredAbout = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "about" );
     final RDFResource resPredResource = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "resource" );
     
-    final TinyXMLDocument xmlDoc = new TinyXMLDocument();
+    final TinyXMLDocument xmlDoc = new TinyXMLDocument( null, sRdfsNamespace );
     final TinyXMLElement elDoc = xmlDoc.createElement( RDF.DEFAULT_SYNTAX_NAMESPACE + "RDF" );
     xmlDoc.setDocumentElement( elDoc );
     
@@ -511,6 +520,12 @@ public String toStringAsRDF( final Map/*String->String*/ mapPkg2NS )
             
             mapResource2XMLElement.put( currentResource, elInst );
 
+            if(     currentResource.getLabel() != null &&
+                    !currentResource.getLabel().equals( currentResource.getURI() ) )
+            {
+                RDFResource resProperty = new RDFResource( xmlDoc.RDFS_NAMESPACE, "label" );
+                elInst.setAttribute( resProperty.getURI(), currentResource.getLabel() );
+            }
             Collection/*PropertyInfo*/ collPropInfos = currentResource.getPropertyStore().getPropertyInfos();
             for( Iterator it = collPropInfos.iterator(); it.hasNext(); )
             {
@@ -520,11 +535,34 @@ public String toStringAsRDF( final Map/*String->String*/ mapPkg2NS )
                         pi.getValueType() == PropertyInfo.VT_SYMBOL )
                 {
                     RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
-                    elInst.setAttribute( resProperty.getURI(), (String)pi.getValue() );
+                    appendSlot( elInst, resProperty, (String)pi.getValue() );
                 }
             }
         }
-        
+
+        private void appendSlot( TinyXMLElement elInst, RDFResource resPred, String sValue )
+        {
+            if( TinyXMLTextNode.containsIllegalChars( sValue ) )
+            {
+                TinyXMLElement elSlot = xmlDoc.createElement( resPred.getURI() );
+                elInst.appendChild( elSlot );
+                TinyXMLTextNode txtValue = createTextNode( sValue );
+                elSlot.appendChild( txtValue );
+            }
+            else
+            {
+                elInst.setAttribute( resPred.getNamespace() + resPred.getLocalName(), sValue );
+            }
+        }
+
+        private TinyXMLTextNode createTextNode( String sText )
+        {
+            if( TinyXMLTextNode.containsIllegalChars( sText ) )
+                return xmlDoc.createCDATA( sText );
+            else
+                return xmlDoc.createTextNode( sText );
+        }
+
         Set/*RDFResource*/ setProcessedResources = new HashSet();
         
         public void leaving( RDFResource currentResource )
