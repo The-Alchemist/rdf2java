@@ -31,6 +31,15 @@ static String makeMethodName (String sMethodPrefix, String sPropertyName)
 }
 
 //----------------------------------------------------------------------------------------------------
+static String makeMethodName (String sMethodPrefix, String sPropertyNamespace, String sPropertyName)
+{
+    String sMembervarName = sPropertyName;
+    if( sPropertyNamespace != null )
+        sMembervarName = RDF2Java.namespace2abbrev( sPropertyNamespace ) + '_' + sPropertyName;
+    return makeMethodName( sMethodPrefix, sMembervarName );
+}
+
+//----------------------------------------------------------------------------------------------------
 static Method getMethod (Class cls, String sMethodName, Class[] aPars)
 {
     Method[] aMethods = cls.getMethods();
@@ -140,6 +149,22 @@ public static void clearPropertyValues (THING thing, String sPropertyName)
     catch (Exception ex) {
         throw new RuntimeException( "Exception " + ex.getClass() + " occurred in RDF2Java.clearPropertyValue: " + ex.getMessage() );
     }
+}
+
+//----------------------------------------------------------------------------------------------------
+public static String namespace2abbrev( String sNamespace )
+{
+    if( sNamespace.endsWith( "#" ) ) sNamespace = sNamespace.substring( 0, sNamespace.length()-1 );
+    
+    int posLastSlash = sNamespace.lastIndexOf( '/' );
+    int posLastDot   = sNamespace.lastIndexOf( '.' );
+    int posLastColon = sNamespace.lastIndexOf( ':' );
+    int posLastHash  = sNamespace.lastIndexOf( '#' );
+    
+    int pos = Math.max( posLastSlash, Math.max( posLastDot, Math.max( posLastColon, posLastHash ) ) );  
+    if( posLastSlash >= 0 ) return sNamespace.substring( pos+1 );
+
+    return "" + new Date().getTime();
 }
 
 //----------------------------------------------------------------------------------------------------
