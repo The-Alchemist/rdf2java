@@ -3,14 +3,20 @@ package dfki.rdf.util;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import org.w3c.rdf.model.Resource;
+import org.w3c.rdf.vocabulary.rdf_schema_200001.RDFS;
 
+import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
+import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
 import dfki.util.debug.Debug;
+import dfki.util.rdf.RDF;
 
 
 public class RDFResource   extends Object   
@@ -454,6 +460,134 @@ public void walk( String sLastProperty, WalkerController wc )
     wc.lstWalk.addLast( "inv(" + sLastProperty + ")" );
     if( wc.lstPath.size() > 0 ) wc.lstWalk.addLast( wc.lstPath.getLast() );
 }
+
+
+//----------------------------------------------------------------------------------------------------
+public String toStringAsRDF()
+{
+    return toStringAsRDF( null );
+}
+
+public String toStringAsRDF( final Map/*String->String*/ mapPkg2NS )
+{
+    final RDFResource resPredAbout = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "about" );
+    final RDFResource resPredResource = new RDFResource( RDF.DEFAULT_SYNTAX_NAMESPACE, "resource" );
+    
+    final TinyXMLDocument xmlDoc = new TinyXMLDocument();
+    final TinyXMLElement elDoc = xmlDoc.createElement( RDF.DEFAULT_SYNTAX_NAMESPACE + "RDF" );
+    xmlDoc.setDocumentElement( elDoc );
+    
+    final Map/*RDFResource->TinyXMLElement*/ mapResource2XMLElement = new HashMap();
+    
+    RDFResource.WalkerController wc = new RDFResource.WalkerController() {
+
+        public void arriving( RDFResource currentResource )
+        {
+            TinyXMLElement elParent = elDoc;
+            if( lstPath.size() > 2 ) 
+                elParent = (TinyXMLElement)mapResource2XMLElement.get( lstPath.get( lstPath.size()-3 ) );
+            
+            TinyXMLElement elAppendHere = elParent;
+
+            Class cls = currentResource.getClass();
+            String sClsPackage = getClassPackage( cls );
+            String sClsName = getClassName( cls );
+            String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  :  "http://" + sClsPackage + "#" );
+
+            String sLastProperty = getLastProperty();
+            if( sLastProperty != null ) 
+            {
+                RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
+                TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
+                elParent.appendChild( elLastProperty );
+                elAppendHere = elLastProperty;
+            }
+
+            RDFResource resCls = new RDFResource( sNamespace, sClsName );
+            
+            TinyXMLElement elInst = xmlDoc.createElement( resCls.getURI() );
+            elInst.setAttribute( resPredAbout.getURI(), currentResource );
+            elAppendHere.appendChild( elInst );
+            
+            mapResource2XMLElement.put( currentResource, elInst );
+
+            Collection/*PropertyInfo*/ collPropInfos = currentResource.getPropertyStore().getPropertyInfos();
+            for( Iterator it = collPropInfos.iterator(); it.hasNext(); )
+            {
+                PropertyInfo pi = (PropertyInfo)it.next();
+                if( pi.getValue() == null ) continue;
+                if(     pi.getValueType() == PropertyInfo.VT_STRING ||
+                        pi.getValueType() == PropertyInfo.VT_SYMBOL )
+                {
+                    RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
+                    elInst.setAttribute( resProperty.getURI(), (String)pi.getValue() );
+                }
+            }
+        }
+        
+        Set/*RDFResource*/ setProcessedResources = new HashSet();
+        
+        public void leaving( RDFResource currentResource )
+        {
+            setProcessedResources.add( currentResource );
+        }
+        
+        public void arrivingAgain( RDFResource currentResource )
+        {
+            if( lstPath.size() <= 3 )
+                throw new Error( "failure in RDFResource.walk" );
+            
+            TinyXMLElement elParent = (TinyXMLElement)mapResource2XMLElement.get( lstPath.get( lstPath.size()-3 ) );
+            
+            String sLastProperty = getLastProperty();
+            if( sLastProperty != null ) 
+            {
+                Class cls = currentResource.getClass();
+                String sClsPackage = getClassPackage( cls );
+                String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  :  "http://" + sClsPackage + "#" );
+                RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
+                
+                TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
+                elParent.appendChild( elLastProperty );
+                
+                elLastProperty.setAttribute( resPredResource.getURI(), currentResource );
+            }
+            else
+                throw new Error( "failure in RDFResource.walk" );
+        }
+        
+        public boolean walkingAllowed( RDFResource source, String prop, RDFResource dest )
+        {
+            if( alreadyVisitedOnWalk( source ) )
+            {
+                if( alreadyVisitedOnPath( source ) )
+                    return false;
+                else
+                    return !setProcessedResources.contains( source );
+            }
+            return true;
+        }
+    };
+    this.walk( wc );
+    
+    return xmlDoc.serialize();
+
+}
+
+public static String getClassPackage( Class cls )
+{
+    String className = cls.getName();
+    int p = className.lastIndexOf( '.' );
+    return className.substring( 0, p );
+}
+
+public static String getClassName( Class cls )
+{
+    String className = cls.getName();
+    int p = className.lastIndexOf( '.' );
+    return className.substring( p+1 );
+}
+
 
 
 //----------------------------------------------------------------------------------------------------

@@ -1,5 +1,9 @@
 package dfki.rdf.test.walk;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,10 +11,20 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.w3c.rdf.model.Resource;
+import org.w3c.rdf.util.RDFUtil;
+import org.w3c.rdf.vocabulary.rdf_schema_200001.RDFS;
+
 import dfki.rdf.util.KnowledgeBase;
+import dfki.rdf.util.PropertyInfo;
+import dfki.rdf.util.RDF2Java;
 import dfki.rdf.util.RDFExport;
 import dfki.rdf.util.RDFImport;
 import dfki.rdf.util.RDFResource;
+import dfki.rdf.util.RDFS2Class;
+import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
+import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
+import dfki.util.rdf.RDF;
 
 public class Test
 {
@@ -25,6 +39,7 @@ RDFExport m_rdfExport;
 
 static final String NAMESPACE = "http://dfki.rdf.test/walk#";
 static final String PACKAGE   = "dfki.rdf.test.walk";
+
 
 //---------------------------------------------------------------------------
 public static void main (String[] args)
@@ -55,9 +70,10 @@ void go ()
     m_kbCachedObjects.putAll( mapObjects );
     System.out.println( "knowledgeBase:\n" + m_kbCachedObjects );
     
-    go_1();
-    go_2();
-    go_3();
+//    go_1();
+//    go_2();
+//    go_3();
+    go_4();
 }
 
 //---------------------------------------------------------------------------
@@ -245,7 +261,17 @@ void go_3()
             {
                 System.out.print( "    " );
             }
-            System.out.println( "<" + currentResource.getLocalName() + ">" );
+            System.out.print( "<" + currentResource.getLocalName() );
+            Collection/*PropertyInfo*/ collPropInfos = currentResource.getPropertyStore().getPropertyInfos();
+            for( Iterator it = collPropInfos.iterator(); it.hasNext(); )
+            {
+                PropertyInfo pi = (PropertyInfo)it.next();
+                if( pi.getValue() == null ) continue;
+                if(     pi.getValueType() == PropertyInfo.VT_STRING ||
+                        pi.getValueType() == PropertyInfo.VT_SYMBOL )
+                    System.out.print( " " + pi.getName() + "=\"" + (String)pi.getValue() + "\"" );
+            }
+            System.out.println( ">" );
         }
         
         Set/*RDFResource*/ setLeftResources = new HashSet();
@@ -316,6 +342,29 @@ void go_3()
         System.out.println( "    " + s );
     }
 }
+
+//---------------------------------------------------------------------------
+void go_4()
+{
+    System.out.println( "\n\n\ngo_4:\n" );
+    RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
+    
+    String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS );
+    System.out.println( "resHomer.toStringAsRDF():\n" + sAsRDF );
+
+    try
+    {
+        String sFilename = "testdata/walk/walk_go4.rdf";
+        PrintWriter w = new PrintWriter( new FileOutputStream( sFilename ) );
+        w.write( sAsRDF );
+        w.close();
+    }
+    catch( FileNotFoundException e )
+    {
+        e.printStackTrace();
+    }
+}
+
 
 //---------------------------------------------------------------------------
 Map readin (String sLocalName)

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://protege.stanford.edu/system#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+	 <!ENTITY walk 'http://dfki.rdf.test/walk#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:walk="&walk;"
+	 xmlns:rdfs="&rdfs;">
+<rdfs:Class rdf:about="&walk;Human"
+	 a:role="abstract"
+	 rdfs:label="Human">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&walk;Man"
+	 rdfs:label="Man">
+	<rdfs:subClassOf rdf:resource="&walk;Human"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&walk;Woman"
+	 rdfs:label="Woman">
+	<rdfs:subClassOf rdf:resource="&walk;Human"/>
+</rdfs:Class>
+<rdf:Property rdf:about="&walk;hasChild"
+	 rdfs:label="hasChild">
+	<rdfs:range rdf:resource="&walk;Human"/>
+	<rdfs:domain rdf:resource="&walk;Human"/>
+</rdf:Property>
+<rdf:Property rdf:about="&walk;hasFather"
+	 a:maxCardinality="1"
+	 rdfs:label="hasFather">
+	<rdfs:domain rdf:resource="&walk;Human"/>
+	<rdfs:range rdf:resource="&walk;Man"/>
+</rdf:Property>
+<rdf:Property rdf:about="&walk;hasHusband"
+	 a:maxCardinality="1"
+	 rdfs:label="hasHusband">
+	<rdfs:range rdf:resource="&walk;Man"/>
+	<rdfs:domain rdf:resource="&walk;Woman"/>
+	<a:inverseProperty rdf:resource="&walk;hasWife"/>
+</rdf:Property>
+<rdf:Property rdf:about="&walk;hasMother"
+	 a:maxCardinality="1"
+	 rdfs:label="hasMother">
+	<rdfs:domain rdf:resource="&walk;Human"/>
+	<rdfs:range rdf:resource="&walk;Woman"/>
+</rdf:Property>
+<rdf:Property rdf:about="&walk;hasWife"
+	 a:maxCardinality="1"
+	 rdfs:label="hasWife">
+	<rdfs:domain rdf:resource="&walk;Man"/>
+	<rdfs:range rdf:resource="&walk;Woman"/>
+	<a:inverseProperty rdf:resource="&walk;hasHusband"/>
+</rdf:Property>
+<rdf:Property rdf:about="&walk;name"
+	 a:maxCardinality="1"
+	 rdfs:label="name">
+	<rdfs:domain rdf:resource="&walk;Human"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+</rdf:RDF>

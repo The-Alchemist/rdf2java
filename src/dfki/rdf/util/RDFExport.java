@@ -219,13 +219,13 @@ public class RDFExport {
     add(statement(resource, RDF.type, sysResource(classPackage, className)));
   }
 
-  String getClassPackage(Class cls) {
+  static String getClassPackage(Class cls) {
     String className = cls.getName();
     int p = className.lastIndexOf('.');
     return className.substring(0, p);
   }
 
-  String getClassName(Class cls) {
+  static String getClassName(Class cls) {
     String className = cls.getName();
     int p = className.lastIndexOf('.');
     return className.substring(p+1);
