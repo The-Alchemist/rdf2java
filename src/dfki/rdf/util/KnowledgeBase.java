@@ -216,7 +216,7 @@ private Collection/*THING*/ findSubjects( String sPropertyPkg, String sPropertyN
             }
             else  // singe value slot
             {
-                if( objThingPropertyValue.equals( value ) )
+                if( objThingPropertyValue != null && objThingPropertyValue.equals( value ) )
                 {
                     setSubjects.add( thing );
                     bFoundOne = true;
