@@ -7,7 +7,7 @@ import java.lang.reflect.*;
 public class RDF2Java
 {
 //----------------------------------------------------------------------------------------------------
-static String extractPropertyName (String sMethodName)
+public static String extractPropertyName (String sMethodName)
 {
     // getProp --> prop
     // get_Prop -> Prop   (also possible: get_prop --> prop)
@@ -19,7 +19,7 @@ static String extractPropertyName (String sMethodName)
 }
 
 //----------------------------------------------------------------------------------------------------
-static String makeMethodName (String sMethodPrefix, String sPropertyName)
+public static String makeMethodName (String sMethodPrefix, String sPropertyName)
 {
     // prop --> getProp
     // Prop --> get_Prop
@@ -55,7 +55,7 @@ static boolean areAssignableFrom (Class[] pars1, Class[] pars2)
 }
 
 //----------------------------------------------------------------------------------------------------
-static public Collection/*String*/ getProperties (Class cls)
+public static Collection/*String*/ getProperties (Class cls)
 {
     Collection collProperties = new HashSet();
     Method[] aMethods = cls.getMethods();
@@ -80,7 +80,7 @@ static public Collection/*String*/ getProperties (Class cls)
 }
 
 //----------------------------------------------------------------------------------------------------
-static public Method[] getPropertyMethods (Class cls)
+public static Method[] getPropertyMethods (Class cls)
 {
     Collection/*String*/ collProperties = getProperties(cls);
     Method[] aMethods = new Method[collProperties.size()];
