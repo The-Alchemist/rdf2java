@@ -472,14 +472,12 @@ public class RDFImport {
   }
 
   void putValue(Object object, String property, Object value, Resource objectResourceForDebug) {
-    // create method name as "put" + property with first letter capitalized
-    // this version ignores package incompatibilities ... !!!
     String methodName;
-    if (Character.isLowerCase(property.charAt(0)) || property.equals(URI))  // "putURI" w/o "_"
-        methodName = "put"  + Character.toUpperCase(property.charAt(0))
-                            + property.substring(1);
+    if (property.equals(URI))
+        methodName = "putURI";
     else
-        methodName = "put_" + property;
+        methodName = RDF2Java.makeMethodName("put", property);
+
     Class objectClass = object.getClass();
     Class valueClass = value.getClass();
     Method method = findMethod(objectClass, methodName, valueClass);

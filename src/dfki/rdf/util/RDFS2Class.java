@@ -509,7 +509,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
-            pwClsFile.println(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
+            pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
                               sIndent + "{");
             if (pi.bNeedsRangeInterface)
             {
@@ -529,15 +529,15 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             }
             pwClsFile.print(sIndent + "    m_" + pi.sSlotName + ".add(p_" + pi.sSlotName + ");\n" +
                             sIndent + "}\n");
-            pwClsFile.print(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
+            pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
                             sIndent + "{\n" +
                             sIndent + "    m_" + pi.sSlotName + ".add(p_" + pi.sSlotName + ");\n" +
                             sIndent + "}\n");
-            pwClsFile.print(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (java.util.Collection p_" + pi.sSlotName +")\n" +
+            pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (java.util.Collection p_" + pi.sSlotName +")\n" +
                             sIndent + "{\n" +
                             sIndent + "    m_" + pi.sSlotName + " = new " + m_sCollectionType + "(p_" + pi.sSlotName + ");\n" +
                             sIndent + "}\n");
-            pwClsFile.print(sIndent + "public void " + makeMethodName("clear", pi.sSlotName) + " ()\n" +
+            pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("clear", pi.sSlotName) + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    m_" + pi.sSlotName + " = new " + m_sCollectionType + "();\n" +
                             sIndent + "}");
@@ -547,7 +547,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: getter for slot " + pi.sSlotName + " **/");
-            pwClsFile.print(sIndent + "public java.util.Collection " + makeMethodName("get", pi.sSlotName) + " ()\n" +
+            pwClsFile.print(sIndent + "public java.util.Collection " + RDF2Java.makeMethodName("get", pi.sSlotName) + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    return m_" + pi.sSlotName + ";\n" +
                             sIndent + "}");
@@ -576,7 +576,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
-            pwClsFile.println(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
+            pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
                               sIndent + "{");
             if (pi.bNeedsRangeInterface)
             {
@@ -597,7 +597,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             pwClsFile.print(sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
                             sIndent + "}\n");
             // second putter (URI)
-            pwClsFile.print(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
+            pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
                             sIndent + "{\n" +
                             sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
                             sIndent + "}");
@@ -607,11 +607,11 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: getter for slot " + pi.sSlotName + " **/");
-            pwClsFile.print(sIndent + "public " + sRangePkgAndCls + " " + makeMethodName("Get", pi.sSlotName) + " ()\n" +
+            pwClsFile.print(sIndent + "public " + sRangePkgAndCls + " " + RDF2Java.makeMethodName("Get", pi.sSlotName) + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    return (" + sRangePkgAndCls + ")m_" + pi.sSlotName + ";\n" +
                             sIndent + "}\n");
-            pwClsFile.print(sIndent + "public dfki.rdf.util.RDFResource " + makeMethodName("get", pi.sSlotName) + " ()\n" +
+            pwClsFile.print(sIndent + "public dfki.rdf.util.RDFResource " + RDF2Java.makeMethodName("get", pi.sSlotName) + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    return m_" + pi.sSlotName + ";\n" +
                             sIndent + "}");
@@ -664,14 +664,6 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         copyPartOfFormerFile_class_EOF(pwClsFile);
 
     pwClsFile.println("// EOF\n");
-}
-
-//----------------------------------------------------------------------------------------------------
-protected String makeMethodName (String sPrefix, String sSlotName)
-{
-    String sUnderscore = (Character.isUpperCase(sSlotName.charAt(0)) ? "_" : "");
-    return sPrefix + sUnderscore + Character.toUpperCase(sSlotName.charAt(0))
-                                 + sSlotName.substring(1);
 }
 
 //----------------------------------------------------------------------------------------------------

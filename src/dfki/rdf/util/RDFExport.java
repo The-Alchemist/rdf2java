@@ -235,8 +235,7 @@ public class RDFExport {
       String methodName = method.getName();
       if (methodName.equals("getClass") || methodName.equals("getURI"))
         continue;
-      if ( methodName.startsWith("get") ||
-           (methodName.startsWith("Get") && methodName.endsWith("__asURI")) ) {
+      if ( methodName.startsWith("get") ) {
 	Class[] parameterTypes = method.getParameterTypes();
 	if (parameterTypes.length == 0) {
 	  Object value = null;
@@ -245,7 +244,7 @@ public class RDFExport {
 	  } catch (Exception e) {
 	    System.err.println("exportPropertyValues: "  + e);
 	  }
-	  String propertyName = getPropertyName(methodName);
+	  String propertyName = RDF2Java.extractPropertyName(methodName);
 	  exportPropertyValue(resource, classPackage, propertyName, value, actualDepth);
 	}
       }
@@ -306,29 +305,6 @@ public class RDFExport {
     }
   }
 
-  String getPropertyName(String methodName) {
-    // getProp -> prop
-    // get_prop -> prop and esp. get_Prop -> Prop (upper case properties)
-    if (methodName.startsWith("get"))
-    {
-        if (methodName.startsWith("get_"))
-          return methodName.substring(4);
-        else
-          return Character.toLowerCase(methodName.charAt(3))
-            + methodName.substring(4);
-    }
-    else
-    if (methodName.startsWith("Get") && methodName.endsWith("__asURI"))
-    {
-        if (methodName.startsWith("Get_"))
-          return methodName.substring(4, methodName.length()-7);
-        else
-          return Character.toLowerCase(methodName.charAt(3))
-            + methodName.substring(4, methodName.length()-7);
-    }
-    else
-        throw new Error("implementation error in dfki.rdf.util.RDFExport . getPropertyName");
-  }
 
 
 }
