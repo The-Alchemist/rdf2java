@@ -1,9 +1,12 @@
 package dfki.rdf.util;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 
-public class PropertyInfo
+public class PropertyInfo   implements Serializable
 {
 //------------------------------------------------------------------------------
 private String m_sName;
@@ -22,8 +25,7 @@ private String[] m_asAllowedSymbols;
 
 
 //------------------------------------------------------------------------------
-public static PropertyInfo createStringProperty(
-                                String name, boolean hasMultiValue )
+public static PropertyInfo createStringProperty( String name, boolean hasMultiValue )
 {
     return new PropertyInfo( name, VT_STRING, null, null, hasMultiValue );
 }

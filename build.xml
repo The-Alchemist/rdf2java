@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="rdf2java" default="rdf2java">
+	<target name="rdf2java">
+		<jar destfile="lib/rdf2java.jar">
+		    <fileset dir="./classes" excludes="**/*.html,**/doc-files/**">
+		    	<filename name="dfki/rdf/**/*.class"/>
+			</fileset>
+		    <fileset dir="./src" 	excludes="**/*.html,**/doc-files/**" />
+		</jar>
+	</target>
+
+	<!--target name="apidoc" -->
+		<!--jar destfile="./lib/rdf2java_apidoc.jar" basedir="./apidoc" ></jar -->
+	<!--/target-->
+</project>

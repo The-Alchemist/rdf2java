@@ -1,9 +1,10 @@
 package dfki.rdf.util;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class PropertyStore
+public class PropertyStore   implements Serializable
 {
 //------------------------------------------------------------------------------
 private Map/*String->PropertyInfo*/ m_mapProperty2Info;
