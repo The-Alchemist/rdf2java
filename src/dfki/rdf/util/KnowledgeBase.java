@@ -188,7 +188,7 @@ private Collection/*THING*/ findSubjects( String sPropertyPkg, String sPropertyN
 {
     long iTimeBeginning = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
 
-    HashSet setSubjects = new HashSet();
+    HashSet/*THING*/ setSubjects = new HashSet();
     boolean bFoundOne = false;
     for (Iterator it = values().iterator(); it.hasNext(); )
     {
@@ -205,6 +205,8 @@ private Collection/*THING*/ findSubjects( String sPropertyPkg, String sPropertyN
             if( sPropertyName != null  &&  !sThingPropertyName.equals( sPropertyName ) )
                 continue;
             Object objThingPropertyValue = thing.getPropertyValue( sThingPropertyName );
+            if( objThingPropertyValue == null )
+                continue;
             if( objThingPropertyValue instanceof Collection )
             {
                 if( ((Collection)objThingPropertyValue).contains( value ) )
@@ -216,7 +218,7 @@ private Collection/*THING*/ findSubjects( String sPropertyPkg, String sPropertyN
             }
             else  // singe value slot
             {
-                if( objThingPropertyValue != null && objThingPropertyValue.equals( value ) )
+                if( objThingPropertyValue.equals( value ) )
                 {
                     setSubjects.add( thing );
                     bFoundOne = true;
@@ -236,6 +238,22 @@ private Collection/*THING*/ findSubjects( String sPropertyPkg, String sPropertyN
     }
 
     return setSubjects;
+}
+
+//---------------------------------------------------------------------------
+public Collection/*THING*/ findInstances( Class cls )
+{
+    if( cls == null )
+        return null;  // hey, what do you want?
+    HashSet/*THING*/ setInstances = new HashSet();
+    for (Iterator it = values().iterator(); it.hasNext(); )
+    {
+        Object obj = it.next();
+        if( obj == null  ||  !(obj instanceof THING)  ||  !cls.isAssignableFrom( obj.getClass() ) )
+            continue;
+        setInstances.add( obj );
+    }
+    return setInstances;
 }
 
 //---------------------------------------------------------------------------

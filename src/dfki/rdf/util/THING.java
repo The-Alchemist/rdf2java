@@ -174,6 +174,8 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateN
         if (m_lLastUpdateNumber == lUpdateNumber) return;  // already visited this THING
         m_lLastUpdateNumber = lUpdateNumber;
 
+        kbCachedObjects.put( this );  //SS:2002-12-18
+
         Collection collProperties = getProperties();
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
