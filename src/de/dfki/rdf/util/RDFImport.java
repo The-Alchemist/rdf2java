@@ -106,16 +106,48 @@ public class RDFImport
         m_model = m_rdfFactory.createModel();
         m_nodeFactory = m_model.getNodeFactory();
         
+        Map mapJena2Melnik = new HashMap();
+        
         for( StmtIterator itStatements = jenaModel.listStatements(); itStatements.hasNext(); )
         {
             com.hp.hpl.jena.rdf.model.Statement jenaStatement = itStatements.nextStatement();
-            Resource s = m_nodeFactory.createResource( jenaStatement.getSubject().getURI() );
-            Resource p = m_nodeFactory.createResource( jenaStatement.getPredicate().getURI() );
-            RDFNode o;
-            if( jenaStatement.getObject() instanceof com.hp.hpl.jena.rdf.model.Resource ) 
-                o = m_nodeFactory.createResource( jenaStatement.getResource().getURI() );
-            else
-                o = m_nodeFactory.createLiteral( jenaStatement.getString() );
+            com.hp.hpl.jena.rdf.model.Resource jenaSubject   = jenaStatement.getSubject();
+            com.hp.hpl.jena.rdf.model.Property jenaPredicate = jenaStatement.getPredicate();
+            com.hp.hpl.jena.rdf.model.RDFNode  jenaObject    = jenaStatement.getObject();
+            Resource s = (Resource)mapJena2Melnik.get( jenaSubject );
+            Resource p = (Resource)mapJena2Melnik.get( jenaPredicate );
+            RDFNode  o = (RDFNode) mapJena2Melnik.get( jenaObject );
+            if( s == null )
+            {
+                if( jenaSubject.isAnon() )
+                    s = m_nodeFactory.createUniqueResource();
+                else
+                    s = m_nodeFactory.createResource( jenaSubject.getNameSpace(), jenaSubject.getLocalName() );
+                mapJena2Melnik.put( jenaSubject, s );
+            }
+            if( p == null )
+            {
+                if( jenaPredicate.isAnon() )
+                    p = m_nodeFactory.createUniqueResource();
+                else
+                    p = m_nodeFactory.createResource( jenaPredicate.getNameSpace(), jenaPredicate.getLocalName() );
+                mapJena2Melnik.put( jenaPredicate, p );
+            }
+                
+            if( o == null )
+            {
+                if( jenaStatement.getObject() instanceof com.hp.hpl.jena.rdf.model.Resource ) 
+                {
+                    if( jenaStatement.getResource().isAnon() )
+                        o = m_nodeFactory.createUniqueResource();
+                    else
+                        o = m_nodeFactory.createResource( jenaStatement.getResource().getNameSpace(), jenaStatement.getResource().getLocalName() );
+                }
+                else
+                    o = m_nodeFactory.createLiteral( jenaStatement.getString() );
+                mapJena2Melnik.put( jenaObject, o );
+            }
+
             Statement st = m_nodeFactory.createStatement( s, p, o );
             m_model.add( st );
         }
