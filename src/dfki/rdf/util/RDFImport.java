@@ -335,7 +335,7 @@ public class RDFImport {
   public Map importObjects(String filename, KnowledgeBase cachedObjects) throws Exception {
     getModel(filename);
     importObjects(cachedObjects);
-    return _objects;
+    return convertResourseKeysToStringKeys(_objects);
   }
 
   public Map importObjects(Reader reader) throws Exception {
@@ -345,9 +345,23 @@ public class RDFImport {
   public Map importObjects(Reader reader, KnowledgeBase cachedObjects) throws Exception {
     getModel(reader);
     importObjects(cachedObjects);
-    return _objects;
+    return convertResourseKeysToStringKeys(_objects);
   }
 
+  Map convertResourseKeysToStringKeys (Map mapRes2Object)
+  {
+    Map mapString2Object = new HashMap();
+    try {
+        for (Iterator it = mapRes2Object.keySet().iterator(); it.hasNext(); )
+        {
+            org.w3c.rdf.model.Resource resKey = (org.w3c.rdf.model.Resource)it.next();
+            mapString2Object.put( resKey.getURI(), mapRes2Object.get(resKey) );
+        }
+    }
+    catch (org.w3c.rdf.model.ModelException ex) {
+    }
+    return mapString2Object;
+  }
 
   void importObjects(KnowledgeBase cachedObjects) {
 

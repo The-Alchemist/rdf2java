@@ -74,16 +74,20 @@ public Object get (Object key)
     try {
         if (key instanceof org.w3c.rdf.model.Resource)
             key = ((org.w3c.rdf.model.Resource)key).getURI();
+        else
+        if ( !(key instanceof String) )
+            throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . get; key was no String (not even a Resource)");
         return m_mapObjects.get(key);
     }
     catch (org.w3c.rdf.model.ModelException ex) {
-        return null;
+        throw new Error("ModelException occurred in dfki.rdf.util.KnowledgeBase . get: " + ex.getMessage());
     }
 }
 
 //---------------------------------------------------------------------------
 public void putAll (Map map)
 {
+    // for security reasons we better iterate :-(
     for (Iterator it = map.keySet().iterator(); it.hasNext(); )
     {
         Object objKey = it.next();
