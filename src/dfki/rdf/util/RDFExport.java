@@ -31,7 +31,7 @@ public class RDFExport {
   HashMap _exportedObjects; // maps objects to resources
   int _genid;
 
-  int _depth = -1;  // default value of -1 means infinite
+  int _depth = -1;  // default value of -1 means infinite depth
 
 
   public RDFExport(String namespace) {
@@ -182,7 +182,7 @@ public class RDFExport {
 	else
 	  resource = anonResource(getGenid());
 	_exportedObjects.put(object, resource);
-        if (_depth >= 0 && actualDepth > _depth) {
+        if (_depth >= 0 && actualDepth > 0 && actualDepth > _depth) {
             if (uri == null) throw new Error("ERROR (rdf2java) in method RDFExport.exportObject: found object without URI at max. depth");
             return resource;
         }
