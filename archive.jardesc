@@ -3,7 +3,7 @@
     <jar path="E:/java/rdf2java/lib/rdf2java.jar"/>
     <options buildIfNeeded="true" compress="true"
         descriptionLocation="/rdf2java/archive.jardesc"
-        exportErrors="true" exportWarnings="true" overwrite="false"
+        exportErrors="true" exportWarnings="true" overwrite="true"
         saveDescription="true" useSourceFolders="false"/>
     <manifest generateManifest="true" manifestLocation=""
         manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
