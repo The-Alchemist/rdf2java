@@ -27,6 +27,8 @@ import org.w3c.rdf.vocabulary.rdf_schema_19990303.RDFS;
 import org.w3c.rdf.vocabulary.rdf_syntax_19990222.RDF;
 import org.xml.sax.InputSource;
 
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+
 
 public class RDFImport
 {
@@ -92,6 +94,32 @@ public class RDFImport
          * show all triples: RDFUtil.printStatements(_model, System.out);
          * System.out.println();
          */
+        m_damlList = resource( m_damlNamespace, "List" );
+        m_damlFirst = resource( m_damlNamespace, "first" );
+        m_damlRest = resource( m_damlNamespace, "rest" );
+        m_damlNil = resource( m_damlNamespace, "nil" );
+    }
+    
+    void getModel( com.hp.hpl.jena.rdf.model.Model jenaModel ) throws Exception
+    {
+        m_rdfFactory = new RDFFactoryImpl();
+        m_model = m_rdfFactory.createModel();
+        m_nodeFactory = m_model.getNodeFactory();
+        
+        for( StmtIterator itStatements = jenaModel.listStatements(); itStatements.hasNext(); )
+        {
+            com.hp.hpl.jena.rdf.model.Statement jenaStatement = itStatements.nextStatement();
+            Resource s = m_nodeFactory.createResource( jenaStatement.getSubject().getURI() );
+            Resource p = m_nodeFactory.createResource( jenaStatement.getPredicate().getURI() );
+            RDFNode o;
+            if( jenaStatement.getObject() instanceof com.hp.hpl.jena.rdf.model.Resource ) 
+                o = m_nodeFactory.createResource( jenaStatement.getResource().getURI() );
+            else
+                o = m_nodeFactory.createLiteral( jenaStatement.getString() );
+            Statement st = m_nodeFactory.createStatement( s, p, o );
+            m_model.add( st );
+        }
+
         m_damlList = resource( m_damlNamespace, "List" );
         m_damlFirst = resource( m_damlNamespace, "first" );
         m_damlRest = resource( m_damlNamespace, "rest" );
@@ -433,6 +461,19 @@ public class RDFImport
             throws Exception
     {
         getModel( reader );
+        importObjects( cachedObjects );
+        return convertResourseKeysToStringKeys( m_objects );
+    }
+
+    public Map importObjects( com.hp.hpl.jena.rdf.model.Model jenaModel ) throws Exception
+    {
+        return importObjects( jenaModel, new KnowledgeBase() );
+    }
+
+    public Map importObjects( com.hp.hpl.jena.rdf.model.Model jenaModel, KnowledgeBase cachedObjects )
+            throws Exception
+    {
+        getModel( jenaModel );
         importObjects( cachedObjects );
         return convertResourseKeysToStringKeys( m_objects );
     }
