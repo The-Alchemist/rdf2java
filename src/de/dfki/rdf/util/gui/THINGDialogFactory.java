@@ -349,23 +349,23 @@ public static THINGDialog createModifyDialog(THING p_thing, KnowledgeBase p_know
  {
     boolean bModifyable = true;
     THINGDialog dialog = null;
-    THING thing = null;
+    
 
 
     try
     {
-        if (thing.getURI() == null)
-            thing.makeNewURI();
+        if (p_thing.getURI() == null)
+            p_thing.makeNewURI();
 
         if (p_owner instanceof Dialog)
-         dialog = new THINGDialog(thing,p_knowledgeBase,(Dialog)p_owner, p_thingDHelper);
+         dialog = new THINGDialog(p_thing,p_knowledgeBase,(Dialog)p_owner, p_thingDHelper);
         else
-         dialog = new THINGDialog(thing, p_knowledgeBase,(Frame)p_owner, p_thingDHelper);
+         dialog = new THINGDialog(p_thing, p_knowledgeBase,(Frame)p_owner, p_thingDHelper);
 
-        dialog.setTitle("New - (" + thing.getClass().getName() +")");
+        dialog.setTitle("New - (" + p_thing.getClass().getName() +")");
 
 
-        dialog.getContentPane().add(getMainPane(thing,true,true,dialog), BorderLayout.CENTER);
+        dialog.getContentPane().add(getMainPane(p_thing,true,true,dialog), BorderLayout.CENTER);
     }
     catch (Exception e)
     {
@@ -375,7 +375,7 @@ public static THINGDialog createModifyDialog(THING p_thing, KnowledgeBase p_know
         bModifyable = false; // just View
 
     }
-    dialog.getContentPane().add(getMainDialogButtons(dialog,thing,bModifyable), BorderLayout.SOUTH);
+    dialog.getContentPane().add(getMainDialogButtons(dialog,p_thing,bModifyable), BorderLayout.SOUTH);
     setDialogSize(dialog);
     dialog.setLocation();
     return dialog;
