@@ -4,7 +4,6 @@
   <fullname>xerces</fullname>
   <class>
     <path>[import/xercesImpl.jar]</path>
-    <path>[import/xercesSamples.jar]</path>
     <path>[import/xmlParserAPIs.jar]</path>
   </class>
   <source>

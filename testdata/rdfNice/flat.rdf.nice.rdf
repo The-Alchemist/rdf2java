@@ -19,12 +19,14 @@
     xmlns:task="&task;">
 
     <task:TaskInstance  rdf:about="&default;id_1029933827946_517e5e"
-         task:name="join-test"
          task:taskState="processible">
+        <task:name><![CDATA[join-test]]>
+        </task:name>
         <task:subTask>
             <task:TaskInstance  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00005"
-                 task:name="CCC-1"
                  task:taskState="initiated">
+                <task:name><![CDATA[CCC-1]]>
+                </task:name>
                 <task:rule>
                     <task:Rule  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00008">
                         <task:premise>
@@ -53,8 +55,9 @@
         </task:subTask>
         <task:subTask>
             <task:TaskInstance  rdf:about="&default;id_1029933860113_16e599"
-                 task:name="AAA-1"
                  task:taskState="processible">
+                <task:name><![CDATA[AAA-1]]>
+                </task:name>
                 <task:performedBy  rdf:resource="&default;id_1029933827946_3f5841"/>
                 <task:parentTask  rdf:resource="&default;id_1029933827946_517e5e"/>
                 <task:rootTask  rdf:resource="&default;id_1029933827946_517e5e"/>
@@ -62,8 +65,9 @@
         </task:subTask>
         <task:subTask>
             <task:TaskInstance  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00000"
-                 task:name="AAA-2"
                  task:taskState="processible">
+                <task:name><![CDATA[AAA-2]]>
+                </task:name>
                 <task:performedBy  rdf:resource="&default;id_1029933827946_3f5841"/>
                 <task:parentTask  rdf:resource="&default;id_1029933827946_517e5e"/>
                 <task:rootTask  rdf:resource="&default;id_1029933827946_517e5e"/>
@@ -104,8 +108,56 @@
                             <task:preselectSuccs  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00022"
                                  task:maxToSelect="3"
                                  task:minToSelect="2">
-                                <task:objects  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00007"/>
-                                <task:objects  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00006"/>
+                                <task:objects>
+                                    <task:TaskInstance  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00007"
+                                         task:taskState="initiated">
+                                        <task:name><![CDATA[CCC-3]]>
+                                        </task:name>
+                                        <task:rule>
+                                            <task:Rule  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00014">
+                                                <task:action>
+                                                    <task:ChangeState  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00015"
+                                                         task:transition="queue">
+                                                        <task:object  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00007"/>
+                                                    </task:ChangeState>
+                                                </task:action>
+                                                <task:premise>
+                                                    <task:IsFinished  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00016">
+                                                        <task:object  rdf:resource="&default;id_1029933860113_3bc1f6"/>
+                                                    </task:IsFinished>
+                                                </task:premise>
+                                            </task:Rule>
+                                        </task:rule>
+                                        <task:performedBy  rdf:resource="&default;id_1029933827946_3f5841"/>
+                                        <task:parentTask  rdf:resource="&default;id_1029933827946_517e5e"/>
+                                        <task:rootTask  rdf:resource="&default;id_1029933827946_517e5e"/>
+                                    </task:TaskInstance>
+                                </task:objects>
+                                <task:objects>
+                                    <task:TaskInstance  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00006"
+                                         task:taskState="initiated">
+                                        <task:name><![CDATA[CCC-2]]>
+                                        </task:name>
+                                        <task:rule>
+                                            <task:Rule  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00011">
+                                                <task:premise>
+                                                    <task:IsFinished  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00013">
+                                                        <task:object  rdf:resource="&default;id_1029933860113_3bc1f6"/>
+                                                    </task:IsFinished>
+                                                </task:premise>
+                                                <task:action>
+                                                    <task:ChangeState  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00012"
+                                                         task:transition="queue">
+                                                        <task:object  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00006"/>
+                                                    </task:ChangeState>
+                                                </task:action>
+                                            </task:Rule>
+                                        </task:rule>
+                                        <task:performedBy  rdf:resource="&default;id_1029933827946_3f5841"/>
+                                        <task:parentTask  rdf:resource="&default;id_1029933827946_517e5e"/>
+                                        <task:rootTask  rdf:resource="&default;id_1029933827946_517e5e"/>
+                                    </task:TaskInstance>
+                                </task:objects>
                                 <task:objects  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00005"/>
                             </task:preselectSuccs>
                         </task:action>
@@ -128,54 +180,8 @@
                 <task:rootTask  rdf:resource="&default;id_1029933827946_517e5e"/>
             </task:TaskInstance>
         </task:subTask>
-        <task:subTask>
-            <task:TaskInstance  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00007"
-                 task:name="CCC-3"
-                 task:taskState="initiated">
-                <task:rule>
-                    <task:Rule  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00014">
-                        <task:action>
-                            <task:ChangeState  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00015"
-                                 task:transition="queue">
-                                <task:object  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00007"/>
-                            </task:ChangeState>
-                        </task:action>
-                        <task:premise>
-                            <task:IsFinished  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00016">
-                                <task:object  rdf:resource="&default;id_1029933860113_3bc1f6"/>
-                            </task:IsFinished>
-                        </task:premise>
-                    </task:Rule>
-                </task:rule>
-                <task:performedBy  rdf:resource="&default;id_1029933827946_3f5841"/>
-                <task:parentTask  rdf:resource="&default;id_1029933827946_517e5e"/>
-                <task:rootTask  rdf:resource="&default;id_1029933827946_517e5e"/>
-            </task:TaskInstance>
-        </task:subTask>
-        <task:subTask>
-            <task:TaskInstance  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00006"
-                 task:name="CCC-2"
-                 task:taskState="initiated">
-                <task:rule>
-                    <task:Rule  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00011">
-                        <task:premise>
-                            <task:IsFinished  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00013">
-                                <task:object  rdf:resource="&default;id_1029933860113_3bc1f6"/>
-                            </task:IsFinished>
-                        </task:premise>
-                        <task:action>
-                            <task:ChangeState  rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00012"
-                                 task:transition="queue">
-                                <task:object  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00006"/>
-                            </task:ChangeState>
-                        </task:action>
-                    </task:Rule>
-                </task:rule>
-                <task:performedBy  rdf:resource="&default;id_1029933827946_3f5841"/>
-                <task:parentTask  rdf:resource="&default;id_1029933827946_517e5e"/>
-                <task:rootTask  rdf:resource="&default;id_1029933827946_517e5e"/>
-            </task:TaskInstance>
-        </task:subTask>
+        <task:subTask  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00007"/>
+        <task:subTask  rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00006"/>
         <task:performedBy  rdf:resource="&default;id_1029933827946_3f5841"/>
     </task:TaskInstance>
 </rdf:RDF>

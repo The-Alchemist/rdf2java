@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://org.dfki/rdf2java/example1#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;">
+<a:Person rdf:about="&a;id_20030306_100310_21c887"
+	 a:name="Lisa Simpson">
+	<a:hasParent rdf:resource="&a;example1_00006"/>
+</a:Person>
+<a:Person rdf:about="&a;example1_00005"
+	 a:name="Bart Simpson">
+	<a:hasParent rdf:resource="&a;example1_00006"/>
+</a:Person>
+<a:Person rdf:about="&a;example1_00006"
+	 a:name="Homer Simpson"/>
+</rdf:RDF>

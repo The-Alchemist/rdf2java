@@ -1,6 +1,6 @@
 @echo off
 
-REM set JAVA_VM=C:\jdk1.3\bin\java
+set JAVA_VM=D:\lang\jdk1.3.1\bin\java
 REM set JAVA_VM=java
 
 
