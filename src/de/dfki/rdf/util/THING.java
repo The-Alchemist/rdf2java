@@ -486,14 +486,11 @@ public static class DeepCopyController
 public THING deepCopy( DeepCopyController dcc )   
       throws CloneNotSupportedException
 {
-    THING newThing;
-    if( this.getURI() != null )
-    {
-        newThing = (THING)dcc.mapOldThingNewThing.get( this );
-        if( newThing != null )
-            return newThing;        // this thing has been cloned already
-    }
-    else
+    THING newThing = (THING)dcc.mapOldThingNewThing.get( this );
+    if( newThing != null )
+        return newThing;   // this thing has been cloned already
+    
+    if( this.getURI() == null )
     {
         // This THING has no URI => two alternatives:
         // (1)  (Deep) copy nevertheless; the new (copied) THING will have no URI, too.
