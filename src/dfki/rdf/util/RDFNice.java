@@ -257,8 +257,10 @@ private TinyXMLElement createElement( Resource res )   throws Exception
 //------------------------------------------------------------------------------
 private TinyXMLTextNode createTextNode( String sText )   throws Exception
 {
-    TinyXMLTextNode textNode = m_xmlDoc.createTextNode( sText );
-    return textNode;
+    if( TinyXMLTextNode.containsIllegalChars( sText ) )
+        return m_xmlDoc.createCDATA( sText );
+    else
+        return m_xmlDoc.createTextNode( sText );
 }
 
 //------------------------------------------------------------------------------
@@ -346,7 +348,17 @@ private void appendSlot( TinyXMLElement elInst, Resource resPred, Resource resVa
 //------------------------------------------------------------------------------
 private void appendSlot( TinyXMLElement elInst, Resource resPred, String sValue )   throws Exception
 {
-    elInst.setAttribute( resPred.getNamespace() + resPred.getLocalName(), sValue );
+    if( TinyXMLTextNode.containsIllegalChars( sValue ) )
+    {
+        TinyXMLElement elSlot = createElement( resPred );
+        elInst.appendChild( elSlot );
+        TinyXMLTextNode txtValue = createTextNode( sValue );
+        elSlot.appendChild( txtValue );
+    }
+    else
+    {
+        elInst.setAttribute( resPred.getNamespace() + resPred.getLocalName(), sValue );
+    }
 }
 
 //------------------------------------------------------------------------------

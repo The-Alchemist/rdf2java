@@ -109,6 +109,15 @@ public void putText( String text )
 }
 
 //------------------------------------------------------------------------------
+public void putCDATA( String text )
+{
+    if( m_bWaitingForAttributes )
+        m_sbDocumentElement.append( ">" );
+    m_bWaitingForAttributes = false;
+    m_sbDocumentElement.append( "<![CDATA[" + text + "]]>\n" );
+}
+
+//------------------------------------------------------------------------------
 public void putTextElement( String qnameElement, String text )
 {
     if( m_bWaitingForAttributes )

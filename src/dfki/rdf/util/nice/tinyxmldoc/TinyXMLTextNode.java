@@ -22,6 +22,22 @@ public TinyXMLTextNode( TinyXMLDocument doc, String sText )
 }
 
 //------------------------------------------------------------------------------
+public static boolean containsIllegalChars( String sText )
+{
+    char[] acText = sText.toCharArray();
+    for( int i = 0; i < acText.length; i++ )
+    {
+        char ch = acText[i];
+        if(     ch != ' '
+                &&  !( ch >= '0'  &&  ch <= '9' )
+                &&  !( ch >= 'A'  &&  ch <= 'Z' )
+                &&  !( ch >= 'a'  &&  ch <= 'z' ) )
+            return true;  // bad characters found
+    }
+    return false;  // seems to be ok
+}
+
+//------------------------------------------------------------------------------
 public void setText( String sText )
 {
     m_sText = sText;

@@ -56,6 +56,13 @@ public TinyXMLTextNode createTextNode( String sText )
 }
 
 //------------------------------------------------------------------------------
+public TinyXMLCDATA createCDATA( String sText )
+{
+    TinyXMLCDATA txt = new TinyXMLCDATA( this, sText );
+    return txt;
+}
+
+//------------------------------------------------------------------------------
 public String getNamespace( String sURI )
 {
     int pos = sURI.indexOf( '#' );

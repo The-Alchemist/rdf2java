@@ -46,9 +46,14 @@ public void putAttribute( String qname, String value );
 public void putAttributeElement( String qnameElement, String qnameAttr, String value );
 
 /**
- * Puts a text (child).
+ * Puts a text node (child).
  */
 public void putText( String text );
+
+/**
+ * Puts a CDATA node (child).
+ */
+public void putCDATA( String text );
 
 /**
  * Puts a new element containing the given text --
