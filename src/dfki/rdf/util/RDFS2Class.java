@@ -77,6 +77,7 @@ Resource m_resRDFResProperty;
 Resource m_resProtegeMaxCardinality;
 Resource m_resProtegeAllowedClasses;
 Resource m_resProtegeRange;
+Resource m_resProtegePredRole;
 
 
 LinkedList m_lstFormerFile;  // list of strings (lines) of the former java-file
@@ -116,6 +117,7 @@ public RDFS2Class (String sRDFSFile, String sClsPath, Map mapNamespaceToPackage)
     m_resRDFResProperty = m_rdfURIs.property();
     m_resProtegeMaxCardinality = m_nodeFactory.createResource(PROTEGE_NS, "maxCardinality");
     m_resProtegeAllowedClasses = m_nodeFactory.createResource(PROTEGE_NS, "allowedClasses");
+    m_resProtegePredRole       = m_nodeFactory.createResource(PROTEGE_NS, "role");
     m_resProtegeRange = m_nodeFactory.createResource(PROTEGE_NS, "range");
 
     setRetainOrdering(false);
@@ -436,6 +438,17 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             throw new Exception("Namespace '"+sSuperClassNS+"' (class '"+sSuperClassName+"') mapped to a package");
     }
 
+    // test if class is an abstract or a "concrete" class
+    boolean bClassIsAbstract = false;
+    Model modelClassRole = m_modelRDFS.find(resCls, m_resProtegePredRole, null);
+    if (!modelClassRole.isEmpty())
+    {
+        RDFNode rdfnodeClassRole = RDF.get1(modelClassRole).object();
+        if (rdfnodeClassRole.getLabel().equalsIgnoreCase( "abstract" ))
+            bClassIsAbstract = true;
+    }
+    String sClassIsAbstractSpec = ( bClassIsAbstract  ?  "abstract "  :  " " );  // trailing space is needed!!!
+
     // start writing the file
     pwClsFile.println("package " + sPkg + ";");
     if (m_bIncrementalGenerationForActualFile)
@@ -457,7 +470,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         pwClsFile.println("\n");
     if (m_bInsertIncrementalInfo)
         pwClsFile.println("/** RDFS2Class: class " + sClsName + "\n  * <p>\n  */");
-    pwClsFile.println("public class " + sClsName);
+    pwClsFile.println("public " + sClassIsAbstractSpec + "class " + sClsName);
 
     // subclassing
     if (sSuperClassName != null)
