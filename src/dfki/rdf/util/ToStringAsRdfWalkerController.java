@@ -92,7 +92,9 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
             }
             
             //FIXME: FUCK!!!
-            String sLastPropNamespace = sNamespace;
+            if( penultimateResource == null )
+                throw new Error( "strange error in ToStringAsRdfWalkerController.arriving: penultimateResource == null" );
+            String sLastPropNamespace = getNamespaceFor( penultimateResource );
             int posHash = sLastProperty.lastIndexOf( '#' );
             if( posHash >= 0 )
             {
@@ -215,7 +217,9 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
         if( sLastProperty != null ) 
         {
             //FIXME: FUCK!!!
-            String sLastPropNamespace = getNamespaceFor( currentResource );
+            if( penultimateResource == null )
+                throw new Error( "strange error in ToStringAsRdfWalkerController.arriving: penultimateResource == null" );
+            String sLastPropNamespace = getNamespaceFor( penultimateResource );
             int posHash = sLastProperty.lastIndexOf( '#' );
             if( posHash >= 0 )
             {
