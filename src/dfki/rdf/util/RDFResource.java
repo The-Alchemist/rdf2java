@@ -172,6 +172,11 @@ private static Map/*Class -> Collection of String*/ mapCls2PropertiesCache = new
 
 public Collection/*String*/ getProperties ()
 {
+    return getPropertiesOfThisClass();
+}
+
+protected Collection/*String*/ getPropertiesOfThisClass ()
+{
     Class cls = getClass();
     Collection collProps = (Collection)RDFResource.mapCls2PropertiesCache.get( cls );
     if (collProps == null)
@@ -180,8 +185,6 @@ public Collection/*String*/ getProperties ()
         RDFResource.mapCls2PropertiesCache.put( cls, collProps );
     }
     return collProps;
-
-    //SS:2002-10-11: old version:   return RDF2Java.getProperties(getClass());
 }
 
 //----------------------------------------------------------------------------------------------------

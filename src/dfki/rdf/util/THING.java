@@ -1,6 +1,5 @@
 package dfki.rdf.util;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -273,11 +272,11 @@ public void assign (THING newThing, KnowledgeBase kb)
                 if (objPropValue != null)
                 {
                     // clear old value
-                    //FIXME:   putPropertyValue( sPropertyName, null ); --> is not possible, because class of value is needed
-                    String sPutMethodName = RDF2Java.makeMethodName( "put", sPropertyName );
-                    Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
-                    if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
-                    methodPut.invoke( this, new Object[] { null } );
+                    putPropertyValue( sPropertyName, null );  // is *now* possible :-)
+                    //// String sPutMethodName = RDF2Java.makeMethodName( "put", sPropertyName );
+                    //// Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
+                    //// if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
+                    //// methodPut.invoke( this, new Object[] { null } );
                 }
 
                 assignValues(lstOldValues, lstNewValues, sPropertyName, kb);

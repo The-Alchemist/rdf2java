@@ -38,6 +38,7 @@ static Method getMethod (Class cls, String sMethodName, Class[] aPars)
     {
         Method m = aMethods[i];
         if (!m.getName().equals(sMethodName)) continue;
+        if (aPars == null) return m;  // omit par check => match depends only on method name
         if (!areAssignableFrom( m.getParameterTypes(), aPars )) continue;
         return m;
     }
@@ -119,7 +120,8 @@ public static void putPropertyValue (THING thing, String sPropertyName, Object v
 {
     try {
         String sMethodNamePut = makeMethodName("put", sPropertyName);
-        Method methodPut = getMethod( thing.getClass(), sMethodNamePut, new Class[] { value.getClass() } );
+        Class[] aclsPars = ( value != null  ?  new Class[]{ value.getClass() }  :  null );
+        Method methodPut = getMethod( thing.getClass(), sMethodNamePut, aclsPars );
         methodPut.invoke( thing, new Object[] { value } );
     }
     catch (Exception ex) {
