@@ -49,33 +49,29 @@ public static KnowledgeBase getStaticKnowledgeBase()
 }
 
 //---------------------------------------------------------------------------
-public void setNS2PkgMap( Map mapNS2Pkg )
+synchronized public void setNS2PkgMap( Map mapNS2Pkg )
 {
-    synchronized( m_mapNS2Pkg )
-    {
-        if( m_mapNS2Pkg == null )
-            m_mapNS2Pkg = mapNS2Pkg;
-        else
-            m_mapNS2Pkg.putAll( mapNS2Pkg );
-    }
+	if( mapNS2Pkg == null ) return;
+    if( m_mapNS2Pkg == null )
+        m_mapNS2Pkg = mapNS2Pkg;
+    else
+        m_mapNS2Pkg.putAll( mapNS2Pkg );
 }
 
 //---------------------------------------------------------------------------
-public void setPkg2NSMap( Map mapPkg2NS )
+synchronized public void setPkg2NSMap( Map mapPkg2NS )
 {
-    synchronized( m_mapPkg2NS )
-    {
-        if( m_mapPkg2NS == null )
-            m_mapPkg2NS = mapPkg2NS;
-        else
-            m_mapPkg2NS.putAll( mapPkg2NS );
-    }
+	if( mapPkg2NS == null ) return;
+    if( m_mapPkg2NS == null )
+        m_mapPkg2NS = mapPkg2NS;
+    else
+        m_mapPkg2NS.putAll( mapPkg2NS );
 }
 
 //---------------------------------------------------------------------------
 public void clear ()
 {
-    // synchronized( m_mapObjects )
+    synchronized( m_mapObjects )
     {
         m_mapObjects.clear();
     }
