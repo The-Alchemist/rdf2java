@@ -116,5 +116,17 @@ public void updateRDFResourceSlots ()
 }
 
 //---------------------------------------------------------------------------
+public void assign (dfki.rdf.util.THING thingToAssign)
+{
+    dfki.rdf.util.THING thingOld = (dfki.rdf.util.THING)get(thingToAssign.getURI());
+    if (thingOld != null)
+        thingOld.assign(thingToAssign, this);
+    else
+        put(thingToAssign);
+
+    updateRDFResourceSlots();
+}
+
+//---------------------------------------------------------------------------
 } // end of class KnowledgeBase
 

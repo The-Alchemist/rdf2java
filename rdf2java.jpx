@@ -5,7 +5,7 @@
   <property category="build" name="CopyExtensions.1" value="java" />
   <property category="runtime" name="ConfigurationCount" value="1" />
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner" />
-  <property category="runtime.0" name="application.class" value="dfki.rdf.test.nontransitive.Test" />
+  <property category="runtime.0" name="application.class" value="dfki.rdf.test.assign.Test" />
   <property category="runtime.0" name="jsprunner.launchuri" value="/" />
   <property category="runtime.1" name="ConfigurationName" value="nontransitive.Test" />
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner" />

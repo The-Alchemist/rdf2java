@@ -318,6 +318,13 @@ String calcPropertyNameToMethodNameWithoutURI (String sPropName)
         return "put_" + sPropName; // + "__asURI";
 }
 
+
+//----------------------------------------------------------------------------------------------------
+public void assign (THING thingToAssign, KnowledgeBase kb)
+{
+    throw new Error("Method dfki.rdf.util.THING.assign not yet implemented!");
+}
+
 //----------------------------------------------------------------------------------------------------
 }
 
