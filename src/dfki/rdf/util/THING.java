@@ -230,13 +230,13 @@ public void assign (THING newThing, KnowledgeBase kb)
             {
                 LinkedList lstOldValues = new LinkedList( (Collection)objPropValue );
 
+                Object objPropNewValue = methodGet.invoke( newThing, null );
+                LinkedList lstNewValues = new LinkedList( (Collection)objPropNewValue );
+
                 String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
                 Method methodClear = RDF2Java.getMethod( cls, sClearMethodName, new Class[0] );
                 if (methodClear == null) throw new Exception("missing method " + sClearMethodName + "()");
                 methodClear.invoke( this, null );
-
-                Object objPropNewValue = methodGet.invoke( newThing, null );
-                LinkedList lstNewValues = new LinkedList( (Collection)objPropNewValue );
 
                 assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
             }
@@ -245,13 +245,13 @@ public void assign (THING newThing, KnowledgeBase kb)
                 LinkedList lstOldValues = new LinkedList();
                 if (objPropValue != null) lstOldValues.add( objPropValue );
 
-                Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
-                if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
-                methodPut.invoke( this, new Object[] { null } );
-
                 LinkedList lstNewValues = new LinkedList();
                 Object objPropNewValue = methodGet.invoke( newThing, null );
                 if (objPropNewValue != null) lstNewValues.add( objPropNewValue );
+
+                Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
+                if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
+                methodPut.invoke( this, new Object[] { null } );
 
                 assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
             }
