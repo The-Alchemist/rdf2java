@@ -798,7 +798,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         pwClsFile.println(sIndent + "/** RDFS2Class: PropertyStore-stuff **/");
     pwClsFile.println( sIndent + "private void initPropertyStore()\n" +
                        sIndent + "{\n" +
-                       sIndent + "    dfki.rdf.util.PropertyStore ps = createPropertyStore();\n" +
+                       sIndent + "    dfki.rdf.util.PropertyStore ps = getPropertyStore();\n" +
                        sbPropertyStoreStuff +
                        sIndent + "}" );
     if (m_bInsertIncrementalInfo)

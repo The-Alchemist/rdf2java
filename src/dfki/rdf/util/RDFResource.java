@@ -192,17 +192,11 @@ protected Collection/*String*/ getPropertiesOfThisClass ()
     return collProps;
 }
 
-//------------------------------------------------------------------------------
-public PropertyStore createPropertyStore()
-{
-    if( m_propertyStore == null )
-        m_propertyStore = new PropertyStore( getClass() );
-    return m_propertyStore;
-}
-
 //----------------------------------------------------------------------------------------------------
 public PropertyStore getPropertyStore()
 {
+    if( m_propertyStore == null )
+        m_propertyStore = new PropertyStore( getClass() );
     return m_propertyStore;
 }
 
