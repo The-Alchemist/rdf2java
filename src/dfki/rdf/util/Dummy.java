@@ -26,7 +26,7 @@ static public void main( String[] args )
     			(new Dummy()).go( args[i] );
     		}
     		catch( Exception e ) {
-    			JOptionPane.showMessageDialog( null, "Exception occurred", args[i] + "\n" + e, JOptionPane.OK_OPTION );
+    			JOptionPane.showMessageDialog( null, args[i] + "\n(" + e.getClass() + ")" + e.getMessage() + "\n" + e, "Exception occurred", JOptionPane.OK_OPTION );
     		}
     	}
     }
@@ -98,9 +98,14 @@ private Model convert( Model m1 )   throws Exception
 			p2 = nodeFactory2.createResource( "http://km.dfki.de/model/infotype#authors" );
 		if( p.getURI().equals( "http://km.dfki.de/model/wwf#memoTitle" ) )
 			p2 = nodeFactory2.createResource( "http://km.dfki.de/model/infotype#title" );
+		if( p.getURI().equals( "http://km.dfki.de/model/infotype#contents" ) )
+			p2 = nodeFactory2.createResource( "http://km.dfki.de/model/infotype#topics" );
 
 		if( (o instanceof Resource) && ((Resource)o).getURI().equals( "http://km.dfki.de/model/wwf#Memo" ) )
 			o2 = nodeFactory2.createResource( "http://km.dfki.de/model/infotype#Memo" );			
+
+		if( (o instanceof Resource) && ((Resource)o).getURI().equals( "http://km.dfki.de/model/infotype#HtmlDocument" ) )
+			o2 = nodeFactory2.createResource( "http://km.dfki.de/model/infotype#Document" );			
 
 			
 		Statement st2 = nodeFactory2.createStatement( s2, p2, o2 );
