@@ -72,6 +72,8 @@ static String RDFS_NAMESPACE          = "http://www.w3.org/TR/1999/PR-rdf-schema
 static String RDF_NAMESPACE           = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 static boolean PRINTOUT_RDFS_URIS     = false;
 
+static String XML_SCHEMA_NAMESPACE    = "http://www.w3.org/2001/XMLSchema-datatypes#";
+
 static String PROTEGE_NS              = "http://protege.stanford.edu/system#";
 static boolean PRINTOUT_PROTEGE_URIS  = false;
 
@@ -102,6 +104,7 @@ NodeFactory m_nodeFactory;
 Resource m_resRDFSClass;
 Resource m_resRDFSResource;
 Resource m_resRDFSLiteral;
+Resource m_resXMLDateTime;
 Resource m_resRDFSPredSubClassOf;
 Resource m_resRDFSPredDomain;
 Resource m_resRDFSPredRange;
@@ -364,6 +367,7 @@ protected void initRdfsUris()   throws Exception
     m_resRDFSClass          = m_nodeFactory.createResource( RDFS_NAMESPACE + "Class"        );
     m_resRDFSResource       = m_nodeFactory.createResource( RDFS_NAMESPACE + "Resource"     );
     m_resRDFSLiteral        = m_nodeFactory.createResource( RDFS_NAMESPACE + "Literal"      );
+    m_resXMLDateTime        = m_nodeFactory.createResource( XML_SCHEMA_NAMESPACE + "dateTime"      );
     
     m_resRDFSPredSubClassOf = m_nodeFactory.createResource( RDFS_NAMESPACE + "subClassOf"   );
     m_resRDFSPredDomain     = m_nodeFactory.createResource( RDFS_NAMESPACE + "domain"       );
@@ -557,10 +561,13 @@ protected void createTheClasses ()   throws Exception
 //----------------------------------------------------------------------------------------------------
 protected void createClass (Resource resCls)   throws Exception
 {
+    if( resCls.getURI().equals( m_resXMLDateTime.getURI() ) )
+        return;  //ss:2004-11-22: omitting xml schema classes
+    
     String sClsNS = resCls.getNamespace();
     String sClsName = resCls.getLocalName();
     if (!m_bQuiet)
-        message(sClsNS + sClsName);
+        message(sClsNS + sClsName);    
 
     String sPkg = (String)m_mapNamespaceToPackage.get(sClsNS);
     if (sPkg == null)
@@ -722,6 +729,11 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
         //--- BEGIN --- property info (variable) for this slot
         String sPropInfoHasMultiValue = ( pi.bMultiple  ?  "true"  :  "false" );
+        if( sRangePkgAndCls.equals("Date") )
+        {
+            pwClsFile.println(sIndent + "protected de.dfki.rdf.util.PropertyInfo m_" + sMembervarName + " = de.dfki.rdf.util.PropertyInfo.createStringProperty( \"" + pi.sSlotNS + "\", \"" + pi.sSlotName + "\", " + sPropInfoHasMultiValue + " );\n");
+        }
+        else
         if( sRangePkgAndCls.equals("String") )
         {
             if( pi.setAllowedSymbols == null || pi.setAllowedSymbols.isEmpty() )
@@ -932,6 +944,18 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                                 sIndent + "}");
             }
             // second putter (URI)
+//            if (sRangePkgAndCls.equals("Date"))
+//            {
+//                pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("put", sMembervarName) + " (String p_" + sMembervarName +")\n" +
+//                        sIndent + "{\n" +
+//                        sIndent + "    m_" + sMembervarName + ".putValue(p_" + sMembervarName + ");\n" +
+//                        sIndent + "}");
+//                pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("Put", sMembervarName) + " (Date p_" + sMembervarName +")\n" +
+//                        sIndent + "{\n" +
+//                        sIndent + "    //TODO\n" +
+//                        sIndent + "}");
+//            }
+//            else
             if (!sRealSlotType.equals("String"))
             {
                 if( !sRangePkgAndCls.equals("de.dfki.rdf.util.RDFResource") )
@@ -947,6 +971,14 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: getter for slot " + sMembervarName + " **/");
+//            if (sRangePkgAndCls.equals("Date"))
+//            {
+//                pwClsFile.print(sIndent + "public " + sRangePkgAndCls + " " + RDF2Java.makeMethodName("Get", sMembervarName) + " ()\n" +
+//                        sIndent + "{\n" +
+//                        sIndent + "    //TODO\n" +
+//                        sIndent + "}\n");
+//            }
+//            else
             if (!sRealSlotType.equals("String"))
             {
                 pwClsFile.print(sIndent + "public " + sRangePkgAndCls + " " + RDF2Java.makeMethodName("Get", sMembervarName) + " ()\n" +
@@ -1447,11 +1479,17 @@ private static Debug debug ()
                 else
                 {
                     RDFNode rdfnodeRange = (RDFNode)setResRange.iterator().next();
+                    if (rdfnodeRange.equals(m_resXMLDateTime))
+                    {
+                        sRangeCls = "Date";
+                        sRangeClsPkg = null;
+                    }
+                    else
                     if (rdfnodeRange.equals(m_resRDFSLiteral))
                     {
-                        RDFNode rdfnodeLiteralType = RDF.getObject(m_modelRDFS, resProperty, m_resProtegeRange);
                         sRangeCls = "String";
 /*
+                        RDFNode rdfnodeLiteralType = RDF.getObject(m_modelRDFS, resProperty, m_resProtegeRange);
                         sRangeCls = null;
                         if (rdfnodeLiteralType != null)
                         {

@@ -151,7 +151,7 @@ public class ToStringPackedWalkerController extends JavaGraphWalker.WalkerContro
             sb.append( "<" + sClsName + " " + currentResource.getAddress() );
             if( currentResource.getURI() != null )
                 sb.append( " URI=\"" + currentResource.getURI() + "\"" );
-            sb.append( "\n" );
+            sb.append( ">\n" );
         }
         else
             throw new Error( "failure in RDFResource.walk" );
