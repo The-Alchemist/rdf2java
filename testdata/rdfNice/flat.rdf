@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY default 'http://dfki.rdf.util.rdf2java/default#'>
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY task 'http://dfki.frodo.wwf/task#'>
+	 <!ENTITY anonymous 'http://dfki.frodo.wwf/anonymous#'>
+	 <!ENTITY kb 'http://protege.stanford.edu/kb#'>
+	 <!ENTITY organisationalm 'http://dfki.frodo.wwf/organisationalmodel#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:default="&default;"
+	 xmlns:rdf="&rdf;"
+	 xmlns:task="&task;"
+	 xmlns:anonymous="&anonymous;"
+	 xmlns:kb="&kb;"
+	 xmlns:organisationalm="&organisationalm;"
+	 xmlns:rdfs="&rdfs;">
+<rdfs:Resource rdf:about="&anonymous;wwf_00056"
+	 rdfs:label="anonymous:wwf_00056"/>
+<organisationalm:ProcessRole rdf:about="&default;id_1029933827946_3f5841"
+	 rdfs:label="default:id_1029933827946_3f5841">
+	<organisationalm:participant rdf:resource="&anonymous;wwf_00056"/>
+</organisationalm:ProcessRole>
+<task:TaskInstance rdf:about="&default;id_1029933827946_517e5e"
+	 task:name="join-test"
+	 task:taskState="processible"
+	 rdfs:label="join-test">
+	<task:performedBy rdf:resource="&default;id_1029933827946_3f5841"/>
+	<task:subTask rdf:resource="&default;id_1029933860113_16e599"/>
+	<task:subTask rdf:resource="&default;id_1029933860113_3bc1f6"/>
+	<task:subTask rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00000"/>
+	<task:subTask rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00005"/>
+	<task:subTask rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00006"/>
+	<task:subTask rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00007"/>
+</task:TaskInstance>
+<task:TaskInstance rdf:about="&default;id_1029933860113_16e599"
+	 task:name="AAA-1"
+	 task:taskState="processible"
+	 rdfs:label="AAA-1">
+	<task:performedBy rdf:resource="&default;id_1029933827946_3f5841"/>
+	<task:parentTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rootTask rdf:resource="&default;id_1029933827946_517e5e"/>
+</task:TaskInstance>
+<task:TaskInstance rdf:about="&default;id_1029933860113_3bc1f6"
+	 task:name="BBB"
+	 task:taskState="initiated"
+	 rdfs:label="BBB">
+	<task:performedBy rdf:resource="&default;id_1029933827946_3f5841"/>
+	<task:parentTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rootTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rule rdf:resource="&default;id_1029933860113_3c66d8"/>
+	<task:rule rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00017"/>
+</task:TaskInstance>
+<task:Rule rdf:about="&default;id_1029933860113_3c66d8"
+	 rdfs:label="default:id_1029933860113_3c66d8">
+	<task:premise rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00001"/>
+	<task:action rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00004"/>
+</task:Rule>
+<task:TaskInstance rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00000"
+	 task:name="AAA-2"
+	 task:taskState="processible"
+	 rdfs:label="AAA-2">
+	<task:performedBy rdf:resource="&default;id_1029933827946_3f5841"/>
+	<task:parentTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rootTask rdf:resource="&default;id_1029933827946_517e5e"/>
+</task:TaskInstance>
+<task:OR rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00001"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00001">
+	<task:term rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00002"/>
+	<task:term rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00003"/>
+</task:OR>
+<task:IsFinished rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00002"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00002">
+	<task:object rdf:resource="&default;id_1029933860113_16e599"/>
+</task:IsFinished>
+<task:IsFinished rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00003"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00003">
+	<task:object rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00000"/>
+</task:IsFinished>
+<task:ChangeState rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00004"
+	 task:transition="queue"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00004">
+	<task:object rdf:resource="&default;id_1029933860113_3bc1f6"/>
+</task:ChangeState>
+<task:TaskInstance rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00005"
+	 task:name="CCC-1"
+	 task:taskState="initiated"
+	 rdfs:label="CCC-1">
+	<task:performedBy rdf:resource="&default;id_1029933827946_3f5841"/>
+	<task:parentTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rootTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rule rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00008"/>
+</task:TaskInstance>
+<task:TaskInstance rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00006"
+	 task:name="CCC-2"
+	 task:taskState="initiated"
+	 rdfs:label="CCC-2">
+	<task:performedBy rdf:resource="&default;id_1029933827946_3f5841"/>
+	<task:parentTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rootTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rule rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00011"/>
+</task:TaskInstance>
+<task:TaskInstance rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00007"
+	 task:name="CCC-3"
+	 task:taskState="initiated"
+	 rdfs:label="CCC-3">
+	<task:performedBy rdf:resource="&default;id_1029933827946_3f5841"/>
+	<task:parentTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rootTask rdf:resource="&default;id_1029933827946_517e5e"/>
+	<task:rule rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00014"/>
+</task:TaskInstance>
+<task:Rule rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00008"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00008">
+	<task:action rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00009"/>
+	<task:premise rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00010"/>
+</task:Rule>
+<task:ChangeState rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00009"
+	 task:transition="queue"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00009">
+	<task:object rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00005"/>
+</task:ChangeState>
+<task:IsFinished rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00010"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00010">
+	<task:object rdf:resource="&default;id_1029933860113_3bc1f6"/>
+</task:IsFinished>
+<task:Rule rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00011"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00011">
+	<task:action rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00012"/>
+	<task:premise rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00013"/>
+</task:Rule>
+<task:ChangeState rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00012"
+	 task:transition="queue"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00012">
+	<task:object rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00006"/>
+</task:ChangeState>
+<task:IsFinished rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00013"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00013">
+	<task:object rdf:resource="&default;id_1029933860113_3bc1f6"/>
+</task:IsFinished>
+<task:Rule rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00014"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00014">
+	<task:action rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00015"/>
+	<task:premise rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00016"/>
+</task:Rule>
+<task:ChangeState rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00015"
+	 task:transition="queue"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00015">
+	<task:object rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00007"/>
+</task:ChangeState>
+<task:IsFinished rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00016"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00016">
+	<task:object rdf:resource="&default;id_1029933860113_3bc1f6"/>
+</task:IsFinished>
+<task:Rule rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00017"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00017">
+	<task:premise rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00019"/>
+	<task:action rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00022"/>
+</task:Rule>
+<task:AND rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00019"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00019">
+	<task:term rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00020"/>
+	<task:term rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00021"/>
+</task:AND>
+<task:EventRaised rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00020"
+	 task:eventName="changedTaskState"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00020"/>
+<task:IsFinished rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00021"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00021">
+	<task:object rdf:resource="&default;id_1029933860113_3bc1f6"/>
+</task:IsFinished>
+<task:preselectSuccs rdf:about="&kb;TIA_2002.08.21_02.39.55_1_00022"
+	 task:maxToSelect="3"
+	 task:minToSelect="2"
+	 rdfs:label="TIA_2002.08.21_02.39.55_1_00022">
+	<task:objects rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00005"/>
+	<task:objects rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00006"/>
+	<task:objects rdf:resource="&kb;TIA_2002.08.21_02.39.55_1_00007"/>
+</task:preselectSuccs>
+</rdf:RDF>

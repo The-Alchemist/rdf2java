@@ -5,7 +5,7 @@
   <property category="runtime" name="ConfigurationCount" value="1"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.0" name="application.class" value="dfki.rdf.util.RDFNice"/>
-  <property category="runtime.0" name="application.parameters" value="testdata/rdfNice/flat.rdf"/>
+  <property category="runtime.0" name="application.parameters" value="testdata/rdfNice/flat.rdf http://dfki.frodo.wwf/task#parentTask http://dfki.frodo.wwf/task#rootTask"/>
   <property category="runtime.0" name="application.vmparameters" value="-Dorg.w3c.dom.DOMImplementationSourceList=org.apache.xerces.dom.DOMImplementationSourceImpl"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.0" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
