@@ -54,6 +54,12 @@ public Object put (dfki.rdf.util.THING obj)
 }
 
 //---------------------------------------------------------------------------
+public Object remove (String sURI)
+{
+    return m_mapObjects.remove(sURI);
+}
+
+//---------------------------------------------------------------------------
 public Object get (Object key)
 {
     try {
