@@ -170,18 +170,22 @@ public class RDFExport {
 
   public Resource exportObject(Object object, int actualDepth) {
     Resource resource = (Resource)_exportedObjects.get(object);
-    if (resource == null) { // not yet exported
+    if (resource == null || actualDepth == 0 ) { // not yet exported OR only exported as resource due to a cut-by-depth
       if (object instanceof Resource) {
-	resource = (Resource)object;
-	_exportedObjects.put(object, resource);
-	// add(statement(resource, RDF.type, RDFS.Resource)); // ???
+        if (resource == null) {
+	  resource = (Resource)object;
+	  _exportedObjects.put(object, resource);
+	  // add(statement(resource, RDF.type, RDFS.Resource)); // ???
+        }
       } else {
 	String uri = getURI(object);
-	if (uri != null)
-	  resource = resource(uri);
-	else
-	  resource = anonResource(getGenid());
-	_exportedObjects.put(object, resource);
+        if (resource == null) {
+	  if (uri != null)
+	    resource = resource(uri);
+	  else
+	    resource = anonResource(getGenid());
+	  _exportedObjects.put(object, resource);
+        }
         if (_depth >= 0 && actualDepth > 0 && actualDepth > _depth) {
             if (uri == null) throw new Error("ERROR (rdf2java) in method RDFExport.exportObject: found object without URI at max. depth");
             return resource;
