@@ -111,7 +111,7 @@ public void addToMap (Map mapObjects, String sNamespace)
     }
     catch (Exception ex)
     {
-        System.out.println("Exception occurred: "+ex.getMessage());
+        System.out.println("Exception (" + ex.getClass() + ") occurred: "+ex.getMessage());
         ex.printStackTrace();
         throw new Error(ex.getMessage());
     }
@@ -138,6 +138,7 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
             String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
             String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
             Method methodGet = RDF2Java.getMethod( cls, sGetMethodName, new Class[0] );
+            if (methodGet == null) throw new Exception("missing method " + sGetMethodName + "()");
             Object objPropValue = methodGet.invoke(this, null);
             if (objPropValue == null)
                 continue;
@@ -146,6 +147,7 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                 Collection listOldValues = new LinkedList( (Collection)objPropValue );
                 String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
                 Method methodClear = RDF2Java.getMethod( cls, sClearMethodName, new Class[0] );
+                if (methodClear == null) throw new Exception("missing method " + sClearMethodName + "()");
                 methodClear.invoke( this, null );
                 for (Iterator itPropValues = listOldValues.iterator(); itPropValues.hasNext(); )
                 {
@@ -157,12 +159,14 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                         if (cachedObject != null && (cachedObject instanceof THING))
                         {
                             Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
+                            if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + cachedObject.getClass() + ")");
                             methodPut.invoke( this, new Object[] { cachedObject } );
                             continue;
                         }
                     }
                     // nothing better available => take the old slot value again
                     Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValueElement.getClass() } );
+                    if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValueElement.getClass() + ")");
                     methodPut.invoke( this, new Object[] { objPropValueElement } );
                 }
             }
@@ -177,15 +181,17 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                     if (cachedObject != null && (cachedObject instanceof THING))
                     {
                         Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
+                        if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + cachedObject.getClass() + ")");
                         methodPut.invoke( this, new Object[] { cachedObject } );
                         continue;
                     }
                     // nothing better available => take the old slot value again
                     Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
+                    if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + RDFResource.class + ")");
                     methodPut.invoke( this, new Object[] { propValue } );
                 }
                 catch (Exception ex) {
-                    System.out.println("Exception occurred: "+ex.getMessage());
+                    System.out.println("Exception (" + ex.getClass() + ") occurred: "+ex.getMessage());
                     ex.printStackTrace();
                     throw new Error(ex.getMessage());
                 }
@@ -197,7 +203,7 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
     }
     catch (Exception ex)
     {
-        System.out.println("dfki.rdf.util.THING . updateRDFResourceSlots: Exception occurred" + ex);
+        System.out.println("dfki.rdf.util.THING . updateRDFResourceSlots: Exception (" + ex.getClass() + ") occurred" + ex);
         ex.printStackTrace();
         throw new Error(ex.getMessage());
     }
@@ -216,6 +222,7 @@ public void assign (THING newThing, KnowledgeBase kb)
             String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
             String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
             Method methodGet = RDF2Java.getMethod( cls, sGetMethodName, new Class[0] );
+            if (methodGet == null) throw new Exception("missing method " + sGetMethodName + "()");
             Object objPropValue = methodGet.invoke(this, null);
             if (objPropValue == null)
                 continue;
@@ -225,6 +232,7 @@ public void assign (THING newThing, KnowledgeBase kb)
 
                 String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
                 Method methodClear = RDF2Java.getMethod( cls, sClearMethodName, new Class[0] );
+                if (methodClear == null) throw new Exception("missing method " + sClearMethodName + "()");
                 methodClear.invoke( this, null );
 
                 Object objPropNewValue = methodGet.invoke( newThing, null );
@@ -238,6 +246,7 @@ public void assign (THING newThing, KnowledgeBase kb)
                 if (objPropValue != null) lstOldValues.add( objPropValue );
 
                 Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
+                if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
                 methodPut.invoke( this, new Object[] { null } );
 
                 LinkedList lstNewValues = new LinkedList();
@@ -250,7 +259,7 @@ public void assign (THING newThing, KnowledgeBase kb)
     }
     catch (Exception ex)
     {
-        System.out.println("Exception occurred: "+ex.getMessage());
+        System.out.println("Exception (" + ex.getClass() + ") occurred: "+ex.getMessage());
         ex.printStackTrace();
         throw new Error(ex.getMessage());
     }
@@ -280,6 +289,7 @@ void assignValues (Collection collOldValues, Collection collNewValues,
             continue;  // newValue is not remove from collNewValues and will therfore be handled again below
 
         Method methodPut = RDF2Java.getMethod( getClass(), sPutMethodName, new Class[] { oldValue.getClass() } );
+        if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + oldValue.getClass() + ")");
         methodPut.invoke( this, new Object[] { oldValue } );  // insert the newer slot value
         // mark, that we've already handled that new slot value (inspected below)
         remove(collNewValues, ((RDFResource)newValue).getURI());
@@ -290,6 +300,7 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     {
         Object newValue = itNewValues.next();
         Method methodPut = RDF2Java.getMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
+        if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + newValue.getClass() + ")");
         methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
 
         if (newValue instanceof THING)
