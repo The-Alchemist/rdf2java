@@ -59,6 +59,12 @@ Similarly we first create (generate) Java classes corresponding to the
 RDFS classes. Then we can "read in" RDF data, which are instances of
 RDFS classes and convert them to Java objects, being instances of the
 respective Java classes.<br>
+<br>
+The original tool was written by Michael Sintek. Information and
+download of the old tool can be found <a
+ href="http://www.dfki.uni-kl.de/frodo/rdf2java/">here</a>.<br>
+I developed his tool further to suit our increasing needs in the <a
+ href="http://www.dfki.uni-kl.de/frodo/">FRODO</a> project.
 <h3><a name="example1"></a>1.1&nbsp; Example:</h3>
 Consider the following RDFS file (XML syntax) declaring a class<span
  style="font-family: monospace;"> Person </span>having two properties:
@@ -806,11 +812,11 @@ can not be simply added, but must be assigned to the already existing
 one. Therefore, all Homer properties have to be examined. <span
  style="font-family: monospace;"><br>
 name: </span>left-side Homer stores a value, right-side Homer doesn't.
-Possible interpretation: right-side lacks (leaves out) this
-information? No! Our interpretation is: the right-side Homer is the
-newer one and contains <span style="font-style: italic;">all </span>new
-data. Hence, the value for the<span style="font-family: monospace;">
-name </span>property will be deleted on the left-side Homer object.<br>
+Possible interpretation: right-side lacks (leaves out) this information?
+No! Our interpretation is: the right-side Homer is the newer one and
+contains <span style="font-style: italic;">all </span>new data. Hence,
+the value for the<span style="font-family: monospace;"> name </span>property
+will be deleted on the left-side Homer object.<br>
 <span style="font-family: monospace;">hasChild: </span>both Homer
 objects have different (disjoint) values for that property, so we take
 the new ones, i.e., the ones at the right side.<br>
@@ -1051,7 +1057,9 @@ bracket, no comma, nor anything else.<br>
 Look and edit the Java code if you're longing for more...<br>
 <h3> </h3>
 <hr style="width: 100%; height: 2px;">
-<div style="text-align: right;"><small>last edited: 2003-03-11 14:00</small><br>
+<div style="text-align: right;"><small>author: <a
+ href="mailto:schwarz@dfki.uni-kl.de">Sven Schwarz</a>&nbsp;&nbsp; -
+&nbsp; last edited: 2003-04-02</small><br>
 </div>
 </body>
 </html>

@@ -5,7 +5,7 @@
 ]>
 <rdf:RDF xmlns:rdf="&rdf;"
 	 xmlns:a="&a;">
-<a:Person rdf:about="&a;id_20030306_100310_21c887"
+<a:Person rdf:about="&a;id_20030402_092730_18f375"
 	 a:name="Lisa Simpson">
 	<a:hasParent rdf:resource="&a;example1_00006"/>
 </a:Person>
