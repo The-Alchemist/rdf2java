@@ -522,26 +522,29 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
-            pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
-                              sIndent + "{");
-            if (pi.bNeedsRangeInterface)
+            if( !sRangePkgAndCls.equals("dfki.rdf.util.RDFResource") )
             {
-                pwClsFile.print(sIndent + "    if (");
-                Iterator it = pi.setResRange.iterator();
-                while (it.hasNext())
+                pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
+                                  sIndent + "{");
+                if (pi.bNeedsRangeInterface)
                 {
-                    Resource resRCls = (Resource)it.next();
-                    String sRClsNS = resRCls.getNamespace();
-                    String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
-                    String sRClsName = resRCls.getLocalName();
-                    if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
-                    pwClsFile.print("!(p_"+pi.sSlotName+" instanceof "+sRClsName+")");
-                    if (it.hasNext()) pwClsFile.print(" && ");
+                    pwClsFile.print(sIndent + "    if( p_" + pi.sSlotName + " == null || ( " );
+                    Iterator it = pi.setResRange.iterator();
+                    while (it.hasNext())
+                    {
+                        Resource resRCls = (Resource)it.next();
+                        String sRClsNS = resRCls.getNamespace();
+                        String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
+                        String sRClsName = resRCls.getLocalName();
+                        if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                        pwClsFile.print("!(p_"+pi.sSlotName+" instanceof "+sRClsName+")");
+                        if (it.hasNext()) pwClsFile.print(" && ");
+                    }
+                    pwClsFile.println(" ) )\n"+sIndent+"        throw new Error(\"not an allowed class\");");
                 }
-                pwClsFile.println(")\n"+sIndent+"        throw new Error(\"not an allowed class\");");
+                pwClsFile.print(sIndent + "    m_" + pi.sSlotName + ".add(p_" + pi.sSlotName + ");\n" +
+                                sIndent + "}\n");
             }
-            pwClsFile.print(sIndent + "    m_" + pi.sSlotName + ".add(p_" + pi.sSlotName + ");\n" +
-                            sIndent + "}\n");
             pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
                             sIndent + "{\n" +
                             sIndent + "    m_" + pi.sSlotName + ".add(p_" + pi.sSlotName + ");\n" +
@@ -593,30 +596,35 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
-            pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
-                              sIndent + "{");
-            if (pi.bNeedsRangeInterface)
+            if( !sRangePkgAndCls.equals("dfki.rdf.util.RDFResource") )
             {
-                pwClsFile.print(sIndent + "    if (");
-                Iterator it = pi.setResRange.iterator();
-                while (it.hasNext())
+                pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
+                                  sIndent + "{");
+                if (pi.bNeedsRangeInterface)
                 {
-                    Resource resRCls = (Resource)it.next();
-                    String sRClsNS = resRCls.getNamespace();
-                    String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
-                    String sRClsName = resRCls.getLocalName();
-                    if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
-                    pwClsFile.print("!(p_"+pi.sSlotName+" instanceof "+sRClsName+")");
-                    if (it.hasNext()) pwClsFile.print(" && ");
+                    pwClsFile.print(sIndent + "    if (");
+                    Iterator it = pi.setResRange.iterator();
+                    while (it.hasNext())
+                    {
+                        Resource resRCls = (Resource)it.next();
+                        String sRClsNS = resRCls.getNamespace();
+                        String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
+                        String sRClsName = resRCls.getLocalName();
+                        if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                        pwClsFile.print("!(p_"+pi.sSlotName+" instanceof "+sRClsName+")");
+                        if (it.hasNext()) pwClsFile.print(" && ");
+                    }
+                    pwClsFile.println(")\n"+sIndent+"        throw new Error(\"not an allowed class\");");
                 }
-                pwClsFile.println(")\n"+sIndent+"        throw new Error(\"not an allowed class\");");
+                pwClsFile.print(sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
+                                sIndent + "}");
             }
-            pwClsFile.print(sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
-                            sIndent + "}");
             // second putter (URI)
             if (!sRealSlotType.equals("String"))
             {
-                pwClsFile.print("\n" + sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
+                if( !sRangePkgAndCls.equals("dfki.rdf.util.RDFResource") )
+                    pwClsFile.print( "\n" );
+                pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
                                 sIndent + "{\n" +
                                 sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
                                 sIndent + "}");
@@ -1027,10 +1035,10 @@ private static Debug debug ()
                     else
                     if (rdfnodeRange.equals(m_resRDFSClass))
                     {
-                        sRangeCls = "Class";
-                        sRangeClsPkg = null;
-                        // sRangeCls = "THING";
-                        // sRangeClsPkg = "dfki.rdf.util";
+                        sRangeCls = "RDFResource";
+                        sRangeClsPkg = "dfki.rdf.util";
+                        // sRangeCls = "Class";
+                        // sRangeClsPkg = null;
                     }
                     else
                     {

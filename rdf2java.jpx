@@ -2,8 +2,9 @@
 <!--JBuilder XML Project-->
 <project>
   <property category="build" name="CopyExtensions.1" value="java"/>
-  <property category="runtime" name="ConfigurationCount" value="2"/>
-  <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime" name="ConfigurationCount" value="3"/>
+  <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.AppletRunner"/>
+  <property category="runtime.0" name="applet.class" value="dfki.rdf.util.nice.RDFNiceApplet"/>
   <property category="runtime.0" name="application.class" value="dfki.rdf.util.RDFDiff"/>
   <property category="runtime.0" name="application.parameters" value="testdata/rdfNice/flat.rdf testdata/rdfNice/flat.rdf.nice.rdf"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
@@ -27,6 +28,16 @@
   <property category="runtime.2" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/pc-3147/adm -Dejb.module_preload=true"/>
   <property category="runtime.2" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.2" name="test.harness" value="junit.textui.TestRunner"/>
+  <property category="runtime.3" name="ConfigurationName" value="RDFNiceApplet"/>
+  <property category="runtime.3" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime.3" name="application.class" value="dfki.rdf.util.nice.RDFNiceApplet"/>
+  <property category="runtime.3" name="application.vmparameters" value="-Dorg.w3c.dom.DOMImplementationSourceList=org.apache.xerces.dom.DOMImplementationSourceImpl"/>
+  <property category="runtime.3" name="appserver.ejbJarsSaved" value="1"/>
+  <property category="runtime.3" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
+  <property category="runtime.3" name="appserver.servername" value="standard"/>
+  <property category="runtime.3" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/pc-3147/adm -Dejb.module_preload=true"/>
+  <property category="runtime.3" name="jsprunner.launchuri" value="/"/>
+  <property category="runtime.3" name="test.harness" value="junit.textui.TestRunner"/>
   <property category="sys" name="AuthorLabel" value="@author"/>
   <property category="sys" name="BackupPath" value="bak"/>
   <property category="sys" name="BeansInstantiate" value="false"/>
@@ -57,6 +68,8 @@
   <property category="sys" name="Version" value="1.0"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="."/>
+  <property category="sys"
+    name="uidesign.size.dfki.rdf.util.nice.RDFNiceApplet" value="563,413"/>
   <node name="apidoc" type="Javadoc">
     <property category="nodeJavadoc" name="buildWithProject" value="0"/>
     <property category="nodeJavadoc" name="directory" value="doc"/>
@@ -70,4 +83,5 @@
     <property category="archiving" name="buildWithProject" value="0"/>
     <property category="archiving" name="targetPath" value="lib/rdf2javaApidoc.jar"/>
   </node>
+  <file path="classes/RDFNiceApplet.html"/>
 </project>
