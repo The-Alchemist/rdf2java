@@ -47,6 +47,8 @@ void go ()
     dfki.rdf.util.THING thingToAssign = (dfki.rdf.util.THING)mapObjectToAssign.get(sURI);
     System.out.println("\nthingToAssign:\n" + thingToAssign);
 
+    System.out.println("\n\n################ thingToAssign.getAddress()=" + thingToAssign.getAddress() + "\n\n");
+
     m_kbCachedObjects.assign(thingToAssign);
     System.out.println("knowledgeBase (after assignment):\n" + m_kbCachedObjects);
 }

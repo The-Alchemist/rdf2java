@@ -4,7 +4,7 @@ import java.util.Collection;
 import org.w3c.rdf.model.Resource;
 
 
-public class RDFResource   implements Resource
+public class RDFResource   extends Object   implements Resource
 {
 //----------------------------------------------------------------------------------------------------
 private String m_namespace;
@@ -87,6 +87,51 @@ public String toString ()
     return "RDFResource(" + getURI() + ")";
 }
 
+
+
+//----------------------------------------------------------------------------------------------------
+/** Gets the class name of this object.
+  */
+protected String getClassName ()
+{
+    return getClassNameShort() + " (" + getClass().getName() + ")";
+}
+
+//----------------------------------------------------------------------------------------------------
+/** Gets a short version (without package) of the class name of this object.
+  */
+protected String getClassNameShort ()
+{
+    String sClassName = getClass().getName();
+    int pos = sClassName.lastIndexOf('.');
+    if (pos >= 0)
+        return sClassName.substring(pos+1);
+    else
+        return sClassName;
+}
+
+//----------------------------------------------------------------------------------------------------
+/** Gets a string showing the address of this object in hex notation.
+  * <br>
+  * The string is prefixed with a <code>'@'</code> character.
+  */
+public String getAddress ()
+{
+    return "@" + Integer.toHexString(super.hashCode());
+}
+
+//----------------------------------------------------------------------------------------------------
+/** Gets a string showing the address of this object in hex notation.
+  * <br>
+  * The string is <b>not</b> prefixed with a <code>'@'</code> character.
+  */
+public String getAddressOnlyHex ()
+{
+    return Integer.toHexString(super.hashCode());
+}
+
+
+
 //----------------------------------------------------------------------------------------------------
 public String toStringShort ()
 {
@@ -109,7 +154,10 @@ public boolean equals (Object other)
 //----------------------------------------------------------------------------------------------------
 public int hashCode ()
 {
-    return getURI().hashCode();
+    if (getURI() != null)
+        return getURI().hashCode();
+    else
+        return super.hashCode();
 }
 
 //----------------------------------------------------------------------------------------------------

@@ -81,47 +81,6 @@ public String toStringShort ()                          // overload this method
 }
 
 //----------------------------------------------------------------------------------------------------
-/** Gets the class name of this object.
-  */
-protected String getClassName ()
-{
-    return getClassNameShort() + " (" + getClass().getName() + ")";
-}
-
-//----------------------------------------------------------------------------------------------------
-/** Gets a short version (without package) of the class name of this object.
-  */
-protected String getClassNameShort ()
-{
-    String sClassName = getClass().getName();
-    int pos = sClassName.lastIndexOf('.');
-    if (pos >= 0)
-        return sClassName.substring(pos+1);
-    else
-        return sClassName;
-}
-
-//----------------------------------------------------------------------------------------------------
-/** Gets a string showing the address of this object in hex notation.
-  * <br>
-  * The string is prefixed with a <code>'@'</code> character.
-  */
-protected String getAddress ()
-{
-    return "@" + Integer.toHexString(this.hashCode());
-}
-
-//----------------------------------------------------------------------------------------------------
-/** Gets a string showing the address of this object in hex notation.
-  * <br>
-  * The string is <b>not</b> prefixed with a <code>'@'</code> character.
-  */
-protected String getAddressOnlyHex ()
-{
-    return Integer.toHexString(this.hashCode());
-}
-
-//----------------------------------------------------------------------------------------------------
 /** Creates a new URI (with default namespace) and {@link #putURI stores} this URI in this object.
   */
 public String makeNewURI ()
