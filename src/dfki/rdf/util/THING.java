@@ -174,7 +174,6 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateN
         if (m_lLastUpdateNumber == lUpdateNumber) return;  // already visited this THING
         m_lLastUpdateNumber = lUpdateNumber;
 
-        Class cls = getClass();
         Collection collProperties = getProperties();
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
@@ -251,7 +250,6 @@ public void assign (THING newThing, KnowledgeBase kb)
 {
     try
     {
-        Class cls = getClass();
         Collection collProperties = getProperties();
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
@@ -282,10 +280,6 @@ public void assign (THING newThing, KnowledgeBase kb)
                 {
                     // clear old value
                     putPropertyValue( sPropertyName, null );  // is *now* possible :-)
-                    //// String sPutMethodName = RDF2Java.makeMethodName( "put", sPropertyName );
-                    //// Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
-                    //// if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
-                    //// methodPut.invoke( this, new Object[] { null } );
                 }
 
                 assignValues(lstOldValues, lstNewValues, sPropertyName, kb);

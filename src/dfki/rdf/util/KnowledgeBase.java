@@ -12,9 +12,25 @@ public final static String DEBUG_MODULE = "KnowledgeBase";
 HashMap m_mapObjects = new HashMap();
 private final static boolean MEASURE_TIME = true;
 
+private Map/*String->String*/ m_mapNS2Pkg;
+private Map/*String->String*/ m_mapPkg2NS;
+
+
 //---------------------------------------------------------------------------
 public KnowledgeBase ()
 {
+}
+
+//---------------------------------------------------------------------------
+public void setNS2PkgMap( Map mapNS2Pkg )
+{
+    m_mapNS2Pkg = mapNS2Pkg;
+}
+
+//---------------------------------------------------------------------------
+public void setPkg2NSMap( Map mapPkg2NS )
+{
+    m_mapPkg2NS = mapPkg2NS;
 }
 
 //---------------------------------------------------------------------------
@@ -151,6 +167,64 @@ public void updateRDFResourceSlots ()
         if( iTimeEnd > iTimeBeginning )
             debug().message( "updateRDFResourceSlots: " + (iTimeEnd - iTimeBeginning) + " millis" );
     }
+}
+
+//---------------------------------------------------------------------------
+public Collection/*THING*/ findSubjects( RDFResource resPred, Object value )
+{
+    long iTimeBeginning = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
+
+    if( m_mapNS2Pkg == null )
+    {
+        debug().error( "no Namespace-to-Package map set in KnowledgeBase.findSubjects()" );
+        return null;
+    }
+    String sPropertyPackage = (String)m_mapNS2Pkg.get( resPred.getNamespace() );
+    String sPropertyName = resPred.getLocalName();
+    if( sPropertyPackage == null )
+    {
+        debug().error( "package for namespace of resPred '"+  resPred.getURI() +"'not found in KnowledgeBase.findSubjects()" );
+        return null;
+    }
+
+    HashSet setSubjects = new HashSet();
+    for (Iterator it = values().iterator(); it.hasNext(); )
+    {
+        Object obj = it.next();
+        if ( !(obj instanceof THING) )
+            continue;
+        if( !obj.getClass().getPackage().equals( sPropertyPackage ) )
+            continue;
+        THING thing = (THING)obj;
+        Collection collProperties = thing.getProperties();
+        for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
+        {
+            String sThingPropertyName = (String)itProperties.next();
+            if( !sThingPropertyName.equals( sPropertyName ) )
+                continue;
+            Object objThingPropertyValue = thing.getPropertyValue( sThingPropertyName );
+            if( objThingPropertyValue instanceof Collection )
+            {
+                if( ((Collection)objThingPropertyValue).contains( value ) )
+                    setSubjects.add( thing );
+            }
+            else  // singe value slot
+            {
+                if( objThingPropertyValue.equals( value ) )
+                    setSubjects.add( thing );
+            }
+        }
+
+    }
+
+    if( MEASURE_TIME )
+    {
+        long iTimeEnd = new Date().getTime();
+        if( iTimeEnd > iTimeBeginning )
+            debug().message( "findSubjects: " + (iTimeEnd - iTimeBeginning) + " millis" );
+    }
+
+    return setSubjects;
 }
 
 //---------------------------------------------------------------------------
