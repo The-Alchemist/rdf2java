@@ -386,6 +386,8 @@ private Collection/*Resource*/ findInstances()   throws Exception
 private Resource findCls( Resource resObject )   throws Exception
 {
     Model mCls = m_model.find( resObject, m_resPredType, null );
+    if( mCls == null  ||  mCls.isEmpty() )
+        return null;
     return (Resource)((Statement)RDF.get1( mCls )).object();
 }
 
