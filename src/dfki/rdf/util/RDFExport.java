@@ -192,7 +192,7 @@ public class RDFExport
         }
     }
 
-    void exportObjectsToModel( Collection objects )
+    synchronized void exportObjectsToModel( Collection objects )
     {
         // init
         m_timestamp = new Date().getTime();
@@ -223,7 +223,7 @@ public class RDFExport
         return exportObject( object, 0 );
     }
 
-    public Resource exportObject( Object object, int actualDepth )
+    synchronized public Resource exportObject( Object object, int actualDepth )
     {
         Resource resource = (Resource) m_exportedObjects.get( object );
         if( resource == null || actualDepth == 0 )
