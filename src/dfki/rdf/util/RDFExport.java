@@ -171,13 +171,13 @@ public class RDFExport {
   public Resource exportObject(Object object, int actualDepth) {
     Resource resource = (Resource)_exportedObjects.get(object);
     if (resource == null || actualDepth == 0 ) { // not yet exported OR only exported as resource due to a cut-by-depth
-      if (object instanceof Resource) {
+      if ( !(object instanceof THING) ) {
         if (resource == null) {
 	  resource = (Resource)object;
 	  _exportedObjects.put(object, resource);
 	  // add(statement(resource, RDF.type, RDFS.Resource)); // ???
         }
-      } else {
+      } else { // object instanceof THING
 	String uri = getURI(object);
         if (resource == null) {
 	  if (uri != null)
@@ -192,7 +192,8 @@ public class RDFExport {
         }
 	Class cls = object.getClass();
 	exportType(resource, cls);
-	Method[] methods = cls.getMethods();
+	////2002.02.07   Method[] methods = cls.getMethods();
+        Method[] methods = RDF2Java.getPropertyMethods(cls);
 	String classPackage = getClassPackage(cls);
 	exportPropertyValues(resource, classPackage, object, methods, actualDepth);
       }
