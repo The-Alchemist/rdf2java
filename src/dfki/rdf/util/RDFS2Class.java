@@ -423,7 +423,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
     if (modelSuperClass.isEmpty())
     {
         resSuperClass = null;
-        sSuperClassName = "dfki.rdf.util.THING";
+        sSuperClassName = "dfki.rdf.util.THING";   // or, maybe, better:   dfki.rdf.util.RDFResource
         sSuperClassNS = null;
         sSuperClassPkg = null;
         //SS.2003-03-14: throw new Exception("class '"+sPkg+"."+sClsName+"' has no super class");
@@ -579,10 +579,26 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 for( Iterator it = pi.setResRange.iterator(); it.hasNext(); )
                 {
                     Resource resRCls = (Resource)it.next();
-                    String sRClsNS = resRCls.getNamespace();
-                    String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
-                    String sRClsName = resRCls.getLocalName();
-                    if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                    ////System.out.println( " --- resRCls: " + resRCls );
+                    String sRClsName = null;
+                    if( resRCls.equals( m_resRDFSLiteral ) )
+                    {
+                        sRClsName = "String";
+                    }
+                    else if( resRCls.equals( m_resRDFSResource ) )
+                    {
+                        sRClsName = "dfki.rdf.util.THING";
+                    }
+                    else
+                    {
+                        String sRClsNS = resRCls.getNamespace();
+                        String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
+                        sRClsName = resRCls.getLocalName();
+                        ////System.out.println( " --- sRClsNS: " + sRClsNS );
+                        ////System.out.println( " --- sRClsPkg: " + sRClsPkg );
+                        ////System.out.println( " --- sRClsName: " + sRClsName );
+                        if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                    }
                     sb.append( sRClsName + ".class" );
                     if( it.hasNext() ) sb.append( ", " );
                 }
@@ -604,6 +620,8 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
             if( !sRangePkgAndCls.equals("dfki.rdf.util.RDFResource") )
             {
+                if( pi.bNeedsRangeInterface )
+                    sRangePkgAndCls = "Object";
                 pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
                                   sIndent + "{");
                 if (pi.bNeedsRangeInterface)
@@ -613,10 +631,22 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                     while (it.hasNext())
                     {
                         Resource resRCls = (Resource)it.next();
-                        String sRClsNS = resRCls.getNamespace();
-                        String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
-                        String sRClsName = resRCls.getLocalName();
-                        if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                        String sRClsName = null;
+                        if( resRCls.equals( m_resRDFSLiteral ) )
+                        {
+                            sRClsName = "String";
+                        }
+                        else if( resRCls.equals( m_resRDFSResource ) )
+                        {
+                            sRClsName = "dfki.rdf.util.THING";
+                        }
+                        else
+                        {
+                            String sRClsNS = resRCls.getNamespace();
+                            String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
+                            sRClsName = resRCls.getLocalName();
+                            if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                        }
                         pwClsFile.print("!(p_"+pi.sSlotName+" instanceof "+sRClsName+")");
                         if (it.hasNext()) pwClsFile.print(" && ");
                     }
@@ -662,6 +692,9 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 if (sRangePkgAndCls.equals("String"))
                     sbToStringStuff.append(sIndent + "            sb.append( (String)it_" + pi.sSlotName + ".next() );\n");
                 else
+                if (sRangePkgAndCls.equals("Object"))
+                    sbToStringStuff.append(sIndent + "            " + sPreShort     + "sb.append( sIndent+\"       \" + it_" + pi.sSlotName + ".next() + \"\\n\" );\n" );
+                else
                     sbToStringStuff.append(sIndent + "            " + sPreShort     + "sb.append( sIndent+\"       \" + ((dfki.rdf.util.RDFResource)it_" + pi.sSlotName + ".next()).toStringShort() + \"\\n\" );\n" +
                                            sIndent + "            " + sPreRecursive + "sb.append( ((dfki.rdf.util.RDFResource)it_" + pi.sSlotName + ".next()).toString(sIndent+\"       \") );\n");
                 sbToStringStuff.append(sIndent + "        }\n" +
@@ -676,6 +709,8 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
             if( !sRangePkgAndCls.equals("dfki.rdf.util.RDFResource") )
             {
+                if( pi.bNeedsRangeInterface )
+                    sRangePkgAndCls = "Object";
                 pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (" + sRangePkgAndCls + " p_" + pi.sSlotName +")\n" +
                                   sIndent + "{");
                 if (pi.bNeedsRangeInterface)
@@ -685,10 +720,22 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                     while (it.hasNext())
                     {
                         Resource resRCls = (Resource)it.next();
-                        String sRClsNS = resRCls.getNamespace();
-                        String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
-                        String sRClsName = resRCls.getLocalName();
-                        if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                        String sRClsName = null;
+                        if( resRCls.equals( m_resRDFSLiteral ) )
+                        {
+                            sRClsName = "String";
+                        }
+                        else if( resRCls.equals( m_resRDFSResource ) )
+                        {
+                            sRClsName = "dfki.rdf.util.THING";
+                        }
+                        else
+                        {
+                            String sRClsNS = resRCls.getNamespace();
+                            String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
+                            sRClsName = resRCls.getLocalName();
+                            if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                        }
                         pwClsFile.print("!(p_"+pi.sSlotName+" instanceof "+sRClsName+")");
                         if (it.hasNext()) pwClsFile.print(" && ");
                     }
@@ -735,6 +782,9 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 String sPreRecursive = ( m_bIncludeToStringStuffRecursive  ?  ""     :  "// " );
                 sbToStringStuff.append(sIndent + "    if (m_"+pi.sSlotName+".getValue() != null) {\n");
                 if (sRangePkgAndCls.equals("String"))  //FIXME: hier noch nach "int" etc. testen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+": \"+m_"+pi.sSlotName+".getValue()+\"\\n\");\n");
+                else
+                if (sRangePkgAndCls.equals("Object"))
                     sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+": \"+m_"+pi.sSlotName+".getValue()+\"\\n\");\n");
                 else
                 {
@@ -1143,6 +1193,7 @@ private static Debug debug ()
                 if( !modelAllowedClasses.isEmpty() )
                     setResRange = objectsToSet( modelAllowedClasses );
             }
+
             if (setResRange.size() > 1)
             {
                 sRangeCls = "dfki.rdf.util.THING";  // :THING in protege
@@ -1160,7 +1211,7 @@ private static Debug debug ()
             {
                 if (setResRange.isEmpty())
                 {
-                    sRangeCls = "dfki.rdf.util.THING";  // :THING in protege
+                    sRangeCls = "dfki.rdf.util.THING";   // or, maybe, better:   dfki.rdf.util.RDFResource
                     sRangeClsPkg = null;
                 }
                 else
@@ -1195,8 +1246,10 @@ private static Debug debug ()
                     {
                         sRangeCls = ((Resource)rdfnodeRange).getLocalName();
                         String sRangeClsNS = ((Resource)rdfnodeRange).getNamespace();
-                        //// System.out.println("### slot " + sSlotName + " -> " + sRangeClsNS + " . " + sRangeCls);
                         sRangeClsPkg = (String)m_mapNamespaceToPackage.get(sRangeClsNS);
+                        // System.out.println( "### slot " + sSlotName + " -> " + sRangeClsNS + " . " + sRangeCls + " -> " + sRangeClsPkg );
+                        if( sRangeClsPkg == null )
+                            System.out.println( "# no package mapping for namespace " + sRangeClsNS + " (slot " + sSlotName + ")" );
                     }
                 }
                 bNeedsRangeInterface = false;
