@@ -42,5 +42,5 @@ set IMPORTS=%IMPORTS%;%IMPORT_PATH%\xmlParserAPIs.jar
 
 set FLAGS=-Dorg.w3c.dom.DOMImplementationSourceList=org.apache.xerces.dom.DOMImplementationSourceImpl
 
-%JAVA_VM% -cp %IMPORTS% %FLAGS% dfki.rdf.util.RDFNice %RDF_FILE% %P1% %V1% %P2% %V2% %P3% %V3% %P4% %V4% %P5% %V5% %P6% %V6% %P7% %V7% %P8% %V8% %P9% %V9%
+%JAVA_VM% -cp %IMPORTS% %FLAGS% de.dfki.rdf.util.RDFNice %RDF_FILE% %P1% %V1% %P2% %V2% %P3% %V3% %P4% %V4% %P5% %V5% %P6% %V6% %P7% %V7% %P8% %V8% %P9% %V9%
 pause

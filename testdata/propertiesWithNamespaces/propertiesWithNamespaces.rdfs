@@ -2,9 +2,9 @@
 <!DOCTYPE rdf:RDF [
 	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
 	 <!ENTITY a 'http://protege.stanford.edu/system#'>
-	 <!ENTITY bbb 'http://dfki.rdf.test/propertiesWithNamespaces/bbb#'>
-	 <!ENTITY aaa 'http://dfki.rdf.test/propertiesWithNamespaces/aaa#'>
-	 <!ENTITY ccc 'http://dfki.rdf.test/propertiesWithNamespaces/ccc#'>
+	 <!ENTITY bbb 'http://de.dfki.rdf.test/propertiesWithNamespaces/bbb#'>
+	 <!ENTITY aaa 'http://de.dfki.rdf.test/propertiesWithNamespaces/aaa#'>
+	 <!ENTITY ccc 'http://de.dfki.rdf.test/propertiesWithNamespaces/ccc#'>
 	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
 ]>
 <rdf:RDF xmlns:rdf="&rdf;"

@@ -13,6 +13,6 @@
 	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.0.0/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="lib" path="import/Jena2/commons-logging.jar"/>
 	<classpathentry kind="lib" path="import/Jena2/log4j-1.2.7.jar"/>
-	<classpathentry kind="lib" path="import/DFKIUtils2.jar"/>
+	<classpathentry kind="lib" path="import/DFKIUtils.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

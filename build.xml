@@ -3,7 +3,7 @@
 	<target name="rdf2java">
 		<jar destfile="lib/rdf2java.jar">
 		    <fileset dir="./classes" excludes="**/*.html,**/doc-files/**">
-		    	<filename name="dfki/rdf/**/*.class"/>
+		    	<filename name="de/dfki/rdf/**/*.class"/>
 			</fileset>
 		    <fileset dir="./src" 	excludes="**/*.html,**/doc-files/**" />
 		</jar>

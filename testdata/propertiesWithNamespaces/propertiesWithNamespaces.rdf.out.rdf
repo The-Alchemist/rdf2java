@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <!DOCTYPE rdf:RDF [
 	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
-	 <!ENTITY a 'http://dfki.rdf.test/propertiesWithNamespaces#'>
-	 <!ENTITY b 'http://dfki.rdf.test/propertiesWithNamespaces/bbb#'>
-	 <!ENTITY c 'http://dfki.rdf.test/propertiesWithNamespaces/aaa#'>
-	 <!ENTITY d 'http://dfki.rdf.test/propertiesWithNamespaces/ccc#'>
+	 <!ENTITY a 'http://de.dfki.rdf.test/propertiesWithNamespaces#'>
+	 <!ENTITY b 'http://de.dfki.rdf.test/propertiesWithNamespaces/bbb#'>
+	 <!ENTITY c 'http://de.dfki.rdf.test/propertiesWithNamespaces/aaa#'>
+	 <!ENTITY d 'http://de.dfki.rdf.test/propertiesWithNamespaces/ccc#'>
 	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
 ]>
 <rdf:RDF xmlns:rdf="&rdf;"

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <!DOCTYPE rdf:RDF [
 	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
-	 <!ENTITY nontransitive 'http://dfki.rdf.test/nontransitive#'>
+	 <!ENTITY nontransitive 'http://de.dfki.rdf.test/nontransitive#'>
 	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
 ]>
 <rdf:RDF xmlns:rdf="&rdf;"
