@@ -17,7 +17,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-//import java.util.ResourceBundle;
+
 
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
@@ -32,7 +32,7 @@ import dfki.rdf.util.PropertyStore;
 import dfki.rdf.util.RDFNice;
 import dfki.rdf.util.RDFResource;
 import dfki.rdf.util.THING;
-//import dfki.util.config.Config;
+
 import dfki.util.debug.Debug;
 
 import org.w3c.rdf.model.ModelException;
@@ -677,7 +677,7 @@ public static JPanel getValueComponent( THING p_thing, PropertyInfo  p_pi, boole
         panelButtons.add(getHelpButton(p_pi,p_dialog));
     }
 
-    /*if (specElement instanceof JTextField)
+    if (specElement instanceof JTextField)
     {
         JTextField textField = (JTextField)specElement;
         // TODO this is a quick hack, maybe a more sophisticated URL finder is required
@@ -688,7 +688,7 @@ public static JPanel getValueComponent( THING p_thing, PropertyInfo  p_pi, boole
          panelButtons.add(buttons,BorderLayout.CENTER);
         }
 
-    }*/
+    }
     
     boxValue.add( specElement, BorderLayout.CENTER);
     //boxValue.add(Box.createHorizontalGlue());
@@ -707,8 +707,19 @@ public static JPanel getValueComponent( THING p_thing, PropertyInfo  p_pi, boole
 private static Component getBrowserButton(final JTextField p_field, final THINGDialog p_dialog)
 {
     final JButton  browse = new JButton();
-    //TODO BrowseIcon ??
-    //browse.setIcon(UIDataAccess.getInstance().m_iconWebDoc);
+    
+    try
+    {
+     ImageIcon iconBrowse = ResourceObjectNode.ICONLOADER.getIcon(IconLoader.ICON_BUTTONBROWSE);
+      
+     browse.setIcon(iconBrowse);
+    }
+    catch(Exception e)
+    {
+        debug().error("getBrowserButton:",e);
+    }
+    
+    
     if (p_dialog == null) browse.setEnabled(false);
 
     browse.addActionListener(new ActionListener(){

@@ -49,7 +49,7 @@ public class IconLoader
     public static final String ICON_UNKNOWN = "unknown";
     public static final String ICON_CLASS   = "class";
     public static final String ICON_RDFRESOURCE  = "rdfresource";
-
+    public static final String ICON_BUTTONBROWSE  = "buttonBrowse";
    
     
     
@@ -193,7 +193,7 @@ public class IconLoader
             debug().error("addIconsFromResourceBundle: parameter p_iconResourceBundleClass is null.");
             return;
 
-        }
+        } 
         try
         {
             resourceBundle = ResourceBundle.getBundle(p_iconResourceBundleClass);
