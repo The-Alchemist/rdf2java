@@ -147,7 +147,7 @@ public class RDFExport {
   void exportObjectsToModel(Collection objects) {
     // init
     _timestamp = new Date().getTime();
-    _anonNamespace = _anonNamespacePrefix + _timestamp + "_";
+    _anonNamespace = _anonNamespacePrefix;
     _genid = 1;
     _rdfFactory = new RDFFactoryImpl();
     _model = _rdfFactory.createModel();
