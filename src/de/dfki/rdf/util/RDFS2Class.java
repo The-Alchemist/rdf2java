@@ -718,6 +718,9 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         if( !resCls.getNamespace().equals( pi.sSlotNS ) )
             sMembervarName = RDF2Java.namespace2abbrev( pi.sSlotNS ) + '_' + pi.sSlotName;
         
+        if( sMembervarName.equals( "dateOfBirth" ) )
+            System.out.println( "break here" );
+        
         if (m_bInsertIncrementalInfo)
             pwClsFile.println(sIndent + "/** RDFS2Class: slot " + sMembervarName + " **/");
         String sRangePkgAndCls = pi.sRangeCls;
@@ -902,7 +905,9 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         }
         else  // !(pi.bMultiple) => single value slot
         {
-            String sRealSlotType = ( sRangePkgAndCls.equals("String")  ?  "String"  :  "de.dfki.rdf.util.RDFResource" );
+            String sRealSlotType = ( ( sRangePkgAndCls.equals("String") || sRangePkgAndCls.equals("Date") )  
+                                   ?  "String"  
+                                   :  "de.dfki.rdf.util.RDFResource" );
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + sMembervarName + " **/");
@@ -940,8 +945,12 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                     }
                     pwClsFile.println(")\n"+sIndent+"        throw new Error(\"not an allowed class\");");
                 }
-                pwClsFile.print(sIndent + "    m_" + sMembervarName + ".putValue(p_" + sMembervarName + ");\n" +
-                                sIndent + "}");
+                if( sRangePkgAndCls.equals("Date") )
+                    pwClsFile.print(sIndent + "    m_" + sMembervarName + ".putValue(de.dfki.rdf.util.RDFTool.dateTime2String(p_" + sMembervarName + "));\n" +
+                            sIndent + "}");
+                else
+                    pwClsFile.print(sIndent + "    m_" + sMembervarName + ".putValue(p_" + sMembervarName + ");\n" +
+                                    sIndent + "}");
             }
             // second putter (URI)
 //            if (sRangePkgAndCls.equals("Date"))
@@ -985,6 +994,13 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                                 sIndent + "{\n" +
                                 sIndent + "    return (" + sRangePkgAndCls + ")m_" + sMembervarName + ".getValue();\n" +
                                 sIndent + "}\n");
+            }
+            if( sRangePkgAndCls.equals("Date") )
+            {
+                pwClsFile.print(sIndent + "public " + sRangePkgAndCls + " " + RDF2Java.makeMethodName("Get", sMembervarName) + " ()\n" +
+                        sIndent + "{\n" +
+                        sIndent + "    return de.dfki.rdf.util.RDFTool.string2Date((String)m_" + sMembervarName + ".getValue());\n" +
+                        sIndent + "}\n");
             }
             pwClsFile.print(sIndent + "public " + sRealSlotType + " " + RDF2Java.makeMethodName("get", sMembervarName) + " ()\n" +
                             sIndent + "{\n" +

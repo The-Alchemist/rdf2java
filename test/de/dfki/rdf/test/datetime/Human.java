@@ -38,22 +38,18 @@ public  class Human
     /** RDFS2Class: putter for slot dateOfBirth **/
     public void putDateOfBirth (Date p_dateOfBirth)
     {
-        m_dateOfBirth.putValue(p_dateOfBirth);
-    }
-    public void putDateOfBirth (de.dfki.rdf.util.RDFResource p_dateOfBirth)
-    {
-        m_dateOfBirth.putValue(p_dateOfBirth);
+        m_dateOfBirth.putValue(de.dfki.rdf.util.RDFTool.dateTime2String(p_dateOfBirth));
     }
     // RDFS2Class: end of putter for slot dateOfBirth
 
     /** RDFS2Class: getter for slot dateOfBirth **/
     public Date GetDateOfBirth ()
     {
-        return (Date)m_dateOfBirth.getValue();
+        return de.dfki.rdf.util.RDFTool.string2Date((String)m_dateOfBirth.getValue());
     }
-    public de.dfki.rdf.util.RDFResource getDateOfBirth ()
+    public String getDateOfBirth ()
     {
-        return (de.dfki.rdf.util.RDFResource)m_dateOfBirth.getValue();
+        return (String)m_dateOfBirth.getValue();
     }
     // RDFS2Class: end of getter for slot dateOfBirth
 

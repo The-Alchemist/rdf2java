@@ -22,5 +22,6 @@ set CP_XERCES=%IMPORT_PATH%\xercesImpl.jar;%IMPORT_PATH%\xmlParserAPIs.jar
 
 set CP_RDFS2CLASS=%RDF2JAVA_PATH%\lib\rdf2java.jar
 
+REM echo on
 %JAVA_VM% -cp %CP_RDFS2CLASS%;%CP_DFKIUtils%;%CP_RDF_API%;%CP_XERCES% de.dfki.rdf.util.RDFS2Class %FLAGS% %RDFS_FILE% %OUTPUTDIR% %N1% %P1% %N2% %P2% %N3% %P3% %N4% %P4% %N5% %P5% %N6% %P6%
 pause
