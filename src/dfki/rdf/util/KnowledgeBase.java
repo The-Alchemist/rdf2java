@@ -5,6 +5,15 @@ import java.util.*;
 import dfki.util.debug.Debug;
 
 
+/**
+ * A KnowledgeBase maintains a set of "known" THINGS.
+ * The KnowledgeBase also knows about mapping packages to namespaces and vice versa.
+ * You can put THINGS into and remove THINGS from this knowledge base.<br>
+ * But the most important this is, you can also {@link #assign assign} THINGS to it.
+ * This allows for an unspecified update of THINGS in the knowledge base. If you
+ * receive some RDF containing updates for your knowledge, then this class will
+ * help you with updating your graph in the knowledge base.  
+ */
 public class KnowledgeBase
 {
 //---------------------------------------------------------------------------
@@ -15,10 +24,20 @@ private final static boolean MEASURE_TIME = false;
 private Map/*String->String*/ m_mapNS2Pkg;
 private Map/*String->String*/ m_mapPkg2NS;
 
+private static KnowledgeBase ms_staticKnowledgeBase;
+
 
 //---------------------------------------------------------------------------
 public KnowledgeBase ()
 {
+}
+
+//---------------------------------------------------------------------------
+public static KnowledgeBase getStaticKnowledgeBase()
+{
+    if( ms_staticKnowledgeBase == null )
+        ms_staticKnowledgeBase = new KnowledgeBase();
+    return ms_staticKnowledgeBase;
 }
 
 //---------------------------------------------------------------------------
