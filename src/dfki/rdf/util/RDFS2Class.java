@@ -561,6 +561,12 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             pwClsFile.print(sIndent + "public java.util.Collection " + makeMethodName("Get", pi.sSlotName) + SLOT_RES_APPENDIX + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    return m_" + pi.sSlotName + SLOT_RES_APPENDIX + ";\n" +
+                            sIndent + "}\n");
+            pwClsFile.print(sIndent + "public java.util.Collection " + makeMethodName("Get", pi.sSlotName) + " ()\n" +
+                            sIndent + "{\n" +
+                            sIndent + "    " + m_sCollectionType + " coll = new " + m_sCollectionType + "(m_" + pi.sSlotName + ");\n" +
+                            sIndent + "    coll.addAll(m_" + pi.sSlotName + SLOT_RES_APPENDIX + ");\n" +
+                            sIndent + "    return coll;\n" +
                             sIndent + "}");
             if (m_bInsertIncrementalInfo)
                 pwClsFile.print("\n" + sIndent + "// RDFS2Class: end of getter for slot " + pi.sSlotName);
@@ -638,6 +644,11 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             pwClsFile.print(sIndent + "public dfki.rdf.util.RDFResource " + makeMethodName("Get", pi.sSlotName) + SLOT_RES_APPENDIX + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    return m_" + pi.sSlotName + SLOT_RES_APPENDIX + ";\n" +
+                            sIndent + "}\n");
+            pwClsFile.print(sIndent + "public Object " + makeMethodName("Get", pi.sSlotName) + " ()\n" +
+                            sIndent + "{\n" +
+                            sIndent + "    if (m_" + pi.sSlotName + " != null) return m_" + pi.sSlotName + ";\n" +
+                            sIndent + "    else return m_" + pi.sSlotName + SLOT_RES_APPENDIX + ";\n" +
                             sIndent + "}");
             if (m_bInsertIncrementalInfo)
                 pwClsFile.print("\n" + sIndent + "// RDFS2Class: end of getter for slot " + pi.sSlotName);
