@@ -82,6 +82,12 @@ public void putURI (String namespace, String localName)
 //----------------------------------------------------------------------------------------------------
 public void putURI (String uri)
 {
+    if( uri == null )
+    {
+        putURI( null, null );
+        return;
+    }
+    
     // guess namespace and localname
     int pos = uri.indexOf("#");
     if (pos >= 0)
