@@ -586,6 +586,7 @@ protected void deepCopy_singleValueProperty( THING newThing, String sPropName, O
     }
 }
 
+
 //----------------------------------------------------------------------------------------------------
 }
 
