@@ -7,5 +7,9 @@
 	<classpathentry kind="lib" path="import/xercesImpl.jar"/>
 	<classpathentry sourcepath="import/DFKIUtils.jar" kind="lib" path="import/DFKIUtils.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="import/Jena2/concurrent.jar"/>
+	<classpathentry kind="lib" path="import/Jena2/icu4j.jar"/>
+	<classpathentry kind="lib" path="import/Jena2/jena-2.1_all.jar"/>
+	<classpathentry kind="lib" path="import/Jena2/xml-apis.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

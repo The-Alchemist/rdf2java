@@ -8,6 +8,13 @@ import java.util.Map;
 
 import org.w3c.rdf.model.Resource;
 
+import com.hp.hpl.jena.rdf.model.AnonId;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.vocabulary.RDFS;
+
 import dfki.util.debug.Debug;
 
 
@@ -16,6 +23,8 @@ public class RDFResource   extends Object
 {
 //----------------------------------------------------------------------------------------------------
 public final static String DEBUG_MODULE = "rdf2java";
+
+private static Model ms_serializationModel = ModelFactory.createDefaultModel();
 
 private String m_namespace;
 private String m_localName;
@@ -320,6 +329,69 @@ public static String getClassName( Class cls )
     return className.substring( p+1 );
 }
 
+
+//----------------------------------------------------------------------------------------------------
+public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ mapPkg2NS )
+{
+    com.hp.hpl.jena.rdf.model.Resource res;
+    if( getURI() != null )
+        res = ms_serializationModel.createResource( getURI() );
+    else
+        res = ms_serializationModel.createResource( new AnonId( getAddressOnlyHex() ) );
+    if( getLabel() != null ) 
+        res.addProperty( RDFS.label, getLabel() );
+    
+    if( mapPkg2NS == null )
+        return res;
+    
+    PropertyStore ps = getPropertyStore();
+    for( Iterator it = ps.getPropertyInfos().iterator(); it.hasNext(); )
+    {
+        PropertyInfo pi = (PropertyInfo)it.next();
+        String sPropLocalName = pi.getName();
+        String sPropPackage = getClassPackage( getClass() );
+        String sPropNamespace = (String)mapPkg2NS.get( sPropPackage );
+        Property prop = ms_serializationModel.createProperty( sPropNamespace, sPropLocalName );
+        Object value = pi.getValue();
+        if( value == null ) continue;
+        if( pi.hasMultiValue() )
+        {
+            Collection collValues = (Collection)value;
+            if( collValues.size() > 0 )
+            {
+                for( Iterator itValues = collValues.iterator(); itValues.hasNext(); )
+                {
+                    Object oneValue = itValues.next();
+                    if( oneValue instanceof RDFResource )
+                    {
+                        com.hp.hpl.jena.rdf.model.Resource resValue = ms_serializationModel.createResource( ((RDFResource)oneValue).getURI() );
+                        res.addProperty( prop, resValue );
+                    }
+                    else
+                    {
+                        Literal litValue = ms_serializationModel.createLiteral( oneValue );
+                        res.addProperty( prop, litValue );
+                    }
+                }
+            }
+        }
+        else
+        {
+            if( value instanceof RDFResource )
+            {
+                com.hp.hpl.jena.rdf.model.Resource resValue = ms_serializationModel.createResource( ((RDFResource)value).getURI() );
+                res.addProperty( prop, resValue );
+            }
+            else
+            {
+                Literal litValue = ms_serializationModel.createLiteral( value );
+                res.addProperty( prop, litValue );
+            }
+        }
+    }
+    
+    return res;
+}
 
 //----------------------------------------------------------------------------------------------------
 } // end of class RDFResource
