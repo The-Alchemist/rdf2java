@@ -1,6 +1,8 @@
 package dfki.rdf.util;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
 import org.w3c.rdf.model.Resource;
 
 
@@ -166,9 +168,20 @@ public int hashCode ()
 }
 
 //----------------------------------------------------------------------------------------------------
+private static Map/*Class -> Collection of String*/ mapCls2PropertiesCache = new HashMap();
+
 public Collection/*String*/ getProperties ()
 {
-    return RDF2Java.getProperties(getClass());
+    Class cls = getClass();
+    Collection collProps = (Collection)RDFResource.mapCls2PropertiesCache.get( cls );
+    if (collProps == null)
+    {
+        collProps = RDF2Java.getProperties( cls );
+        RDFResource.mapCls2PropertiesCache.put( cls, collProps );
+    }
+    return collProps;
+
+    //SS:2002-10-11: old version:   return RDF2Java.getProperties(getClass());
 }
 
 //----------------------------------------------------------------------------------------------------
