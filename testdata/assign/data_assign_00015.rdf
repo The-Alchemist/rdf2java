@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY assign 'http://dfki.rdf.test/assign#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:assign="&assign;"
+	 xmlns:rdfs="&rdfs;">
+
+
+<assign:A rdf:about="&assign;assign_00015"
+	 rdfs:label="assign_00015">
+	<assign:superA rdf:resource="&assign;assign_00014"/>
+	<assign:toB rdf:resource="&assign;assign_00016"/>
+	<assign:toB rdf:resource="&assign;assign_00017"/>
+	<assign:toB rdf:resource="&assign;assign_00018"/>
+	<assign:subA rdf:resource="&assign;assign_00020"/>
+</assign:A>
+
+
+
+</rdf:RDF>

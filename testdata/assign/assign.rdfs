@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://protege.stanford.edu/system#'>
+	 <!ENTITY assign 'http://dfki.rdf.test/assign#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:assign="&assign;"
+	 xmlns:rdfs="&rdfs;">
+<rdfs:Class rdf:about="&assign;A"
+	 rdfs:label="A">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="&assign;B"
+	 rdfs:label="B">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdf:Property rdf:about="&assign;nontransitive_00013"
+	 a:maxCardinality="1"
+	 rdfs:label="nontransitive_00013">
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+<rdf:Property rdf:about="&assign;subA"
+	 rdfs:label="subA">
+	<rdfs:range rdf:resource="&assign;A"/>
+	<rdfs:domain rdf:resource="&assign;A"/>
+	<a:inverseProperty rdf:resource="&assign;superA"/>
+</rdf:Property>
+<rdf:Property rdf:about="&assign;superA"
+	 rdfs:label="superA">
+	<rdfs:range rdf:resource="&assign;A"/>
+	<rdfs:domain rdf:resource="&assign;A"/>
+	<a:inverseProperty rdf:resource="&assign;subA"/>
+</rdf:Property>
+<rdf:Property rdf:about="&assign;toB"
+	 rdfs:label="toB">
+	<rdfs:domain rdf:resource="&assign;A"/>
+	<rdfs:range rdf:resource="&assign;B"/>
+</rdf:Property>
+</rdf:RDF>
