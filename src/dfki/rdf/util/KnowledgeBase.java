@@ -1,8 +1,14 @@
 package dfki.rdf.util;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-import dfki.util.debug.Debug;
+import de.dfki.util.debug.Debug;
 
 
 /**

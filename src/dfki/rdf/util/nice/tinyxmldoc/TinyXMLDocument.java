@@ -5,8 +5,8 @@ import java.util.*;
 import dfki.rdf.util.nice.TinyXMLSerializer;
 import dfki.rdf.util.nice.TinyXMLSerializerImpl;
 
-import dfki.util.rdf.RDF;
-import dfki.util.rdfs.RDFS;
+import de.dfki.util.rdf.RDF;
+import de.dfki.util.rdfs.RDFS;
 
 
 public class TinyXMLDocument

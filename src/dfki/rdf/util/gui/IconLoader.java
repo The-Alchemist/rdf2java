@@ -4,15 +4,14 @@
 package dfki.rdf.util.gui;
 
 import java.awt.Toolkit;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 
-import dfki.util.config.Config;
-import dfki.util.debug.Debug;
+import de.dfki.util.config.Config;
+import de.dfki.util.debug.Debug;
 
 /**
  * @author maus

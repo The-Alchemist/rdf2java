@@ -1,9 +1,8 @@
 package dfki.rdf.util.filter;
 
-import dfki.rdf.util.RDFFilter;
-import dfki.rdf.util.THING;
-
 import java.util.Collection;
+
+import dfki.rdf.util.RDFFilter;
 
 
 /**

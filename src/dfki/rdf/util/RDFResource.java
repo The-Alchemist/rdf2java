@@ -17,7 +17,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
-import dfki.util.debug.Debug;
+import de.dfki.util.debug.Debug;
 
 
 public class RDFResource   extends Object   

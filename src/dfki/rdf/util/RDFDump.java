@@ -1,6 +1,6 @@
 package dfki.rdf.util;
 
-import dfki.util.rdf.RDF;
+import de.dfki.util.rdf.RDF;
 
 import org.w3c.rdf.model.Model;
 import org.w3c.rdf.model.Statement;

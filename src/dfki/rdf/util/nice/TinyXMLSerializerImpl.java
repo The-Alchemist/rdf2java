@@ -1,6 +1,7 @@
 package dfki.rdf.util.nice;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.TreeMap;
 
 
 public class TinyXMLSerializerImpl implements TinyXMLSerializer

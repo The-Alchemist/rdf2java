@@ -4,7 +4,13 @@
 package dfki.rdf.util.gui;
 
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.StringReader;
@@ -18,25 +24,39 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.w3c.rdf.model.ModelException;
+import org.w3c.rdf.model.Resource;
 
-
+import de.dfki.util.debug.Debug;
 import dfki.rdf.util.KnowledgeBase;
 import dfki.rdf.util.PropertyInfo;
 import dfki.rdf.util.PropertyStore;
 import dfki.rdf.util.RDFNice;
 import dfki.rdf.util.RDFResource;
 import dfki.rdf.util.THING;
-
-import dfki.util.debug.Debug;
-
-import org.w3c.rdf.model.ModelException;
-import org.w3c.rdf.model.Resource;
 
 
 /**

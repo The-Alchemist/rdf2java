@@ -15,7 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import dfki.util.debug.Debug;
+import de.dfki.util.debug.Debug;
+
 
 /**
  * Walks along a graph of RDFResources. 

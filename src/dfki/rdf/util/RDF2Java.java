@@ -1,7 +1,10 @@
 package dfki.rdf.util;
 
-import java.util.*;
-import java.lang.reflect.*;
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class RDF2Java

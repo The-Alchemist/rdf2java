@@ -3,13 +3,18 @@
  */
 package dfki.rdf.util.gui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Toolkit;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 
 import dfki.rdf.util.KnowledgeBase;
 import dfki.rdf.util.THING;

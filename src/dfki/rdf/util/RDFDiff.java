@@ -1,14 +1,16 @@
 package dfki.rdf.util;
 
-import java.io.*;
-import java.util.*;
+import java.util.Enumeration;
 
-import dfki.util.rdfs.RDFS;
-import dfki.util.rdf.RDF;
-import org.w3c.rdf.model.*;
+import org.w3c.rdf.model.Model;
+import org.w3c.rdf.model.NodeFactory;
+import org.w3c.rdf.model.Resource;
+import org.w3c.rdf.model.Statement;
 import org.w3c.rdf.syntax.RDFParser;
 import org.w3c.rdf.syntax.RDFSerializer;
 import org.w3c.rdf.util.RDFFactory;
+
+import de.dfki.util.rdf.RDF;
 
 
 /**
@@ -85,7 +87,7 @@ private Model loadRDF( String sRDFFilename )   throws Exception
 private void saveRDF( Model model, String sRDFFilename )   throws Exception
 {
     RDFSerializer rdfSerializer = m_rdfFactory.createSerializer();
-    dfki.util.rdf.RDF.saveModel( model, sRDFFilename, rdfSerializer );
+    RDF.saveModel( model, sRDFFilename, rdfSerializer );
 
     System.out.println( "*** " + sRDFFilename + " saved; " + model.size() + " statements written ***" );
 }

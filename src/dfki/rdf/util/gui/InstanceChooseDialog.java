@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,6 +40,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
+import de.dfki.util.debug.Debug;
 import dfki.rdf.util.KnowledgeBase;
 import dfki.rdf.util.RDFResource;
 import dfki.rdf.util.THING;
@@ -145,9 +145,9 @@ private void init (Class[] p_allowedClasses, boolean p_hasMultiValue)
 }
 
 //-------------------------------------------------------------------------------------------------------------------------
-private static dfki.util.debug.Debug debug ()
+private static Debug debug ()
 {
-    return dfki.util.debug.Debug.forModule("InstanceChooseDialog");
+    return Debug.forModule("InstanceChooseDialog");
 }
 
 

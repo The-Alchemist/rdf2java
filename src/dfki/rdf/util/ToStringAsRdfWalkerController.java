@@ -12,7 +12,7 @@ import org.w3c.rdf.model.ModelException;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLTextNode;
-import dfki.util.rdf.RDF;
+import de.dfki.util.rdf.RDF;
 
 
 public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerController

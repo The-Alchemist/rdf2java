@@ -5,7 +5,7 @@ import java.util.*;
 import dfki.rdf.util.nice.TinyXMLSerializer;
 
 import org.w3c.rdf.model.Resource;
-import dfki.util.rdf.RDF;
+import de.dfki.util.rdf.RDF;
 
 
 public class TinyXMLElement   extends TinyXMLNode

@@ -1,7 +1,11 @@
 package dfki.rdf.util;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import org.w3c.rdf.model.ModelException;
 import org.w3c.rdf.model.Resource;

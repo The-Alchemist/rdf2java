@@ -3,7 +3,8 @@
  */
 package dfki.rdf.util.gui;
 
-import dfki.util.config.Config;
+import de.dfki.util.config.Config;
+
 
 /**
  * @author maus

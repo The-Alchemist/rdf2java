@@ -3,10 +3,11 @@ package dfki.rdf.util;
 import java.io.*;
 import java.util.*;
 
-import dfki.util.debug.Debug;
+import de.dfki.util.debug.Debug;
 
-import dfki.util.rdfs.RDFS;
-import dfki.util.rdf.RDF;
+import de.dfki.util.rdf.RDF;
+import de.dfki.util.rdfs.RDFS;
+
 import org.w3c.rdf.model.*;
 import org.w3c.rdf.syntax.RDFParser;
 import org.w3c.rdf.util.RDFFactory;

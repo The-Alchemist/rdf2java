@@ -1,15 +1,31 @@
 package dfki.rdf.util;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
-import dfki.util.debug.Debug;
-
-import dfki.util.rdfs.RDFS;
-import dfki.util.rdf.RDF;
-import org.w3c.rdf.model.*;
+import org.w3c.rdf.model.Literal;
+import org.w3c.rdf.model.Model;
+import org.w3c.rdf.model.NodeFactory;
+import org.w3c.rdf.model.RDFNode;
+import org.w3c.rdf.model.Resource;
+import org.w3c.rdf.model.Statement;
 import org.w3c.rdf.syntax.RDFParser;
 import org.w3c.rdf.util.RDFFactory;
+
+import de.dfki.util.debug.Debug;
+import de.dfki.util.rdf.RDF;
 
 /** 
  * The <code>RDFS2Class</code> tool.<br>

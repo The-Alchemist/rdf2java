@@ -1,12 +1,11 @@
 package dfki.rdf.util.filter;
 
-import dfki.rdf.util.RDFFilter;
-import dfki.rdf.util.RDFResource;
-import dfki.rdf.util.THING;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+
+import dfki.rdf.util.RDFFilter;
+import dfki.rdf.util.THING;
 
 
 

@@ -1,7 +1,6 @@
 package dfki.rdf.util.reification.rdf;
 
 // RDFS2Class: imports
-import java.util.*;
 // RDFS2Class: end of imports
 
 

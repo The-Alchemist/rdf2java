@@ -4,8 +4,7 @@ package dfki.rdf.util;
 import java.io.*;
 import java.util.*;
 
-import dfki.util.rdfs.RDFS;
-import dfki.util.rdf.RDF;
+import de.dfki.util.rdf.RDF;
 import org.w3c.rdf.model.*;
 import org.w3c.rdf.syntax.RDFParser;
 import org.w3c.rdf.syntax.RDFSerializer;
@@ -69,7 +68,7 @@ public class RDFExtract
     private void saveRDF( Model model, String sRDFFilename ) throws Exception
     {
         RDFSerializer rdfSerializer = m_rdfFactory.createSerializer();
-        dfki.util.rdf.RDF.saveModel( model, sRDFFilename, rdfSerializer );
+        RDF.saveModel( model, sRDFFilename, rdfSerializer );
 
         System.out.println( "*** " + sRDFFilename + " saved; " + model.size()
                 + " statements written ***" );
