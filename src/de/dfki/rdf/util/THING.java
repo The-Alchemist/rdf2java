@@ -392,7 +392,7 @@ public static void remove (Collection coll, String sURI)
 //----------------------------------------------------------------------------------------------------
 public static class DeepCopyController
 {
-    public Map/*String->THING*/ mapOldUri2NewThing = new HashMap();
+    public Map/*String->THING*/ mapOldThingNewThing = new HashMap();
 
     /**
      * path along the copied (old) THINGS
@@ -489,7 +489,7 @@ public THING deepCopy( DeepCopyController dcc )
     THING newThing;
     if( this.getURI() != null )
     {
-        newThing = (THING)dcc.mapOldUri2NewThing.get( this.getURI() );
+        newThing = (THING)dcc.mapOldThingNewThing.get( this );
         if( newThing != null )
             return newThing;        // this thing has been cloned already
     }
@@ -531,7 +531,7 @@ public void deepCopyTo( THING newThing, DeepCopyController dcc )
             newThing.putURI( this.getURI() );
     }
     
-    dcc.mapOldUri2NewThing.put( this.getURI(), newThing );
+    dcc.mapOldThingNewThing.put( this, newThing );
     
     for( Iterator itProperties = m_propertyStore.getProperties().iterator(); itProperties.hasNext(); )
     {

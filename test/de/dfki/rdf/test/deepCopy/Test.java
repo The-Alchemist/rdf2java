@@ -48,7 +48,7 @@ public class Test
         THING.DeepCopyController dcc = new THING.DeepCopyController();
         THING oldSimple = (THING)mapObjects.get( NAMESPACE + "deepCopy_00007" );
         THING newSimple = oldSimple.deepCopy( dcc );
-        printout( dcc.mapOldUri2NewThing );
+        printout( dcc.mapOldThingNewThing );
     }
     
     
@@ -57,7 +57,7 @@ public class Test
         THING.DeepCopyController dcc = new THING.DeepCopyController();
         THING oldHomer = (THING)mapObjects.get( NAMESPACE + "deepCopy_00008" );
         THING newHomer = oldHomer.deepCopy( dcc );
-        printout( dcc.mapOldUri2NewThing );
+        printout( dcc.mapOldThingNewThing );
     }
     
     
@@ -81,7 +81,7 @@ public class Test
                     ComplexClass value = ((ComplexClass)sourceObject).GetComplexSingleValueSlot();
                     try
                     {
-                        ComplexClass2 newValue2 = (ComplexClass2)mapOldUri2NewThing.get( ((ComplexClass)value).getURI() );
+                        ComplexClass2 newValue2 = (ComplexClass2)mapOldThingNewThing.get( (ComplexClass)value );
                         if( newValue2 == null )
                         {
                             newValue2 = (ComplexClass2) ((ComplexClass)value).deepCopy( ComplexClass2.class, this );
@@ -104,7 +104,7 @@ public class Test
         THING oldHomer = (THING)mapObjects.get( NAMESPACE + "deepCopy_00008" );
         ComplexClass2 newHomer2 = (ComplexClass2) oldHomer.deepCopy( ComplexClass2.class, dcc );
         //// printout( mapObjects );
-        printout( dcc.mapOldUri2NewThing );
+        printout( dcc.mapOldThingNewThing );
     }
     
     
