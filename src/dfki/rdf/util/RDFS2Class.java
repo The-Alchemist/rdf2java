@@ -1127,12 +1127,12 @@ private static Debug debug ()
             {
                 RDFNode rdfnodeRange = (RDFNode)setResRange.iterator().next();
                 // System.out.println("# "+sSlotName+" -> "+rdfnodeRange);
-                if (rdfnodeRange.equals(m_resRDFSResource))
-                {
+//                if (rdfnodeRange.equals(m_resRDFSResource))
+//                {
                     // System.out.println("# "+sSlotName+" -> "+rdfnodeRange);
                     Model modelAllowedClasses = m_modelRDFS.find(resProperty, m_resProtegeAllowedClasses, null);
                     setResRange = objectsToSet(modelAllowedClasses);
-                }
+//                }
             }
             if (setResRange.size() > 1)
             {
