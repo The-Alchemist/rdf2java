@@ -2,11 +2,10 @@
 <!--JBuilder XML Project-->
 <project>
   <property category="build" name="CopyExtensions.1" value="java"/>
-  <property category="runtime" name="ConfigurationCount" value="1"/>
+  <property category="runtime" name="ConfigurationCount" value="2"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.0" name="application.class" value="dfki.rdf.util.RDFNice"/>
-  <property category="runtime.0" name="application.parameters" value="testdata/rdfNice/flat.rdf http://dfki.frodo.wwf/task#rootTask -10000 http://dfki.frodo.wwf/task#parentTask -1000 http://dfki.frodo.wwf/task#subTask 100 http://dfki.frodo.wwf/task#object -1 http://dfki.frodo.wwf/task#objects -1 http://dfki.frodo.wwf/task#name 10000"/>
-  <property category="runtime.0" name="application.vmparameters" value="-Dorg.w3c.dom.DOMImplementationSourceList=org.apache.xerces.dom.DOMImplementationSourceImpl"/>
+  <property category="runtime.0" name="application.class" value="dfki.rdf.util.RDFDiff"/>
+  <property category="runtime.0" name="application.parameters" value="testdata/rdfNice/flat.rdf testdata/rdfNice/flat.rdf.nice.rdf"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.0" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.0" name="appserver.servername" value="standard"/>
@@ -17,6 +16,17 @@
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.1" name="application.class" value="dfki.rdf.test.nontransitive.Test"/>
   <property category="runtime.1" name="jsprunner.launchuri" value="/"/>
+  <property category="runtime.2" name="ConfigurationName" value="RDFNice"/>
+  <property category="runtime.2" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime.2" name="application.class" value="dfki.rdf.util.RDFNice"/>
+  <property category="runtime.2" name="application.parameters" value="testdata/rdfNice/flat.rdf http://dfki.frodo.wwf/task#rootTask -10000 http://dfki.frodo.wwf/task#parentTask -1000 http://dfki.frodo.wwf/task#subTask 100 http://dfki.frodo.wwf/task#object -1 http://dfki.frodo.wwf/task#objects -1 http://dfki.frodo.wwf/task#name 10000"/>
+  <property category="runtime.2" name="application.vmparameters" value="-Dorg.w3c.dom.DOMImplementationSourceList=org.apache.xerces.dom.DOMImplementationSourceImpl"/>
+  <property category="runtime.2" name="appserver.ejbJarsSaved" value="1"/>
+  <property category="runtime.2" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
+  <property category="runtime.2" name="appserver.servername" value="standard"/>
+  <property category="runtime.2" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/pc-3147/adm -Dejb.module_preload=true"/>
+  <property category="runtime.2" name="jsprunner.launchuri" value="/"/>
+  <property category="runtime.2" name="test.harness" value="junit.textui.TestRunner"/>
   <property category="sys" name="AuthorLabel" value="@author"/>
   <property category="sys" name="BackupPath" value="bak"/>
   <property category="sys" name="BeansInstantiate" value="false"/>

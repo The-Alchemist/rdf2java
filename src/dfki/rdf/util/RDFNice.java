@@ -15,6 +15,9 @@ import org.w3c.dom.*;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xml.serialize.OutputFormat;
 
+import dfki.rdf.util.nice.*;
+
+
 public class RDFNice
 {
 //------------------------------------------------------------------------------
@@ -41,6 +44,8 @@ Element m_elDoc;
 
 Map/*String->String*/ m_mapNS2Prefix;
 
+TinyXMLSerializer m_xmlSerializer;
+
 
 //------------------------------------------------------------------------------
 public RDFNice()   throws Exception
@@ -58,6 +63,8 @@ public RDFNice()   throws Exception
     m_mapNS2Prefix = new TreeMap();
     m_mapNS2Prefix.put( m_rdfURIs.namespace(), "rdf" );
     m_mapNS2Prefix.put( m_rdfsURIs.namespace(), "rdfs" );
+
+    m_xmlSerializer = new TinyXMLSerializerImpl();
 }
 
 //------------------------------------------------------------------------------
@@ -109,6 +116,8 @@ private void loadRDF( String sRDFFile )   throws Exception
     m_model = m_rdfFactory.createModel();
     RDF.parse( "file:" + sRDFFile, m_rdfParser, m_model );
 
+    System.out.println( "*** " + m_model.size() + " statements read in ***" );
+
     m_modelRest = m_model.duplicate();
 }
 
@@ -123,6 +132,8 @@ private String getPrefix( String sURI )   throws Exception
 private String getPrefix( Resource res )   throws Exception
 {
     String sNS = res.getNamespace();
+    if( sNS == null  ||  sNS.length() <= 0 )
+        throw new Error( "Implementation failure" );
     String sPrefix = (String)m_mapNS2Prefix.get( sNS );
     if (sPrefix == null)
     {
@@ -134,7 +145,18 @@ private String getPrefix( Resource res )   throws Exception
         m_mapNS2Prefix.put( sNS, sPrefix );
 //        EntityReference er = m_xmlDoc.createEntityReference( "das:test" );
     }
+
+    m_xmlSerializer.declareNamespacePrefix( sPrefix, sNS );
+
     return sPrefix;
+}
+
+//------------------------------------------------------------------------------
+private String res2qname( String sURI )   throws Exception
+{
+    RDFResource rdfres = new RDFResource( sURI );
+    Resource res = m_nodeFactory.createResource( rdfres.getNamespace(), rdfres.getLocalName() );
+    return res2qname( res );
 }
 
 //------------------------------------------------------------------------------
@@ -147,19 +169,13 @@ private String res2qname( Resource res )   throws Exception
 //------------------------------------------------------------------------------
 private String uri2qnameRef( String sURI )   throws Exception
 {
-    Resource res = m_nodeFactory.createResource( sURI );
+    RDFResource rdfres = new RDFResource( sURI );
+    Resource res = m_nodeFactory.createResource( rdfres.getNamespace(), rdfres.getLocalName() );
     String sPrefix = getPrefix( res );
     return "&" + sPrefix + ";" + res.getLocalName();
-}
 
-//------------------------------------------------------------------------------
-private void createDocumentElement()   throws Exception
-{
-    m_xmlDOM = DOMImplementationRegistry.getDOMImplementation( "XML" );
-    DocumentType docType = m_xmlDOM.createDocumentType( "rdf:RDF", null, null );
-//    DocumentType docType = m_xmlDOM.createDocumentType( "rdf:RDF", "rdf", "http://rdf#RDF" );
-    m_xmlDoc = m_xmlDOM.createDocument( m_rdfURIs.namespace(), "rdf:RDF", docType );
-    m_elDoc = m_xmlDoc.getDocumentElement();
+//    Resource res = m_nodeFactory.createResource( sURI );
+//    return res2qname( res );
 }
 
 //------------------------------------------------------------------------------
@@ -167,7 +183,6 @@ private void createNiceXML()   throws Exception
 {
     createDocumentElement();  // creates m_elDoc
 
-    ////System.out.println( "\n" );
     while( true )
     {
         Resource resTopInstance = takeNextInstance();
@@ -186,19 +201,38 @@ private Element createElement( Resource res )   throws Exception
 }
 
 //------------------------------------------------------------------------------
-private Text createTextNode( String sText )   throws Exception
+//private Text createTextNode( String sText )   throws Exception
+//{
+//    Text textNode = m_xmlDoc.createTextNode( sText );
+//    return textNode;
+//}
+
+//------------------------------------------------------------------------------
+private void addAttribute( Element el, String sNamespace, String sLocalName, String sValue )   throws Exception
 {
-    Text textNode = m_xmlDoc.createTextNode( sText );
-    return textNode;
+    Attr attr = m_xmlDoc.createAttributeNS( sNamespace, sLocalName );
+    attr.setValue( sValue );
+    el.setAttributeNodeNS( attr );
 }
 
 //------------------------------------------------------------------------------
-private Attr addAttribute( Element el, String sNamespace, String sLocalName, String sValue )
+private void addAttribute( Element el, String sNamespace, String sLocalName, Resource resValue )   throws Exception
 {
+//    Attr attr = m_xmlDoc.createAttributeNS( sNamespace, sLocalName );
+//    attr.setNodeValue( sValue );
+//    el.setAttributeNodeNS( attr );
+//    return attr;
+
     Attr attr = m_xmlDoc.createAttributeNS( sNamespace, sLocalName );
-    attr.setNodeValue( sValue );
+//    Element attr = m_xmlDoc.createElementNS( sNamespace, sLocalName );
+    EntityReference er = m_xmlDoc.createEntityReference( getPrefix( resValue ) );
+//    er.setNodeValue( ?????????????? );
+    Text er2 = m_xmlDoc.createTextNode( getPrefix( resValue ) );
+    Text er3 = m_xmlDoc.createTextNode( resValue.getLocalName() );
+//    attr.appendChild( er );
+    attr.appendChild( er );
+//    attr.appendChild( er3 );
     el.setAttributeNodeNS( attr );
-    return attr;
 }
 
 //------------------------------------------------------------------------------
@@ -208,7 +242,8 @@ private void appendInstance( Resource resInstance, Element elAppendHere,
     removeInstanceFromRDFModelRest( resInstance );
     if( setProcessedResources.contains( resInstance.getURI() ) )
     {
-        addAttribute( elAppendHere, m_rdfURIs.namespace(), "resource", uri2qnameRef( resInstance.getURI() ) );
+        addAttribute( elAppendHere, m_rdfURIs.namespace(), "resource", resInstance );
+        m_xmlSerializer.putAttribute( res2qname( m_rdfURIs.namespace() + "resource" ), uri2qnameRef( resInstance.getURI() ) );
         return;
     }
     setProcessedResources.add( resInstance.getURI() );
@@ -218,8 +253,11 @@ private void appendInstance( Resource resInstance, Element elAppendHere,
     String sPrefix = getPrefix( resCls );
 
     Element elInst = createElement( resCls );
-    addAttribute( elInst, m_rdfURIs.namespace(), "about", uri2qnameRef( resInstance.getURI() ) );
+    m_xmlSerializer.startElement( elInst.getTagName() );
+    addAttribute( elInst, m_rdfURIs.namespace(), "about", resInstance );
+    m_xmlSerializer.putAttribute( res2qname( m_rdfURIs.namespace() + "about" ), uri2qnameRef( resInstance.getURI() ) );
     elAppendHere.appendChild( elInst );
+
 
     Model mSlots = m_model.find( resInstance, null, null );
     while( true )
@@ -239,14 +277,30 @@ private void appendInstance( Resource resInstance, Element elAppendHere,
             {
                 Element elSlot = createElement( resPred );
                 elInst.appendChild( elSlot );
+                m_xmlSerializer.startElement( res2qname( resPred ) );
                 appendInstance( resValue, elSlot, setProcessedResources );  // recursion
+                m_xmlSerializer.endElement( res2qname( resPred ) );
             }
             else
+            {
                 appendSlot( resInstance, elInst, resPred, resValue );
+//                m_xmlSerializer.startElement( res2qname( resPred ) );
+//                m_xmlSerializer.putAttribute( res2qname( m_rdfURIs.namespace() + "resource" ), uri2qnameRef( resValue.getURI() ) );
+//                m_xmlSerializer.endElement( res2qname( resPred ) );
+                m_xmlSerializer.putAttributeElement(
+                    res2qname( resPred ),
+                    res2qname( m_rdfURIs.namespace() + "resource" ),
+                    uri2qnameRef( resValue.getURI() ) );
+            }
         }
         else
+        {
             appendSlot( resInstance, elInst, resPred, rdfnodeValue.getLabel() );
+            m_xmlSerializer.putTextElement( res2qname( resPred ), rdfnodeValue.getLabel() );
+        }
     }
+
+    m_xmlSerializer.endElement( elInst.getTagName() );
 }
 
 //------------------------------------------------------------------------------
@@ -278,18 +332,18 @@ private void appendSlot( Resource resInstance, Element elInst, Resource resPred,
 {
     Element elSlot = createElement( resPred );
     elInst.appendChild( elSlot );
-    addAttribute( elSlot, m_rdfURIs.namespace(), "resource", uri2qnameRef( resValue.getURI() ) );
+    addAttribute( elSlot, m_rdfURIs.namespace(), "resource", resValue );
 }
 
 //------------------------------------------------------------------------------
 private void appendSlot( Resource resInstance, Element elInst, Resource resPred, String sValue )   throws Exception
 {
-    Element elSlot = createElement( resPred );
-    elInst.appendChild( elSlot );
-    Text textNode = createTextNode( sValue );
-    elSlot.appendChild( textNode );
+//    Element elSlot = createElement( resPred );
+//    elInst.appendChild( elSlot );
+//    Text textNode = createTextNode( sValue );
+//    elSlot.appendChild( textNode );
 
-    //    addAttribute( elInst, getPrefix( resPred ), resPred.getLocalName(), sValue );
+    addAttribute( elInst, getPrefix( resPred ), resPred.getLocalName(), sValue );
 }
 
 //------------------------------------------------------------------------------
@@ -392,32 +446,53 @@ private Resource findCls( Resource resObject )   throws Exception
 }
 
 //------------------------------------------------------------------------------
+private void createDocumentElement()   throws Exception
+{
+    m_xmlDOM = DOMImplementationRegistry.getDOMImplementation( "XML" );
+    DocumentType docType = m_xmlDOM.createDocumentType( "rdf:RDF", null, null );
+//    DocumentType docType = m_xmlDOM.createDocumentType( "rdf:RDF", "rdf", "http://rdf#RDF" );
+    m_xmlDoc = m_xmlDOM.createDocument( m_rdfURIs.namespace(), "rdf:RDF", docType );
+    m_elDoc = m_xmlDoc.getDocumentElement();
+
+    m_xmlSerializer.startElement( "rdf:RDF" );
+}
+
+//------------------------------------------------------------------------------
 private void saveNiceXML()   throws Exception
 {
     ////System.out.println( "\n\nmap:\n" + m_mapNS2Prefix );
 
-/***
+/***/
     DocumentType docType = m_xmlDoc.getDoctype();
     NamedNodeMap nnm = docType.getEntities();
 //    nnm.setNamedItemNS( m_xmlDoc.createElementNS( m_rdfURIs.namespace(), "rdf:RDF" ) );
     String sNS = "http://dfki.frodo.wwf/task#";
     String sAbrev = (String)m_mapNS2Prefix.get( sNS );
+
     org.apache.xerces.dom.EntityImpl e = (org.apache.xerces.dom.EntityImpl)((org.apache.xerces.dom.CoreDocumentImpl)m_xmlDoc).createEntity( sAbrev );
     e.setBaseURI( sNS );
+    e.setNodeValue( sNS );
     nnm.setNamedItemNS( e );
 //    nnm = docType.getNotations();
 //    nnm.setNamedItemNS( m_xmlDoc.createElementNS( m_rdfURIs.namespace(), "rdf:RDF" ) );
 
-    String sInternalSubset = docType.getInternalSubset();
-***/
+//    String sInternalSubset = docType.getInternalSubset();
+/***/
 
 
+    m_xmlSerializer.endElement( "rdf:RDF" );
+    m_xmlSerializer.flush();
     PrintWriter pw = new PrintWriter( new FileOutputStream( m_sDestFile ) );
-    OutputFormat outputFormat = new OutputFormat( m_xmlDoc, "ISO-8859-1", true );
-        outputFormat.setLineWidth( 0 );
-    XMLSerializer xmlSerializer = new XMLSerializer( pw, outputFormat );
-    xmlSerializer.serialize( m_xmlDoc );
+    pw.print( m_xmlSerializer.toString() );
     pw.flush();
+    pw.close();
+
+//    PrintWriter pw = new PrintWriter( new FileOutputStream( m_sDestFile ) );
+//    OutputFormat outputFormat = new OutputFormat( m_xmlDoc, "ISO-8859-1", true );
+//        outputFormat.setLineWidth( 0 );
+//    XMLSerializer xmlSerializer = new XMLSerializer( pw, outputFormat );
+//    xmlSerializer.serialize( m_xmlDoc );
+//    pw.flush();
 }
 
 //------------------------------------------------------------------------------
