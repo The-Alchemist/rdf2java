@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry sourcepath="import/rdf-api-2001-01-19.jar" kind="lib" path="import/rdf-api-2001-01-19.jar"/>
 	<classpathentry kind="lib" path="import/xmlParserAPIs.jar"/>
 	<classpathentry kind="lib" path="import/DFKIUtilsApidoc.jar"/>

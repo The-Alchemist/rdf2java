@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.w3c.rdf.model.ModelException;
+
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
 import dfki.rdf.util.nice.tinyxmldoc.TinyXMLTextNode;
@@ -46,6 +48,24 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
         return xmlDoc.serialize();
     }
     
+    private String getNamespaceFor( RDFResource res )
+    {
+        String sNamespace = null;
+        if( res.getRDFSClass() != null )
+        {
+            try{ sNamespace = res.getRDFSClass().getNamespace(); }
+            catch( ModelException ex ) {}
+        }
+        if( sNamespace == null )
+        {
+            Class cls = res.getClass();
+            String sClsPackage = RDFResource.getClassPackage( cls );
+            sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  
+                                              :  "http://" + sClsPackage + "#" );
+        }
+        return sNamespace;
+    }
+    
     public boolean arriving( RDFResource currentResource )
     {
         TinyXMLElement elParent = elDoc;
@@ -59,10 +79,8 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
         TinyXMLElement elAppendHere = elParent;
 
         Class cls = currentResource.getClass();
-        String sClsPackage = RDFResource.getClassPackage( cls );
         String sClsName = RDFResource.getClassName( cls );
-        String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  
-                                                 :  "http://" + sClsPackage + "#" );
+        String sNamespace = getNamespaceFor( currentResource );
 
         String sLastProperty = getLastProperty();
         if( sLastProperty != null ) 
@@ -72,7 +90,17 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
                 arrivingAgain( currentResource );
                 return false;
             }
-            RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
+            
+            //FIXME: FUCK!!!
+            String sLastPropNamespace = sNamespace;
+            int posHash = sLastProperty.lastIndexOf( '#' );
+            if( posHash >= 0 )
+            {
+                sLastPropNamespace = sLastProperty.substring( 0, posHash+1 );
+                sLastProperty = sLastProperty.substring( posHash+1 );
+            }
+            
+            RDFResource resLastProperty = new RDFResource( sLastPropNamespace, sLastProperty );
             TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
             elParent.appendChild( elLastProperty );
             elAppendHere = elLastProperty;
@@ -110,14 +138,20 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
                         for( Iterator itValues = collValues.iterator(); itValues.hasNext(); )
                         {
                             String sValue = (String)itValues.next();
-                            RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
+                            String sPropNamespace = sNamespace;
+                            if( pi.getNamespace() != null ) 
+                                sPropNamespace = pi.getNamespace();
+                            RDFResource resProperty = new RDFResource( sPropNamespace, pi.getName() );
                             appendSlot( elInst, resProperty, sValue );
                         }
                     }
                 }
                 else
                 {
-                    RDFResource resProperty = new RDFResource( sNamespace, pi.getName() );
+                    String sPropNamespace = sNamespace;
+                    if( pi.getNamespace() != null ) 
+                        sPropNamespace = pi.getNamespace();
+                    RDFResource resProperty = new RDFResource( sPropNamespace, pi.getName() );
                     appendSlot( elInst, resProperty, (String)pi.getValue() );
                 }
             }
@@ -180,11 +214,16 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
         String sLastProperty = getLastProperty();
         if( sLastProperty != null ) 
         {
-            Class cls = currentResource.getClass();
-            String sClsPackage = RDFResource.getClassPackage( cls );
-            String sNamespace = ( mapPkg2NS != null  ?  (String)mapPkg2NS.get( sClsPackage )  :  "http://" + sClsPackage + "#" );
-            RDFResource resLastProperty = new RDFResource( sNamespace, sLastProperty );
+            //FIXME: FUCK!!!
+            String sLastPropNamespace = getNamespaceFor( currentResource );
+            int posHash = sLastProperty.lastIndexOf( '#' );
+            if( posHash >= 0 )
+            {
+                sLastPropNamespace = sLastProperty.substring( 0, posHash+1 );
+                sLastProperty = sLastProperty.substring( posHash+1 );
+            }
             
+            RDFResource resLastProperty = new RDFResource( sLastPropNamespace, sLastProperty );            
             TinyXMLElement elLastProperty = xmlDoc.createElement( resLastProperty.getURI() );
             elParent.appendChild( elLastProperty );
             

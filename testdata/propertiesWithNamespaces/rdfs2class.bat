@@ -8,7 +8,7 @@ set RDF2JAVA_PATH=..\..
 REM *************************************************************
 
 set RDFS_FILE=%RDF2JAVA_PATH%\testdata\propertiesWithNamespaces\propertiesWithNamespaces.rdfs
-set OUTPUTDIR=%RDF2JAVA_PATH%\src
+set OUTPUTDIR=%RDF2JAVA_PATH%\test
 
 set FLAGS=-is
 

@@ -3,24 +3,38 @@ package dfki.rdf.util;
 import java.io.Serializable;
 import java.util.*;
 
+import org.w3c.rdf.model.ModelException;
+import org.w3c.rdf.model.Resource;
+
 
 public class PropertyStore   implements Serializable
 {
 //------------------------------------------------------------------------------
 private Map/*String->PropertyInfo*/ m_mapProperty2Info;
 private Class m_cls;
+private Resource m_rdfsClass;
 
 //------------------------------------------------------------------------------
-public PropertyStore( Class cls )
+public PropertyStore( Class cls, Resource rdfsClass )
 {
     m_mapProperty2Info = new HashMap();
     m_cls = cls;
+    m_rdfsClass = rdfsClass;
 }
 
 //------------------------------------------------------------------------------
 public void addProperty( PropertyInfo pi )
 {
-    m_mapProperty2Info.put( pi.getName(), pi );
+    String sPropName = pi.getName();
+    try 
+    {
+        if(     m_rdfsClass != null && pi.getNamespace() != null &&
+                !m_rdfsClass.getNamespace().equals( pi.getNamespace() ) )
+            sPropName = pi.getNamespace() + pi.getName();
+    }
+    catch( ModelException ex ) {}
+    
+    m_mapProperty2Info.put( sPropName, pi );
 }
 
 //------------------------------------------------------------------------------
@@ -58,6 +72,8 @@ public Object getPropertyValue (String sPropertyName)
 public void putPropertyValue (String sPropertyName, Object value)
 {
     PropertyInfo pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName );
+    if( pi == null )
+        System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
     pi.putValue( value );
 }
 

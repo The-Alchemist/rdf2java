@@ -2,17 +2,21 @@
 <!DOCTYPE rdf:RDF [
 	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
 	 <!ENTITY a 'http://org.dfki/rdf2java/example1#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
 ]>
 <rdf:RDF xmlns:rdf="&rdf;"
-	 xmlns:a="&a;">
-<a:Person rdf:about="&a;id_20030402_092730_18f375"
+	 xmlns:a="&a;"
+	 xmlns:rdfs="&rdfs;">
+<a:Person rdf:about="&a;id_20040921_221727_ca0115"
 	 a:name="Lisa Simpson">
 	<a:hasParent rdf:resource="&a;example1_00006"/>
 </a:Person>
 <a:Person rdf:about="&a;example1_00005"
-	 a:name="Bart Simpson">
+	 a:name="Bart Simpson"
+	 rdfs:label="Bart Simpson">
 	<a:hasParent rdf:resource="&a;example1_00006"/>
 </a:Person>
 <a:Person rdf:about="&a;example1_00006"
-	 a:name="Homer Simpson"/>
+	 a:name="Homer Simpson"
+	 rdfs:label="Homer Simpson"/>
 </rdf:RDF>

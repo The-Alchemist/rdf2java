@@ -256,7 +256,7 @@ protected Collection/*String*/ getPropertiesOfThisClass ()
 public PropertyStore getPropertyStore()
 {
     if( m_propertyStore == null )
-        m_propertyStore = new PropertyStore( getClass() );
+        m_propertyStore = new PropertyStore( getClass(), getRDFSClass() );
     return m_propertyStore;
 }
 

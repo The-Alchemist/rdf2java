@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://dfki.rdf.test/propertiesWithNamespaces#'>
+	 <!ENTITY b 'http://dfki.rdf.test/propertiesWithNamespaces/bbb#'>
+	 <!ENTITY c 'http://dfki.rdf.test/propertiesWithNamespaces/aaa#'>
+	 <!ENTITY d 'http://dfki.rdf.test/propertiesWithNamespaces/ccc#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:b="&b;"
+	 xmlns:c="&c;"
+	 xmlns:rdfs="&rdfs;"
+	 xmlns:d="&d;">
+<c:A rdf:about="&a;propertiesWithNamespaces_00021"
+	 c:a2b="just some string in a1"
+	 c:aname="a1"
+	 rdfs:label="propertiesWithNamespaces_00021">
+	<d:a2b rdf:resource="&a;propertiesWithNamespaces_00022"/>
+</c:A>
+<b:B rdf:about="&a;propertiesWithNamespaces_00022"
+	 b:bname="b1"
+	 rdfs:label="propertiesWithNamespaces_00022"/>
+</rdf:RDF>

@@ -1,4 +1,3 @@
-
 package dfki.rdf.util;
 
 import java.io.BufferedReader;
@@ -14,6 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.w3c.rdf.model.Model;
+import org.w3c.rdf.model.ModelException;
 import org.w3c.rdf.model.NodeFactory;
 import org.w3c.rdf.model.RDFNode;
 import org.w3c.rdf.model.Resource;
@@ -43,6 +43,7 @@ public class RDFImport
 
     final static String m_damlNamespace = "http://www.daml.org/2001/03/daml+oil#";
     final static String URI = "URI";
+    final static String LABEL = "label";
     Resource m_damlList;
     Resource m_damlFirst;
     Resource m_damlRest;
@@ -478,7 +479,7 @@ public class RDFImport
                 if(     propertyNamespace.equals( "http://www.w3.org/2000/01/rdf-schema#" ) || 
                         propertyNamespace.equals( "http://www.w3.org/TR/1999/PR-rdf-schema-19990303#" ) )
                 {
-                    if( propertyName.equals( "label" ) )
+                    if( propertyName.equals( LABEL ) )
                         bAccept = true;
                 }
 
@@ -494,10 +495,31 @@ public class RDFImport
                             value = getObject( (Resource) valueNode, cachedObjects );
                         else  // Literal (or other, irrelevant cases)
                             value = getLabel( valueNode );
-                        if( value != null ) 
-                            putValue( object, propertyName, value, resource );
+                        if( value != null )
+                        {
+                            if( (object instanceof THING) && ((THING)object).getRDFSClass() != null )
+                            {
+                                try
+                                {
+                                    THING thing = (THING)object;
+                                    if(     propertyNamespace != null &&
+                                            !thing.getRDFSClass().getNamespace().equals( propertyNamespace ) ) 
+                                        putValue( thing, propertyNamespace + propertyName, value, resource );
+                                    else
+                                        putValue( thing, propertyName, value, resource );
+                                }
+                                catch( ModelException ex )
+                                {
+                                    ex.printStackTrace();
+                                }
+                            }
+                            else
+                                putValue_old( object, propertyName, value, resource );
+                        }
                         else
+                        {
                             System.err.println( "Unhandled value: " + resource + " . " + property + " = " + valueNode );
+                        }
                     }
                 }
             }
@@ -574,7 +596,7 @@ public class RDFImport
             object = cls.newInstance();
             String uri = resource.getURI();
             if( uri.indexOf( "#genid" ) == -1 ) // remove genids ... ???
-            putValue( object, URI, resource.getURI(), resource );
+                putValue_old( object, URI, resource.getURI(), resource );
         }
         catch( Exception e )
         {
@@ -583,7 +605,30 @@ public class RDFImport
         return object;
     }
 
-    void putValue( Object object, String property, Object value,
+    void putValue( THING thing, String property, Object value,
+            Resource objectResourceForDebug )
+    {
+        if( property.equals( URI ) )
+        {
+            thing.putURI( (String)value );
+            return;
+        }
+        
+        if(     property.startsWith( "http://www.w3.org/2000/01/rdf-schema#" ) || 
+                property.startsWith( "http://www.w3.org/TR/1999/PR-rdf-schema-19990303#" ) )
+        {
+            if( property.endsWith( "label" ) )
+            {
+                thing.putLabel( (String)value );
+                return;
+            }
+        }
+        
+        PropertyStore ps = thing.getPropertyStore();
+        ps.putPropertyValue( property, value );
+    }
+
+    void putValue_old( Object object, String property, Object value,
             Resource objectResourceForDebug )
     {
         String methodName;

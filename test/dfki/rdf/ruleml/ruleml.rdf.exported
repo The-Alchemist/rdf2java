@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://dfki.km.rdf2java/temp#'>
+	 <!ENTITY b 'http://www.ruleml.org/rdf#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:b="&b;">
+<b:Rulebase rdf:about="&a;1095799612514_genid1">
+	<b:clauses rdf:resource="&a;1095799612514_genid2"/>
+</b:Rulebase>
+<b:Var rdf:about="&a;1095799612514_genid10"
+	 b:name="X"/>
+<b:Atom rdf:about="&a;1095799612514_genid11"
+	 b:rel="r">
+	<b:args rdf:resource="&a;1095799612514_genid12"/>
+</b:Atom>
+<rdf:Seq rdf:about="&a;1095799612514_genid12">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid13"/>
+</rdf:Seq>
+<b:Var rdf:about="&a;1095799612514_genid13"
+	 b:name="X"/>
+<b:Imp rdf:about="&a;1095799612514_genid14">
+	<b:head rdf:resource="&a;1095799612514_genid15"/>
+	<b:body rdf:resource="&a;1095799612514_genid18"/>
+</b:Imp>
+<b:Atom rdf:about="&a;1095799612514_genid15"
+	 b:rel="q">
+	<b:args rdf:resource="&a;1095799612514_genid16"/>
+</b:Atom>
+<rdf:Seq rdf:about="&a;1095799612514_genid16">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid17"/>
+</rdf:Seq>
+<b:Var rdf:about="&a;1095799612514_genid17"
+	 b:name="X"/>
+<b:Atom rdf:about="&a;1095799612514_genid18"
+	 b:rel="r">
+	<b:args rdf:resource="&a;1095799612514_genid19"/>
+</b:Atom>
+<rdf:Seq rdf:about="&a;1095799612514_genid19">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid20"/>
+</rdf:Seq>
+<rdf:Seq rdf:about="&a;1095799612514_genid2">
+	<rdf:_3 rdf:resource="&a;1095799612514_genid14"/>
+	<rdf:_4 rdf:resource="&a;1095799612514_genid23"/>
+	<rdf:_1 rdf:resource="&a;1095799612514_genid3"/>
+	<rdf:_2 rdf:resource="&a;1095799612514_genid7"/>
+</rdf:Seq>
+<b:Cterm rdf:about="&a;1095799612514_genid20"
+	 b:ctor="f">
+	<b:args rdf:resource="&a;1095799612514_genid21"/>
+</b:Cterm>
+<rdf:Seq rdf:about="&a;1095799612514_genid21">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid22"/>
+</rdf:Seq>
+<b:Var rdf:about="&a;1095799612514_genid22"
+	 b:name="X"/>
+<b:Imp rdf:about="&a;1095799612514_genid23">
+	<b:head rdf:resource="&a;1095799612514_genid24"/>
+	<b:body rdf:resource="&a;1095799612514_genid28"/>
+</b:Imp>
+<b:Atom rdf:about="&a;1095799612514_genid24"
+	 b:rel="q">
+	<b:args rdf:resource="&a;1095799612514_genid25"/>
+</b:Atom>
+<rdf:Seq rdf:about="&a;1095799612514_genid25">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid26"/>
+	<rdf:_2 rdf:resource="&a;1095799612514_genid27"/>
+</rdf:Seq>
+<b:Var rdf:about="&a;1095799612514_genid26"
+	 b:name="X"/>
+<b:Var rdf:about="&a;1095799612514_genid27"
+	 b:name="Y"/>
+<b:And rdf:about="&a;1095799612514_genid28">
+	<b:args rdf:resource="&a;1095799612514_genid29"/>
+</b:And>
+<rdf:Seq rdf:about="&a;1095799612514_genid29">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid30"/>
+	<rdf:_2 rdf:resource="&a;1095799612514_genid35"/>
+</rdf:Seq>
+<b:Fact rdf:about="&a;1095799612514_genid3">
+	<b:head rdf:resource="&a;1095799612514_genid4"/>
+</b:Fact>
+<b:Atom rdf:about="&a;1095799612514_genid30"
+	 b:rel="r">
+	<b:args rdf:resource="&a;1095799612514_genid31"/>
+</b:Atom>
+<rdf:Seq rdf:about="&a;1095799612514_genid31">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid32"/>
+</rdf:Seq>
+<b:Cterm rdf:about="&a;1095799612514_genid32"
+	 b:ctor="f">
+	<b:args rdf:resource="&a;1095799612514_genid33"/>
+</b:Cterm>
+<rdf:Seq rdf:about="&a;1095799612514_genid33">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid34"/>
+</rdf:Seq>
+<b:Var rdf:about="&a;1095799612514_genid34"
+	 b:name="X"/>
+<b:Atom rdf:about="&a;1095799612514_genid35"
+	 b:rel="s">
+	<b:args rdf:resource="&a;1095799612514_genid36"/>
+</b:Atom>
+<rdf:Seq rdf:about="&a;1095799612514_genid36">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid37"/>
+</rdf:Seq>
+<b:Cterm rdf:about="&a;1095799612514_genid37"
+	 b:ctor="g">
+	<b:args rdf:resource="&a;1095799612514_genid38"/>
+</b:Cterm>
+<rdf:Seq rdf:about="&a;1095799612514_genid38">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid39"/>
+	<rdf:_2 rdf:resource="&a;1095799612514_genid40"/>
+</rdf:Seq>
+<b:Var rdf:about="&a;1095799612514_genid39"
+	 b:name="Y"/>
+<b:Atom rdf:about="&a;1095799612514_genid4"
+	 b:rel="p">
+	<b:args rdf:resource="&a;1095799612514_genid5"/>
+</b:Atom>
+<b:Var rdf:about="&a;1095799612514_genid40"
+	 b:name="X"/>
+<rdf:Seq rdf:about="&a;1095799612514_genid5">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid6"/>
+</rdf:Seq>
+<b:Ind rdf:about="&a;1095799612514_genid6"
+	 b:name="c"/>
+<b:Imp rdf:about="&a;1095799612514_genid7">
+	<b:body rdf:resource="&a;1095799612514_genid11"/>
+	<b:head rdf:resource="&a;1095799612514_genid8"/>
+</b:Imp>
+<b:Atom rdf:about="&a;1095799612514_genid8"
+	 b:rel="q">
+	<b:args rdf:resource="&a;1095799612514_genid9"/>
+</b:Atom>
+<rdf:Seq rdf:about="&a;1095799612514_genid9">
+	<rdf:_1 rdf:resource="&a;1095799612514_genid10"/>
+</rdf:Seq>
+</rdf:RDF>

@@ -1,7 +1,6 @@
 @echo off
 
-set JAVA_VM=D:\lang\jdk1.3.1\bin\java
-REM set JAVA_VM=java
+set JAVA_VM=%JAVA_HOME%\bin\java.exe
 
 REM *************************************************************
 REM set the following to the path, where you installed RDFS2Class
@@ -9,7 +8,7 @@ set RDF2JAVA_PATH=..\..
 REM *************************************************************
 
 set RDFS_FILE=%RDF2JAVA_PATH%\testdata\assign\assign.rdfs
-set OUTPUTDIR=%RDF2JAVA_PATH%\src
+set OUTPUTDIR=%RDF2JAVA_PATH%\test
 
 set FLAGS=-is
 

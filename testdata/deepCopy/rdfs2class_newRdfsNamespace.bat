@@ -8,12 +8,12 @@ set RDF2JAVA_PATH=..\..
 REM *************************************************************
 
 set RDFS_FILE=deepCopy_newRdfsNamespace.rdfs
-set OUTPUTDIR=%RDF2JAVA_PATH%\src
+set OUTPUTDIR=%RDF2JAVA_PATH%\test
 
 set FLAGS=-is rdfs=http://www.w3.org/2000/01/rdf-schema#
 
 set N1=http://dfki.org/rdf2java/deepCopyExample#
-set P1=org.dfki.rdf2java.deepCopyExample
+set P1=dfki.rdf.test.deepCopy
 
 
 set IMPORT_PATH=%RDF2JAVA_PATH%\import

@@ -1,6 +1,7 @@
 @echo off
 
-set JAVA_VM=D:\lang\jdk1.3.1\bin\java
+set JAVA_VM=%JAVA_HOME%\bin\java.exe
+
 
 REM *************************************************************
 REM set the following to the path, where you installed RDFS2Class
@@ -8,12 +9,12 @@ set RDF2JAVA_PATH=..\..
 REM *************************************************************
 
 set RDFS_FILE=example1.rdfs
-set OUTPUTDIR=%RDF2JAVA_PATH%\src
+set OUTPUTDIR=%RDF2JAVA_PATH%\test
 
 set FLAGS=-is
 
 set N1=http://org.dfki/rdf2java/example1#
-set P1=org.dfki.rdf2java.example1
+set P1=dfki.rdf.test.example1
 
 
 set IMPORT_PATH=%RDF2JAVA_PATH%\import

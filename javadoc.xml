@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="javadoc">
 <target name="javadoc">
-<javadoc access="protected" author="true" classpath="classes;import/rdf-api-2001-01-19.jar;import/DFKIUtils.jar;import/xmlParserAPIs.jar;import/DFKIUtilsApidoc.jar;import/xercesImpl.jar" destdir="apidoc" doctitle="DFKIJena Apidoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="dfki.rdf.test.walk,dfki.rdf.test.nontransitive,dfki.rdf.util.nice.tinyxmldoc,dfki.rdf.test.assign,org.dfki.rdf2java.deepCopyExample,dfki.rdf.test.import_export,dfki.rdf.util.reification.rdf,dfki.rdf.util,dfki.rdf.util.filter,org.dfki.rdf2java.example1,dfki.rdf.util.nice,dfki.rdf.ruleml" sourcepath="src" splitindex="true" use="true" version="true"/>
+<javadoc access="protected" author="true" classpath="classes;import/Jena2/commons-logging.jar;import/rdf-api-2001-01-19.jar;import/Jena2/log4j-1.2.7.jar;import/xmlParserAPIs.jar;import/Jena2/jena-2.1_all.jar;import/DFKIUtils.jar;import/Jena2/icu4j.jar;D:\Programme\eclipse\plugins\org.junit_3.8.1\junit.jar;import/DFKIUtilsApidoc.jar;import/Jena2/concurrent.jar;import/Jena2/xml-apis.jar;import/xercesImpl.jar" destdir="apidoc" doctitle="rdf2java Apidoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="dfki.rdf.util.reification.rdf,dfki.rdf.util,dfki.rdf.util.nice.tinyxmldoc,dfki.rdf.util.filter,dfki.rdf.util.nice" sourcepath="test;src" splitindex="true" use="true" version="true"/>
 </target>
 </project>

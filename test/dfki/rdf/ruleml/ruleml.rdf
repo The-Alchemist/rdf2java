@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY ruleml 'http://www.ruleml.org/rdf#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:ruleml="&ruleml;">
+
+<ruleml:Rulebase>
+<ruleml:clauses>
+<rdf:Seq>
+
+  <rdf:li>
+    <ruleml:Fact>
+      <ruleml:head>
+	<ruleml:Atom ruleml:rel="p">
+	  <ruleml:args>
+	    <rdf:Seq>
+	      <rdf:li> <ruleml:Ind ruleml:name="c"/> </rdf:li>
+	    </rdf:Seq>
+	  </ruleml:args>
+	</ruleml:Atom>
+      </ruleml:head>
+    </ruleml:Fact>
+  </rdf:li>
+
+  <rdf:li>
+    <ruleml:Imp>
+      <ruleml:head>
+	<ruleml:Atom ruleml:rel="q">
+	  <ruleml:args>
+	    <rdf:Seq>
+	      <rdf:li> <ruleml:Var ruleml:name="X"/> </rdf:li>
+	    </rdf:Seq>
+	  </ruleml:args>
+	</ruleml:Atom>
+      </ruleml:head>
+      <ruleml:body>
+	<ruleml:Atom ruleml:rel="r">
+	  <ruleml:args>
+	    <rdf:Seq>
+	      <rdf:li> <ruleml:Var ruleml:name="X"/> </rdf:li>
+	    </rdf:Seq>
+	  </ruleml:args>
+	</ruleml:Atom>
+      </ruleml:body>
+    </ruleml:Imp>
+  </rdf:li>
+
+  <rdf:li>
+    <ruleml:Imp>
+      <ruleml:head>
+	<ruleml:Atom ruleml:rel="q">
+	  <ruleml:args>
+	    <rdf:Seq>
+	      <rdf:li> <ruleml:Var ruleml:name="X"/> </rdf:li>
+	    </rdf:Seq>
+	  </ruleml:args>
+	</ruleml:Atom>
+      </ruleml:head>
+      <ruleml:body>
+	<ruleml:Atom ruleml:rel="r">
+	  <ruleml:args>
+	    <rdf:Seq>
+	      <rdf:li>
+		<ruleml:Cterm ruleml:ctor="f">
+		  <ruleml:args>
+		    <rdf:Seq>
+		      <rdf:li> <ruleml:Var ruleml:name="X"/> </rdf:li>
+		    </rdf:Seq>
+		  </ruleml:args>
+		</ruleml:Cterm>
+	      </rdf:li>
+	    </rdf:Seq>
+	  </ruleml:args>
+	</ruleml:Atom>
+      </ruleml:body>
+    </ruleml:Imp>
+  </rdf:li>
+
+  <rdf:li>
+    <ruleml:Imp>
+      <ruleml:head>
+	<ruleml:Atom ruleml:rel="q">
+	  <ruleml:args>
+	    <rdf:Seq>
+	      <rdf:li> <ruleml:Var ruleml:name="X"/> </rdf:li>
+	      <rdf:li> <ruleml:Var ruleml:name="Y"/> </rdf:li>
+	    </rdf:Seq>
+	  </ruleml:args>
+	</ruleml:Atom>
+      </ruleml:head>
+      <ruleml:body>
+	<ruleml:And>
+	  <ruleml:args>
+	    <rdf:Seq>
+	      <rdf:li>
+		<ruleml:Atom ruleml:rel="r">
+		  <ruleml:args>
+		    <rdf:Seq>
+		      <rdf:li>
+			<ruleml:Cterm ruleml:ctor="f">
+			  <ruleml:args>
+			    <rdf:Seq>
+			      <rdf:li> <ruleml:Var ruleml:name="X"/> </rdf:li>
+			    </rdf:Seq>
+			  </ruleml:args>
+			</ruleml:Cterm>
+		      </rdf:li>
+		    </rdf:Seq>
+		  </ruleml:args>
+		</ruleml:Atom>
+	      </rdf:li>
+	      <rdf:li>
+		<ruleml:Atom ruleml:rel="s">
+		  <ruleml:args>
+		    <rdf:Seq>
+		      <rdf:li>
+			<ruleml:Cterm ruleml:ctor="g">
+			  <ruleml:args>
+			    <rdf:Seq>
+			      <rdf:li> <ruleml:Var ruleml:name="Y"/> </rdf:li>
+			      <rdf:li> <ruleml:Var ruleml:name="X"/> </rdf:li>
+			    </rdf:Seq>
+			  </ruleml:args>
+			</ruleml:Cterm>
+		      </rdf:li>
+		    </rdf:Seq>
+		  </ruleml:args>
+		</ruleml:Atom>
+	      </rdf:li>
+	    </rdf:Seq>
+	  </ruleml:args>
+	</ruleml:And>
+      </ruleml:body>
+    </ruleml:Imp>
+  </rdf:li>
+
+</rdf:Seq>
+</ruleml:clauses>
+</ruleml:Rulebase>
+
+</rdf:RDF>
+
+
