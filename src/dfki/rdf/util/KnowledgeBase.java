@@ -172,6 +172,20 @@ public void updateRDFResourceSlots ()
 //---------------------------------------------------------------------------
 public Collection/*THING*/ findSubjects( RDFResource resPred, Object value )
 {
+    return findSubjects( resPred, value, false );
+}
+
+//---------------------------------------------------------------------------
+public THING findFirstSubject( RDFResource resPred, Object value )
+{
+    Collection coll = findSubjects( resPred, value, true );
+    if( coll == null ) return null;
+    return (THING)coll.iterator().next();
+}
+
+//---------------------------------------------------------------------------
+private Collection/*THING*/ findSubjects( RDFResource resPred, Object value, boolean bOnlyOneResultNeeded )
+{
     long iTimeBeginning = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
 
     if( m_mapNS2Pkg == null )
@@ -188,6 +202,7 @@ public Collection/*THING*/ findSubjects( RDFResource resPred, Object value )
     }
 
     HashSet setSubjects = new HashSet();
+    boolean bFoundOne = false;
     for (Iterator it = values().iterator(); it.hasNext(); )
     {
         Object obj = it.next();
@@ -206,15 +221,24 @@ public Collection/*THING*/ findSubjects( RDFResource resPred, Object value )
             if( objThingPropertyValue instanceof Collection )
             {
                 if( ((Collection)objThingPropertyValue).contains( value ) )
+                {
                     setSubjects.add( thing );
+                    bFoundOne = true;
+                    break;
+                }
             }
             else  // singe value slot
             {
                 if( objThingPropertyValue.equals( value ) )
+                {
                     setSubjects.add( thing );
+                    bFoundOne = true;
+                    break;
+                }
             }
         }
-
+        if( bOnlyOneResultNeeded && bFoundOne )
+            break;
     }
 
     if( MEASURE_TIME )
