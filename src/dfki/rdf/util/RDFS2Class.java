@@ -753,6 +753,32 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         pwClsFile.println();
     }
 
+    // information about sub classes are coming here
+    Model modelSubClasses = m_modelRDFS.find( null, m_resRDFSPredSubClassOf, resCls );
+    Set setSubClasses = subjectsToSet( modelSubClasses );
+    pwClsFile.println( sIndent + sSeparator );
+    if (m_bInsertIncrementalInfo)
+        pwClsFile.println(sIndent + "/** RDFS2Class: sub class information **/");
+    StringBuffer sbSubClasses = new StringBuffer();
+    for( Iterator it = setSubClasses.iterator(); it.hasNext(); )
+    {
+        Resource resSubCls = (Resource)it.next();
+        String sSubClsNS = resSubCls.getNamespace();
+        String sSubClsPkg = (String)m_mapNamespaceToPackage.get(sSubClsNS);
+        String sSubClsName = resSubCls.getLocalName();
+        if (!sSubClsPkg.equals(sPkg)) sSubClsName = sSubClsPkg + "." + sSubClsName;
+        sbSubClasses.append( sSubClsName + ".class" );
+        if( it.hasNext() ) sbSubClasses.append( ", " );
+    }
+    pwClsFile.println( sIndent + "public final static Class[] KNOWN_SUBCLASSES = {" + sbSubClasses.toString() + "};\n" );
+//                       sIndent + "public Class[] GetKnownJavaSubClasses()\n" +
+//                       sIndent + "{\n" +
+//                       sIndent + "    return KNOWN_SUBCLASSES;\n" +
+//                       sIndent + "}" );
+    if (m_bInsertIncrementalInfo)
+        pwClsFile.println(sIndent + "// RDFS2Class: end of sub class information");
+    pwClsFile.println();
+
     // default constructor comes here
     pwClsFile.println( sIndent + sSeparator );
     if (m_bInsertIncrementalInfo)
@@ -832,6 +858,19 @@ protected Set objectsToSet (Model modelStatements)   throws Exception
     {
         Statement st = (Statement)enum.nextElement();
         hs.add(st.object());
+    }
+    return hs;
+}
+
+//----------------------------------------------------------------------------------------------------
+protected Set subjectsToSet (Model modelStatements)   throws Exception
+{
+    HashSet hs = new HashSet();
+    Enumeration enum = modelStatements.elements();
+    while (enum.hasMoreElements())
+    {
+        Statement st = (Statement)enum.nextElement();
+        hs.add(st.subject());
     }
     return hs;
 }
