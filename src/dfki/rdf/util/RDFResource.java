@@ -142,7 +142,7 @@ public String toStringShort ()
 public boolean equals (Object other)
 {
     // objects are hereby declared as identical iff their URIs are equal
-    if (other instanceof org.w3c.rdf.model.Resource)
+    if ( other != null  &&  (other instanceof org.w3c.rdf.model.Resource) )
     {
         try { return getURI().equals(((org.w3c.rdf.model.Resource)other).getURI()); }
         catch (Exception ex) { return false; }
