@@ -1,5 +1,6 @@
 package dfki.rdf.util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import java.util.Map;
   * @version 1.0
   */
 public class THING   extends RDFResource
+                     implements Serializable
 {
 //----------------------------------------------------------------------------------------------------
 final static protected String DEFAULT_NAMESPACE = "http://dfki.rdf.util.rdf2java/default#";

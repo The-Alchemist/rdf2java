@@ -1,5 +1,6 @@
 package dfki.rdf.util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
@@ -7,7 +8,8 @@ import java.util.HashSet;
 import org.w3c.rdf.model.Resource;
 
 
-public class RDFResource   extends Object   implements Resource
+public class RDFResource   extends Object   
+                           implements Resource, Serializable
 {
 //----------------------------------------------------------------------------------------------------
 private String m_namespace;

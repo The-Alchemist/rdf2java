@@ -507,6 +507,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
     if (m_bInsertIncrementalInfo)
         pwClsFile.println("// RDFS2Class: imports");
     pwClsFile.println("import java.util.*;");
+    pwClsFile.println("import java.io.Serializable;");
     if (sSuperClassPkg != null && !sPkg.equals(sSuperClassPkg))
         pwClsFile.println("import " + sSuperClassPkg + ".*;");
     if (m_bInsertIncrementalInfo)
@@ -526,23 +527,26 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
     else
         pwClsFile.println("    extends dfki.rdf.util.THING");
 
-/*
+
+    //2003-11-12: added serialization
+    pwClsFile.print("    implements Serializable");
+    /***
     hier fehlt auch das verwenden (import) der packages von den interface classes
     // implementing interfaces
     Set setInterfaces = getInterfacesForCls(resCls);
     if (!setInterfaces.isEmpty())
     {
-        pwClsFile.print("    implements ");
         Iterator itInterfaces = setInterfaces.iterator();
         while (itInterfaces.hasNext())
         {
+            pwClsFile.print(", ");
             String sInterface = (String)itInterfaces.next();
             pwClsFile.print(sInterface);
-            if (itInterfaces.hasNext()) pwClsFile.print(", ");
         }
-        pwClsFile.println();
     }
-*/
+    ***/
+    pwClsFile.println();    // end "implements" line
+
 
     pwClsFile.println("{");
 
