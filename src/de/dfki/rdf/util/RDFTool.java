@@ -40,15 +40,21 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Vector;
 
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.impl.ResIteratorImpl;
 import com.hp.hpl.jena.rdql.Query;
 import com.hp.hpl.jena.rdql.QueryEngine;
 import com.hp.hpl.jena.rdql.QueryExecution;
@@ -429,6 +435,55 @@ public class RDFTool
         return m;
     }
 
+    
+    /**
+     * serialize a ResIterator in a Vector of strings - 
+     * at position 0 there's the model of the resources as string,
+     * at position 1 to n there's the URIs of the resources to be iterated over.
+     * <b>note:</b> model is retrieved from the first resource resIter is pointing
+     * at! if you iterate over resources from different models this method will not work! 
+     */
+    public static Vector/*String*/ resIteratorToVector( ResIterator resIter )
+    {
+        LinkedList/*Resource*/ resList = new LinkedList();
+        while( resIter.hasNext() )
+        {
+            Resource res = resIter.nextResource();
+            resList.add( res );
+        }
+        Model model = ( resList.isEmpty()  ?  ModelFactory.createDefaultModel()  
+                                           :  ((Resource)resList.getFirst()).getModel() );
+        Vector/*String*/ victor = new Vector( resList.size() + 1 );
+        int i = 0;
+        victor.add( modelToString( model ) );
+        for( Iterator it = resList.iterator(); it.hasNext(); )
+        {
+            Resource res = (Resource)it.next();
+            victor.add( res.getURI() );
+        }
+        return victor;
+    }
+    
+    /**
+     * reconstructs a ResIterator from a vector of strings - 
+     * at position 0 there's the model of the resources as string,
+     * at position 1 to n there's the URIs of the resources to be iterated over.
+     * <b>note:</b> it is expected, that all resources are part of one model!
+     */
+    public static ResIterator vectorToResIterator( Vector/*String*/ victor )
+    {
+        String asRDF = (String)victor.get( 0 );
+        Model model = stringToModel( asRDF );
+        LinkedList/*Resource*/ resList = new LinkedList();
+        for( int i = 1; i < victor.size(); i++ )
+        {
+            String sURI = (String)victor.get( i );
+            Resource res = model.getResource( sURI );
+            resList.add( res );
+        }
+        ResIteratorImpl resIter = new ResIteratorImpl( resList.iterator() );
+        return resIter;
+    }
 
 }
 
