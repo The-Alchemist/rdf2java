@@ -144,6 +144,18 @@ public Object getPropertyValue (String sPropertyName)
 }
 
 //----------------------------------------------------------------------------------------------------
+public void putPropertyValue (String sPropertyName, Object value)
+{
+    RDF2Java.putPropertyValue( this, sPropertyName, value );
+}
+
+//----------------------------------------------------------------------------------------------------
+public void clearPropertyValues (String sPropertyName)
+{
+    RDF2Java.clearPropertyValues( this, sPropertyName );
+}
+
+//----------------------------------------------------------------------------------------------------
 public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateNumber)
 {
     try
@@ -156,20 +168,13 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateN
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
             String sPropertyName = (String)itProperties.next();
-            String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
-            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
-            Method methodGet = RDF2Java.getMethod( cls, sGetMethodName, new Class[0] );
-            if (methodGet == null) throw new Exception("missing method " + sGetMethodName + "()");
-            Object objPropValue = methodGet.invoke(this, null);
+            Object objPropValue = getPropertyValue( sPropertyName );
             if (objPropValue == null)
                 continue;
             if (objPropValue instanceof Collection)
             {
                 Collection listOldValues = new LinkedList( (Collection)objPropValue );
-                String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
-                Method methodClear = RDF2Java.getMethod( cls, sClearMethodName, new Class[0] );
-                if (methodClear == null) throw new Exception("missing method " + sClearMethodName + "()");
-                methodClear.invoke( this, null );
+                clearPropertyValues( sPropertyName );
                 for (Iterator itPropValues = listOldValues.iterator(); itPropValues.hasNext(); )
                 {
                     Object objPropValueElement = itPropValues.next();
@@ -179,17 +184,13 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateN
                         Object cachedObject = kbCachedObjects.get(res.getURI());
                         if (cachedObject != null && (cachedObject instanceof THING))
                         {
-                            Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
-                            if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + cachedObject.getClass() + ")");
-                            methodPut.invoke( this, new Object[] { cachedObject } );
+                            putPropertyValue( sPropertyName, cachedObject );
                             ((THING)cachedObject).updateRDFResourceSlots( kbCachedObjects, lUpdateNumber );
                             continue;
                         }
                     }
                     // nothing better available => take the old slot value again
-                    Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValueElement.getClass() } );
-                    if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValueElement.getClass() + ")");
-                    methodPut.invoke( this, new Object[] { objPropValueElement } );
+                    putPropertyValue( sPropertyName, objPropValueElement );
                     if (objPropValueElement instanceof THING)
                         ((THING)objPropValueElement).updateRDFResourceSlots( kbCachedObjects, lUpdateNumber );
                 }
@@ -208,16 +209,12 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateN
                     Object cachedObject = kbCachedObjects.get(propValue.getURI());
                     if (cachedObject != null && (cachedObject instanceof THING))
                     {
-                        Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
-                        if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + cachedObject.getClass() + ")");
-                        methodPut.invoke( this, new Object[] { cachedObject } );
+                        putPropertyValue( sPropertyName, cachedObject );
                         ((THING)cachedObject).updateRDFResourceSlots( kbCachedObjects, lUpdateNumber );
                         continue;
                     }
                     // nothing better available => take the old slot value again
-                    Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
-                    if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + RDFResource.class + ")");
-                    methodPut.invoke( this, new Object[] { propValue } );
+                    putPropertyValue( sPropertyName, propValue );
                 }
                 catch (Exception ex) {
                     System.out.println("Exception (" + ex.getClass() + ") occurred: "+ex.getMessage());
@@ -248,27 +245,16 @@ public void assign (THING newThing, KnowledgeBase kb)
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
             String sPropertyName = (String)itProperties.next();
-            String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
-            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
-            Method methodGet = RDF2Java.getMethod( cls, sGetMethodName, new Class[0] );
-            if (methodGet == null) throw new Exception("missing method " + sGetMethodName + "()");
-            Object objPropValue = methodGet.invoke(this, null);
-            //sven:2002-06-06: removed following 2 lines (bug!)
-            //  if (objPropValue == null)
-            //      continue;
+            Object objPropValue = getPropertyValue( sPropertyName );
             if (objPropValue instanceof Collection)
             {
                 LinkedList lstOldValues = new LinkedList( (Collection)objPropValue );
 
-                Object objPropNewValue = methodGet.invoke( newThing, null );
+                Object objPropNewValue = newThing.getPropertyValue( sPropertyName );
                 LinkedList lstNewValues = new LinkedList( (Collection)objPropNewValue );
 
-                String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
-                Method methodClear = RDF2Java.getMethod( cls, sClearMethodName, new Class[0] );
-                if (methodClear == null) throw new Exception("missing method " + sClearMethodName + "()");
-                methodClear.invoke( this, null );  // clear old value
-
-                assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
+                clearPropertyValues( sPropertyName );  // clear old values
+                assignValues( lstOldValues, lstNewValues, sPropertyName, kb );
             }
             else
             {
@@ -278,18 +264,20 @@ public void assign (THING newThing, KnowledgeBase kb)
                 if (objPropValue != null) lstOldValues.add( objPropValue );
 
                 LinkedList lstNewValues = new LinkedList();
-                Object objPropNewValue = methodGet.invoke( newThing, null );
+                Object objPropNewValue = newThing.getPropertyValue( sPropertyName );
                 if (objPropNewValue != null) lstNewValues.add( objPropNewValue );
 
                 if (objPropValue != null)
                 {
                     // clear old value
+                    //FIXME:   putPropertyValue( sPropertyName, null ); --> is not possible, because class of value is needed
+                    String sPutMethodName = RDF2Java.makeMethodName( "put", sPropertyName );
                     Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
                     if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
                     methodPut.invoke( this, new Object[] { null } );
                 }
 
-                assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
+                assignValues(lstOldValues, lstNewValues, sPropertyName, kb);
             }
         }
     }
@@ -303,7 +291,7 @@ public void assign (THING newThing, KnowledgeBase kb)
 
 //----------------------------------------------------------------------------------------------------
 void assignValues (Collection collOldValues, Collection collNewValues,
-                   String sPutMethodName, KnowledgeBase kb)   throws Exception
+                   String sPropertyName, KnowledgeBase kb)   throws Exception
 {
     for (Iterator itOldValues = collOldValues.iterator(); itOldValues.hasNext(); )
     {
@@ -324,11 +312,10 @@ void assignValues (Collection collOldValues, Collection collNewValues,
         // as this case is handled deeper below, too, we only do the other case here:
         // A L T H O U G H :   note, that this disturbs the order of the slot values !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if ( newValue instanceof THING )
-            continue;  // newValue is not remove from collNewValues and will therfore be handled again below
+            continue;  // newValue is not removed from collNewValues and will therfore be handled again below
 
-        Method methodPut = RDF2Java.getMethod( getClass(), sPutMethodName, new Class[] { oldValue.getClass() } );
-        if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + oldValue.getClass() + ")");
-        methodPut.invoke( this, new Object[] { oldValue } );  // insert the newer slot value
+        // insert the newer slot value (that is the old one)
+        putPropertyValue( sPropertyName, oldValue );
         // mark, that we've already handled that new slot value (inspected below)
         remove(collNewValues, ((RDFResource)newValue).getURI());
     }
@@ -337,9 +324,8 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     for (Iterator itNewValues = collNewValues.iterator(); itNewValues.hasNext(); )
     {
         Object newValue = itNewValues.next();
-        Method methodPut = RDF2Java.getMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
-        if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + newValue.getClass() + ")");
-        methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
+        // insert the newer slot value (that is the new one)
+        putPropertyValue( sPropertyName, newValue );
 
         if (newValue instanceof THING)
             kb.put( newValue );     // now the new Java object exists in the knowledge base, too

@@ -109,5 +109,37 @@ public static Object getPropertyValue (THING thing, String sPropertyName)
 }
 
 //----------------------------------------------------------------------------------------------------
+public static Collection getPropertyValues (THING thing, String sPropertyName)
+{
+    return (Collection)getPropertyValue( thing, sPropertyName );
+}
+
+//----------------------------------------------------------------------------------------------------
+public static void putPropertyValue (THING thing, String sPropertyName, Object value)
+{
+    try {
+        String sMethodNamePut = makeMethodName("put", sPropertyName);
+        Method methodPut = getMethod( thing.getClass(), sMethodNamePut, new Class[] { value.getClass() } );
+        methodPut.invoke( thing, new Object[] { value } );
+    }
+    catch (Exception ex) {
+        throw new RuntimeException( "Exception " + ex.getClass() + " occurred in RDF2Java.putPropertyValue: " + ex.getMessage() );
+    }
+}
+
+//----------------------------------------------------------------------------------------------------
+public static void clearPropertyValues (THING thing, String sPropertyName)
+{
+    try {
+        String sMethodNameClear = makeMethodName("clear", sPropertyName);
+        Method methodClear = getMethod( thing.getClass(), sMethodNameClear, new Class[0] );
+        methodClear.invoke( thing, null );
+    }
+    catch (Exception ex) {
+        throw new RuntimeException( "Exception " + ex.getClass() + " occurred in RDF2Java.clearPropertyValue: " + ex.getMessage() );
+    }
+}
+
+//----------------------------------------------------------------------------------------------------
 } // end of class RDF2Java
 
