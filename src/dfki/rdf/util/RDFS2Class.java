@@ -618,7 +618,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                                 sIndent + "    return (" + sRangePkgAndCls + ")m_" + pi.sSlotName + ";\n" +
                                 sIndent + "}\n");
             }
-            pwClsFile.print(sIndent + sRealSlotType + " " + RDF2Java.makeMethodName("get", pi.sSlotName) + " ()\n" +
+            pwClsFile.print(sIndent + "public " + sRealSlotType + " " + RDF2Java.makeMethodName("get", pi.sSlotName) + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    return m_" + pi.sSlotName + ";\n" +
                             sIndent + "}");
