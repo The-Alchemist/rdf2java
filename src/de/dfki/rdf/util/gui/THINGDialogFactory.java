@@ -661,7 +661,7 @@ public static JPanel getValueComponent( THING p_thing, PropertyInfo  p_pi, boole
 
     JComponent specElement = getSpecificElement(p_thing, p_pi, p_editable, p_populate);
     JPanel panelButtons = new JPanel();
-    panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.Y_AXIS));
+    panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.X_AXIS));
     if (p_editable && specElement instanceof JList)
     {
         // here specElement is definetly a JList
@@ -1048,6 +1048,7 @@ protected static JButton getCreateButton(final THING p_thing, final JList p_list
  * @param p_pi
  * @param p_dialog
  * @return
+ *  TODO filter abstract classes
  */
 protected static JComponent getListModifyButtons(final THING p_thing, final JList p_list, final PropertyInfo  p_pi, final THINGDialog p_dialog)
 {
@@ -1061,10 +1062,20 @@ protected static JComponent getListModifyButtons(final THING p_thing, final JLis
   add.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent e)
     {
+        Collection colAllowedClasses =  p_pi.getAllowedValueClasses(); 
         
-     Collection colAllowedClasses =  p_pi.getAllowedValueClasses();   
-        
-     Class[] allowedClasses = (Class[]) colAllowedClasses.toArray( new Class[colAllowedClasses.size()] );
+        // including all known subclasses  
+        Iterator it = colAllowedClasses.iterator();
+        Collection collAllPossibleClasses = new Vector(colAllowedClasses);
+        while (it.hasNext())
+        {
+            Class cls = (Class) it.next();
+            collAllPossibleClasses.addAll(getAllKnownSubclassesOfClass(cls));
+        }
+
+     Class[] allowedClasses = (Class[]) collAllPossibleClasses.toArray( new Class[collAllPossibleClasses.size()] );
+     
+     
      InstanceChooseDialog dialog = new InstanceChooseDialog(allowedClasses, p_pi.hasMultiValue(), p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(),p_dialog);
      
      
@@ -1075,11 +1086,11 @@ protected static JComponent getListModifyButtons(final THING p_thing, final JLis
         Collection c = dialog.selectInstances();
         if (c != null && !c.isEmpty())
         {
-            Iterator it = c.iterator();
+            Iterator it2 = c.iterator();
 
-            while (it.hasNext())
+            while (it2.hasNext())
             {
-                Object o = it.next();
+                Object o = it2.next();
                 if (!lm.contains(o)) lm.addElement(o);
             }
         }
@@ -1154,6 +1165,24 @@ protected static JComponent getListModifyButtons(final THING p_thing, final JLis
   return buttonPanel;
 }
 
+
+///**
+// * delivers all allowed classes of the given property includig all subclasses
+// * @param p_pi
+// * @return all allowed classes of the given property includig all subclasses
+// */
+//protected Class[] getAllowedClassesIncludingSubclasses( PropertyInfo p_pi )
+//{
+//    Collection colAllowedClasses =  p_pi.getAllowedValueClasses(); 
+//    Collection colAllowdClassesAndSubclasses = new Vector(colAllowedClasses);
+//    
+//    colAllowedClasses.iterator()
+//    
+//    
+//    
+//    (Class[]) colAllowedClasses.toArray( new Class[colAllowedClasses.size()] );  
+//
+//}
 
 /**
  * @param p_thing
@@ -1552,17 +1581,43 @@ protected static void fillPropertyInfo(Component p_com, PropertyInfo p_pi)
    }
 }
 
- /**
-  * todo is there any dynamic version of this method? -> find all subclasses of this class, e.g. by starting
-  *  only within the package, or list all classes and find the subclasses etc.
-  * @param p_classThing
-  * @param p_owner
-  * @return one class, null if nothing found
-  */
-private static Class chooseSubclassForAbstractClass(Class p_classThing, Window p_owner)
+/**
+ * finds all known subclasses of the given class by iterating down the inheritance hierarchy<br>
+ * It uses the KNOWN_SUBCLASSES field of the classes generated with rdfs2class.
+ * @param p_classThing
+ * @return all sublasses if any (Collection can be empty)
+ * @see de.dfki.util.rdfs2class KNOWN_SUBCLASSES
+ */
+private static Collection /*Class*/ getAllKnownSubclassesOfClass(Class p_classThing)
 {
-    // p_class is abstract, therefore find subclasses to instantiate
-    // collect all subclasses
+    Class[] subClasses = getKnownSubclassesOfClass(p_classThing);
+    Collection cResultSubClasses = new Vector ();
+    
+    if (subClasses != null && subClasses.length > 0)
+    {
+        // first add all subclasses of p_classThing, then iterate through the inheritance hierarchy
+        cResultSubClasses.addAll(Arrays.asList(subClasses));
+        for (int i =0; i < subClasses.length; i++)
+        {
+            
+            cResultSubClasses.addAll(getAllKnownSubclassesOfClass(subClasses[i]));
+            
+        }
+    }
+
+    
+    return cResultSubClasses;
+}
+
+/**
+ * finds all known subclasses (depth one) of the given class<br>
+ * It uses the KNOWN_SUBCLASSES field of the classes generated with rdfs2class.
+ * @param p_classThing
+ * @return all sublasses or null if nothing found
+ * @see de.dfki.util.rdfs2class KNOWN_SUBCLASSES
+ */
+private static Class[] getKnownSubclassesOfClass(Class p_classThing)
+{
     Class[] subClasses = null;
 
     try
@@ -1572,27 +1627,40 @@ private static Class chooseSubclassForAbstractClass(Class p_classThing, Window p
     }
     catch (Exception e)
     {
-        debug().error("chooseSubclassForAbstractClass:",e);
-        return null;
+        debug().error("getKnownSubclassesOfClass: " + p_classThing ,e);
     }
+    
+    return subClasses;
+}
 
-    if (subClasses == null || subClasses.length == 0)
-    {
-        return null;
-    }
+ /**
+  * offers a dialog to choose a subclass of the given abstarct class. The subclasses shown are only direct subclasses of the given class.
+  * <br>If again an abstract class is selected, this method is clled again internally.
+  * TODO is there any dynamic version of this method? -> find all subclasses of this class, e.g. by starting
+  *  only within the package, or list all classes and find the subclasses etc.
+  * @param p_classThing
+  * @param p_owner
+  * @return one class, null if nothing found (or the user cancelled the selction)
+  */
+private static Class chooseSubclassForAbstractClass(Class p_classThing, Window p_owner)
+{
+    // p_class is abstract, therefore find subclasses to instantiate
+    // collect all subclasses
+    Class[] subClasses = getKnownSubclassesOfClass(p_classThing);
 
-    Class selectedClass=null;
+    if (subClasses == null || subClasses.length == 0)  return null;
 
+    Class selectedClass = subClasses[0];
+    
     if (subClasses.length > 1)
     {
-      selectedClass = (Class)JOptionPane.showInputDialog(p_owner,"Please choose the class for an instance","Create",JOptionPane.QUESTION_MESSAGE,null,subClasses,subClasses[0]);
+      selectedClass = (Class)JOptionPane.showInputDialog(p_owner,"Please choose the class for an instance","Create",JOptionPane.QUESTION_MESSAGE,null,subClasses,selectedClass);
 
      if (selectedClass == null )
         return null; // user has cancelled the selection
 
     }
-    else
-        selectedClass = subClasses[0];
+
 
     if (Modifier.isAbstract(selectedClass.getModifiers()) )
         return chooseSubclassForAbstractClass(selectedClass, p_owner);
