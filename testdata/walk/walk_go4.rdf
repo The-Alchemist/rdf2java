@@ -17,7 +17,11 @@
             <walk:Woman  rdf:about="&walk;Lisa"
                  walk:name="Lisa"
                  rdfs:label="Lisa">
-                <walk:hasFather  rdf:resource="&walk;Homer"/>
+                <walk:hasFather>
+                    <walk:Man  rdf:about="&walk;Homer"
+                         walk:name="Homer"
+                         rdfs:label="Homer"/>
+                </walk:hasFather>
                 <walk:hasMother>
                     <walk:Woman  rdf:about="&walk;March"
                          walk:name="March"
@@ -27,16 +31,25 @@
                             <walk:Man  rdf:about="&walk;Bart"
                                  walk:name="Bart"
                                  rdfs:label="Bart">
-                                <walk:hasFather  rdf:resource="&walk;Homer"/>
+                                <walk:hasFather>
+                                    <walk:Man  rdf:about="&walk;Homer"
+                                         walk:name="Homer"
+                                         rdfs:label="Homer"/>
+                                </walk:hasFather>
                                 <walk:hasMother  rdf:resource="&walk;March"/>
                             </walk:Man>
                         </walk:hasChild>
-                        <walk:hasHusband  rdf:resource="&walk;Homer"/>
+                        <walk:hasHusband>
+                            <walk:Man  rdf:about="&walk;Homer"
+                                 walk:name="Homer"
+                                 rdfs:label="Homer">
+                                <walk:hasChild  rdf:resource="&walk;Bart"/>
+                                <walk:hasWife  rdf:resource="&walk;March"/>
+                            </walk:Man>
+                        </walk:hasHusband>
                     </walk:Woman>
                 </walk:hasMother>
             </walk:Woman>
         </walk:hasChild>
-        <walk:hasChild  rdf:resource="&walk;Bart"/>
-        <walk:hasWife  rdf:resource="&walk;March"/>
     </walk:Man>
 </rdf:RDF>

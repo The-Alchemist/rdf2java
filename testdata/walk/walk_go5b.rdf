@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+    <!ENTITY rdfs 'http://www.w3.org/2000/01/rdf-schema#'>
+    <!ENTITY walk 'http://dfki.rdf.test/walk#'>
+
+]>
+<rdf:RDF 
+    xmlns:rdf="&rdf;"
+    xmlns:rdfs="&rdfs;"
+    xmlns:walk="&walk;">
+
+    <walk:Man  rdf:about="&walk;Homer"
+         walk:name="Homer"
+         rdfs:label="Homer">
+        <walk:hasChild>
+            <walk:Woman  rdf:about="&walk;Lisa"
+                 walk:name="Lisa"
+                 rdfs:label="Lisa">
+                <walk:hasFather  rdf:resource="&walk;Homer"/>
+                <walk:hasMother  rdf:resource="&walk;March"/>
+            </walk:Woman>
+        </walk:hasChild>
+        <walk:hasChild>
+            <walk:Man  rdf:about="&walk;Bart"
+                 walk:name="Bart"
+                 rdfs:label="Bart">
+                <walk:hasFather  rdf:resource="&walk;Homer"/>
+                <walk:hasMother  rdf:resource="&walk;March"/>
+            </walk:Man>
+        </walk:hasChild>
+        <walk:hasWife  rdf:resource="&walk;March"/>
+    </walk:Man>
+    <walk:Woman  rdf:about="&walk;March"
+         walk:name="March"
+         rdfs:label="March">
+        <walk:hasChild  rdf:resource="&walk;Lisa"/>
+        <walk:hasChild  rdf:resource="&walk;Bart"/>
+        <walk:hasHusband  rdf:resource="&walk;Homer"/>
+    </walk:Woman>
+</rdf:RDF>

@@ -3,28 +3,23 @@ package dfki.rdf.test.walk;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-import org.w3c.rdf.model.Resource;
-import org.w3c.rdf.util.RDFUtil;
 import org.w3c.rdf.vocabulary.rdf_schema_200001.RDFS;
 
+import dfki.rdf.util.JavaGraphWalker;
 import dfki.rdf.util.KnowledgeBase;
 import dfki.rdf.util.PropertyInfo;
-import dfki.rdf.util.RDF2Java;
 import dfki.rdf.util.RDFExport;
 import dfki.rdf.util.RDFImport;
 import dfki.rdf.util.RDFResource;
-import dfki.rdf.util.RDFS2Class;
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
-import dfki.util.rdf.RDF;
+import dfki.rdf.util.ToStringWalkerController;
 
 public class Test
 {
@@ -73,9 +68,10 @@ void go ()
 //    go_1();
 //    go_2();
 //    go_3();
-    go_4();
-    go_5();
-    go_6();
+//    go_4();
+//    go_5();
+    go_5b();
+//    go_6();
 }
 
 //---------------------------------------------------------------------------
@@ -83,8 +79,9 @@ void go_1()
 {
     System.out.println( "\n\n\ngo_1:\n" );
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
-    resHomer.walk( new RDFResource.WalkerController() {
-
+    
+    JavaGraphWalker walker = new JavaGraphWalker( new JavaGraphWalker.WalkerController() {
+            
         public boolean arriving( RDFResource currentResource )
         {
             System.out.print( "arriving   : " );
@@ -145,6 +142,7 @@ void go_1()
             System.out.println();
         }        
     });
+    walker.walk( resHomer );
 }
 
 //---------------------------------------------------------------------------
@@ -152,7 +150,8 @@ void go_2()
 {
     System.out.println( "\n\n\ngo_2:\n" );
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
-    RDFResource.WalkerController wc = new RDFResource.WalkerController() {
+    
+    JavaGraphWalker walker = new JavaGraphWalker( new JavaGraphWalker.WalkerController() {
 
         public boolean arriving( RDFResource currentResource )
         {
@@ -246,11 +245,11 @@ void go_2()
                 return false;
             return true;
         }
-    };
-    resHomer.walk( wc );
+    } );
+    walker.walk( resHomer );
     
     System.out.println( "\nlstWalk:" );
-    for( Iterator it = wc.lstWalk.iterator(); it.hasNext(); )
+    for( Iterator it = walker.getWholeWalk().iterator(); it.hasNext(); )
     {
         Object o = it.next();
         String s = ( o instanceof RDFResource  ?  ((RDFResource)o).getLocalName()  :  (String)o );
@@ -263,7 +262,8 @@ void go_3()
 {
     System.out.println( "\n\n\ngo_3:\n" );
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
-    RDFResource.WalkerController wc = new RDFResource.WalkerController() {
+    
+    JavaGraphWalker walker = new JavaGraphWalker( new JavaGraphWalker.WalkerController() {
 
         public boolean arriving( RDFResource currentResource )
         {
@@ -345,11 +345,11 @@ void go_3()
             }
             return true;
         }
-    };
-    resHomer.walk( wc );
+    } );
+    walker.walk( resHomer );
     
     System.out.println( "\nlstWalk:" );
-    for( Iterator it = wc.lstWalk.iterator(); it.hasNext(); )
+    for( Iterator it = walker.getWholeWalk().iterator(); it.hasNext(); )
     {
         Object o = it.next();
         String s = ( o instanceof RDFResource  ?  ((RDFResource)o).getLocalName()  :  (String)o );
@@ -365,7 +365,7 @@ void go_4()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new RDFResource.ToStringController() {
+            new ToStringWalkerController.ToStringController() {
                 public int propertyImportance( RDFResource source, String prop )
                 {
                     return 0;
@@ -406,7 +406,7 @@ void go_5()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new RDFResource.ToStringController() {
+            new ToStringWalkerController.ToStringController() {
                 public int propertyImportance( RDFResource source, String prop )
                 {
                     if( prop.equals( "hasChild" ) )         return 10;
@@ -449,6 +449,55 @@ void go_5()
 
 
 //---------------------------------------------------------------------------
+void go_5b()
+{
+    System.out.println( "\n\n\ngo_5b:\n" );
+    RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
+    RDFResource resMarch = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "March" );
+    
+    ToStringWalkerController.ToStringController tsc = new ToStringWalkerController.ToStringController() {
+        public int propertyImportance( RDFResource source, String prop )
+        {
+            return 0;
+        }
+        
+        public boolean hideProperty( RDFResource source, String prop )
+        {
+            return false;
+        }
+        
+        public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
+        {
+            if(     prop.equals( "hasHusband" ) || prop.equals( "hasWife" ) ||
+                    prop.equals( "hasFather" ) || prop.equals( "hasMother" ) )
+                return false;
+            return true;
+        }
+    };
+    
+    Collection collResources = new LinkedList();
+    collResources.add( resHomer );
+    collResources.add( resMarch );
+
+    String sAsRDF = RDFResource.toStringAsRDF( collResources, m_mapPkg2NS, RDFS._Namespace, tsc ); 
+    System.out.println( "resHomer.toStringAsRDF():\n" + sAsRDF );
+    
+
+    try
+    {
+        String sFilename = "testdata/walk/walk_go5b.rdf";
+        PrintWriter w = new PrintWriter( new FileOutputStream( sFilename ) );
+        w.write( sAsRDF );
+        w.close();
+    }
+    catch( FileNotFoundException e )
+    {
+        e.printStackTrace();
+    }
+}
+
+
+//---------------------------------------------------------------------------
 void go_6()
 {
     System.out.println( "\n\n\ngo_6:\n" );
@@ -456,7 +505,7 @@ void go_6()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new RDFResource.ToStringController() {
+            new ToStringWalkerController.ToStringController() {
                 public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
                 {
                     return false;
