@@ -3,6 +3,7 @@ package de.dfki.rdf.test.jena2java;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
@@ -13,11 +14,21 @@ import de.dfki.rdf.util.RDFTool;
 
 public class DomainConcept   extends JenaResource
 {
-	public DomainConcept( Resource res )
-	{
-		super( res );
-	}
-	
+    public DomainConcept( Resource res )
+    {
+        super( res );
+    }
+    
+    public DomainConcept()
+    {
+        super();
+    }
+    
+    public DomainConcept( String uri )
+    {
+        super( uri );
+    }
+    
 	
     public void putName (String name)
     {

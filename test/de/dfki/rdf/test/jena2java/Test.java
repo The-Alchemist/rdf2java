@@ -76,9 +76,16 @@ public class Test
 		System.out.println( "dcRoot->name : " + dcRoot.getName() );
 		System.out.println( "dcRoot.toString(): " + dcRoot.toString() );
         
+        System.out.println();
         printDomainConceptTree( "", " +  ", dcRoot );
         
-        System.out.println( "\nmodel:\n" + RDFTool.modelToString( dcRoot.getModel() ) );
+        //System.out.println( "\nmodel:\n" + RDFTool.modelToString( dcRoot.getModel() ) );
+        
+        DomainConcept dcSmartFlow = new DomainConcept();
+        dcSmartFlow.putName( "SmartFlow" );
+        dc1.putDirectSubConcepts( dcSmartFlow );
+        System.out.println();
+        printDomainConceptTree( "", " +  ", dcRoot );        
 	}
     
     public void printDomainConceptTree( String sCurrentIndent, String sIndent, DomainConcept dc )

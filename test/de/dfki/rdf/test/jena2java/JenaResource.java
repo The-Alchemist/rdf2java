@@ -3,6 +3,7 @@ package de.dfki.rdf.test.jena2java;
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
@@ -22,11 +23,57 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 public class JenaResource implements Resource
 {
     protected Resource m_res;
-
+    
+    protected static Model m_defaultModel = ModelFactory.createDefaultModel();
+    
+    
+    /**
+     * Creates a new JenaResource.
+     * As a JenaResource is just a wrapper around a jena resource, 
+     * we've got to create a new internal jena resource, too,
+     * and that's just why we need a jena model to be given here.
+     */
+    public JenaResource( Model model )
+    {
+        m_res = model.createResource( new AnonId() );
+    }
+    
+    /**
+     * Creates a new JenaResource with the specified URI.
+     * As a JenaResource is just a wrapper around a jena resource, 
+     * we've got to create a new internal jena resource, too,
+     * and that's just why we need a jena model to be given here.
+     */
+    public JenaResource( Model model, String uri )
+    {
+        m_res = model.createResource( uri );
+    }
+    
+    /**
+     * Creates a new JenaResource.
+     * As a JenaResource is just a wrapper around a jena resource, 
+     * we've got to create a new internal jena resource, too.
+     * That new jena resource is created in the default model inhere.
+     */
+    public JenaResource()
+    {
+        m_res = m_defaultModel.createResource( new AnonId() );
+    }
+    
+    /**
+     * Creates a new JenaResource with the specified URI.
+     * As a JenaResource is just a wrapper around a jena resource, 
+     * we've got to create a new internal jena resource, too.
+     * That new jena resource is created in the default model inhere.
+     */
+    public JenaResource( String uri )
+    {
+        m_res = m_defaultModel.createResource( uri );
+    }
     
     /**
      * Initializes the internal jena resource of this JenaResource.
-	 * Note: A JenaResource is just a wrapper around the real jena resource.
+     * Note: A JenaResource is just a wrapper around the real jena resource.
      */
     public JenaResource( Resource res )
     {
