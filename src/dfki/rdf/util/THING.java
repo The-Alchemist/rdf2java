@@ -126,6 +126,12 @@ public void addToMap (Map mapObjects)
 }
 
 //----------------------------------------------------------------------------------------------------
+public Object getPropertyValue (String sPropertyName)
+{
+    return RDF2Java.getPropertyValue( this, sPropertyName );
+}
+
+//----------------------------------------------------------------------------------------------------
 public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
 {
     try

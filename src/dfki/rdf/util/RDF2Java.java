@@ -7,7 +7,7 @@ import java.lang.reflect.*;
 public class RDF2Java
 {
 //----------------------------------------------------------------------------------------------------
-public static String extractPropertyName (String sMethodName)
+static String extractPropertyName (String sMethodName)
 {
     // getProp --> prop
     // get_Prop -> Prop   (also possible: get_prop --> prop)
@@ -19,7 +19,7 @@ public static String extractPropertyName (String sMethodName)
 }
 
 //----------------------------------------------------------------------------------------------------
-public static String makeMethodName (String sMethodPrefix, String sPropertyName)
+static String makeMethodName (String sMethodPrefix, String sPropertyName)
 {
     // prop --> getProp
     // Prop --> get_Prop
@@ -92,6 +92,20 @@ public static Method[] getPropertyMethods (Class cls)
         aMethods[i] = getMethod( cls, sGetMethodName, new Class[0] );
     }
     return aMethods;
+}
+
+//----------------------------------------------------------------------------------------------------
+public static Object getPropertyValue (THING thing, String sPropertyName)
+{
+    try {
+        String sMethodNameGet = makeMethodName("get", sPropertyName);
+        Method methodGet = getMethod( thing.getClass(), sMethodNameGet, new Class[0] );
+        Object value = methodGet.invoke( thing, null );
+        return value;
+    }
+    catch (Exception ex) {
+        throw new RuntimeException( "Exception " + ex.getClass() + " occurred in RDF2Java.getPropertyValue: " + ex.getMessage() );
+    }
 }
 
 //----------------------------------------------------------------------------------------------------
