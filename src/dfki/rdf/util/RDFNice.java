@@ -167,7 +167,7 @@ private void createNiceXML()   throws Exception
 {
     createDocumentElement();  // creates m_elDoc
 
-    System.out.println( "\n" );
+    ////System.out.println( "\n" );
     while( true )
     {
         Resource resTopInstance = takeNextInstance();
@@ -183,6 +183,13 @@ private Element createElement( Resource res )   throws Exception
 {
     Element el = m_xmlDoc.createElementNS( res.getNamespace(), res2qname( res ) );
     return el;
+}
+
+//------------------------------------------------------------------------------
+private Text createTextNode( String sText )   throws Exception
+{
+    Text textNode = m_xmlDoc.createTextNode( sText );
+    return textNode;
 }
 
 //------------------------------------------------------------------------------
@@ -215,21 +222,20 @@ private void appendInstance( Resource resInstance, Element elAppendHere,
     elAppendHere.appendChild( elInst );
 
     Model mSlots = m_model.find( resInstance, null, null );
-    for( Enumeration enumSlots = mSlots.elements(); enumSlots.hasMoreElements(); )
+    while( true )
     {
-        Statement st = (Statement)enumSlots.nextElement();
+        Statement st = takeNextSlotStatement( mSlots );
+        if( st == null )
+            break;
+
         Resource resPred = st.predicate();
-        if( resPred.getURI().equals( m_resPredType.getURI() ) ||
-            resPred.getURI().equals( m_rdfsURIs.namespace() + "label" )                )
-        {
-            continue;
-        }
         RDFNode rdfnodeValue = st.object();
         if( rdfnodeValue instanceof Resource )
         {
             Resource resValue = (Resource)rdfnodeValue;
             Resource resClsChild = findCls( resValue );
-            if( resClsChild  != null )
+            double dValue = getValueForPred( resPred.getURI() );
+            if( dValue >= 0  &&  resClsChild  != null )
             {
                 Element elSlot = createElement( resPred );
                 elInst.appendChild( elSlot );
@@ -244,6 +250,31 @@ private void appendInstance( Resource resInstance, Element elAppendHere,
 }
 
 //------------------------------------------------------------------------------
+private Statement takeNextSlotStatement( Model mSlotsRest )   throws Exception
+{
+    Statement stBest = null;
+    final double WORST_VALUE = -9999.0;
+    double dBest = WORST_VALUE;
+    for( Enumeration enumSlots = mSlotsRest.elements(); enumSlots.hasMoreElements(); )
+    {
+        Statement st = (Statement)enumSlots.nextElement();
+        Resource resPred = st.predicate();
+        if(     resPred.getURI().equals( m_resPredType.getURI()           ) ||
+                resPred.getURI().equals( m_rdfsURIs.namespace() + "label" ) )
+            continue;
+        double dVal = getValueForPred( resPred.getURI() );
+        if( dVal > dBest )
+        {
+            dBest = dVal;
+            stBest = st;
+        }
+    }
+    if( stBest != null )
+        mSlotsRest.remove( stBest );
+    return stBest;
+}
+
+//------------------------------------------------------------------------------
 private void appendSlot( Resource resInstance, Element elInst, Resource resPred, Resource resValue )   throws Exception
 {
     Element elSlot = createElement( resPred );
@@ -254,7 +285,12 @@ private void appendSlot( Resource resInstance, Element elInst, Resource resPred,
 //------------------------------------------------------------------------------
 private void appendSlot( Resource resInstance, Element elInst, Resource resPred, String sValue )   throws Exception
 {
-    addAttribute( elInst, getPrefix( resPred ), resPred.getLocalName(), sValue );
+    Element elSlot = createElement( resPred );
+    elInst.appendChild( elSlot );
+    Text textNode = createTextNode( sValue );
+    elSlot.appendChild( textNode );
+
+    //    addAttribute( elInst, getPrefix( resPred ), resPred.getLocalName(), sValue );
 }
 
 //------------------------------------------------------------------------------
@@ -291,7 +327,7 @@ private Resource takeNextInstance()   throws Exception
             dInstanceValue += getValueForPred( sPred );
             ////System.out.println( "     " + getValueForPred( sPred ) + " # " + sPred );
         }
-        System.out.println( "   # " + dInstanceValue + " # " + resSubject.getURI() );
+        ////System.out.println( "   # " + dInstanceValue + " # " + resSubject.getURI() );
         if( dInstanceValue > dBestInstance )
         {
             dBestInstance = dInstanceValue;
@@ -358,7 +394,7 @@ private Resource findCls( Resource resObject )   throws Exception
 //------------------------------------------------------------------------------
 private void saveNiceXML()   throws Exception
 {
-    System.out.println( "\n\nmap:\n" + m_mapNS2Prefix );
+    ////System.out.println( "\n\nmap:\n" + m_mapNS2Prefix );
 
 /***
     DocumentType docType = m_xmlDoc.getDoctype();

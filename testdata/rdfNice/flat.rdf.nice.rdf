@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rdf:RDF>
+    <task:TaskInstance about="&amp;default;id_1029933827946_517e5e">
+        <task:name>join-test</task:name>
+        <task:subTask>
+            <task:TaskInstance about="&amp;kb;TIA_2002.08.21_02.39.55_1_00005">
+                <task:name>CCC-1</task:name>
+                <task:rule>
+                    <task:Rule about="&amp;kb;TIA_2002.08.21_02.39.55_1_00008">
+                        <task:premise>
+                            <task:IsFinished about="&amp;kb;TIA_2002.08.21_02.39.55_1_00010">
+                                <task:object resource="&amp;default;id_1029933860113_3bc1f6"/>
+                            </task:IsFinished>
+                        </task:premise>
+                        <task:action>
+                            <task:ChangeState about="&amp;kb;TIA_2002.08.21_02.39.55_1_00009">
+                                <task:transition>queue</task:transition>
+                                <task:object resource="&amp;kb;TIA_2002.08.21_02.39.55_1_00005"/>
+                            </task:ChangeState>
+                        </task:action>
+                    </task:Rule>
+                </task:rule>
+                <task:taskState>initiated</task:taskState>
+                <task:performedBy>
+                    <organisationalmodel:ProcessRole about="&amp;default;id_1029933827946_3f5841">
+                        <organisationalmodel:participant>
+                            <rdfs:Resource about="&amp;anonymous;wwf_00056"/>
+                        </organisationalmodel:participant>
+                    </organisationalmodel:ProcessRole>
+                </task:performedBy>
+                <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+            </task:TaskInstance>
+        </task:subTask>
+        <task:subTask>
+            <task:TaskInstance about="&amp;default;id_1029933860113_16e599">
+                <task:name>AAA-1</task:name>
+                <task:taskState>processible</task:taskState>
+                <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
+                <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+            </task:TaskInstance>
+        </task:subTask>
+        <task:subTask>
+            <task:TaskInstance about="&amp;kb;TIA_2002.08.21_02.39.55_1_00000">
+                <task:name>AAA-2</task:name>
+                <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
+                <task:taskState>processible</task:taskState>
+                <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+            </task:TaskInstance>
+        </task:subTask>
+        <task:subTask>
+            <task:TaskInstance about="&amp;default;id_1029933860113_3bc1f6">
+                <task:name>BBB</task:name>
+                <task:rule>
+                    <task:Rule about="&amp;default;id_1029933860113_3c66d8">
+                        <task:action>
+                            <task:ChangeState about="&amp;kb;TIA_2002.08.21_02.39.55_1_00004">
+                                <task:transition>queue</task:transition>
+                                <task:object resource="&amp;default;id_1029933860113_3bc1f6"/>
+                            </task:ChangeState>
+                        </task:action>
+                        <task:premise>
+                            <task:OR about="&amp;kb;TIA_2002.08.21_02.39.55_1_00001">
+                                <task:term>
+                                    <task:IsFinished about="&amp;kb;TIA_2002.08.21_02.39.55_1_00003">
+                                        <task:object resource="&amp;kb;TIA_2002.08.21_02.39.55_1_00000"/>
+                                    </task:IsFinished>
+                                </task:term>
+                                <task:term>
+                                    <task:IsFinished about="&amp;kb;TIA_2002.08.21_02.39.55_1_00002">
+                                        <task:object resource="&amp;default;id_1029933860113_16e599"/>
+                                    </task:IsFinished>
+                                </task:term>
+                            </task:OR>
+                        </task:premise>
+                    </task:Rule>
+                </task:rule>
+                <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
+                <task:taskState>initiated</task:taskState>
+                <task:rule>
+                    <task:Rule about="&amp;kb;TIA_2002.08.21_02.39.55_1_00017">
+                        <task:action>
+                            <task:preselectSuccs about="&amp;kb;TIA_2002.08.21_02.39.55_1_00022">
+                                <task:minToSelect>2</task:minToSelect>
+                                <task:maxToSelect>3</task:maxToSelect>
+                                <task:objects resource="&amp;kb;TIA_2002.08.21_02.39.55_1_00007"/>
+                                <task:objects resource="&amp;kb;TIA_2002.08.21_02.39.55_1_00006"/>
+                                <task:objects resource="&amp;kb;TIA_2002.08.21_02.39.55_1_00005"/>
+                            </task:preselectSuccs>
+                        </task:action>
+                        <task:premise>
+                            <task:AND about="&amp;kb;TIA_2002.08.21_02.39.55_1_00019">
+                                <task:term>
+                                    <task:IsFinished about="&amp;kb;TIA_2002.08.21_02.39.55_1_00021">
+                                        <task:object resource="&amp;default;id_1029933860113_3bc1f6"/>
+                                    </task:IsFinished>
+                                </task:term>
+                                <task:term>
+                                    <task:EventRaised about="&amp;kb;TIA_2002.08.21_02.39.55_1_00020">
+                                        <task:eventName>changedTaskState</task:eventName>
+                                    </task:EventRaised>
+                                </task:term>
+                            </task:AND>
+                        </task:premise>
+                    </task:Rule>
+                </task:rule>
+                <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+            </task:TaskInstance>
+        </task:subTask>
+        <task:subTask>
+            <task:TaskInstance about="&amp;kb;TIA_2002.08.21_02.39.55_1_00007">
+                <task:name>CCC-3</task:name>
+                <task:rule>
+                    <task:Rule about="&amp;kb;TIA_2002.08.21_02.39.55_1_00014">
+                        <task:action>
+                            <task:ChangeState about="&amp;kb;TIA_2002.08.21_02.39.55_1_00015">
+                                <task:transition>queue</task:transition>
+                                <task:object resource="&amp;kb;TIA_2002.08.21_02.39.55_1_00007"/>
+                            </task:ChangeState>
+                        </task:action>
+                        <task:premise>
+                            <task:IsFinished about="&amp;kb;TIA_2002.08.21_02.39.55_1_00016">
+                                <task:object resource="&amp;default;id_1029933860113_3bc1f6"/>
+                            </task:IsFinished>
+                        </task:premise>
+                    </task:Rule>
+                </task:rule>
+                <task:taskState>initiated</task:taskState>
+                <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
+                <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+            </task:TaskInstance>
+        </task:subTask>
+        <task:subTask>
+            <task:TaskInstance about="&amp;kb;TIA_2002.08.21_02.39.55_1_00006">
+                <task:name>CCC-2</task:name>
+                <task:rule>
+                    <task:Rule about="&amp;kb;TIA_2002.08.21_02.39.55_1_00011">
+                        <task:premise>
+                            <task:IsFinished about="&amp;kb;TIA_2002.08.21_02.39.55_1_00013">
+                                <task:object resource="&amp;default;id_1029933860113_3bc1f6"/>
+                            </task:IsFinished>
+                        </task:premise>
+                        <task:action>
+                            <task:ChangeState about="&amp;kb;TIA_2002.08.21_02.39.55_1_00012">
+                                <task:transition>queue</task:transition>
+                                <task:object resource="&amp;kb;TIA_2002.08.21_02.39.55_1_00006"/>
+                            </task:ChangeState>
+                        </task:action>
+                    </task:Rule>
+                </task:rule>
+                <task:taskState>initiated</task:taskState>
+                <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
+                <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+            </task:TaskInstance>
+        </task:subTask>
+        <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
+        <task:taskState>processible</task:taskState>
+    </task:TaskInstance>
+</rdf:RDF>
