@@ -71,6 +71,8 @@ public Object remove (String sURI)
 public Object get (Object key)
 {
     try {
+        if (key == null)
+            return null;
         if (key instanceof org.w3c.rdf.model.Resource)
             key = ((org.w3c.rdf.model.Resource)key).getURI();
         else
