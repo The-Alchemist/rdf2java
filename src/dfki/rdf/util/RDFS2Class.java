@@ -563,8 +563,11 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 sbToStringStuff.append(sIndent + "    if (!m_"+pi.sSlotName+".isEmpty()) {\n");
                 sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+":\\n\");\n");
                 sbToStringStuff.append(sIndent + "        for (Iterator it_" + pi.sSlotName + " = m_" + pi.sSlotName + ".iterator(); it_" + pi.sSlotName + ".hasNext(); ) {\n");
-                sbToStringStuff.append(sIndent + "            " + sPreShort     + "sb.append( sIndent+\"       \" + ((dfki.rdf.util.RDFResource)it_" + pi.sSlotName + ".next()).toStringShort() + \"\\n\" );\n" +
-                                       sIndent + "            " + sPreRecursive + "sb.append( ((dfki.rdf.util.RDFResource)it_" + pi.sSlotName + ".next()).toString(sIndent+\"       \") );\n");
+                if (sRangePkgAndCls.equals("String"))
+                    sbToStringStuff.append(sIndent + "            sb.append( (String)it_" + pi.sSlotName + ".next() );\n");
+                else
+                    sbToStringStuff.append(sIndent + "            " + sPreShort     + "sb.append( sIndent+\"       \" + ((dfki.rdf.util.RDFResource)it_" + pi.sSlotName + ".next()).toStringShort() + \"\\n\" );\n" +
+                                           sIndent + "            " + sPreRecursive + "sb.append( ((dfki.rdf.util.RDFResource)it_" + pi.sSlotName + ".next()).toString(sIndent+\"       \") );\n");
                 sbToStringStuff.append(sIndent + "        }\n" +
                                        sIndent + "    }\n");
             }
