@@ -21,6 +21,9 @@ import java.lang.reflect.*;
 public class THING   extends RDFResource
 {
 //----------------------------------------------------------------------------------------------------
+final static protected String DEFAULT_NAMESPACE = "http://dfki.rdf.util.rdf2java/default#";
+
+//----------------------------------------------------------------------------------------------------
 /** <code>toString()<code> stuff...
   */
 public String toString ()
@@ -123,7 +126,7 @@ protected String getAddressOnlyHex ()
   */
 public String makeNewURI ()
 {
-    return makeNewURI("http://dfki.frodo/default#");
+    return makeNewURI(DEFAULT_NAMESPACE);
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -143,9 +146,9 @@ public String makeNewURI (String sNamespace)
 public void addToMap (Map mapObjects, String sNamespace)
 {
     try {
-        makeNewURI(sNamespace);
-        Resource resNewURI = dfki.util.rdf.RDF.factory().getNodeFactory().createResource(getURI());
-        mapObjects.put(resNewURI, this);
+        if (getURI() == null)
+            makeNewURI(sNamespace);
+        mapObjects.put(getURI(), this);
     }
     catch (Exception ex)
     {
@@ -160,89 +163,70 @@ public void addToMap (Map mapObjects, String sNamespace)
   */
 public void addToMap (Map mapObjects)
 {
-    addToMap(mapObjects, "http://dfki.rdf.util.rdf2java/default#");
+    addToMap(mapObjects, DEFAULT_NAMESPACE);
+}
+
+//----------------------------------------------------------------------------------------------------
+public Collection/*String*/ getProperties ()
+{
+    return RDF2Java.getProperties(getClass());
 }
 
 //----------------------------------------------------------------------------------------------------
 public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
 {
-    Class cls = getClass();
-    Method[] aMethods = cls.getMethods();
-    for (int i = 0; i < aMethods.length; i++)
+    try
     {
-        Method method = aMethods[i];
-        String sMethodName = method.getName();
-        if (!sMethodName.startsWith("Get") || !sMethodName.endsWith("__asURI"))
-            continue;
-        Class[] aParameterTypes = method.getParameterTypes();
-        if (aParameterTypes.length > 0)
-            continue;
-        Object objPropValue = null;
-        try {
+        Collection collProperties = getProperties();
+        for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
+        {
+            String sPropertyName = (String)itProperties.next();
+            String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
+            Method method = myGetMethod( getClass(), sGetMethodName, new Class[0] );
+            Object objPropValue = null;
             objPropValue = method.invoke(this, null);
-        } catch (Exception ex) {
-            System.out.println("dfki.rdf.util.THING . updateRDFResourceSlots: Exception occurred" + ex);
-        }
-        if (objPropValue == null)
-            continue;
-        String sPropertyName = calcMethodNameToPropertyName(sMethodName);
-        String sPutMethodName = calcPropertyNameToMethodNameWithoutURI("put", sPropertyName);
-        if ( !(objPropValue instanceof THING) )
-        {
-            try {
-                RDFResource propValue = (RDFResource)objPropValue;
-                Object cachedObject = kbCachedObjects.get(propValue.getURI());
-                if (cachedObject == null || !(cachedObject instanceof THING)) continue;
-                Method methodPutterNormal = myGetMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
-                Method methodPutterURI = myGetMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
-                methodPutterURI.invoke( this, new Object[] { null } );
-                methodPutterNormal.invoke( this, new Object[] { cachedObject } );
-            }
-            catch (Exception ex) {
-                throw new Error(ex.getMessage());
-            }
-        }
-        else
-        if (objPropValue instanceof java.util.Collection)
-        {
-            try {
-                for (Iterator itURIs = ((java.util.Collection)objPropValue).iterator(); itURIs.hasNext(); )
+            if (objPropValue == null)
+                continue;
+            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
+            if (objPropValue instanceof java.util.Collection)
+            {
+                Collection collChangedValues = new LinkedList();
+                for (Iterator itPropValues = ((java.util.Collection)objPropValue).iterator(); itPropValues.hasNext(); )
                 {
-                    RDFResource uri = (RDFResource)itURIs.next();
-                    Object cachedObject = kbCachedObjects.get(uri);
+                    Object objPropValueElement = itPropValues.next();
+                    if ( !(objPropValueElement instanceof RDFResource) ) continue;
+                    RDFResource res = (RDFResource)objPropValueElement;
+                    Object cachedObject = kbCachedObjects.get(res.getURI());
                     if (cachedObject == null || !(cachedObject instanceof THING)) continue;
                     Method methodPutterNormal = myGetMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
                     methodPutterNormal.invoke( this, new Object[] { cachedObject } );
-                    itURIs.remove();
                 }
             }
-            catch (Exception ex) {
-                throw new Error(ex.getMessage());
+            else
+            if ( !(objPropValue instanceof THING) )
+            {
+                try {
+                    RDFResource propValue = (RDFResource)objPropValue;
+                    Object cachedObject = kbCachedObjects.get(propValue.getURI());
+                    if (cachedObject == null || !(cachedObject instanceof THING)) continue;
+                    Method methodPutterNormal = myGetMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
+                    Method methodPutterURI = myGetMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
+                    methodPutterURI.invoke( this, new Object[] { null } );
+                    methodPutterNormal.invoke( this, new Object[] { cachedObject } );
+                }
+                catch (Exception ex) {
+                    throw new Error(ex.getMessage());
+                }
             }
+            else
+                throw new Error("Wrong class for objValue in dfki.rdf.util.THING . updateRDFResourceSlots");
         }
-        else
-            throw new Error("Wrong class for objValue in dfki.rdf.util.THING . updateRDFResourceSlots");
+    }
+    catch (Exception ex)
+    {
+        System.out.println("dfki.rdf.util.THING . updateRDFResourceSlots: Exception occurred" + ex);
     }
 }
-
-String calcMethodNameToPropertyName (String sMethodName)
-{
-    // getXXYYZZ --> XXYYZZ
-    if (sMethodName.startsWith("get_"))
-        return sMethodName.substring(4);
-    else
-        return Character.toLowerCase(sMethodName.charAt(3)) + sMethodName.substring(4);
-}
-
-String calcPropertyNameToMethodNameWithoutURI (String sMethodPrefix, String sPropName)
-{
-    if (Character.isLowerCase(sPropName.charAt(0)))
-        return sMethodPrefix + Character.toUpperCase(sPropName.charAt(0))
-                             + sPropName.substring(1);
-    else
-        return sMethodPrefix + "_" + sPropName;
-}
-
 
 //----------------------------------------------------------------------------------------------------
 public void assign (THING newThing, KnowledgeBase kb)
@@ -265,11 +249,11 @@ public void assign (THING newThing, KnowledgeBase kb)
             if (aParameterTypes.length > 0)
                 continue;
 
-            String sPropertyName = calcMethodNameToPropertyName(sMethodName);
-            String sPutMethodName = calcPropertyNameToMethodNameWithoutURI("put", sPropertyName);
-            String sClearMethodName = calcPropertyNameToMethodNameWithoutURI("clear", sPropertyName);
-            String sGetMethodName = calcPropertyNameToMethodNameWithoutURI("get", sPropertyName);
-            String sGetAsURIMethodName = calcPropertyNameToMethodNameWithoutURI("Get", sPropertyName + "__asURI");
+            String sPropertyName = RDF2Java.extractPropertyName(sMethodName);
+            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
+            String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
+            String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
+            String sGetAsURIMethodName = RDF2Java.makeMethodName("Get", sPropertyName + "__asURI");
 
             Method methodPutAsURI = myGetMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
             Method methodClear = myGetMethod( cls, sClearMethodName, new Class[] { } );

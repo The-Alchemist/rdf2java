@@ -18,6 +18,7 @@ public class A
     /** RDFS2Class: putter for slot subA **/
     public void putSubA (A p_subA)
     {
+        ...
         m_subA.add(p_subA);
     }
     public void putSubA (dfki.rdf.util.RDFResource p_subA)

@@ -14,7 +14,9 @@ private String m_uri;
 //----------------------------------------------------------------------------------------------------
 protected RDFResource ()
 {
-    putURI( null, null );  // hope, this doesn't last for long...
+    m_namespace = null;
+    m_localName = null;
+    m_uri = null;
 }
 
 //----------------------------------------------------------------------------------------------------

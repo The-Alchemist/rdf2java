@@ -1,5 +1,8 @@
 package dfki.rdf.util;
 
+import java.util.*;
+import java.lang.reflect.*;
+
 
 public class RDF2Java
 {
@@ -25,6 +28,31 @@ static String makeMethodName (String sMethodPrefix, String sPropertyName)
                              + sPropertyName.substring(1);
     else
         return sMethodPrefix + "_" + sPropertyName;
+}
+
+//----------------------------------------------------------------------------------------------------
+static public Collection/*String*/ getProperties (Class cls)
+{
+    Collection collProperties = new HashSet();
+    Method[] aMethods = cls.getMethods();
+    for (int i = 0; i < aMethods.length; i++)
+    {
+        Method method = aMethods[i];
+        String sMethodName = method.getName();
+        if (method.getDeclaringClass().equals(RDFResource.class))
+            continue;
+        if (!sMethodName.startsWith("get"))
+            continue;
+        if (sMethodName.equals("getClass"))
+            continue;
+        Class[] aParameterTypes = method.getParameterTypes();
+        if (aParameterTypes.length > 0)
+            continue;
+
+        String sPropertyName = RDF2Java.extractPropertyName(sMethodName);
+        collProperties.add(sPropertyName);
+    }
+    return collProperties;
 }
 
 //----------------------------------------------------------------------------------------------------
