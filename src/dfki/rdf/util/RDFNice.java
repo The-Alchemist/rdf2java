@@ -15,52 +15,84 @@ import dfki.rdf.util.nice.*;
 import dfki.rdf.util.nice.tinyxmldoc.*;
 
 
+/**
+ * <p>
+ * RDFNice - serializes RDF models hierarchically
+ * </p><p>
+ * The serialization / transformation of an RDF model to a hierarchical
+ * XML model has to be done as follows:
+ * <ol>
+ *   <li> You start by calling one of the constructors. You can decide whether
+ *        to read in an RDF file or to pass an already existing RDF model
+ *   </li>
+ *   <li> Optionally you can set up values for some predicates (in the RDF
+ *        model) via method {@link #setPredValue setPredValue}.
+ *   </li>
+ *   <li> Then you call {@link #createNiceXML createNiceXML} to build the
+ *        hierarchical XML model, which does what this class is about.
+ *   </li>
+ *   <li> Finally you can serialize the constructed (internal) XML model
+ *        via {@link #save save} or one of the <code>serializeTo</code> methods.
+ *   </li>
+ * </ol>
+ * </p><p>
+ * Alternatively to the procedure above you can just call the {@link #main main}
+ * method which transforms an existing RDF file to another RDF file.
+ * </p><p>
+ * <b>Note:</b> The internal XML data structure can not be retrieved.
+ * </p>
+ */
 public class RDFNice
 {
-//------------------------------------------------------------------------------
-RDF.Syntax m_rdfURIs;
-RDFS.URIs m_rdfsURIs;
-RDFFactory m_rdfFactory;
-RDFParser m_rdfParser;
-NodeFactory m_nodeFactory;
-
-Resource m_resRDFSLiteral;
-Resource m_resRDFSResCls;
-Resource m_resRDFSPredSubClassOf;
-Resource m_resPredType;
-Resource m_resPredResource;
-Resource m_resPredAbout;
-
-String m_sSourceFile;
-String m_sDestFile;
-Model m_model;
-Model m_modelRest;
-
-Map/*String->Double*/ m_mapPred2Value = new HashMap();
-
-TinyXMLDocument m_xmlDoc;
-TinyXMLElement m_elDoc;
-
-
-//------------------------------------------------------------------------------
-public RDFNice()   throws Exception
+/*******************************************************************************
+ * Initializes RDFNice with a given RDF model.
+ */
+public RDFNice( Model rdfModel )
 {
-    m_rdfURIs = RDF.syntax();
-    m_rdfsURIs = RDFS.getURIs();
-    m_rdfFactory = RDF.factory();
-    m_rdfParser = m_rdfFactory.createParser();
-    m_nodeFactory = m_rdfFactory.getNodeFactory();
+    this();
+    m_model = rdfModel;
+}
 
-    m_resRDFSLiteral = m_nodeFactory.createResource(m_rdfsURIs.literal());
-    m_resRDFSResCls = m_nodeFactory.createResource(m_rdfsURIs._class());
-    m_resRDFSPredSubClassOf = m_nodeFactory.createResource(m_rdfsURIs.subClassOf());
-    m_resPredType = RDF.syntax().type();
-
-    m_resPredResource = m_nodeFactory.createResource( m_rdfURIs.namespace() + "resource" );
-    m_resPredAbout = m_nodeFactory.createResource( m_rdfURIs.namespace() + "about" );
+/*******************************************************************************
+ * Initializes RDFNice with the contents of an RDF file.
+ * @param sRDFFilename the filename of the RDF file
+ */
+public RDFNice( String sRDFFilename )
+{
+    this();
+    loadRDF( sRDFFilename );
 }
 
 //------------------------------------------------------------------------------
+private RDFNice()
+{
+    try {
+        m_rdfURIs = RDF.syntax();
+        m_rdfsURIs = RDFS.getURIs();
+        m_rdfFactory = RDF.factory();
+        m_rdfParser = m_rdfFactory.createParser();
+        m_nodeFactory = m_rdfFactory.getNodeFactory();
+
+        m_resRDFSLiteral = m_nodeFactory.createResource(m_rdfsURIs.literal());
+        m_resRDFSResCls = m_nodeFactory.createResource(m_rdfsURIs._class());
+        m_resRDFSPredSubClassOf = m_nodeFactory.createResource(m_rdfsURIs.subClassOf());
+        m_resPredType = RDF.syntax().type();
+
+        m_resPredResource = m_nodeFactory.createResource( m_rdfURIs.namespace() + "resource" );
+        m_resPredAbout = m_nodeFactory.createResource( m_rdfURIs.namespace() + "about" );
+    }
+    catch( Exception ex )
+    {
+        debug().error( "exception occurred: " + ex );
+    }
+}
+
+/*******************************************************************************
+ * Usage: <code>RDFNice &lt;rdf-file&gt; { [&lt;predicate&gt; &lt;value&gt;] }*</code>
+ * <br>
+ * The filename of the resulting RDF file is just the name of the source file
+ * plus the postfix ".nice.rdf".
+ */
 static public void main( String[] args )
 {
     try
@@ -69,7 +101,17 @@ static public void main( String[] args )
             System.out.println( "missing parameter: <rdf-file>" );
             return;
         }
-        (new RDFNice()).go( args );
+        RDFNice app = new RDFNice( args[0] );
+        String sDestFile = args[0] + ".nice.rdf";
+        for( int i = 1; i < args.length; i += 2 )
+        {
+            String sPred = args[i];
+            double dValue = Double.parseDouble( args[i+1] );
+            app.setPredValue( sPred, dValue );
+        }
+        app.createNiceXML();
+        app.save( sDestFile );
+        ////System.out.println( "\n" + app.serializeToString() );
     }
     catch( Exception ex )
     {
@@ -78,55 +120,105 @@ static public void main( String[] args )
     }
 }
 
-//------------------------------------------------------------------------------
-private void go( String[] args )   throws Exception
+/*******************************************************************************
+ * Constructs the hierarchical (internal) XML structure for the nice RDF.
+ */
+public void createNiceXML()
 {
-    m_sSourceFile = args[0];
-    m_sDestFile = m_sSourceFile + ".nice.rdf";
-
-    for( int i = 1; i < args.length; i += 2 )
+    try
     {
-        String sPred = args[i];
-        Double dValue = new Double( args[i+1] );
-        m_mapPred2Value.put( sPred, dValue );
-    }
+        createDocumentElement();  // creates m_elDoc, too
 
-    loadRDF( m_sSourceFile );
-    createNiceXML();
-    saveNiceXML();
+        while( true )
+        {
+            Resource resTopInstance = takeNextInstance();
+            if( resTopInstance == null )
+                break;
+            appendInstance( resTopInstance, m_elDoc, new HashSet() );
+        }
+    }
+    catch( Exception ex )
+    {
+        debug().error( "exception occurred: " + ex );
+    }
 }
 
-//------------------------------------------------------------------------------
-private double getValueForPred( String sPred )
+/*******************************************************************************
+ * Saves the hierarchical XML structure to a file.
+ * @param sFilename the filename of the resulting RDF file
+ */
+public void save( String sFilename )
+{
+    try
+    {
+        PrintWriter pw = new PrintWriter( new FileOutputStream( sFilename ) );
+        serializeTo( pw );
+    }
+    catch( Exception ex )
+    {
+        debug().error( "exception occurred: " + ex );
+    }
+}
+
+/*******************************************************************************
+ * Serializes the hierarchical XML structure to the given writer.
+ */
+public void serializeTo( Writer w )
+{
+    try
+    {
+        w.write( m_xmlDoc.serialize() );
+        w.flush();
+        w.close();
+    }
+    catch( Exception ex )
+    {
+        debug().error( "exception occurred: " + ex );
+    }
+}
+
+/*******************************************************************************
+ * Serializes the hierarchical XML structure to a string, which is returned.
+ */
+public String serializeToString()
+{
+    StringWriter sw = new StringWriter();
+    serializeTo( sw );
+    return sw.toString();
+}
+
+/*******************************************************************************
+ * Gets the value for a specific predecessor.
+ */
+public double getPredValue( String sPred )
 {
     Double d = (Double)m_mapPred2Value.get( sPred );
     return ( d != null  ?  d.doubleValue()  :  0.0 );
 }
 
-//------------------------------------------------------------------------------
-private void loadRDF( String sRDFFile )   throws Exception
+/*******************************************************************************
+ * Sets the value of a specific predecessor.
+ */
+public void setPredValue( String sPred, double dValue )
 {
-    m_model = m_rdfFactory.createModel();
-    RDF.parse( "file:" + sRDFFile, m_rdfParser, m_model );
-
-    System.out.println( "*** " + m_model.size() + " statements read in ***" );
-
-    m_modelRest = m_model.duplicate();
+    m_mapPred2Value.put( sPred, new Double( dValue ) );
 }
 
 //------------------------------------------------------------------------------
-private void createNiceXML()   throws Exception
+private void loadRDF( String sRDFFile )
 {
-    createDocumentElement();  // creates m_elDoc, too
+    try {
+        m_model = m_rdfFactory.createModel();
+        RDF.parse( "file:" + sRDFFile, m_rdfParser, m_model );
 
-    while( true )
-    {
-        Resource resTopInstance = takeNextInstance();
-        if( resTopInstance == null )
-            break;
-        appendInstance( resTopInstance, m_elDoc, new HashSet() );
+        ////System.out.println( "*** " + m_model.size() + " statements read in ***" );
+
+        m_modelRest = m_model.duplicate();
     }
-
+    catch( Exception ex )
+    {
+        debug().error( "exception occurred: " + ex );
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -174,7 +266,7 @@ private void appendInstance( Resource resInstance, TinyXMLElement elAppendHere,
         {
             Resource resValue = (Resource)rdfnodeValue;
             Resource resClsChild = findCls( resValue );
-            double dValue = getValueForPred( resPred.getURI() );
+            double dValue = getPredValue( resPred.getURI() );
             if( dValue >= 0  &&  resClsChild  != null )
             {
                 TinyXMLElement elSlot = createElement( resPred );
@@ -205,7 +297,7 @@ private Statement takeNextSlotStatement( Model mSlotsRest )   throws Exception
         if(     resPred.getURI().equals( m_resPredType.getURI()           ) ||
                 resPred.getURI().equals( m_rdfsURIs.namespace() + "label" ) )               // ??? !!! ??? !!! ??? !!! ??? !!! ???
             continue;
-        double dVal = getValueForPred( resPred.getURI() );
+        double dVal = getPredValue( resPred.getURI() );
         if( stBest == null  ||  dVal > dBest )
         {
             dBest = dVal;
@@ -252,8 +344,8 @@ private Resource takeNextInstance()   throws Exception
         {
             Statement s = (Statement)enum.nextElement();
             String sPred = s.predicate().getURI();
-            dInstanceValue -= getValueForPred( sPred );  // NEGATIVE!!!
-            ////System.out.println( "     " + (-getValueForPred( sPred )) + " # " + sPred );
+            dInstanceValue -= getPredValue( sPred );  // NEGATIVE!!!
+            ////System.out.println( "     " + (-getPredValue( sPred )) + " # " + sPred );
         }
         mTest = m_model.find( resSubject, null, null );
         int nrLinksFromInst = 0;
@@ -261,8 +353,8 @@ private Resource takeNextInstance()   throws Exception
         {
             Statement s = (Statement)enum.nextElement();
             String sPred = s.predicate().getURI();
-            dInstanceValue += getValueForPred( sPred );
-            ////System.out.println( "     " + getValueForPred( sPred ) + " # " + sPred );
+            dInstanceValue += getPredValue( sPred );
+            ////System.out.println( "     " + getPredValue( sPred ) + " # " + sPred );
         }
         ////System.out.println( "   # " + dInstanceValue + " # " + resSubject.getURI() );
         if( stBestInstance == null  ||  dInstanceValue > dBestInstance )
@@ -339,13 +431,34 @@ private void createDocumentElement()   throws Exception
 }
 
 //------------------------------------------------------------------------------
-private void saveNiceXML()   throws Exception
+private static Debug debug()
 {
-    PrintWriter pw = new PrintWriter( new FileOutputStream( m_sDestFile ) );
-    pw.print( m_xmlDoc.serialize() );
-    pw.flush();
-    pw.close();
+    return Debug.forModule( "RDFNice" );
 }
+
+
+//------------------------------------------------------------------------------
+private RDF.Syntax m_rdfURIs;
+private RDFS.URIs m_rdfsURIs;
+private RDFFactory m_rdfFactory;
+private RDFParser m_rdfParser;
+private NodeFactory m_nodeFactory;
+
+private Resource m_resRDFSLiteral;
+private Resource m_resRDFSResCls;
+private Resource m_resRDFSPredSubClassOf;
+private Resource m_resPredType;
+private Resource m_resPredResource;
+private Resource m_resPredAbout;
+
+private Model m_model;
+private Model m_modelRest;
+
+private Map/*String->Double*/ m_mapPred2Value = new HashMap();
+
+private TinyXMLDocument m_xmlDoc;
+private TinyXMLElement m_elDoc;
+
 
 //------------------------------------------------------------------------------
 } // end of class RDFNice

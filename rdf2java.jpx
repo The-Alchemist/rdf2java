@@ -57,7 +57,17 @@
   <property category="sys" name="Version" value="1.0"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="."/>
-  <node name="rdf2java" type="Archive">
+  <node name="apidoc" type="Javadoc">
+    <property category="nodeJavadoc" name="buildWithProject" value="0"/>
+    <property category="nodeJavadoc" name="directory" value="doc"/>
+    <property category="nodeJavadoc" name="displayAllOutput" value="0"/>
+  </node>
+  <node name="rdf2java.jar" type="Archive">
     <property category="archiving" name="targetPath" value="lib/rdf2java.jar"/>
+  </node>
+  <node name="rdf2javaApidoc" type="Archive">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.archive.DocumentationArchiver"/>
+    <property category="archiving" name="buildWithProject" value="0"/>
+    <property category="archiving" name="targetPath" value="lib/rdf2javaApidoc.jar"/>
   </node>
 </project>
