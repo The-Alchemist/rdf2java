@@ -278,6 +278,8 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     for (Iterator itOldValues = collOldValues.iterator(); itOldValues.hasNext(); )
     {
         Object oldValue = itOldValues.next();
+        if ( oldValue == null )
+            continue;
         if ( !(oldValue instanceof RDFResource) )
             continue;  // slot value is a LITERAL => handle that case below => assign NEW slot value (overwrite old value)
         Object newValue = find(collNewValues, ((RDFResource)oldValue).getURI());
