@@ -167,59 +167,64 @@ public void addToMap (Map mapObjects)
 }
 
 //----------------------------------------------------------------------------------------------------
-public Collection/*String*/ getProperties ()
-{
-    return RDF2Java.getProperties(getClass());
-}
-
-//----------------------------------------------------------------------------------------------------
 public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
 {
     try
     {
+        Class cls = getClass();
         Collection collProperties = getProperties();
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
             String sPropertyName = (String)itProperties.next();
             String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
-            Method method = myGetMethod( getClass(), sGetMethodName, new Class[0] );
-            Object objPropValue = null;
-            objPropValue = method.invoke(this, null);
+            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
+            Method methodGet = getMethod( cls, sGetMethodName, new Class[0] );
+            Object objPropValue = methodGet.invoke(this, null);
             if (objPropValue == null)
                 continue;
-            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
-            if (objPropValue instanceof java.util.Collection)
+            if (objPropValue instanceof Collection)
             {
-                Collection collChangedValues = new LinkedList();
-                for (Iterator itPropValues = ((java.util.Collection)objPropValue).iterator(); itPropValues.hasNext(); )
+                Collection listOldValues = new LinkedList( (Collection)objPropValue );
+                String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
+                Method methodClear = getMethod( cls, sClearMethodName, new Class[0] );
+                methodClear.invoke( this, null );
+                for (Iterator itPropValues = listOldValues.iterator(); itPropValues.hasNext(); )
                 {
                     Object objPropValueElement = itPropValues.next();
-                    if ( !(objPropValueElement instanceof RDFResource) ) continue;
-                    RDFResource res = (RDFResource)objPropValueElement;
-                    Object cachedObject = kbCachedObjects.get(res.getURI());
-                    if (cachedObject == null || !(cachedObject instanceof THING)) continue;
-                    Method methodPutterNormal = myGetMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
-                    methodPutterNormal.invoke( this, new Object[] { cachedObject } );
+                    if (objPropValueElement instanceof RDFResource)
+                    {
+                        RDFResource res = (RDFResource)objPropValueElement;
+                        Object cachedObject = kbCachedObjects.get(res.getURI());
+                        if (cachedObject != null && (cachedObject instanceof THING))
+                        {
+                            Method methodPut = getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
+                            methodPut.invoke( this, new Object[] { cachedObject } );
+                            continue;
+                        }
+                    }
+                    // nothing better available => take the old slot value again
+                    Method methodPut = getMethod( cls, sPutMethodName, new Class[] { objPropValueElement.getClass() } );
+                    methodPut.invoke( this, new Object[] { objPropValueElement } );
                 }
             }
             else
-            if ( !(objPropValue instanceof THING) )
+            if (objPropValue instanceof RDFResource)
             {
+                if (objPropValue instanceof THING)
+                    continue;
                 try {
                     RDFResource propValue = (RDFResource)objPropValue;
                     Object cachedObject = kbCachedObjects.get(propValue.getURI());
                     if (cachedObject == null || !(cachedObject instanceof THING)) continue;
-                    Method methodPutterNormal = myGetMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
-                    Method methodPutterURI = myGetMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
-                    methodPutterURI.invoke( this, new Object[] { null } );
-                    methodPutterNormal.invoke( this, new Object[] { cachedObject } );
+                    Method methodPut = getMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
+                    methodPut.invoke( this, new Object[] { cachedObject } );
                 }
                 catch (Exception ex) {
                     throw new Error(ex.getMessage());
                 }
             }
             else
-                throw new Error("Wrong class for objValue in dfki.rdf.util.THING . updateRDFResourceSlots");
+                throw new Error("Wrong class for objValue in dfki.rdf.util.THING . updateRDFResourceSlots; class=" + objPropValue.getClass());
         }
     }
     catch (Exception ex)
@@ -234,66 +239,40 @@ public void assign (THING newThing, KnowledgeBase kb)
     try
     {
         Class cls = getClass();
-        Method[] aMethods = cls.getMethods();
-        for (int i = 0; i < aMethods.length; i++)
+        Collection collProperties = getProperties();
+        for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
         {
-            Method method = aMethods[i];
-            String sMethodName = method.getName();
-            if (!sMethodName.startsWith("get"))
-                continue;
-            if (method.getDeclaringClass().equals(RDFResource.class))
-                continue;
-            if (sMethodName.equals("getClass"))
-                continue;
-            Class[] aParameterTypes = method.getParameterTypes();
-            if (aParameterTypes.length > 0)
-                continue;
-
-            String sPropertyName = RDF2Java.extractPropertyName(sMethodName);
-            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
-            String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
+            String sPropertyName = (String)itProperties.next();
             String sGetMethodName = RDF2Java.makeMethodName("get", sPropertyName);
-            String sGetAsURIMethodName = RDF2Java.makeMethodName("Get", sPropertyName + "__asURI");
-
-            Method methodPutAsURI = myGetMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
-            Method methodClear = myGetMethod( cls, sClearMethodName, new Class[] { } );
-            Method methodGet = myGetMethod( cls, sGetMethodName, new Class[] { } );
-            Method methodGetAsURI = myGetMethod( cls, sGetAsURIMethodName, new Class[] { } );
-
-            Class clsReturnType = methodGet.getReturnType();
-            if (Collection.class.isAssignableFrom(clsReturnType))
+            String sPutMethodName = RDF2Java.makeMethodName("put", sPropertyName);
+            Method methodGet = getMethod( cls, sGetMethodName, new Class[0] );
+            Object objPropValue = methodGet.invoke(this, null);
+            if (objPropValue == null)
+                continue;
+            if (objPropValue instanceof Collection)
             {
-                Object value = methodGet.invoke( this, null );
-                LinkedList lstOldValues = new LinkedList( (Collection)value );
-                value = methodGetAsURI.invoke( this, null );
-                lstOldValues.addAll( (Collection)value );
+                LinkedList lstOldValues = new LinkedList( (Collection)objPropValue );
 
+                String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
+                Method methodClear = getMethod( cls, sClearMethodName, new Class[0] );
                 methodClear.invoke( this, null );
 
-                value = methodGet.invoke( newThing, null );
-                LinkedList lstNewValues = new LinkedList( (Collection)value );
-                value = methodGetAsURI.invoke( newThing, null );
-                lstNewValues.addAll( (Collection)value );
+                Object objPropNewValue = methodGet.invoke( newThing, null );
+                LinkedList lstNewValues = new LinkedList( (Collection)objPropNewValue );
 
                 assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
             }
             else
             {
                 LinkedList lstOldValues = new LinkedList();
-                Object value = methodGet.invoke( this, null );
-                if (value != null) lstOldValues.add( value );
-                value = methodGetAsURI.invoke( this, null );
-                if (value != null) lstOldValues.add( value );
-                // assert( lstOldValues.size() > 1 )
+                if (objPropValue != null) lstOldValues.add( objPropValue );
 
-                methodClear.invoke( this, null );
+                Method methodPut = getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
+                methodPut.invoke( this, new Object[] { null } );
 
                 LinkedList lstNewValues = new LinkedList();
-                value = methodGet.invoke( newThing, null );
-                if (value != null) lstNewValues.add( value );
-                value = methodGetAsURI.invoke( newThing, null );
-                if (value != null) lstNewValues.add( value );
-                // assert( lstNewValues.size() > 1 )
+                Object objPropNewValue = methodGet.invoke( newThing, null );
+                if (objPropNewValue != null) lstNewValues.add( objPropNewValue );
 
                 assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
             }
@@ -317,19 +296,18 @@ void assignValues (Collection collOldValues, Collection collNewValues,
         Object newValue = find(collNewValues, ((RDFResource)oldValue).getURI());
 
         // if newValue == null, then the old slot value (subA_this) has to be removed
-        // as this is already done (via method clearXXX), nothing has to be done in that case
+        // as this is already done (in the calling assign method), nothing has to be done in that case
         if (newValue == null)
             continue;
 
         // if the new slot value gives us an increase of quality, we take it!
         // this can only be the case iff newValue is a THING (and not an URI reference)
         // as this case is handled deeper below, too, we only do the other case here:
-        // A L T H O U G H :   note, that this disturbs the order of the slot values !!!
-        // OR WELL... DOES IT REALLY ???????????????????????????????????????????????????
+        // A L T H O U G H :   note, that this disturbs the order of the slot values !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if ( newValue instanceof THING )
             continue;  // newValue is not remove from collNewValues and will therfore be handled again below
 
-        Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { oldValue.getClass() } );
+        Method methodPut = getMethod( getClass(), sPutMethodName, new Class[] { oldValue.getClass() } );
         methodPut.invoke( this, new Object[] { oldValue } );  // insert the newer slot value
         // mark, that we've already handled that new slot value (inspected below)
         remove(collNewValues, ((RDFResource)newValue).getURI());
@@ -339,7 +317,7 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     for (Iterator itNewValues = collNewValues.iterator(); itNewValues.hasNext(); )
     {
         Object newValue = itNewValues.next();
-        Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
+        Method methodPut = getMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
         methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
 
         if (newValue instanceof THING)
@@ -348,7 +326,7 @@ void assignValues (Collection collOldValues, Collection collNewValues,
 }
 
 //----------------------------------------------------------------------------------------------------
-Method myGetMethod (Class cls, String sMethodName, Class[] aPars)
+Method getMethod (Class cls, String sMethodName, Class[] aPars)
 {
     Method[] aMethods = cls.getMethods();
     for (int i = 0; i < aMethods.length; i++)

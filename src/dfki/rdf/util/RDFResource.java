@@ -1,5 +1,6 @@
 package dfki.rdf.util;
 
+import java.util.Collection;
 import org.w3c.rdf.model.Resource;
 
 
@@ -109,6 +110,12 @@ public boolean equals (Object other)
 public int hashCode ()
 {
     return getURI().hashCode();
+}
+
+//----------------------------------------------------------------------------------------------------
+public Collection/*String*/ getProperties ()
+{
+    return RDF2Java.getProperties(getClass());
 }
 
 //----------------------------------------------------------------------------------------------------

@@ -572,7 +572,8 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         else
         {
             ////2002.02.05:old: pwClsFile.println(sIndent + sRangePkgAndCls + " m_" + pi.sSlotName + ";");
-            pwClsFile.println(sIndent + "dfki.rdf.util.RDFResource m_" + pi.sSlotName + ";\n");
+            String sRealSlotType = ( sRangePkgAndCls.equals("String")  ?  "String"  :  "dfki.rdf.util.RDFResource" );
+            pwClsFile.println(sIndent + sRealSlotType + " m_" + pi.sSlotName + ";\n");
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
@@ -595,23 +596,29 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 pwClsFile.println(")\n"+sIndent+"        throw new Error(\"not an allowed class\");");
             }
             pwClsFile.print(sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
-                            sIndent + "}\n");
-            // second putter (URI)
-            pwClsFile.print(sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
-                            sIndent + "{\n" +
-                            sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
                             sIndent + "}");
+            // second putter (URI)
+            if (!sRealSlotType.equals("String"))
+            {
+                pwClsFile.print("\n" + sIndent + "public void " + RDF2Java.makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
+                                sIndent + "{\n" +
+                                sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
+                                sIndent + "}");
+            }
             if (m_bInsertIncrementalInfo)
                 pwClsFile.print("\n" + sIndent + "// RDFS2Class: end of putter for slot " + pi.sSlotName);
             pwClsFile.println("\n");
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: getter for slot " + pi.sSlotName + " **/");
-            pwClsFile.print(sIndent + "public " + sRangePkgAndCls + " " + RDF2Java.makeMethodName("Get", pi.sSlotName) + " ()\n" +
-                            sIndent + "{\n" +
-                            sIndent + "    return (" + sRangePkgAndCls + ")m_" + pi.sSlotName + ";\n" +
-                            sIndent + "}\n");
-            pwClsFile.print(sIndent + "public dfki.rdf.util.RDFResource " + RDF2Java.makeMethodName("get", pi.sSlotName) + " ()\n" +
+            if (!sRealSlotType.equals("String"))
+            {
+                pwClsFile.print(sIndent + "public " + sRangePkgAndCls + " " + RDF2Java.makeMethodName("Get", pi.sSlotName) + " ()\n" +
+                                sIndent + "{\n" +
+                                sIndent + "    return (" + sRangePkgAndCls + ")m_" + pi.sSlotName + ";\n" +
+                                sIndent + "}\n");
+            }
+            pwClsFile.print(sIndent + sRealSlotType + " " + RDF2Java.makeMethodName("get", pi.sSlotName) + " ()\n" +
                             sIndent + "{\n" +
                             sIndent + "    return m_" + pi.sSlotName + ";\n" +
                             sIndent + "}");
