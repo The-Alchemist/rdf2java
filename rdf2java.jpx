@@ -97,7 +97,7 @@
   <node name="rdf2java.jar" type="Archive">
     <property category="archiving" name="targetPath" value="lib/rdf2java.jar"/>
   </node>
-  <node name="rdf2javaApidoc" type="Archive">
+  <node name="rdf2javaApidoc.jar" type="Archive">
     <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.archive.DocumentationArchiver"/>
     <property category="archiving" name="buildWithProject" value="0"/>
     <property category="archiving" name="targetPath" value="lib/rdf2javaApidoc.jar"/>
