@@ -97,6 +97,10 @@ public class Test
                 }
             }
         };
+        
+        // try disabling/enabling the following line:
+        // dcc.keepExistingURIs = true;
+        
         THING oldHomer = (THING)mapObjects.get( NAMESPACE + "deepCopy_00008" );
         ComplexClass2 newHomer2 = (ComplexClass2) oldHomer.deepCopy( ComplexClass2.class, dcc );
         //// printout( mapObjects );

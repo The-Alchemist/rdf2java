@@ -470,12 +470,21 @@ public static class DeepCopyController
         }
     }
     
+    /** 
+     * This flag controls the URIs of newly created resources.<br> 
+     * <code>keepExistingURIs</code> = true: URIs are copied 
+     *   from the source resources<br>
+     * <code>keepExistingURIs</code> = false: all cloned resources
+     *   get a new URI if the source resources has one.  
+     */
+    public boolean keepExistingURIs = false;
+    
 } // end of inner class DeepCopyController
 
 
 //----------------------------------------------------------------------------------------------------
 public THING deepCopy( DeepCopyController dcc )   
-        throws CloneNotSupportedException
+      throws CloneNotSupportedException
 {
     THING newThing;
     if( this.getURI() != null )
@@ -490,7 +499,7 @@ public THING deepCopy( DeepCopyController dcc )
         // (1)  (Deep) copy nevertheless; the new (copied) THING will have no URI, too.
         //      ->  This is our case, see below!
         // (2)  Reference the same THING (i.e. this THING) and stop copying here.
-        //      ->  We did not chose this alternative.
+        //      ->  We did *not* chose this alternative.
     }
 
     newThing = dcc.createNewThing( this.getClass() );
@@ -501,7 +510,7 @@ public THING deepCopy( DeepCopyController dcc )
 
 //----------------------------------------------------------------------------------------------------
 public THING deepCopy( Class clsNewThing, DeepCopyController dcc )   
-        throws CloneNotSupportedException
+      throws CloneNotSupportedException
 {
     THING newThing = (THING)dcc.createNewThing( clsNewThing );
     this.deepCopyTo( newThing, dcc );
@@ -510,13 +519,18 @@ public THING deepCopy( Class clsNewThing, DeepCopyController dcc )
 
 //----------------------------------------------------------------------------------------------------
 public void deepCopyTo( THING newThing, DeepCopyController dcc )   
-        throws CloneNotSupportedException
+      throws CloneNotSupportedException
 {
     dcc.lstCopyPath.addLast( this );
     
-    if( this.getURI() != null  &&  newThing.getURI() == null )
-        newThing.makeNewURI();
-
+    if( this.getURI() != null )
+    {
+        if(         !dcc.keepExistingURIs && newThing.getURI() == null )
+            newThing.makeNewURI();
+        else if(     dcc.keepExistingURIs && newThing.getURI() == null )
+            newThing.putURI( this.getURI() );
+    }
+    
     dcc.mapOldUri2NewThing.put( this.getURI(), newThing );
     
     for( Iterator itProperties = m_propertyStore.getProperties().iterator(); itProperties.hasNext(); )
