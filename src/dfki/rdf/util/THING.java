@@ -230,8 +230,9 @@ public void assign (THING newThing, KnowledgeBase kb)
             Method methodGet = RDF2Java.getMethod( cls, sGetMethodName, new Class[0] );
             if (methodGet == null) throw new Exception("missing method " + sGetMethodName + "()");
             Object objPropValue = methodGet.invoke(this, null);
-            if (objPropValue == null)
-                continue;
+            //sven:2002-06-06: removed following 2 lines (bug!)
+            //  if (objPropValue == null)
+            //      continue;
             if (objPropValue instanceof Collection)
             {
                 LinkedList lstOldValues = new LinkedList( (Collection)objPropValue );
@@ -242,12 +243,14 @@ public void assign (THING newThing, KnowledgeBase kb)
                 String sClearMethodName = RDF2Java.makeMethodName("clear", sPropertyName);
                 Method methodClear = RDF2Java.getMethod( cls, sClearMethodName, new Class[0] );
                 if (methodClear == null) throw new Exception("missing method " + sClearMethodName + "()");
-                methodClear.invoke( this, null );
+                methodClear.invoke( this, null );  // clear old value
 
                 assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
             }
             else
             {
+                // 2 cases:  (a) objPropValue == null  OR  (b) objPropValue is no Collection
+
                 LinkedList lstOldValues = new LinkedList();
                 if (objPropValue != null) lstOldValues.add( objPropValue );
 
@@ -255,9 +258,13 @@ public void assign (THING newThing, KnowledgeBase kb)
                 Object objPropNewValue = methodGet.invoke( newThing, null );
                 if (objPropNewValue != null) lstNewValues.add( objPropNewValue );
 
-                Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
-                if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
-                methodPut.invoke( this, new Object[] { null } );
+                if (objPropValue != null)
+                {
+                    // clear old value
+                    Method methodPut = RDF2Java.getMethod( cls, sPutMethodName, new Class[] { objPropValue.getClass() } );
+                    if (methodPut == null) throw new Exception("missing method " + sPutMethodName + "(" + objPropValue.getClass() + ")");
+                    methodPut.invoke( this, new Object[] { null } );
+                }
 
                 assignValues(lstOldValues, lstNewValues, sPutMethodName, kb);
             }
