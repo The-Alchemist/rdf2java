@@ -76,6 +76,8 @@ Resource m_resRDFPredType;
 Resource m_resRDFResProperty;
 Resource m_resProtegeMaxCardinality;
 Resource m_resProtegeAllowedClasses;
+Resource m_resProtegeAllowedSymbols;
+Resource m_resProtegeDefaultValues;
 Resource m_resProtegeRange;
 Resource m_resProtegePredRole;
 
@@ -117,6 +119,8 @@ public RDFS2Class (String sRDFSFile, String sClsPath, Map mapNamespaceToPackage)
     m_resRDFResProperty = m_rdfURIs.property();
     m_resProtegeMaxCardinality = m_nodeFactory.createResource(PROTEGE_NS, "maxCardinality");
     m_resProtegeAllowedClasses = m_nodeFactory.createResource(PROTEGE_NS, "allowedClasses");
+    m_resProtegeAllowedSymbols = m_nodeFactory.createResource(PROTEGE_NS, "allowedValues");
+    m_resProtegeDefaultValues  = m_nodeFactory.createResource(PROTEGE_NS, "defaultValues");
     m_resProtegePredRole       = m_nodeFactory.createResource(PROTEGE_NS, "role");
     m_resProtegeRange = m_nodeFactory.createResource(PROTEGE_NS, "range");
 
@@ -520,10 +524,72 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
 
         sbPropertyStoreStuff.append( sIndent + "    ps.addProperty( m_" + pi.sSlotName + " );\n" );
 
+
+        //--- BEGIN --- property info (variable) for this slot
+        String sPropInfoHasMultiValue = ( pi.bMultiple  ?  "true"  :  "false" );
+        if( sRangePkgAndCls.equals("String") )
+        {
+            if( pi.setAllowedSymbols == null || pi.setAllowedSymbols.isEmpty() )
+                pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createStringProperty( \"" + pi.sSlotName + "\", " + sPropInfoHasMultiValue + " );\n");
+            else
+            {   // symbol type
+                StringBuffer sb = new StringBuffer( "new String[]{" );
+                for( Iterator it = pi.setAllowedSymbols.iterator(); it.hasNext(); )
+                {
+                    String symbol = ((RDFNode)it.next()).getLabel();
+                    sb.append( "\"" + symbol + "\"" );
+                    if( it.hasNext() ) sb.append( ", " );
+                }
+                sb.append( "}" );
+                String sPropInfoAllowedSymbols = sb.toString();
+
+                String sPropInfoDefaultValues = "null";
+                if( pi.setDefaultValues != null && pi.setDefaultValues.size() > 0 )
+                {
+                    sb = new StringBuffer( "new String[]{" );
+                    for( Iterator it = pi.setDefaultValues.iterator(); it.hasNext(); )
+                    {
+                        String symbol = ((RDFNode)it.next()).getLabel();
+                        sb.append( "\"" + symbol + "\"" );
+                        if( it.hasNext() ) sb.append( ", " );
+                    }
+                    sb.append( "}" );
+                    sPropInfoDefaultValues = sb.toString();
+                }
+
+                pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createSymbolProperty( \"" + pi.sSlotName + "\", " + sPropInfoAllowedSymbols + ", " + sPropInfoDefaultValues + ", " + sPropInfoHasMultiValue + " );\n");
+            }
+        }
+        else
+        {
+            String sPropInfoAllowedValueClasses = "null";
+            if( pi.bNeedsRangeInterface )
+            {
+                StringBuffer sb = new StringBuffer( "new Class[]{" );
+                for( Iterator it = pi.setResRange.iterator(); it.hasNext(); )
+                {
+                    Resource resRCls = (Resource)it.next();
+                    String sRClsNS = resRCls.getNamespace();
+                    String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
+                    String sRClsName = resRCls.getLocalName();
+                    if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
+                    sb.append( sRClsName + ".class" );
+                    if( it.hasNext() ) sb.append( ", " );
+                }
+                sb.append( "}" );
+                sPropInfoAllowedValueClasses = sb.toString();
+            }
+            else  // no range interface needed
+            {
+                sPropInfoAllowedValueClasses = "new Class[]{" + sRangePkgAndCls + ".class}";
+            }
+            pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createInstanceProperty( \"" + pi.sSlotName + "\", " + sPropInfoAllowedValueClasses + ", " + sPropInfoHasMultiValue + " );\n");
+        }
+        //--- END --- property info (variable) for this slot
+
+
         if (pi.bMultiple)
         {
-            pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = new dfki.rdf.util.PropertyInfo( \"" + pi.sSlotName + "\", true );\n");
-
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
             if( !sRangePkgAndCls.equals("dfki.rdf.util.RDFResource") )
@@ -594,9 +660,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         }
         else  // !(pi.bMultiple) => single value slot
         {
-            ////2002.02.05:old: pwClsFile.println(sIndent + sRangePkgAndCls + " m_" + pi.sSlotName + ";");
             String sRealSlotType = ( sRangePkgAndCls.equals("String")  ?  "String"  :  "dfki.rdf.util.RDFResource" );
-            pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = new dfki.rdf.util.PropertyInfo( \"" + pi.sSlotName + "\", false );\n");
 
             if (m_bInsertIncrementalInfo)
                 pwClsFile.println(sIndent + "/** RDFS2Class: putter for slot " + pi.sSlotName + " **/");
@@ -984,6 +1048,8 @@ private static Debug debug ()
         String sSlotName;
         Set setResDomain;
         Set setResRange;
+        Set setAllowedSymbols;
+        Set setDefaultValues;
         String sRangeCls;
         String sRangeClsPkg;
         boolean bMultiple;
@@ -1002,6 +1068,11 @@ private static Debug debug ()
             setResDomain = objectsToSet(modelDomain);
             Model modelRange = m_modelRDFS.find(resProperty, m_resRDFSPredRange, null);
             setResRange = objectsToSet(modelRange);
+            Model modelAllowedSymbols = m_modelRDFS.find(resProperty, m_resProtegeAllowedSymbols, null);
+            setAllowedSymbols = objectsToSet(modelAllowedSymbols);
+            Model modelDefaultValues = m_modelRDFS.find(resProperty, m_resProtegeDefaultValues, null);
+            setDefaultValues = objectsToSet(modelDefaultValues);
+
             RDFNode rdfnodeMaxCardinality = RDF.getObject(m_modelRDFS, resProperty, m_resProtegeMaxCardinality);
             if (rdfnodeMaxCardinality != null)
             {
