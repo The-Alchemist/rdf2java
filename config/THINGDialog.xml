@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+  <THINGDialog>
+          <icons>
+              <val>class</val>                  <val>/dfki/rdf/util/gui/resources/class.gif</val>
+              <val>unknown</val>                <val>/dfki/rdf/util/gui/resources/unknown.gif</val>
+              <val>rdfresource</val>            <val>/dfki/rdf/util/gui/resources/rdfresource.gif</val>
+
+<!-- list further icons (maybe in a separate config.xml file) -->
+<!-- in the form of: URI to icon resource  or URI local name to icon resource -->
+<!-- <val>http://km.dfki.de/model/org#Skill</val>  <val>/dfki/frodo/wwf/gui/resources/icons/umb/skill.gif</val> -->
+
+
+
+<!-- you can do this also in a Java properties file; unfortunately then no URLs can be listed due to their special characters  -->
+ 
+         </icons>
+  </THINGDialog>
+
+</config>
+
+
