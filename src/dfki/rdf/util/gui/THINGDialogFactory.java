@@ -1041,7 +1041,11 @@ protected static JComponent getListModifyButtons(final THING p_thing, final JLis
   add.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent e)
     {
-     InstanceChooseDialog dialog = new InstanceChooseDialog((Class[])p_pi.getAllowedValueClasses().toArray(), p_pi.hasMultiValue(), p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(),p_dialog);
+        
+     Collection colAllowedClasses =  p_pi.getAllowedValueClasses();   
+        
+     Class[] allowedClasses = (Class[]) colAllowedClasses.toArray( new Class[colAllowedClasses.size()] );
+     InstanceChooseDialog dialog = new InstanceChooseDialog(allowedClasses, p_pi.hasMultiValue(), p_dialog.getKnowledgeBase(), p_dialog.getTHINGDialogHelper(),p_dialog);
      
      
      DefaultListModel lm = (DefaultListModel) p_list.getModel();
@@ -1649,7 +1653,18 @@ public static THING chooseInstanceOfClass(Class p_class,KnowledgeBase p_knowledg
  */
 public static THING chooseInstanceOfClasses(Collection p_colClasses,KnowledgeBase p_knowledgeBase, THINGDialogFactory.THINGDialogHelper p_thingDHelper, Window p_owner)
 {
-    InstanceChooseDialog dialog = new InstanceChooseDialog((Class[]) p_colClasses.toArray(),false,p_knowledgeBase, p_thingDHelper,p_owner);
+    
+   if (p_colClasses == null)
+       {
+        debug().error("chooseInstanceOfClasses: allowed classes in p_colClasses is null");
+        return null;
+       }
+    
+   Class[] allowedClasses = (Class[]) p_colClasses.toArray( new Class[p_colClasses.size()] );
+
+    
+    
+    InstanceChooseDialog dialog = new InstanceChooseDialog(allowedClasses,false,p_knowledgeBase, p_thingDHelper,p_owner);
     
    DefaultMutableTreeNode node = dialog.selectInstance();
         
