@@ -39,7 +39,7 @@ public class IconLoader
     protected static ResourceBundle m_resourceBundle;
     private String m_customResourceBundleClass;
 
-    protected static final String m_localResourceBundleClass = "dfki.rdf.util.gui.resources.icons";
+    protected static final String m_localResourceBundleClass = "de.dfki.rdf.util.gui.resources.icons";
     
     
     private HashMap m_uri2iconsMap;
