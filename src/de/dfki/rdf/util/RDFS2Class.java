@@ -915,8 +915,22 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             {
                 if( pi.bNeedsRangeInterface )
                     sRangePkgAndCls = "Object";
-                pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", sMembervarName) + " (" + sRangePkgAndCls + " p_" + sMembervarName +")\n" +
-                                  sIndent + "{");
+
+                if( sRangePkgAndCls.equals("Date") )
+                {
+                    pwClsFile.println(  sIndent + "public void " + RDF2Java.makeMethodName("put", sMembervarName) + " (" + sRangePkgAndCls + " p_" + sMembervarName +")\n" +
+                                        sIndent + "{\n" +
+                                        sIndent + "    m_" + sMembervarName + ".putValue(de.dfki.rdf.util.RDFTool.dateTime2String(p_" + sMembervarName + "));\n" +
+                                        sIndent + "}" );
+                    pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", sMembervarName) + " (" + sRealSlotType + " p_" + sMembervarName +")\n" +
+                            sIndent + "{");
+                }
+                else
+                {
+                    pwClsFile.println(sIndent + "public void " + RDF2Java.makeMethodName("put", sMembervarName) + " (" + sRangePkgAndCls + " p_" + sMembervarName +")\n" +
+                                      sIndent + "{");
+                }
+                
                 if (pi.bNeedsRangeInterface)
                 {
                     pwClsFile.print(sIndent + "    if( p_" + sMembervarName + " != null && !(p_" + sMembervarName + " instanceof de.dfki.rdf.util.RDFResource) && " );
@@ -945,12 +959,8 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                     }
                     pwClsFile.println(")\n"+sIndent+"        throw new Error(\"not an allowed class\");");
                 }
-                if( sRangePkgAndCls.equals("Date") )
-                    pwClsFile.print(sIndent + "    m_" + sMembervarName + ".putValue(de.dfki.rdf.util.RDFTool.dateTime2String(p_" + sMembervarName + "));\n" +
-                            sIndent + "}");
-                else
-                    pwClsFile.print(sIndent + "    m_" + sMembervarName + ".putValue(p_" + sMembervarName + ");\n" +
-                                    sIndent + "}");
+                pwClsFile.print(sIndent + "    m_" + sMembervarName + ".putValue(p_" + sMembervarName + ");\n" +
+                                sIndent + "}");
             }
             // second putter (URI)
 //            if (sRangePkgAndCls.equals("Date"))

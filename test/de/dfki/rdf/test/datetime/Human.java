@@ -40,6 +40,10 @@ public  class Human
     {
         m_dateOfBirth.putValue(de.dfki.rdf.util.RDFTool.dateTime2String(p_dateOfBirth));
     }
+    public void putDateOfBirth (String p_dateOfBirth)
+    {
+        m_dateOfBirth.putValue(p_dateOfBirth);
+    }
     // RDFS2Class: end of putter for slot dateOfBirth
 
     /** RDFS2Class: getter for slot dateOfBirth **/
