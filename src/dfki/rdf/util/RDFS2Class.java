@@ -421,25 +421,35 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
     String sSuperClassName = null;
     Model modelSuperClass = m_modelRDFS.find(resCls, m_resRDFSPredSubClassOf, null);
     if (modelSuperClass.isEmpty())
-        throw new Exception("class '"+sPkg+"."+sClsName+"' has no super class");
-    resSuperClass = (Resource)RDF.get1(modelSuperClass).object();
-    // System.out.println("resSuperClass="+resSuperClass);
-    if (resSuperClass.equals(m_resRDFSClass))
     {
-        sSuperClassName = "dfki.rdf.util.THING";  //// = "Class";
+        resSuperClass = null;
+        sSuperClassName = "dfki.rdf.util.THING";
         sSuperClassNS = null;
-        sSuperClassPkg = null;  //// = "java.lang";
-        System.out.println("# super class THING (not 'Class'!!) used for class '"+resCls+"'");
-        ////System.out.println("# super class 'Class' used for class '"+resCls+"'");
+        sSuperClassPkg = null;
+        //SS.2003-03-14: throw new Exception("class '"+sPkg+"."+sClsName+"' has no super class");
     }
     else
-    if (!resSuperClass.equals(m_resRDFSResource))
     {
-        sSuperClassName = resSuperClass.getLocalName();
-        sSuperClassNS = resSuperClass.getNamespace();
-        sSuperClassPkg = (String)m_mapNamespaceToPackage.get(sSuperClassNS);
-        if (sSuperClassPkg == null)
-            throw new Exception("Namespace '"+sSuperClassNS+"' (class '"+sSuperClassName+"') mapped to a package");
+        resSuperClass = (Resource)RDF.get1(modelSuperClass).object();
+
+        // System.out.println("resSuperClass="+resSuperClass);
+        if (resSuperClass.equals(m_resRDFSClass))
+        {
+            sSuperClassName = "dfki.rdf.util.THING";  //// = "Class";
+            sSuperClassNS = null;
+            sSuperClassPkg = null;  //// = "java.lang";
+            System.out.println("# super class THING (not 'Class'!!) used for class '"+resCls+"'");
+            ////System.out.println("# super class 'Class' used for class '"+resCls+"'");
+        }
+        else
+        if (!resSuperClass.equals(m_resRDFSResource))
+        {
+            sSuperClassName = resSuperClass.getLocalName();
+            sSuperClassNS = resSuperClass.getNamespace();
+            sSuperClassPkg = (String)m_mapNamespaceToPackage.get(sSuperClassNS);
+            if (sSuperClassPkg == null)
+                throw new Exception("Namespace '"+sSuperClassNS+"' (class '"+sSuperClassName+"') mapped to a package");
+        }
     }
 
     // test if class is an abstract or a "concrete" class
