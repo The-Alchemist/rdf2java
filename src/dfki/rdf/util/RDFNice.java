@@ -11,11 +11,8 @@ import org.w3c.rdf.model.*;
 import org.w3c.rdf.syntax.RDFParser;
 import org.w3c.rdf.util.RDFFactory;
 
-import org.w3c.dom.*;
-import org.apache.xml.serialize.XMLSerializer;
-import org.apache.xml.serialize.OutputFormat;
-
 import dfki.rdf.util.nice.*;
+import dfki.rdf.util.nice.tinyxmldoc.*;
 
 
 public class RDFNice
@@ -26,10 +23,13 @@ RDFS.URIs m_rdfsURIs;
 RDFFactory m_rdfFactory;
 RDFParser m_rdfParser;
 NodeFactory m_nodeFactory;
+
 Resource m_resRDFSLiteral;
 Resource m_resRDFSResCls;
 Resource m_resRDFSPredSubClassOf;
 Resource m_resPredType;
+Resource m_resPredResource;
+Resource m_resPredAbout;
 
 String m_sSourceFile;
 String m_sDestFile;
@@ -38,13 +38,8 @@ Model m_modelRest;
 
 Map/*String->Double*/ m_mapPred2Value = new HashMap();
 
-DOMImplementation m_xmlDOM;
-Document m_xmlDoc;
-Element m_elDoc;
-
-Map/*String->String*/ m_mapNS2Prefix;
-
-TinyXMLSerializer m_xmlSerializer;
+TinyXMLDocument m_xmlDoc;
+TinyXMLElement m_elDoc;
 
 
 //------------------------------------------------------------------------------
@@ -55,16 +50,14 @@ public RDFNice()   throws Exception
     m_rdfFactory = RDF.factory();
     m_rdfParser = m_rdfFactory.createParser();
     m_nodeFactory = m_rdfFactory.getNodeFactory();
+
     m_resRDFSLiteral = m_nodeFactory.createResource(m_rdfsURIs.literal());
     m_resRDFSResCls = m_nodeFactory.createResource(m_rdfsURIs._class());
     m_resRDFSPredSubClassOf = m_nodeFactory.createResource(m_rdfsURIs.subClassOf());
     m_resPredType = RDF.syntax().type();
 
-    m_mapNS2Prefix = new TreeMap();
-    m_mapNS2Prefix.put( m_rdfURIs.namespace(), "rdf" );
-    m_mapNS2Prefix.put( m_rdfsURIs.namespace(), "rdfs" );
-
-    m_xmlSerializer = new TinyXMLSerializerImpl();
+    m_resPredResource = m_nodeFactory.createResource( m_rdfURIs.namespace() + "resource" );
+    m_resPredAbout = m_nodeFactory.createResource( m_rdfURIs.namespace() + "about" );
 }
 
 //------------------------------------------------------------------------------
@@ -122,66 +115,9 @@ private void loadRDF( String sRDFFile )   throws Exception
 }
 
 //------------------------------------------------------------------------------
-private String getPrefix( String sURI )   throws Exception
-{
-    Resource res = m_nodeFactory.createResource( sURI );
-    return getPrefix( res );
-}
-
-//------------------------------------------------------------------------------
-private String getPrefix( Resource res )   throws Exception
-{
-    String sNS = res.getNamespace();
-    if( sNS == null  ||  sNS.length() <= 0 )
-        throw new Error( "Implementation failure" );
-    String sPrefix = (String)m_mapNS2Prefix.get( sNS );
-    if (sPrefix == null)
-    {
-        int pos = 0;
-        for (int i = 0; i >= 0; i = sNS.indexOf( '/', i+1 ) )
-            pos = i;
-        sPrefix = sNS.substring( pos+1, sNS.length()-1 );
-//        sPrefix = "ns" + Integer.toString( m_mapNS2Prefix.size() + 1 );
-        m_mapNS2Prefix.put( sNS, sPrefix );
-//        EntityReference er = m_xmlDoc.createEntityReference( "das:test" );
-    }
-
-    m_xmlSerializer.declareNamespacePrefix( sPrefix, sNS );
-
-    return sPrefix;
-}
-
-//------------------------------------------------------------------------------
-private String res2qname( String sURI )   throws Exception
-{
-    RDFResource rdfres = new RDFResource( sURI );
-    Resource res = m_nodeFactory.createResource( rdfres.getNamespace(), rdfres.getLocalName() );
-    return res2qname( res );
-}
-
-//------------------------------------------------------------------------------
-private String res2qname( Resource res )   throws Exception
-{
-    String sPrefix = getPrefix( res );
-    return sPrefix + ":" + res.getLocalName();
-}
-
-//------------------------------------------------------------------------------
-private String uri2qnameRef( String sURI )   throws Exception
-{
-    RDFResource rdfres = new RDFResource( sURI );
-    Resource res = m_nodeFactory.createResource( rdfres.getNamespace(), rdfres.getLocalName() );
-    String sPrefix = getPrefix( res );
-    return "&" + sPrefix + ";" + res.getLocalName();
-
-//    Resource res = m_nodeFactory.createResource( sURI );
-//    return res2qname( res );
-}
-
-//------------------------------------------------------------------------------
 private void createNiceXML()   throws Exception
 {
-    createDocumentElement();  // creates m_elDoc
+    createDocumentElement();  // creates m_elDoc, too
 
     while( true )
     {
@@ -194,68 +130,34 @@ private void createNiceXML()   throws Exception
 }
 
 //------------------------------------------------------------------------------
-private Element createElement( Resource res )   throws Exception
+private TinyXMLElement createElement( Resource res )   throws Exception
 {
-    Element el = m_xmlDoc.createElementNS( res.getNamespace(), res2qname( res ) );
+    TinyXMLElement el = m_xmlDoc.createElement( res.getURI() );
     return el;
 }
 
 //------------------------------------------------------------------------------
-//private Text createTextNode( String sText )   throws Exception
-//{
-//    Text textNode = m_xmlDoc.createTextNode( sText );
-//    return textNode;
-//}
-
-//------------------------------------------------------------------------------
-private void addAttribute( Element el, String sNamespace, String sLocalName, String sValue )   throws Exception
+private TinyXMLTextNode createTextNode( String sText )   throws Exception
 {
-    Attr attr = m_xmlDoc.createAttributeNS( sNamespace, sLocalName );
-    attr.setValue( sValue );
-    el.setAttributeNodeNS( attr );
+    TinyXMLTextNode textNode = m_xmlDoc.createTextNode( sText );
+    return textNode;
 }
 
 //------------------------------------------------------------------------------
-private void addAttribute( Element el, String sNamespace, String sLocalName, Resource resValue )   throws Exception
-{
-//    Attr attr = m_xmlDoc.createAttributeNS( sNamespace, sLocalName );
-//    attr.setNodeValue( sValue );
-//    el.setAttributeNodeNS( attr );
-//    return attr;
-
-    Attr attr = m_xmlDoc.createAttributeNS( sNamespace, sLocalName );
-//    Element attr = m_xmlDoc.createElementNS( sNamespace, sLocalName );
-    EntityReference er = m_xmlDoc.createEntityReference( getPrefix( resValue ) );
-//    er.setNodeValue( ?????????????? );
-    Text er2 = m_xmlDoc.createTextNode( getPrefix( resValue ) );
-    Text er3 = m_xmlDoc.createTextNode( resValue.getLocalName() );
-//    attr.appendChild( er );
-    attr.appendChild( er );
-//    attr.appendChild( er3 );
-    el.setAttributeNodeNS( attr );
-}
-
-//------------------------------------------------------------------------------
-private void appendInstance( Resource resInstance, Element elAppendHere,
+private void appendInstance( Resource resInstance, TinyXMLElement elAppendHere,
                              Set/*String*/ setProcessedResources )   throws Exception
 {
     removeInstanceFromRDFModelRest( resInstance );
     if( setProcessedResources.contains( resInstance.getURI() ) )
     {
-        addAttribute( elAppendHere, m_rdfURIs.namespace(), "resource", resInstance );
-        m_xmlSerializer.putAttribute( res2qname( m_rdfURIs.namespace() + "resource" ), uri2qnameRef( resInstance.getURI() ) );
+        elAppendHere.setAttribute( m_resPredResource.getURI(), resInstance );
         return;
     }
     setProcessedResources.add( resInstance.getURI() );
 
     Resource resCls = findCls( resInstance );
-    System.out.println( "(" + resCls + ") " + resInstance );
-    String sPrefix = getPrefix( resCls );
-
-    Element elInst = createElement( resCls );
-    m_xmlSerializer.startElement( elInst.getTagName() );
-    addAttribute( elInst, m_rdfURIs.namespace(), "about", resInstance );
-    m_xmlSerializer.putAttribute( res2qname( m_rdfURIs.namespace() + "about" ), uri2qnameRef( resInstance.getURI() ) );
+    TinyXMLElement elInst = createElement( resCls );
+    elInst.setAttribute( m_resPredAbout.getURI(), resInstance );
     elAppendHere.appendChild( elInst );
 
 
@@ -275,32 +177,20 @@ private void appendInstance( Resource resInstance, Element elAppendHere,
             double dValue = getValueForPred( resPred.getURI() );
             if( dValue >= 0  &&  resClsChild  != null )
             {
-                Element elSlot = createElement( resPred );
+                TinyXMLElement elSlot = createElement( resPred );
                 elInst.appendChild( elSlot );
-                m_xmlSerializer.startElement( res2qname( resPred ) );
                 appendInstance( resValue, elSlot, setProcessedResources );  // recursion
-                m_xmlSerializer.endElement( res2qname( resPred ) );
             }
             else
             {
-                appendSlot( resInstance, elInst, resPred, resValue );
-//                m_xmlSerializer.startElement( res2qname( resPred ) );
-//                m_xmlSerializer.putAttribute( res2qname( m_rdfURIs.namespace() + "resource" ), uri2qnameRef( resValue.getURI() ) );
-//                m_xmlSerializer.endElement( res2qname( resPred ) );
-                m_xmlSerializer.putAttributeElement(
-                    res2qname( resPred ),
-                    res2qname( m_rdfURIs.namespace() + "resource" ),
-                    uri2qnameRef( resValue.getURI() ) );
+                appendSlot( elInst, resPred, resValue );
             }
         }
         else
         {
-            appendSlot( resInstance, elInst, resPred, rdfnodeValue.getLabel() );
-            m_xmlSerializer.putTextElement( res2qname( resPred ), rdfnodeValue.getLabel() );
+            appendSlot( elInst, resPred, rdfnodeValue.getLabel() );
         }
     }
-
-    m_xmlSerializer.endElement( elInst.getTagName() );
 }
 
 //------------------------------------------------------------------------------
@@ -313,7 +203,7 @@ private Statement takeNextSlotStatement( Model mSlotsRest )   throws Exception
         Statement st = (Statement)enumSlots.nextElement();
         Resource resPred = st.predicate();
         if(     resPred.getURI().equals( m_resPredType.getURI()           ) ||
-                resPred.getURI().equals( m_rdfsURIs.namespace() + "label" ) )
+                resPred.getURI().equals( m_rdfsURIs.namespace() + "label" ) )               // ??? !!! ??? !!! ??? !!! ??? !!! ???
             continue;
         double dVal = getValueForPred( resPred.getURI() );
         if( stBest == null  ||  dVal > dBest )
@@ -328,22 +218,17 @@ private Statement takeNextSlotStatement( Model mSlotsRest )   throws Exception
 }
 
 //------------------------------------------------------------------------------
-private void appendSlot( Resource resInstance, Element elInst, Resource resPred, Resource resValue )   throws Exception
+private void appendSlot( TinyXMLElement elInst, Resource resPred, Resource resValue )   throws Exception
 {
-    Element elSlot = createElement( resPred );
+    TinyXMLElement elSlot = createElement( resPred );
     elInst.appendChild( elSlot );
-    addAttribute( elSlot, m_rdfURIs.namespace(), "resource", resValue );
+    elSlot.setAttribute( m_resPredResource.getURI(), resValue );
 }
 
 //------------------------------------------------------------------------------
-private void appendSlot( Resource resInstance, Element elInst, Resource resPred, String sValue )   throws Exception
+private void appendSlot( TinyXMLElement elInst, Resource resPred, String sValue )   throws Exception
 {
-//    Element elSlot = createElement( resPred );
-//    elInst.appendChild( elSlot );
-//    Text textNode = createTextNode( sValue );
-//    elSlot.appendChild( textNode );
-
-    addAttribute( elInst, getPrefix( resPred ), resPred.getLocalName(), sValue );
+    elInst.setAttribute( resPred.getNamespace() + resPred.getLocalName(), sValue );
 }
 
 //------------------------------------------------------------------------------
@@ -448,51 +333,18 @@ private Resource findCls( Resource resObject )   throws Exception
 //------------------------------------------------------------------------------
 private void createDocumentElement()   throws Exception
 {
-    m_xmlDOM = DOMImplementationRegistry.getDOMImplementation( "XML" );
-    DocumentType docType = m_xmlDOM.createDocumentType( "rdf:RDF", null, null );
-//    DocumentType docType = m_xmlDOM.createDocumentType( "rdf:RDF", "rdf", "http://rdf#RDF" );
-    m_xmlDoc = m_xmlDOM.createDocument( m_rdfURIs.namespace(), "rdf:RDF", docType );
-    m_elDoc = m_xmlDoc.getDocumentElement();
-
-    m_xmlSerializer.startElement( "rdf:RDF" );
+    m_xmlDoc = new TinyXMLDocument();
+    m_elDoc = m_xmlDoc.createElement( m_rdfURIs.namespace() + "RDF" );
+    m_xmlDoc.setDocumentElement( m_elDoc );
 }
 
 //------------------------------------------------------------------------------
 private void saveNiceXML()   throws Exception
 {
-    ////System.out.println( "\n\nmap:\n" + m_mapNS2Prefix );
-
-/***/
-    DocumentType docType = m_xmlDoc.getDoctype();
-    NamedNodeMap nnm = docType.getEntities();
-//    nnm.setNamedItemNS( m_xmlDoc.createElementNS( m_rdfURIs.namespace(), "rdf:RDF" ) );
-    String sNS = "http://dfki.frodo.wwf/task#";
-    String sAbrev = (String)m_mapNS2Prefix.get( sNS );
-
-    org.apache.xerces.dom.EntityImpl e = (org.apache.xerces.dom.EntityImpl)((org.apache.xerces.dom.CoreDocumentImpl)m_xmlDoc).createEntity( sAbrev );
-    e.setBaseURI( sNS );
-    e.setNodeValue( sNS );
-    nnm.setNamedItemNS( e );
-//    nnm = docType.getNotations();
-//    nnm.setNamedItemNS( m_xmlDoc.createElementNS( m_rdfURIs.namespace(), "rdf:RDF" ) );
-
-//    String sInternalSubset = docType.getInternalSubset();
-/***/
-
-
-    m_xmlSerializer.endElement( "rdf:RDF" );
-    m_xmlSerializer.flush();
     PrintWriter pw = new PrintWriter( new FileOutputStream( m_sDestFile ) );
-    pw.print( m_xmlSerializer.toString() );
+    pw.print( m_xmlDoc.serialize() );
     pw.flush();
     pw.close();
-
-//    PrintWriter pw = new PrintWriter( new FileOutputStream( m_sDestFile ) );
-//    OutputFormat outputFormat = new OutputFormat( m_xmlDoc, "ISO-8859-1", true );
-//        outputFormat.setLineWidth( 0 );
-//    XMLSerializer xmlSerializer = new XMLSerializer( pw, outputFormat );
-//    xmlSerializer.serialize( m_xmlDoc );
-//    pw.flush();
 }
 
 //------------------------------------------------------------------------------

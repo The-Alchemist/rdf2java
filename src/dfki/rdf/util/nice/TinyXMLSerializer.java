@@ -40,7 +40,7 @@ public void endElement( String qname );
 public void putAttribute( String qname, String value );
 
 /**
- * Puts a new element containing an attribute with the given value
+ * Puts a new element containing <i>one</i> attribute with the given value
  * (that value is always a string).
  */
 public void putAttributeElement( String qnameElement, String qnameAttr, String value );

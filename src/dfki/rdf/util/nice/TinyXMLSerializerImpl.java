@@ -13,6 +13,7 @@ private boolean m_bFirstElement;
 private String m_sFirstElementQName;
 private int m_iIndent;
 private final static int INDENT_SIZE = 4;
+private boolean m_bFlushed = false;
 
 
 //------------------------------------------------------------------------------
@@ -61,12 +62,15 @@ public void startElement( String qname )
 //------------------------------------------------------------------------------
 public void endElement( String qname )
 {
-    if( m_bWaitingForAttributes )
-        m_sbDocumentElement.append( ">\n" );
-    m_bWaitingForAttributes = false;
     decreaseIndent();
-    indent();
-    m_sbDocumentElement.append( "</" + qname + ">\n" );
+    if( m_bWaitingForAttributes )
+        m_sbDocumentElement.append( "/>\n" );
+    else
+    {
+        indent();
+        m_sbDocumentElement.append( "</" + qname + ">\n" );
+    }
+    m_bWaitingForAttributes = false;
 }
 
 //------------------------------------------------------------------------------
@@ -74,14 +78,14 @@ public void putAttribute( String qname, String value )
 {
     if ( !m_bWaitingForAttributes )
         throw new Error( "implementation failure" );
-    if( qname.equals( "rdf:about" ) )
-        m_sbDocumentElement.append( "  " );
+    if( qname.equals( "rdf:about" )  ||  qname.equals( "rdf:resource" ) )
+        m_sbDocumentElement.append( " " );
     else
     {
         m_sbDocumentElement.append( "\n" );
         indent();
     }
-    m_sbDocumentElement.append( qname + "=\"" + value + "\"" );
+    m_sbDocumentElement.append( " " + qname + "=\"" + value + "\"" );
 }
 
 //------------------------------------------------------------------------------
@@ -117,6 +121,9 @@ public void putTextElement( String qnameElement, String text )
 //------------------------------------------------------------------------------
 public void flush()
 {
+    if( m_bFlushed )
+        return;
+
     String sTemp = m_sbDocumentElement.toString();
     m_sbDocumentElement = new StringBuffer();
     m_iIndent = 0;
