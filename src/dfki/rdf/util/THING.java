@@ -413,7 +413,7 @@ void assignValues (Collection collOldValues, Collection collNewValues,
         // OR WELL... DOES IT REALLY ???????????????????????????????????????????????????
         if ( !(newValue instanceof dfki.rdf.util.THING) )
         {
-            Method methodPut = getClass().getMethod( sPutMethodName, new Class[] { newValue.getClass() } );
+            Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
             methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
             // mark, that we've already handled that new slot value for later
             remove(collNewValues, getURI(newValue));
@@ -424,14 +424,36 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     for (Iterator itNewValues = collNewValues.iterator(); itNewValues.hasNext(); )
     {
         Object newValue = itNewValues.next();
-
-        Method[] aMethods = getClass().getMethods();
-        Method methodPut = getClass().getMethod( sPutMethodName, new Class[] { newValue.getClass() } );
+        Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
         methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
 
         if (newValue instanceof dfki.rdf.util.THING)
             kb.put( newValue );     // now the new Java object exists in the knowledge base, too
     }
+}
+
+//----------------------------------------------------------------------------------------------------
+Method myGetMethod (Class cls, String sMethodName, Class[] aPars)
+{
+    Method[] aMethods = cls.getMethods();
+    for (int i = 0; i < aMethods.length; i++)
+    {
+        Method m = aMethods[i];
+        if (!m.getName().equals(sMethodName)) continue;
+        if (!areAssignableFrom( m.getParameterTypes(), aPars )) continue;
+        return m;
+    }
+    return null;  // not found
+}
+
+boolean areAssignableFrom (Class[] pars1, Class[] pars2)
+{
+    if (pars1.length != pars2.length) return false;
+    for (int i = 0; i < pars1.length; i++)
+    {
+        if (!pars1[i].isAssignableFrom(pars2[i])) return false;
+    }
+    return true;  // pars1 ARE assignable from pars2
 }
 
 //----------------------------------------------------------------------------------------------------
