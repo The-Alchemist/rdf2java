@@ -17,11 +17,12 @@ public class RDFExport {
   NodeFactory _nodeFactory;
   Model _model;
 
-  public final static String NAMESPACE_FOR_TEMPORARIES = "http://dfki.km.rdf2java/temporaries#"; 
+  public final static String NAMESPACE_FOR_TEMPORARIES = "http://dfki.km.rdf2java/temp#"; 
   final static String _anonNamespacePrefix = NAMESPACE_FOR_TEMPORARIES;
+  long _timestamp;
   String _anonNamespace;
   String _defaultNamespace; // used when package is not in map below
-  Map _packagesNamespaces;
+  Map _packagesNamespaces;  
 
   final static String _damlNamespace = "http://www.daml.org/2001/03/daml+oil#";
   Resource _damlList;
@@ -84,7 +85,7 @@ public class RDFExport {
   }
 
   Resource anonResource(String name) {
-    return resource(_anonNamespace, name);
+    return resource(_anonNamespace, "" + _timestamp + "_" + name);
   }
 
   Resource sysResource(String classPackage, String name) {
@@ -145,8 +146,8 @@ public class RDFExport {
 
   void exportObjectsToModel(Collection objects) {
     // init
-    long timestamp = new Date().getTime();
-    _anonNamespace = _anonNamespacePrefix + timestamp + "_";
+    _timestamp = new Date().getTime();
+    _anonNamespace = _anonNamespacePrefix + _timestamp + "_";
     _genid = 1;
     _rdfFactory = new RDFFactoryImpl();
     _model = _rdfFactory.createModel();
