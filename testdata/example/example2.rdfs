@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	 <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	 <!ENTITY a 'http://protege.stanford.edu/system#'>
+	 <!ENTITY example1 'http://org.dfki/rdf2java/example1#'>
+	 <!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	 xmlns:a="&a;"
+	 xmlns:example1="&example1;"
+	 xmlns:rdfs="&rdfs;">
+<rdfs:Class rdf:about="&example1;Person"
+	 rdfs:label="Person">
+	<rdfs:subClassOf rdf:resource="&rdfs;Resource"/>
+</rdfs:Class>
+<rdf:Property rdf:about="&example1;hasChild"
+	 rdfs:label="hasChild">
+	<rdfs:range rdf:resource="&example1;Person"/>
+	<rdfs:domain rdf:resource="&example1;Person"/>
+	<a:inverseProperty rdf:resource="&example1;hasParent"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example1;hasParent"
+	 rdfs:label="hasParent">
+	<rdfs:range rdf:resource="&example1;Person"/>
+	<rdfs:domain rdf:resource="&example1;Person"/>
+	<a:inverseProperty rdf:resource="&example1;hasChild"/>
+</rdf:Property>
+<rdf:Property rdf:about="&example1;name"
+	 a:maxCardinality="1"
+	 rdfs:label="name">
+	<rdfs:domain rdf:resource="&example1;Person"/>
+	<rdfs:range rdf:resource="&rdfs;Literal"/>
+</rdf:Property>
+</rdf:RDF>

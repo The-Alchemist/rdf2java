@@ -4,19 +4,6 @@
 set JAVA_VM=java
 
 
-set RDF_FILE=%1
-
-
-set P1=http://org.dfki/rdf2java/example1#hasParent
-set V1=-1000
-
-set P1=http://org.dfki/rdf2java/example1#hasChild
-set V1=1000
-
-set P2=http://org.dfki/rdf2java/example1#name
-set V2=1
-
-
 set RDF2JAVA_PATH=E:\java\rdf2java
 
 set IMPORT_PATH=%RDF2JAVA_PATH%\import
@@ -30,6 +17,5 @@ set IMPORTS=%IMPORTS%;%IMPORT_PATH%\xmlParserAPIs.jar
 
 REM set FLAGS=-Dorg.w3c.dom.DOMImplementationSourceList=org.apache.xerces.dom.DOMImplementationSourceImpl
 
-%JAVA_VM% -cp %IMPORTS% %FLAGS% dfki.rdf.util.RDFNice %RDF_FILE% %P1% %V1% %P2% %V2% %P3% %V3% %P4% %V4% %P5% %V5% %P6% %V6% %P7% %V7% %P8% %V8% %P9% %V9%
-REM pause
-
+%JAVA_VM% -cp %IMPORTS% %FLAGS% dfki.rdf.util.RDFDump %1 %2 %3 %4 %5 %6 %7 %8 %9
+pause

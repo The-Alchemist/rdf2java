@@ -1,0 +1,16 @@
+digraph "example1" {
+
+    graph [font="Arial"]
+
+    "http://org.dfki/rdf2java/example1#Person" [shape=box, color="0.0,1.0,1.0", fontcolor="0.0,1.0,1.0"]
+
+    "http://org.dfki/rdf2java/example1#example1_00005" [shape=box]
+    "http://org.dfki/rdf2java/example1#Person" -> "http://org.dfki/rdf2java/example1#example1_00005" [dir=back, label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type", color="0.0,1.0,1.0", fontcolor="0.0,1.0,1.0"]
+    "http://org.dfki/rdf2java/example1#example1_00006" -> "http://org.dfki/rdf2java/example1#example1_00005" [dir=back, label="http://org.dfki/rdf2java/example1#hasParent"]
+    "http://org.dfki/rdf2java/example1#example1_00005" -> "Bart Simpson" [label="http://org.dfki/rdf2java/example1#name"]
+
+    "http://org.dfki/rdf2java/example1#example1_00006" [shape=box]
+    "http://org.dfki/rdf2java/example1#Person" -> "http://org.dfki/rdf2java/example1#example1_00006" [dir=back, label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type", color="0.0,1.0,1.0", fontcolor="0.0,1.0,1.0"]
+    "http://org.dfki/rdf2java/example1#example1_00006" -> "Homer Simpson" [label="http://org.dfki/rdf2java/example1#name"]
+
+}

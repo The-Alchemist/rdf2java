@@ -1,0 +1,17 @@
+digraph "example1" {
+
+    graph [font="Arial"]
+
+    "example1:Person" [shape=box, color="0.0,1.0,1.0", fontcolor="0.0,1.0,1.0"]
+
+    "example1:example1_00005" [shape=box]
+    "example1:Person" -> "example1:example1_00005" [dir=back, label="rdf:type", color="0.0,1.0,1.0", fontcolor="0.0,1.0,1.0"]
+    "example1:example1_00006" -> "example1:example1_00005" [dir=back, label="example1:hasParent"]
+    "example1:example1_00005" -> "Bart Simpson" [label="example1:name"]
+
+    "example1:example1_00006" [shape=box]
+    "example1:Person" -> "example1:example1_00006" [dir=back, label="rdf:type", color="0.0,1.0,1.0", fontcolor="0.0,1.0,1.0"]
+    "example1:example1_00006" -> "Homer Simpson" [label="example1:name"]
+    "example1:example1_00006" -> "example1:example1_00005" [label="example1:hasChild"]
+
+}

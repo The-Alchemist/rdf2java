@@ -60,10 +60,10 @@ RDFS classes. Then we can "read in" RDF data, which are instances of
 RDFS classes and convert them to Java objects, being instances of the
 respective Java classes.<br>
 <h3><a name="example1"></a>1.1&nbsp; Example:</h3>
-<div style="margin-left: 40px;">Consider the following RDFS file (XML
-syntax) declaring a class<span style="font-family: monospace;"> Person </span>having
-two properties: (1)<span style="font-family: monospace;"> name </span>is
-a string-valued property (<span style="font-family: monospace;">-&gt;Literal</span>)
+Consider the following RDFS file (XML syntax) declaring a class<span
+ style="font-family: monospace;"> Person </span>having two properties:
+(1)<span style="font-family: monospace;"> name </span>is a
+string-valued property (<span style="font-family: monospace;">-&gt;Literal</span>)
 and (2)<span style="font-family: monospace;"> hasParent </span>demands
 a reference to another instance of<span style="font-family: monospace;">
 Person</span>.<br>
@@ -71,10 +71,8 @@ Person</span>.<br>
  href="http://www.w3.org/TR/rdf-schema/">http://www.w3.org/TR/rdf-schema/</a>
 for more information on this topic.]<br>
 <br>
-</div>
-<div style="margin-left: 40px;">
 <table cellpadding="0" cellspacing="0" border="1"
- style="text-align: left; width: 100%;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td style="vertical-align: top;">
@@ -83,13 +81,28 @@ for more information on this topic.]<br>
     </tr>
   </tbody>
 </table>
-</div>
 <br>
-<div style="margin-left: 40px;">Assume, there is an RDF file containing
-some instances of this RDFS class (<span style="font-family: monospace;">Person</span>):<br>
+Just to give you an idea, here's the plain set of RDF triples (subject,
+predicate, object) for the RDF Schema above. You may need to use your
+scroll bar! I sorted the triples for your convenience; don't forget,
+they aren't, really:<br>
 <br>
-<table cellpadding="" cellspacing="" border="1"
- style="width: 100%; text-align: left;">
+<table cellpadding="0" cellspacing="0" border="1"
+ style="text-align: left;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <pre style="background-color: rgb(192, 192, 192);">http://org.dfki/rdf2java/example1#Person    , http://www.w3.org/1999/02/22-rdf-syntax-ns#type             , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#Class<br>http://org.dfki/rdf2java/example1#Person    , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#subClassOf , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#Resource<br>http://org.dfki/rdf2java/example1#hasParent , http://www.w3.org/1999/02/22-rdf-syntax-ns#type             , http://www.w3.org/1999/02/22-rdf-syntax-ns#Property<br>http://org.dfki/rdf2java/example1#hasParent , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#domain     , http://org.dfki/rdf2java/example1#Person<br>http://org.dfki/rdf2java/example1#hasParent , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#range      , http://org.dfki/rdf2java/example1#Person<br>http://org.dfki/rdf2java/example1#name      , http://www.w3.org/1999/02/22-rdf-syntax-ns#type             , http://www.w3.org/1999/02/22-rdf-syntax-ns#Property<br>http://org.dfki/rdf2java/example1#name      , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#domain     , http://org.dfki/rdf2java/example1#Person<br>http://org.dfki/rdf2java/example1#name      , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#range      , http://www.w3.org/TR/1999/PR-rdf-schema-19990303#Literal<br></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Assume, there is an RDF file containing some instances of this RDFS
+class (<span style="font-family: monospace;">Person</span>):<br>
+<br>
+<table cellpadding="0" cellspacing="0" border="1"
+ style="text-align: left;">
   <tbody>
     <tr>
       <td style="vertical-align: top;">
@@ -98,6 +111,31 @@ some instances of this RDFS class (<span style="font-family: monospace;">Person<
     </tr>
   </tbody>
 </table>
+<br>
+Again, just to give you an idea of the plain RDF, here are the triples,
+again ordered for your convenience (you may need to use your scroll bar):<br>
+<br>
+<table cellpadding="0" cellspacing="0" border="1"
+ style="text-align: left;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <pre style="background-color: rgb(192, 192, 192);">http://org.dfki/rdf2java/example1#example1_00005 , http://www.w3.org/1999/02/22-rdf-syntax-ns#type , http://org.dfki/rdf2java/example1#Person<br>http://org.dfki/rdf2java/example1#example1_00005 , http://org.dfki/rdf2java/example1#hasParent     , http://org.dfki/rdf2java/example1#example1_00006<br>http://org.dfki/rdf2java/example1#example1_00005 , http://org.dfki/rdf2java/example1#name          , Bart Simpson<br>http://org.dfki/rdf2java/example1#example1_00006 , http://www.w3.org/1999/02/22-rdf-syntax-ns#type , http://org.dfki/rdf2java/example1#Person<br>http://org.dfki/rdf2java/example1#example1_00006 , http://org.dfki/rdf2java/example1#name          , Homer Simpson<br></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+When you visualize these set of triples you receive the following
+picture (only the RDF data is shown, not the RDF Schema). Boxes
+represent resources (RDF subjects) whereas ellipses show literals
+(strings), which can only be RDF objects. The named and directed edges
+visualize the predicates. Click on the image to get a bigger version.<br>
+<br>
+<a href="../testdata/example/example1.a.gif"><img
+ src="../testdata/example/example1.a.75.gif" title=""
+ alt="graph representation of these RDF triples"
+ style="border: 1px solid ; width: 805px; height: 317px;"></a><br>
 <br>
 This RDF data contains two<span style="font-family: monospace;"> Person</span>s<span
  style="font-family: monospace;">: </span>Bart Simpson and Homer
@@ -108,7 +146,7 @@ Now, assume further, there is a Java class named<span
 structure:<br>
 <br>
 <table cellpadding="0" cellspacing="0" border="1"
- style="width: 100%; text-align: left;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td style="vertical-align: top;">
@@ -157,7 +195,6 @@ multiple inheritance either. This remark is for people using <a
  href="http://protege.stanford.edu/">Prot&eacute;g&eacute;-2000</a> (see
 below) to generate and work on RDF/S.<br>
 <br>
-</div>
 <h3><a name="what_can_do"></a>1.2&nbsp; What<span
  style="font-family: monospace;"> rdf2java </span>can do</h3>
 Opposed to plain RDF,<span style="font-family: monospace;"> rdf2java </span>distinguishes
@@ -320,7 +357,7 @@ RDFS2Class tool.<br>
 Generally, you will have to call RDFS2Class as follows:<br>
 <br>
 <table cellpadding="0" cellspacing="0" border="1"
- style="width: 100%; text-align: left;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td
@@ -344,7 +381,7 @@ Generally, you will have to call RDFS2Class as follows:<br>
 whereas<br>
 <br>
 <table cellpadding="0" cellspacing="0" border="1"
- style="width: 100%; text-align: left;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td
@@ -370,7 +407,7 @@ C:\TEMP\example1.rdfs. </span>Then you could call RDFS2Class with the
 following parameters:<br>
 <br>
 <table cellpadding="0" cellspacing="0" border="1"
- style="width: 100%; text-align: left;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td
@@ -415,9 +452,9 @@ For a better understanding I pasted an extract of the most important
 parts of the code below (marginal stuff like, e.g., exception handling
 has been removed):<br>
 <br>
-<big><big style="color: rgb(204, 0, 0);">
+<big><big style="color: rgb(204, 0, 0);"> </big></big>
 <table cellpadding="0" cellspacing="0" border="1"
- style="width: 100%; text-align: left;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td
@@ -444,7 +481,7 @@ has been removed):<br>
     </tr>
   </tbody>
 </table>
-</big></big><br>
+<br>
 <a name="knowledgebase"></a><br>
 <hr style="width: 100%; height: 2px;">
 <h2>5. Knowledge Base (<a
@@ -664,9 +701,180 @@ is automatically called in the<span style="font-family: monospace;">
 assign </span>method (in the<span style="font-family: monospace;">
 KnowledgeBase </span>class).<br>
 <br>
-What is missing here in fact, are a lot of nice, explanatory diagrams,
-but, alas, I'm lacking the time at the moment. I'll (hopefully) come to
-that later...<br>
+<h3>Examples</h3>
+We change the old example slightly, as the old example lacks
+interesting cases. Therefore, we add an a inverse property to<span
+ style="font-family: monospace;"> hasParent, </span>namely<span
+ style="font-family: monospace;"> hasChild. </span>Furthermore we have
+to add the inverse values for this slot, as this isn't done
+automatically. The result is<span style="font-family: monospace;">
+example2.* </span>in the<span style="font-family: monospace;"> <a
+ href="../testdata/example/example2.rdf">example</a> </span>directory.<br>
+<br>
+Assume, our knowledge base contains Java objects corresponding to RDF
+data declaring Bart and Homer Simpson and their relationships to each
+other (properties <span style="font-family: monospace;">hasParent </span>and<span
+ style="font-family: monospace;"> hasChild</span>). The RDF graph for
+this is shown on the left image after this paragraph (namespaces have
+been abreviated).<br>
+Assume further we want to<span style="font-family: monospace;"> assign </span>a
+new object for Lisa Simpson plus relevant relationships to this
+knowledge base. You see the graphical representation of the RDF data to
+assign on the right image below. We will see below, the assignment won't
+lead to the result you might expect. Later we will show the correct RDF
+data to assign...<br>
+<br>
+<table cellpadding="2" cellspacing="2" border="0"
+ style="text-align: left;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: middle;"><a
+ href="../testdata/example/example2.a.short.gif"><img
+ src="../testdata/example/example2.a.short.75.gif" title="" alt=""
+ style="border: 1px solid ; width: 508px; height: 317px;" align="middle"></a></td>
+      <td style="vertical-align: middle; text-align: center;"><span
+ style="font-family: monospace;"><nobr>&nbsp;&lt;-&nbsp;</nobr></span><br>
+      <span style="font-family: monospace;"></span>
+      <pre><span style="font-family: monospace;"> </span></pre>
+      </td>
+      <td style="vertical-align: middle;"><a
+ href="../testdata/example/example2.b.short.gif"><img
+ src="../testdata/example/example2.b.short.75.gif" title="" alt=""
+ style="border: 1px solid ; width: 370px; height: 317px;" align="middle"></a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">the
+knowledge base so far<br>
+      </td>
+      <td> <br>
+      </td>
+      <td style="vertical-align: top; text-align: center;">RDF data to
+assign to the knowledge base<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+When looking at these pictures, keep in mind, that they are nothing
+more than the graphical representation of RDF triples; boxes represent
+RDF resources, ellipses represent literals (strings). Via<span
+ style="font-family: monospace;"> rdf2java, </span>resources (boxes)
+for instances of RDFS classes are represented by corresponding Java
+objects in the knowledge base, and outgoing edges are stored in these
+Java objects and are available via getter methods.<br>
+<br>
+Hence, before the assignment, the knowledge base (left pictures)
+contains two Java objects: one for Bart (<span
+ style="font-family: monospace;">example1:example1_00005</span>) and
+one for Homer (<span style="font-family: monospace;">example1:example1_00006</span>).
+Furthermore, both objects store the respective value for the<span
+ style="font-family: monospace;"> name </span>property. Finally the
+Bart object stores a link to the Homer object for the<span
+ style="font-family: monospace;"> hasParent </span>property, and the
+Homer object stores the inverse link for the<span
+ style="font-family: monospace;"> hasChild </span>property,
+respectively. Note, that there's no object for <span
+ style="font-family: monospace;">example1:Person </span>as this is a
+class and no instance.<br>
+<br>
+Analogously, the RDF data to assign (right image above) will be
+represented (e.g. after RDF Import) by two objects, one for Lisa's
+resource plus outgoing edges (properties<span
+ style="font-family: monospace;"> name </span>and<span
+ style="font-family: monospace;"> hasParent</span>) and one for Homer's
+resource plus outgoing edges (property<span
+ style="font-family: monospace;"> hasChild</span>). Note, that this
+Homer object is neither the same object as the one in the knowledge
+base, nor has it identical values; That Homer object, e.g., doesn't have
+a value for the<span style="font-family: monospace;"> name </span>property,
+whereas the Homer object in the knowledge base has.<br>
+<br>
+When assigning the RDF data (right image above), both of the two
+objects (Lisa and Homer) have to be assigned. The assignment will take
+place in two steps (see above): (1) the main assignment procedure, (2)
+updating all the property values linking to an<span
+ style="font-family: monospace;"> RDFResource, </span>which after the
+assignment is available as a<span style="font-family: monospace;"> THING.</span><br>
+The first step of assigning Lisa's object is easy, as it doesn't yet
+exist in the knowledge base. Therefore, the object will bluntly be added
+(including inthere all information about outgoing edges) to the
+knowledge base.<br>
+Assigning the Homer object, or to be more precise: the RDF data stored
+in the Homer object, is a bit more complicated. First of all, there
+exists already a Homer object in the knowledge base. Hence, the object
+can not be simply added, but must be assigned to the already existing
+one. Therefore, all Homer properties have to be examined. <span
+ style="font-family: monospace;"><br>
+name: </span>left-side Homer stores a value, right-side Homer doesn't.
+Possible interpretation: right-side lacks (leaves out) this
+information? No! Our interpretation is: the right-side Homer is the
+newer one and contains <span style="font-style: italic;">all </span>new
+data. Hence, the value for the<span style="font-family: monospace;">
+name </span>property will be deleted on the left-side Homer object.<br>
+<span style="font-family: monospace;">hasChild: </span>both Homer
+objects have different (disjoint) values for that property, so we take
+the new ones, i.e., the ones at the right side.<br>
+The result (knowledge base) is as follows:<br>
+<br>
+<a href="../testdata/example/example2.c.short.gif"><img
+ src="../testdata/example/example2.c.short.75.gif" title="" alt=""
+ style="border: 1px solid ; width: 642px; height: 317px;"></a><br>
+<br>
+The result is not quite the one, you might have expected when I started
+this example. There are several mistakes: The Bart object forgot about
+his name. Then it still "knows" about his parent, but the Homer object
+doesn't reflect this relationship. As RDF/S doesn't know anything about
+inverse slots, this is this correct RDF. Finally it's not quite what we
+wanted to receive. The problem arose right at the beginning, where we
+specified, what RDF data to assign to the knowledge base. Let's make
+another assignment:<br>
+<br>
+<table cellpadding="2" cellspacing="2" border="0"
+ style="text-align: left;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: middle;"><a
+ href="../testdata/example/example2.a.short.gif"><img
+ src="../testdata/example/example2.a.short.75.gif" title="" alt=""
+ style="border: 1px solid ; width: 508px; height: 317px;" align="middle"></a></td>
+      <td style="vertical-align: middle; text-align: center;"><span
+ style="font-family: monospace;"><nobr>&nbsp;&lt;-&nbsp;</nobr></span><br>
+      <span style="font-family: monospace;"></span>
+      <pre><span style="font-family: monospace;"> </span></pre>
+      </td>
+      <td style="vertical-align: middle;"><a
+ href="../testdata/example/example2.b2.short.gif"><img
+ src="../testdata/example/example2.b2.short.75.gif" title="" alt=""
+ style="border: 1px solid ; width: 666px; height: 317px;" align="middle"></a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">the
+knowledge base so far<br>
+      </td>
+      <td> <br>
+      </td>
+      <td style="vertical-align: top; text-align: center;">RDF data to
+assign to the knowledge base<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Note, that<span style="font-family: monospace;"> example1:example1_00005 </span>(on
+the right image) will only be represented by an<span
+ style="font-family: monospace;"> RDFResource </span>object, because
+the right-side Homer object just needs to links to a reference of this
+resource. There's no need to know about about or change this resource.
+The Homer object has to be changed because of the<span
+ style="font-family: monospace;"> hasChild </span>property. Hence, we
+need to represent <span style="font-style: italic;">that</span> by a<span
+ style="font-family: monospace;"> THING </span>object and add / change
+the property values we like.<br>
+However, the result of this assignment will be as follows:<br>
+<br>
+<a href="../testdata/example/example2.d.short.gif"><img
+ src="../testdata/example/example2.d.short.75.gif" title="" alt=""
+ style="border: 1px solid ; width: 915px; height: 317px;"></a><br>
 <br>
 <a name="additional_stuff"></a>
 <hr style="width: 100%; height: 2px;">
@@ -759,7 +967,7 @@ Call RDF Diff the following way to get a "nice" version of the RDF file
 for our small "Person" example:<br>
 <br>
 <table cellpadding="0" cellspacing="0" border="1"
- style="width: 100%; text-align: left;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td
@@ -782,14 +990,14 @@ example.<br>
 Doing this, you get the following RDF, which is not quite impresing,
 but that's because the simple "Person" example is a bad one. The only
 hierarchical relation is pointing into the wrong direction, namely
-upwards. For strictness of this document, I stick to this example,
-nevertheless.<br>
+upwards, but XML serialization is always about the other direction,
+namely downwards.<br>
 Note, that the predicate<span style="font-family: monospace;"> name </span>comes
 before<span style="font-family: monospace;"> hasParent, </span>because
 its value is greater (greater, not stronger!).<br>
 <br>
 <table cellpadding="0" cellspacing="0" border="1"
- style="width: 100%; text-align: left;">
+ style="text-align: left;">
   <tbody>
     <tr>
       <td
@@ -800,9 +1008,50 @@ its value is greater (greater, not stronger!).<br>
   </tbody>
 </table>
 <br>
+To get a better picture of RDF Nice,  we switch to<span
+ style="font-family: monospace;"> example2.* </span>in the<span
+ style="font-family: monospace;"> <a
+ href="../testdata/example/example2.rdf">example</a> </span>directory.
+To rememver, we added a new property to the RDF Schema: the property<span
+ style="font-family: monospace;"> hasChild </span>being the inverse
+property to<span style="font-family: monospace;"> hasParent. </span>Changing
+the call to RDF Nice (see<span style="font-family: monospace;"> <a
+ href="../testdata/example/rdfnice.bat">rdfnice.bat</a></span>) taking
+into account the new property (<span style="font-family: monospace;">hasChild</span>is
+assigned the negative value of<span style="font-family: monospace;">
+hasParent: +1000</span>), we receive the following XML serialization for<span
+ style="font-family: monospace;"> <a
+ href="../testdata/example/example2_lisa.rdf">example2_lisa.rdf</a> </span>(including
+Lisa):<br>
+<br>
+<table cellpadding="0" cellspacing="0" border="1"
+ style="text-align: left;">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">
+      <pre><span style="font-family: monospace;"></span><span
+ style="font-family: monospace;">&lt;?xml version='1.0' encoding='ISO-8859-1'?&gt;<br>&lt;!DOCTYPE rdf:RDF [<br>    &lt;!ENTITY example1 'http://org.dfki/rdf2java/example1#'&gt;<br>    &lt;!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'&gt;<br>    &lt;!ENTITY rdfs 'http://www.w3.org/TR/1999/PR-rdf-schema-19990303#'&gt;<br><br>]&gt;<br>&lt;rdf:RDF <br>    xmlns:example1="&amp;example1;"<br>    xmlns:rdf="&amp;rdf;"<br>    xmlns:rdfs="&amp;rdfs;"&gt;<br><br>    &lt;example1:Person  rdf:about="&amp;example1;example1_00006"<br>         example1:name="Homer Simpson"&gt;<br>        &lt;example1:hasChild&gt;<br>            &lt;example1:Person  rdf:about="&amp;example1;example1_00005"<br>                 example1:name="Bart Simpson"&gt;<br>                &lt;example1:hasParent  rdf:resource="&amp;example1;example1_00006"/&gt;<br>            &lt;/example1:Person&gt;<br>        &lt;/example1:hasChild&gt;<br>        &lt;example1:hasChild&gt;<br>            &lt;example1:Person  rdf:about="&amp;example1;example2_00007"<br>                 example1:name="Lisa Simpson"&gt;<br>                &lt;example1:hasParent  rdf:resource="&amp;example1;example1_00006"/&gt;<br>            &lt;/example1:Person&gt;<br>        &lt;/example1:hasChild&gt;<br>    &lt;/example1:Person&gt;<br>&lt;/rdf:RDF&gt;<br></span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h3><a name="rdfdump"></a>6.3&nbsp; RDF Dump (<a
+ href="../apidoc/dfki/rdf/util/RDFDump.html"><span
+ style="font-family: monospace;">dfki.rdf.util.RDFDump</span></a>)</h3>
+Nothing much to say about this tool. It just load in an RDF file and
+dumps out the triples to System.out. The triples are output in pure
+ASCII and follow the following format:<span
+ style="font-family: monospace;"> subject \t predicate \t object \n. </span>So,<span
+ style="font-family: monospace;"> TAB </span>and<span
+ style="font-family: monospace;"> NEWLINE </span>are the delimiters;
+there's no<span style="font-family: monospace;"> SPACE, </span>no
+bracket, no comma, nor anything else.<br>
+Look and edit the Java code if you're longing for more...<br>
 <h3> </h3>
 <hr style="width: 100%; height: 2px;">
-<div style="text-align: right;"><small>last edited: 2003-03-06 16:00</small><br>
+<div style="text-align: right;"><small>last edited: 2003-03-11 14:00</small><br>
 </div>
 </body>
 </html>
