@@ -1,9 +1,6 @@
 package dfki.rdf.util;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Collection;
+import java.util.*;
 
 
 public class KnowledgeBase
@@ -46,7 +43,7 @@ public Object put (Object objKey, Object objValue)
 }
 
 //---------------------------------------------------------------------------
-public Object put (dfki.rdf.util.THING obj)
+public Object put (RDFResource obj)
 {
     String sURI = obj.getURI();
     if (sURI == null) throw new Error("tried to put an obj in the map w/o URI in dfki.rdf.util.KnowledgeBase . put");
@@ -54,12 +51,12 @@ public Object put (dfki.rdf.util.THING obj)
 }
 
 //---------------------------------------------------------------------------
-Object put (Object obj)
+protected Object put (Object obj)
 {
-    if (obj instanceof dfki.rdf.util.THING)
-        return put( (dfki.rdf.util.THING)obj );
+    if (obj instanceof RDFResource)
+        return put( (RDFResource)obj );
     else
-        throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . put; class should have been dfki.rdf.util.THING");
+        throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . put; class should have been a subclass dfki.rdf.util.RDFResource");
 }
 
 //---------------------------------------------------------------------------
@@ -103,6 +100,12 @@ public Collection values ()
 }
 
 //---------------------------------------------------------------------------
+public Set keySet ()
+{
+    return m_mapObjects.keySet();
+}
+
+//---------------------------------------------------------------------------
 public String toString ()
 {
     StringBuffer sb = new StringBuffer();
@@ -123,15 +126,15 @@ public void updateRDFResourceSlots ()
     for (Iterator it = m_mapObjects.values().iterator(); it.hasNext(); )
     {
         Object obj = it.next();
-        if (obj instanceof dfki.rdf.util.THING)
-            ((dfki.rdf.util.THING)obj).updateRDFResourceSlots(this);
+        if (obj instanceof THING)
+            ((THING)obj).updateRDFResourceSlots(this);
     }
 }
 
 //---------------------------------------------------------------------------
-public void assign (dfki.rdf.util.THING thingToAssign)
+public void assign (THING thingToAssign)
 {
-    dfki.rdf.util.THING thingOld = (dfki.rdf.util.THING)get(thingToAssign.getURI());
+    THING thingOld = (THING)get(thingToAssign.getURI());
     if (thingOld != null)
         thingOld.assign(thingToAssign, this);
     else

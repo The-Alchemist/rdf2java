@@ -44,28 +44,11 @@ void go ()
     String sRDFFilename = "data_assign_" + sNumber;
     String sURI = "http://dfki.rdf.test/assign#assign_" + sNumber;
     Map mapObjectToAssign = readin(sRDFFilename);
-    dfki.rdf.util.THING thingToAssign = (dfki.rdf.util.THING)get(mapObjectToAssign, sURI);
+    dfki.rdf.util.THING thingToAssign = (dfki.rdf.util.THING)mapObjectToAssign.get(sURI);
     System.out.println("\nthingToAssign:\n" + thingToAssign);
 
     m_kbCachedObjects.assign(thingToAssign);
     System.out.println("knowledgeBase (after assignment):\n" + m_kbCachedObjects);
-}
-
-//---------------------------------------------------------------------------
-Object get (Map map, String sURI)
-{
-    try
-    {
-        for (Iterator it = map.keySet().iterator(); it.hasNext(); )
-        {
-            org.w3c.rdf.model.Resource res = (org.w3c.rdf.model.Resource)it.next();
-            if (res.getURI().equals(sURI))
-                return map.get(res);
-        }
-    }
-    catch (Exception ex)
-    { }
-    return null;
 }
 
 //---------------------------------------------------------------------------

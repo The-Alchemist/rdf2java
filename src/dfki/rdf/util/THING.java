@@ -21,43 +21,6 @@ import java.lang.reflect.*;
 public class THING   extends RDFResource
 {
 //----------------------------------------------------------------------------------------------------
-/** Sets the <code>URI</code> of the corresponding RDF object.
-  */
-public void putURI (String sURI)
-{
-    setURI(sURI);  // calls RDFResource.setURI
-}
-
-//----------------------------------------------------------------------------------------------------
-/** Gets the <code>URI</code> of the corresponding RDF object.
-  */
-public String getURI ()
-{
-    return getURI();  // calls RDFResource.setURI
-}
-
-//----------------------------------------------------------------------------------------------------
-/** the <code>label</code> of the corresponding RDF object (Protege)
-  */
-String m_sLabel;
-
-//----------------------------------------------------------------------------------------------------
-/** Sets the <code>label</code> of the corresponding RDF object (Protege).
-  */
-public void putLabel (String sLabel)
-{
-    m_sLabel = sLabel;
-}
-
-//----------------------------------------------------------------------------------------------------
-/** Gets the <code>label</code> of the corresponding RDF object (Protege).
-  */
-public String getLabel ()
-{
-    return m_sLabel;
-}
-
-//----------------------------------------------------------------------------------------------------
 /** <code>toString()<code> stuff...
   */
 public String toString ()
@@ -116,10 +79,6 @@ public String toStringShort ()                          // overload this method
 
 //----------------------------------------------------------------------------------------------------
 /** Gets the class name of this object.
-  * <br>
-  * <b>Note:</b> The method must be declared protected in order to avoid
-  * unwanted slot generation when using <code>RDFExport</code> (Java-to-RDF)
-  * of Michael Sintek's <code>rdf2java</code> tool
   */
 protected String getClassName ()
 {
@@ -128,10 +87,6 @@ protected String getClassName ()
 
 //----------------------------------------------------------------------------------------------------
 /** Gets a short version (without package) of the class name of this object.
-  * <br>
-  * <b>Note:</b> The method must be declared protected in order to avoid
-  * unwanted slot generation when using <code>RDFExport</code> (Java-to-RDF)
-  * of Michael Sintek's <code>rdf2java</code> tool
   */
 protected String getClassNameShort ()
 {
@@ -146,10 +101,7 @@ protected String getClassNameShort ()
 //----------------------------------------------------------------------------------------------------
 /** Gets a string showing the address of this object in hex notation.
   * <br>
-  * The string is prefixed with a <code>'@'</code> character.<br>
-  * <b>Note:</b> The method must be declared protected in order to avoid
-  * unwanted slot generation when using <code>RDFExport</code> (Java-to-RDF)
-  * of Michael Sintek's <code>rdf2java</code> tool
+  * The string is prefixed with a <code>'@'</code> character.
   */
 protected String getAddress ()
 {
@@ -159,10 +111,7 @@ protected String getAddress ()
 //----------------------------------------------------------------------------------------------------
 /** Gets a string showing the address of this object in hex notation.
   * <br>
-  * The string is <b>not</b> prefixed with a <code>'@'</code> character.<br>
-  * <b>Note:</b> The method must be declared protected in order to avoid
-  * unwanted slot generation when using <code>RDFExport</code> (Java-to-RDF)
-  * of Michael Sintek's <code>rdf2java</code> tool
+  * The string is <b>not</b> prefixed with a <code>'@'</code> character.
   */
 protected String getAddressOnlyHex ()
 {
@@ -211,34 +160,14 @@ public void addToMap (Map mapObjects, String sNamespace)
   */
 public void addToMap (Map mapObjects)
 {
-    addToMap(mapObjects, "http://dfki.frodo/default#");
+    addToMap(mapObjects, "http://dfki.rdf.util.rdf2java/default#");
 }
 
 //----------------------------------------------------------------------------------------------------
-public boolean equals (Object other)
+public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
 {
-    // objects are hereby declared as identical iff their URIs are equal
-    if (other instanceof THING)
-    {
-        if (getURI() != null && ((THING)other).getURI() != null)
-            return getURI().equals(((THING)other).getURI());
-        else
-            return false;  // sorry, no chance left :-(
-    }
-    else
-    if (other instanceof org.w3c.rdf.model.Resource)
-    {
-        try { return getURI().equals(((org.w3c.rdf.model.Resource)other).getURI()); }
-        catch (Exception ex) { return false; }
-    }
-    else
-        return false;
-}
-
-//----------------------------------------------------------------------------------------------------
-public void updateRDFResourceSlots (dfki.rdf.util.KnowledgeBase kbCachedObjects)
-{
-    Method[] aMethods = getClass().getMethods();
+    Class cls = getClass();
+    Method[] aMethods = cls.getMethods();
     for (int i = 0; i < aMethods.length; i++)
     {
         Method method = aMethods[i];
@@ -248,39 +177,41 @@ public void updateRDFResourceSlots (dfki.rdf.util.KnowledgeBase kbCachedObjects)
         Class[] aParameterTypes = method.getParameterTypes();
         if (aParameterTypes.length > 0)
             continue;
-        Object objPropValueAsURI = null;
+        Object objPropValue = null;
         try {
-            objPropValueAsURI = method.invoke(this, null);
+            objPropValue = method.invoke(this, null);
         } catch (Exception ex) {
             System.out.println("dfki.rdf.util.THING . updateRDFResourceSlots: Exception occurred" + ex);
         }
-        if (objPropValueAsURI == null) continue;
+        if (objPropValue == null)
+            continue;
         String sPropertyName = calcMethodNameToPropertyName(sMethodName);
         String sPutMethodName = calcPropertyNameToMethodNameWithoutURI("put", sPropertyName);
-        if (objPropValueAsURI instanceof dfki.rdf.util.RDFResource)
+        if ( !(objPropValue instanceof THING) )
         {
             try {
-                Object cachedObject = kbCachedObjects.get(objPropValueAsURI);
-                if (cachedObject == null || (cachedObject instanceof dfki.rdf.util.RDFResource)) continue;
-                Method methodPutterNormal = getClass().getMethod( sPutMethodName, new Class[] { cachedObject.getClass() } );
-                Method methodPutterURI = getClass().getMethod( sPutMethodName, new Class[] { dfki.rdf.util.RDFResource.class } );
-                methodPutterNormal.invoke( this, new Object[] { cachedObject } );
+                RDFResource propValue = (RDFResource)objPropValue;
+                Object cachedObject = kbCachedObjects.get(propValue.getURI());
+                if (cachedObject == null || !(cachedObject instanceof THING)) continue;
+                Method methodPutterNormal = myGetMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
+                Method methodPutterURI = myGetMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
                 methodPutterURI.invoke( this, new Object[] { null } );
+                methodPutterNormal.invoke( this, new Object[] { cachedObject } );
             }
             catch (Exception ex) {
                 throw new Error(ex.getMessage());
             }
         }
         else
-        if (objPropValueAsURI instanceof java.util.Collection)
+        if (objPropValue instanceof java.util.Collection)
         {
             try {
-                for (Iterator itURIs = ((java.util.Collection)objPropValueAsURI).iterator(); itURIs.hasNext(); )
+                for (Iterator itURIs = ((java.util.Collection)objPropValue).iterator(); itURIs.hasNext(); )
                 {
-                    dfki.rdf.util.RDFResource uri = (dfki.rdf.util.RDFResource)itURIs.next();
+                    RDFResource uri = (RDFResource)itURIs.next();
                     Object cachedObject = kbCachedObjects.get(uri);
-                    if (cachedObject == null || (cachedObject instanceof dfki.rdf.util.RDFResource)) continue;
-                    Method methodPutterNormal = getClass().getMethod( sPutMethodName, new Class[] { cachedObject.getClass() } );
+                    if (cachedObject == null || !(cachedObject instanceof THING)) continue;
+                    Method methodPutterNormal = myGetMethod( cls, sPutMethodName, new Class[] { cachedObject.getClass() } );
                     methodPutterNormal.invoke( this, new Object[] { cachedObject } );
                     itURIs.remove();
                 }
@@ -318,14 +249,17 @@ public void assign (THING newThing, KnowledgeBase kb)
 {
     try
     {
-        Method[] aMethods = getClass().getMethods();
+        Class cls = getClass();
+        Method[] aMethods = cls.getMethods();
         for (int i = 0; i < aMethods.length; i++)
         {
             Method method = aMethods[i];
             String sMethodName = method.getName();
             if (!sMethodName.startsWith("get"))
                 continue;
-            if (sMethodName.equals("getClass") || sMethodName.equals("getURI") || sMethodName.equals("getLabel"))
+            if (method.getDeclaringClass().equals(RDFResource.class))
+                continue;
+            if (sMethodName.equals("getClass"))
                 continue;
             Class[] aParameterTypes = method.getParameterTypes();
             if (aParameterTypes.length > 0)
@@ -337,10 +271,10 @@ public void assign (THING newThing, KnowledgeBase kb)
             String sGetMethodName = calcPropertyNameToMethodNameWithoutURI("get", sPropertyName);
             String sGetAsURIMethodName = calcPropertyNameToMethodNameWithoutURI("Get", sPropertyName + "__asURI");
 
-            Method methodPutAsURI = getClass().getMethod( sPutMethodName, new Class[] { dfki.rdf.util.RDFResource.class } );
-            Method methodClear = getClass().getMethod( sClearMethodName, new Class[] { } );
-            Method methodGet = getClass().getMethod( sGetMethodName, new Class[] { } );
-            Method methodGetAsURI = getClass().getMethod( sGetAsURIMethodName, new Class[] { } );
+            Method methodPutAsURI = myGetMethod( cls, sPutMethodName, new Class[] { RDFResource.class } );
+            Method methodClear = myGetMethod( cls, sClearMethodName, new Class[] { } );
+            Method methodGet = myGetMethod( cls, sGetMethodName, new Class[] { } );
+            Method methodGetAsURI = myGetMethod( cls, sGetAsURIMethodName, new Class[] { } );
 
             Class clsReturnType = methodGet.getReturnType();
             if (Collection.class.isAssignableFrom(clsReturnType))
@@ -394,9 +328,9 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     for (Iterator itOldValues = collOldValues.iterator(); itOldValues.hasNext(); )
     {
         Object oldValue = itOldValues.next();
-        if ( !(oldValue instanceof dfki.rdf.util.THING) && !(oldValue instanceof dfki.rdf.util.RDFResource) )
+        if ( !(oldValue instanceof RDFResource) )
             continue;  // slot value is a LITERAL => handle that case below => assign NEW slot value (overwrite old value)
-        Object newValue = find(collNewValues, getURI(oldValue));
+        Object newValue = find(collNewValues, ((RDFResource)oldValue).getURI());
 
         // if newValue == null, then the old slot value (subA_this) has to be removed
         // as this is already done (via method clearXXX), nothing has to be done in that case
@@ -408,13 +342,13 @@ void assignValues (Collection collOldValues, Collection collNewValues,
         // as this case is handled deeper below, too, we only do the other case here:
         // A L T H O U G H :   note, that this disturbs the order of the slot values !!!
         // OR WELL... DOES IT REALLY ???????????????????????????????????????????????????
-        if ( newValue instanceof dfki.rdf.util.THING )
+        if ( newValue instanceof THING )
             continue;  // newValue is not remove from collNewValues and will therfore be handled again below
 
         Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { oldValue.getClass() } );
         methodPut.invoke( this, new Object[] { oldValue } );  // insert the newer slot value
         // mark, that we've already handled that new slot value (inspected below)
-        remove(collNewValues, getURI(newValue));
+        remove(collNewValues, ((RDFResource)newValue).getURI());
     }
 
     // if collNewValues still contains some slot values => add them all
@@ -424,7 +358,7 @@ void assignValues (Collection collOldValues, Collection collNewValues,
         Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
         methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
 
-        if (newValue instanceof dfki.rdf.util.THING)
+        if (newValue instanceof THING)
             kb.put( newValue );     // now the new Java object exists in the knowledge base, too
     }
 }
@@ -454,27 +388,13 @@ boolean areAssignableFrom (Class[] pars1, Class[] pars2)
 }
 
 //----------------------------------------------------------------------------------------------------
-public static String getURI (Object obj)
-{
-    if (obj instanceof dfki.rdf.util.RDFResource)
-        return ((dfki.rdf.util.RDFResource)obj).getURI();
-    else
-    if (obj instanceof dfki.rdf.util.THING)
-        return ((dfki.rdf.util.THING)obj).getURI();
-    else
-        throw new Error("implementation error");
-}
-
-//----------------------------------------------------------------------------------------------------
 public static Object find (Collection collOther, String sURI)
 {
     for (Iterator itOthers = collOther.iterator(); itOthers.hasNext(); )
     {
         Object other = itOthers.next();
-        if ( (other instanceof dfki.rdf.util.RDFResource) && getURI(other).equals(sURI) )
-            return other;
-        else
-        if ( (other instanceof dfki.rdf.util.THING) && getURI(other).equals(sURI) )
+        if ( (other instanceof RDFResource) &&
+             ((RDFResource)other).getURI().equals(sURI) )
             return other;
     }
     return null;  // not found
@@ -486,8 +406,8 @@ public static void remove (Collection coll, String sURI)
     for (Iterator it = coll.iterator(); it.hasNext(); )
     {
         Object obj = it.next();
-        if ( (obj instanceof dfki.rdf.util.RDFResource) &&
-             ((dfki.rdf.util.RDFResource)obj).getURI().equals(sURI) )
+        if ( (obj instanceof RDFResource) &&
+             ((RDFResource)obj).getURI().equals(sURI) )
         {
             it.remove();
             return;

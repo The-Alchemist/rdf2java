@@ -1,10 +1,7 @@
 package dfki.rdf.test.assign;
 
 // RDFS2Class: imports
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Iterator;
+import java.util.*;
 // RDFS2Class: end of imports
 
 

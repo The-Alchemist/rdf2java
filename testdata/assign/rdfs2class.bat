@@ -1,7 +1,7 @@
 @echo off
 
-REM set JAVA_VM=C:\TOOLS\JBuilder5\jdk1.3\bin\java
-set JAVA_VM=java
+set JAVA_VM=C:\jdk1.3\bin\java
+REM set JAVA_VM=java
 
 REM *************************************************************
 REM set the following to the path, where you installed RDFS2Class
