@@ -60,13 +60,24 @@ public RDFNice( Model rdfModel )
 public RDFNice( String sRDFFilename )
 {
     this();
-    loadRDF( sRDFFilename );
+    loadFromFile( sRDFFilename );
+}
+
+/*******************************************************************************
+ * Initializes RDFNice with the contents in a reader.
+ * The reader is expected to deliver an XML serialization of an RDF model.
+ */
+public RDFNice( Reader reader )
+{
+    this();
+    loadFromReader( reader );
 }
 
 //------------------------------------------------------------------------------
 private RDFNice()
 {
-    try {
+    try
+    {
         m_rdfURIs = RDF.syntax();
         m_rdfsURIs = RDFS.getURIs();
         m_rdfFactory = RDF.factory();
@@ -88,36 +99,28 @@ private RDFNice()
 }
 
 /*******************************************************************************
- * Usage: <code>RDFNice &lt;rdf-file&gt; { [&lt;predicate&gt; &lt;value&gt;] }*</code>
+ * Usage: <code>RDFNice &lt;rdf-file&gt; { &lt;predicate&gt; &lt;value&gt; }*</code>
  * <br>
  * The filename of the resulting RDF file is just the name of the source file
  * plus the postfix ".nice.rdf".
  */
 static public void main( String[] args )
 {
-    try
-    {
-        if( args.length < 1 ) {
-            System.out.println( "missing parameter: <rdf-file>" );
-            return;
-        }
-        RDFNice app = new RDFNice( args[0] );
-        String sDestFile = args[0] + ".nice.rdf";
-        for( int i = 1; i < args.length; i += 2 )
-        {
-            String sPred = args[i];
-            double dValue = Double.parseDouble( args[i+1] );
-            app.setPredValue( sPred, dValue );
-        }
-        app.createNiceXML();
-        app.save( sDestFile );
-        ////System.out.println( "\n" + app.serializeToString() );
+    if( args.length < 1 ) {
+        System.out.println( "missing parameter: <rdf-file>" );
+        return;
     }
-    catch( Exception ex )
+    RDFNice app = new RDFNice( args[0] );
+    String sDestFile = args[0] + ".nice.rdf";
+    for( int i = 1; i < args.length; i += 2 )
     {
-        System.out.println( ex );
-        ex.printStackTrace();
+        String sPred = args[i];
+        double dValue = Double.parseDouble( args[i+1] );
+        app.setPredValue( sPred, dValue );
     }
+    app.createNiceXML();
+    app.save( sDestFile );
+    ////System.out.println( "\n" + app.serializeToString() );
 }
 
 /*******************************************************************************
@@ -125,6 +128,10 @@ static public void main( String[] args )
  */
 public void createNiceXML()
 {
+    if( m_bCreateNiceCalled )
+        return;
+    m_bCreateNiceCalled = true;
+
     try
     {
         createDocumentElement();  // creates m_elDoc, too
@@ -151,6 +158,7 @@ public void save( String sFilename )
 {
     try
     {
+        createNiceXML();
         PrintWriter pw = new PrintWriter( new FileOutputStream( sFilename ) );
         serializeTo( pw );
     }
@@ -167,6 +175,7 @@ public void serializeTo( Writer w )
 {
     try
     {
+        createNiceXML();
         w.write( m_xmlDoc.serialize() );
         w.flush();
         w.close();
@@ -205,19 +214,36 @@ public void setPredValue( String sPred, double dValue )
 }
 
 //------------------------------------------------------------------------------
-private void loadRDF( String sRDFFile )
+private void loadFromFile( String sRDFFile )
 {
-    try {
+    try
+    {
         m_model = m_rdfFactory.createModel();
         RDF.parse( "file:" + sRDFFile, m_rdfParser, m_model );
-
         ////System.out.println( "*** " + m_model.size() + " statements read in ***" );
-
         m_modelRest = m_model.duplicate();
     }
     catch( Exception ex )
     {
         debug().error( "exception occurred: " + ex );
+        ex.printStackTrace();
+    }
+}
+
+//------------------------------------------------------------------------------
+private void loadFromReader( Reader reader )
+{
+    try
+    {
+        m_model = m_rdfFactory.createModel();
+        RDF.parse( "http://dfki.rdf.util.rdfnice/default#load_in_by_reader", reader, m_rdfParser, m_model );
+        ////System.out.println( "*** " + m_model.size() + " statements read in ***" );
+        m_modelRest = m_model.duplicate();
+    }
+    catch( Exception ex )
+    {
+        debug().error( "exception occurred: " + ex );
+        ex.printStackTrace();
     }
 }
 
@@ -459,6 +485,7 @@ private Map/*String->Double*/ m_mapPred2Value = new HashMap();
 private TinyXMLDocument m_xmlDoc;
 private TinyXMLElement m_elDoc;
 
+private boolean m_bCreateNiceCalled = false;
 
 //------------------------------------------------------------------------------
 } // end of class RDFNice
