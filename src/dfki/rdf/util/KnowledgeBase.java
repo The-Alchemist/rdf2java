@@ -144,5 +144,16 @@ public void assign (THING thingToAssign)
 }
 
 //---------------------------------------------------------------------------
+public void assignAllThings (Collection coll)
+{
+    for (Iterator it = coll.iterator(); it.hasNext(); )
+    {
+        Object obj = it.next();
+        if (obj instanceof THING)
+            assign( (THING)obj );
+    }
+}
+
+//---------------------------------------------------------------------------
 } // end of class KnowledgeBase
 
