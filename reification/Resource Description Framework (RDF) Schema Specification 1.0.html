@@ -1,0 +1,2115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><html><head><title>Resource Description Framework (RDF) Schema Specification 1.0</title>
+   
+ <style type="text/css">
+     .EXAMPLE { margin-left: 1em }
+     </style>
+   <link rel="stylesheet" type="text/css" media="screen" href="Resource%20Description%20Framework%20%28RDF%29%20Schema%20Specification%201.0_files/W3C-CR.css"></head>
+
+
+<body>
+
+<div class="head">
+<p><a href="http://www.w3.org/"><img height="48" width="72" src="Resource%20Description%20Framework%20%28RDF%29%20Schema%20Specification%201.0_files/w3c_home.png" alt="W3C" border="0"></a></p>
+</div>
+
+<h1>Resource Description Framework<br>(RDF) Schema Specification 1.0</h1>
+
+<h2>W3C Candidate Recommendation 27 March 2000</h2>
+
+<dl><dt>This Version:</dt><dd><a href="http://www.w3.org/TR/2000/CR-rdf-schema-20000327">http://www.w3.org/TR/2000/CR-rdf-schema-20000327</a></dd><dt>Latest Version:</dt><dd><a href="http://www.w3.org/TR/rdf-schema">http://www.w3.org/TR/rdf-schema</a></dd><dt>Previous Version:</dt><dd><a href="http://www.w3.org/TR/1999/PR-rdf-schema-19990303">http://www.w3.org/TR/1999/PR-rdf-schema-19990303</a></dd><dt>Editors:</dt><dd>Dan Brickley, University of Bristol</dd><dd>R.V. Guha, Epinions</dd></dl>
+
+<br>
+
+<a href="#ack">Acknowledgments</a>
+
+<p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"> Copyright</a> ©1998,1999,2000 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.lcs.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.inria.fr/"><abbr lang="fr" title="Institut National de Recherche en Informatique et Automatique">INRIA</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>, <a href="http://www.w3.org/Consortium/Legal/copyright-documents-19990405">document use</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-software-19980720">software licensing</a> rules apply.</p>
+
+<hr>
+
+
+<h2>Abstract</h2>
+
+<p>
+This specification describes how to use RDF to describe RDF
+vocabularies. The specification also defines a basic vocabulary for this
+purpose, as well as an extensibility mechanism to anticipate future
+additions to RDF.
+</p>
+
+<h2>Status of this document</h2>
+
+<p>
+This document is a <a href="http://www.w3.org/Consortium/Process/Process-19991111/process.html#RecsCR">Candidate Recommendation</a> of the
+<a href="http://www.w3.org/">World Wide Web Consortium</a>.  
+
+Review comments on this specification should be sent by June 15, 2000 to
+&lt;<a href="mailto:www-rdf-comments@w3.org">www-rdf-comments@w3.org</a>&gt;.
+The archive of public comments is available at
+<a href="http://lists.w3.org/Archives/Public/www-rdf-comments">http://lists.w3.org/Archives/Public/www-rdf-comments</a>.
+Private comments that you wish to be visible only to the editors,
+working group chair, and W3C staff may be sent to
+&lt;<a href="mailto:w3c-rdf-review@w3.org">w3c-rdf-review@w3.org</a>&gt;.</p>
+
+<p>This specification is a revision of the Proposed Recommendation of
+<a href="http://www.w3.org/TR/1999/PR-rdf-schema-19990303">March 03
+1999</a>, incorporating editorial suggestions <a href="http://lists.w3.org/Archives/Public/www-rdf-comments">received in review
+comments</a>. A <a href="http://www.w3.org/TR/2000/CR-rdf-schema-20000327/changes">separate document</a> provides an
+overview of the main changes since the last publication of this work. 
+ With the publication of this document, the RDF Schema specification enters W3C
+<a href="http://www.w3.org/Consortium/Process/Process-19991111/process.html#RecsCR">Candidate Recommendation</a> phase.  W3C encourages active implementation to test this
+specification during the Candidate Recommendation review period; reports
+of implementation experience sent to the
+<a href="mailto:www-rdf-comments@w3.org">review address</a> are especially
+desired.</p>
+
+<p>
+The Resource Description Framework is part of the <a href="http://www.w3.org/Metadata/">W3C Metadata Activity</a>. The goal of this activity, and of RDF specifically,
+is to produce a language for the exchange of machine-understandable descriptions
+of resources on the Web. A separate specification describes the
+<a href="#refs">data model and syntax</a> for the interchange of metadata using RDF.
+</p>
+
+<p>This section describes the status of this document at the time of
+its publication. Other documents may supersede this document.
+Identified <a href="http://www.w3.org/2000/.status/CR-rdf-schema-20000327/errata">Errata</a> in this document and the
+<a href="http://www.w3.org/2000/.status/CR-rdf-schema-20000327/status">latest
+status</a> of this document series is maintained at the W3C.
+Refer to <a href="#ABOUTW3CDOCS">Appendix B</a>, About W3C Documents,
+for a description of the W3C Technical Report publishing policy.
+</p>
+
+
+<p>
+It is inappropriate to use W3C Candidate Recommendations as reference
+material or to cite them as other than "work in progress".  This is
+work in progress and does not imply endorsement by, or the consensus of
+W3C.  Advancement of a document to Candidate Recommendation is an
+explicit call for implementation and technical feedback;
+it is appropriate to build implementations based on this
+specification for the purposes of testing the specification and
+becoming familiar with it. 
+A list of current W3C Recommendations and other
+technical documents can be found at
+<a href="http://www.w3.org/TR">http://www.w3.org/TR</a>.
+</p>
+
+
+<hr width="100%">
+
+<h2>Table of Contents</h2>
+
+<ul>
+<li><a href="#intro">1. Introduction</a>
+	<ul>
+	<li><a href="#s1.1">1.1. Scope</a>
+		<ul>	
+		<li><a href="#s1.1.1">1.1.1. Platform for Internet Content Selection (PICS)</a></li>
+		<li><a href="#s1.1.2">1.1.2. Simple Web Metadata</a></li>
+		<li><a href="#s1.1.3">1.1.3. Sitemaps and Concept Navigation</a></li>
+		</ul>
+	</li>
+	</ul>
+</li>
+<li><a href="#s2">2. Classes and Properties</a>
+	<ul>
+	<li><a href="#s2.1">2.1. The Type System</a>
+		<ul>
+		<li><a href="#s2.1.1">2.1.1. Figure 1: Classes and Resources as Sets and Elements</a></li>
+		<li><a href="#s2.1.2">2.1.2. Figure 2: Class hierarchy for the RDF Schema</a></li>
+		</ul>			
+	</li>
+	<li><a href="#s2.2">2.2. Core Classes</a>
+		<ul>
+		<li><a href="#s2.2.1">2.2.1. rdfs:Resource</a></li>
+		<li><a href="#s2.2.2">2.2.2. rdf:Property</a></li>
+		<li><a href="#s2.2.3">2.2.3. rdfs:Class</a></li>
+		</ul>				
+	</li>
+	<li><a href="#s2.3">2.3. Core Properties</a>
+		<ul>
+		<li><a href="#s2.3.1">2.3.1. rdf:type</a></li>
+		<li><a href="#s2.3.2">2.3.2. rdfs:subClassOf</a></li>
+		<li><a href="#s2.3.3">2.3.3. rdfs:subPropertyOf</a></li>
+		<li><a href="#s2.3.4">2.3.4. rdfs:seeAlso</a></li>
+		<li><a href="#s2.3.5">2.3.5. rdfs:isDefinedBy</a></li>
+		</ul></li>
+	</ul>
+</li>
+
+<li><a href="#constraints">3. Constraints</a>
+	<ul>
+	<li><a href="#s3.1">3.1. Core Constraints</a>
+		<ul>
+		<li><a href="#s3.1.1">3.1.1. rdfs:ConstraintResource</a></li>
+		<li><a href="#s3.1.2">3.1.2. rdfs:ConstraintProperty</a></li>
+		<li><a href="#s3.1.3">3.1.3. rdfs:range</a></li>
+		<li><a href="#s3.1.4">3.1.4. rdfs:domain</a></li>
+		</ul></li>
+	<li><a href="#s3.2">3.2 Example</a></li>
+	</ul>
+</li>
+
+<li><a href="#extensibility">4. Extensibility Mechanisms</a>
+	<ul>
+	<li><a href="#s4.1">4.1 Evolvability of RDF vocabularies</a>
+		<ul>
+		<li><a href="#s4.1.1">4.1.1. Terminology</a></li>
+		<li><a href="#s4.1.2">4.1.2. Versioning and URI references</a></li>
+		<li><a href="#s4.1.3">4.1.3. Inter-Vocabulary Relationships</a></li>
+		</ul>
+	</li>
+	<li><a href="#s4.2">4.2. Evolvability of the RDF Schema Constraint Mechanism</a></li>
+	</ul>
+</li>
+
+<li><a href="#doc">5. Documentation</a>
+	<ul>
+	<li><a href="#s5.1">5.1. rdfs:comment</a></li>
+	<li><a href="#s5.2">5.2. rdfs:label</a></li>
+	</ul>
+</li>
+
+<li><a href="#mns">6. Model and Syntax concepts</a>
+	<ul>
+	<li><a href="#s6.1">6.1. rdfs:Literal</a></li>
+	<li><a href="#s6.2">6.2. rdf:Statement</a></li>
+	<li><a href="#s6.3">6.3. rdf:subject</a></li>
+	<li><a href="#s6.4">6.4. rdf:predicate</a></li>
+	<li><a href="#s6.5">6.5. rdf:object</a></li>
+	<li><a href="#s6.6">6.6. rdfs:Container</a></li>
+	<li><a href="#s6.7">6.7. rdf:Bag</a></li>
+	<li><a href="#s6.8">6.8. rdf:Seq</a></li>
+	<li><a href="#s6.9">6.9. rdf:Alt</a></li>
+	<li><a href="#s6.10">6.10. rdf:ContainerMembershipProperty</a></li>
+	<li><a href="#s6.11">6.11. rdf:value</a></li>
+	</ul>
+</li>
+<li><a href="#examples">7. Examples</a>
+
+	<ul>
+	<li><a href="#s7.1">7.1. Example 1</a></li>
+	<li><a href="#s7.2">7.2. Example 2</a></li>
+	</ul>
+</li>
+
+<li><a href="#s8">8. References</a>
+	<ul>
+	<li><a href="#s8.1">8.1. Normative References</a></li>
+	<li><a href="#s8.2">8.2. Informational References</a></li>
+	</ul>
+</li>
+
+<li><a href="#ack">Acknowledgments</a></li>
+<li><a href="#xmlcore">Appendix A: XML Serialization</a></li>
+</ul>
+
+<hr width="100%">
+
+<h1>RDF Schemas</h1>
+
+<h2><a name="intro"></a>1. Introduction</h2>
+
+
+<p>
+The Resource Description Framework (RDF) is a foundation for processing
+metadata; it provides interoperability between applications
+that exchange machine-understandable information on the Web.
+RDF uses XML to exchange descriptions of Web resources but the
+resources being described can be of any type, including XML and
+non-XML resources.
+RDF emphasizes facilities to enable automated processing of Web
+resources. RDF can be used in a variety of application areas, for example:
+in resource discovery to provide better search engine
+capabilities, in cataloging for describing the content and content
+relationships available at a particular Web site, page, or digital
+library, by intelligent software agents to facilitate knowledge sharing and
+exchange, in content rating, in describing collections of
+pages that represent a single logical "document", for describing
+intellectual property rights of Web pages, and for expressing the
+privacy preferences of a user as well as the privacy policies of a Web site.
+RDF with digital signatures will be key to building the
+"Web of Trust" for electronic commerce, collaboration, and other
+applications.
+</p>
+
+
+
+<p>
+Descriptions used by these applications can be modeled as
+relationships among Web resources.  The RDF data model, as specified in
+[<a href="#refs">RDFMS</a>], defines a simple model for describing
+interrelationships among resources in terms of named properties and values.
+RDF properties may be thought of as attributes of resources and in this sense
+correspond to traditional attribute-value pairs. RDF properties also
+represent relationships between resources. As such, the RDF data model can
+therefore resemble an entity-relationship diagram.  The RDF data model,
+however, provides no mechanisms for declaring these properties, nor does it
+provide any mechanisms for defining the relationships between these
+properties and other resources.  That is the role of RDF Schema.
+</p>
+
+<p>Resource description communities require the ability to say certain things
+about certain kinds of resources. For describing bibliographic resources,
+for example, descriptive attributes including "author", "title", and "subject"
+are common. For digital certification, attributes such as "checksum" and
+"authorization" are often required. The declaration of these properties (attributes)
+and their corresponding semantics are defined in the context of RDF as an
+<em>RDF schema</em>. A schema defines not only the
+properties of the resource (e.g., title, author, subject, size, color, etc.) but
+may also define the kinds of resources being described (books, Web pages,
+people, companies, etc.).
+</p>
+
+<p>
+This document does not specify a vocabulary of descriptive elements
+such as "author". Instead, it specifies the mechanisms
+needed to define such elements, to define the classes of resources they 
+may be used with, to restrict possible combinations of classes and relationships, 
+and to detect violations of those restrictions. Thus, this document 
+defines a <em>schema specification language</em>. More succinctly, the 
+RDF Schema mechanism provides a basic <em>type system</em> for use in RDF 
+models. It defines resources and properties  such as
+<code>rdfs:Class</code> and <code>rdfs:subClassOf</code> that are used in
+specifying application-specific schemas.
+</p>
+
+<p>
+The typing system is specified in terms of the basic RDF data model - as
+resources and properties.
+Thus, the resources constituting this typing system become
+part of the RDF model of any description that uses them. The schema
+specification language is a declarative representation language influenced by ideas from knowledge
+ representation (e.g., semantic nets, frames, predicate logic) as well as
+ database schema specification languages (e.g. <a href="#refs">NIAM</a>)
+and graph data models. The RDF schema specification language is less expressive, but much
+ simpler to implement, than full predicate calculus languages such as
+CycL [<a href="#cyclcite">CycL</a>]  and KIF [<a href="#kifcite">KIF</a>].
+</p>
+
+<p>
+RDF and the RDF Schema language were also based on metadata research
+in the Digital Library community. In particular, RDF adopts a
+modular approach to metadata that can be considered an implementation of
+the Warwick Framework [<a href="#wfcite">WF</a>]. RDF represents an evolution of the Warwick
+Framework model in that the Warwick Framework allowed each
+metadata vocabulary to be represented in a different syntax. In RDF,
+all vocabularies are expressed within a single well defined model. This
+allows for a finer grained mixing of machine-processable
+vocabularies, and addresses the need [<a href="#xlcite">EXTWEB</a>] to
+create metadata in which statements can draw upon multiple vocabularies
+that are managed in a decentralized fashion by independent communities of
+expertise.
+</p>
+
+<p>
+RDF Schemas might be contrasted with XML Document Type
+Definitions (DTDs) [<a href="#dtdcite">XML</a>] and XML Schemas
+[<a href="#xmlschemacite">XMLSCHEMA</a>].  Unlike an XML DTD or Schema,
+which gives specific constraints on the structure of an XML document, an
+RDF Schema provides information about the interpretation of the statements
+given in an RDF data model.  While an XML Schema can be used to validate
+the syntax of an RDF/XML expression, a syntactic schema alone is not
+sufficient for RDF purposes. RDF Schemas may also specify constraints
+that should be followed by these data models.
+Future work on RDF Schema and XML Schema might enable the simple
+combination of syntactic and semantic rules from both
+[<a href="#cccite">SCHEMA-ARCH</a>].
+</p>
+
+<p>This RDF Schema specification has intentionally left unspecified
+a set of primitive datatypes.  As RDF uses XML for its interchange
+encoding, the work on data typing in XML
+[<a href="#xmldatatypescite">XMLDATATYPES</a>] itself should be
+the foundation for such a capability.</p>
+
+<a name="s1.1"></a>
+<h3>1.1. Scope</h3>
+
+<p>
+The RDF Schema specification is not aimed at theoretical issues, but at solving a
+small number of immediate problems. Its creators expect that other problems (some of
+which are illustrated in the examples below) will share similar characteristics
+and that they also may be able to use the basic classes described in this
+specification.
+</p>
+
+<p>
+The RDF Schema specification was directly influenced by consideration
+of the following problems:
+</p>
+
+<a name="s1.1.1"></a>
+<h4>1.1.1. Platform for Internet Content Selection (PICS)</h4>
+
+<p>
+The RDF Model and Syntax is adequate to represent PICS labels
+ [<a href="#refs">PICS</a>], however it does not provide a general-purpose
+mapping from PICS rating systems into an RDF representation. One such
+mapping is described in a <a href="#picsrdfcite">separate document</a>.
+</p>
+
+<a name="s1.1.2"></a>
+<h4>1.1.2. Simple Web Metadata</h4>
+
+<p>
+One obvious application for RDF is in the description of Web pages.
+This is one of the basic goals of the Dublin Core [<a href="#refs">DC</a>]
+Metadata Initiative. The Dublin Core Element Set is a set of 15 elements
+believed to be broadly applicable to describing Web resources to enable
+their discovery. The Dublin Core has been a major influence on the
+development of RDF. An important consideration in the development of the
+Dublin Core was to not only allow simple descriptions, but also to provide the ability to qualify descriptions in
+order to provide both domain specific elaboration and descriptive precision.
+</p>
+
+<p>
+The RDF Schema Specification provides a machine-understandable
+system for defining schemas for descriptive vocabularies like the Dublin
+Core. It allows designers to specify classes of resource types and properties 
+to convey descriptions of those classes,
+relationships between those properties and classes,
+and constraints on the allowed
+combinations of classes, properties, and values.
+</p>
+
+<a name="s1.1.3"></a>
+<h4>1.1.3. Sitemaps and Concept Navigation</h4>
+
+<p>
+A sitemap is a hierarchical description of a Web site. A subject taxonomy
+is a classification system that might be used by content creators or trusted 
+third parties to organize or classify Web resources.
+The RDF Schema specification provides a mechanism for defining the vocabularies
+needed for such applications.
+</p>
+
+<p>
+Thesauri and library classification schemes are well known examples of
+hierarchical systems for representing subject taxonomies in terms of the
+relationships between named concepts. The RDF Schema specification
+provides sufficient resources for creating  RDF models that represent the
+logical structure of thesauri (and other library classification systems).
+</p>
+
+
+<a name="s1.1.4"></a>
+<h4>1.1.4. P3P</h4>
+
+<p>
+The W3C Platform for Privacy Preferences Project
+(<a href="http://www.w3.org/P3P/">P3P</a>) has specified a grammar
+for constructing statements about a site's data collection practices and personal
+preferences as exercised over those practices, as well as a syntax for
+exchanging structured data.
+</p>
+
+<p>
+Although personal data collection practices have been described in P3P
+using an application-specific XML tagset, there are benefits to
+using a general metadata model for this data.  The structure of
+P3P policies can be interpreted as an RDF model.  Using a metadata
+schema to describe the semantics of privacy practice
+descriptions will permit privacy practice data to be used along 
+with other metadata in a query during resource discovery, and will 
+permit a generic software agent to act on privacy metadata using
+the same techniques as used for other descriptive metadata.
+Extensions to P3P that describe the specific data elements collected
+by a site could use RDF Schema to further specify how those data
+elements are used.
+</p>
+
+ 
+
+
+<a name="s2"></a>
+<h2><a name="core"></a>2. Classes and Properties</h2>
+
+
+
+<p>
+An RDF Schema is expressed by the data model described in the RDF Model
+and Syntax [<a href="#refs">RDFMS</a>] specification. The schema description
+language is simply a set of resources and properties defined by the RDF Schema
+Specification and implicitly part of every RDF model using the RDF schema
+machinery.
+</p>
+
+<p>
+This document specifies the RDF Schema mechanism as a set of RDF
+resources (including classes and properties), and constraints on their
+relationships. The abstract RDF Schema core vocabulary can be used to make RDF
+statements defining and describing application-specific vocabularies such as the
+Dublin Core Element Set.
+</p>
+
+<a name="s2.1"></a>
+<h3>2.1. The Type System</h3>
+<p>
+The RDF Schema defined in this specification is a collection of RDF resources
+that can be used to describe properties of other RDF resources (including properties)
+which define application-specific RDF vocabularies.
+The core schema vocabulary is defined in a namespace informally called
+'<code>rdfs</code>' here, and identified by
+the URI reference <code>http://www.w3.org/2000/01/rdf-schema#</code>.
+This specification also uses the prefix '<code>rdf</code>' to refer to
+the core RDF namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.
+</p>
+
+<p>
+As described in the RDF Model and Syntax specification
+[<a href="#rdfmscite">RDFMS</a>], resources may be instances of
+one or more classes; this is indicated with the <code>rdf:type</code>
+property. Classes themselves are often organized in a hierarchical
+fashion, for example a class <code>Dog</code> might be considered  a subclass of
+<code>Mammal</code> which is a subclass of <code>Animal</code>, meaning that any
+resource which is of <code>rdf:type</code> <code>Dog</code> is also considered to be of
+<code>rdf:type</code> <code>Animal</code>. This specification describes a
+property, <code>rdfs:subClassOf</code>, to denote such relationships
+between classes.
+</p>
+
+<p>
+The RDF Schema type system is similar to the type systems of
+object-oriented programming languages such as Java.
+However,  RDF differs from many such systems in that instead of defining
+a class in terms of the properties its instances may have, an RDF schema
+will define properties in terms of the classes of resource to which
+they apply. This is the role of the <code>rdfs:domain</code> and
+<code>rdfs:range</code> constraints described in
+<a href="#constraints">Section 3</a>. For example,
+we could define the <code>author</code> property to
+have a domain of <code>Book</code> and a range of <code>Literal</code>,
+whereas a classical OO system might typically define a class
+<code>Book</code> with an attribute called
+<code>author</code> of type <code>Literal</code>. One benefit of the RDF
+property-centric approach is that it is very easy for anyone to say
+anything they want about existing resources, which is one of the
+architectural principles of the Web [<a href="#rdfnotcite">BERNERS-LEE98</a>].
+</p>
+
+<p>
+This specification anticipates the development of a set of classes corresponding to a set of 
+datatypes. This specification does not define any specific datatypes, but
+does note that datatypes may be used as the value of the 
+<code>rdfs:range</code> property.
+</p>
+
+
+ 
+
+<a name="s2.1.1"></a>
+<h4> 2.1.1. Figure 1: Classes and Resources as Sets and Elements</h4>
+
+<b>Figure 1</b> illustrates the concepts of class, subclass, and
+resource. A class is depicted by a rounded rectangle; a resource is
+depicted by a large dot. In the figure below, arrows are drawn from a
+resource to the class it defines. A subclass is shown by having a rounded rectangle (the
+subclass) completely enclosed by another (the superclass). If a resource
+is inside a class, then there exists either an explicit or implicit
+<code>rdf:type</code> property of that resource whose value is the resource defining the
+containing class. (These properties are shown as arcs in the directed labelled
+graph representation in figure 2). The RDF resources depicted in figure 1
+are described either in the remainder of this specification, or in the RDF
+Model and Syntax specification.
+
+<center>
+<p>
+<img src="Resource%20Description%20Framework%20%28RDF%29%20Schema%20Specification%201.0_files/sets.gif" alt="Figure 1: Classes and Resources as Sets and Elements">
+<br><b>Figure 1</b>: Classes and Resources as Sets and Elements
+<br>
+</p>
+</center>
+
+
+
+<a name="s2.1.2"></a>
+<h4>2.1.2. Figure 2: Class hierarchy for the RDF Schema</h4>
+
+<p>
+<b>Figure 2</b> shows the same information about the class hierarchy
+as in figure 1, but does so using a "nodes and arcs" graph representation of
+the RDF data model.
+If one class is a subset of another, then there is an <code>rdfs:subClassOf</code>
+ arc from the node 
+representing the first class to the node representing the second. Similarly,
+if a resource is an instance of a class, then there is an <code>rdf:type</code>
+arc from the resource to the node representing the class. Not all such arcs are shown.
+We only show the arc to the most tightly encompassing class, and rely on the transitivity
+of the <code>rdfs:subClassOf</code> relation to provide the rest.
+</p>
+
+<center>
+<p>
+<img src="Resource%20Description%20Framework%20%28RDF%29%20Schema%20Specification%201.0_files/hierarchy.gif" alt="Figure 2: Class Hierarchy for the RDF Schema">
+<br><b>Figure 2</b>: Class Hierarchy for the RDF Schema
+</p>
+</center>
+
+
+<a name="s2.2"></a>
+<h3>2.2. Core Classes</h3>
+<p>
+The following resources are the core classes that are defined as part of the
+RDF Schema vocabulary. Every RDF model that draws upon the RDF
+Schema namespace (implicitly) includes these.
+</p>
+
+
+
+<a name="s2.2.1"></a>
+<h4>2.2.1. rdfs:Resource</h4>
+<p>
+All things being described by RDF expressions are called <em>resources</em>, and are
+considered to be instances of the class <code>rdfs:Resource</code>.
+The RDF class <code>rdfs:Resource</code>
+represents the set called 'Resources' in the formal model for RDF presented in section 5 of
+the Model and Syntax specification [<a href="#rdfmscite">RDFMS</a>].
+</p>
+
+<a name="s2.2.2"></a>
+<h4>2.2.2. rdf:Property</h4>
+<p>
+<code>rdf:Property</code> represents the subset of RDF resources that are properties,
+ i.e., all the elements of the set introduced as 'Properties' in section 5 of the Model
+ and Syntax specification [<a href="#rdfmscite">RDFMS</a>].
+</p>
+
+
+
+<a name="s2.2.3"></a>
+<h4>2.2.3. rdfs:Class</h4>
+<p>
+This corresponds to the generic concept of a <em>Type</em> or
+<em>Category</em>, similar to the notion of a Class in object-oriented
+programming languages such as Java.
+When a schema defines a new class, the resource representing that class must
+have an <code>rdf:type</code> property whose value is the resource <code>rdfs:Class</code>.
+RDF classes can be defined to represent almost anything, such as Web pages, people, document types,
+databases or abstract concepts.
+</p>
+
+
+<a name="s2.3"></a>
+<h3>2.3. Core Properties</h3>
+<p>
+Every RDF model which uses the schema mechanism
+also (implicitly) includes the following core properties.
+These are instances of the <code>rdf:Property</code> class and provide
+a mechanism for expressing relationships between classes and their instances
+or superclasses.
+</p>
+
+
+<a name="s2.3.1"></a>
+<h4>2.3.1. rdf:type</h4>
+<p>
+This indicates that a resource is a member of a class, and thus has all
+the characteristics that are to be expected of a member of that class.
+When a resource has an <code>rdf:type</code> property whose value is
+some specific class, we say
+that the resource is an <em>instance of</em> the specified class. The value of an
+<code>rdf:type</code> property for some resource is
+another resource which must be an instance of <code>rdfs:Class</code>.
+The resource known as <code>rdfs:Class</code> is itself a resource of <code>rdf:type</code>
+<code>rdfs:Class</code>. Individual classes (for example, 'Dog') will always have an
+<code>rdf:type</code> property whose value is <code>rdfs:Class</code> (or some subclass
+of <code>rdfs:Class</code>, as described in section 2.3.2). A resource may be an instance
+of more than one class.
+</p>
+
+
+
+<a name="s2.3.2"></a>
+<h4>2.3.2. rdfs:subClassOf</h4>
+<p>
+This property specifies a subset/superset relation between classes.
+The <code>rdfs:subClassOf</code> property is transitive.
+If class A is a subclass of some broader class B, and B is a subclass of
+C, then A is also implicitly a subclass of C. Consequently, resources
+that are instances of class A will also be instances of C, since A is a
+sub-set of both B and C. Only instances of <code>rdfs:Class</code> can have the
+<code>rdfs:subClassOf</code> property and the property value is always of
+<code>rdf:type</code> <code>rdfs:Class</code>. A class may be a
+subclass of more than one class.
+</p>
+
+<p>
+A class can never be declared to be a subclass of itself, nor of any
+of its own subclasses. Note that this constraint is <em>not</em> expressible
+using the RDF Schema constraint facilities provided below, and so does
+not appear in the RDF version of this specification given in Appendix A.
+</p>
+
+
+
+<a name="s2.3.2.1"></a>
+<h5>2.3.2.1. Example</h5>
+
+<p>
+This is a very simple example that expresses the following class
+hierarchy. We first define a class <code>MotorVehicle</code>. We then
+define three subclasses of <code>MotorVehicle</code>, namely <code>PassengerVehicle</code>, 
+<code>Truck</code> and
+<code>Van</code>. We then define a class <code>Minivan</code> which is a subclass of both
+<code>Van</code> and <code>PassengerVehicle</code>.
+</p>
+
+
+<center>
+<p><img src="Resource%20Description%20Framework%20%28RDF%29%20Schema%20Specification%201.0_files/car_classes.gif" alt="Example Vehicles class hierarchy"></p></center> 
+
+<p>
+The RDF/XML shown here uses the basic RDF syntax defined in section 2.2.1
+of the Model and Syntax specification [<a href="#refs">RDFMS</a>]. 
+abbreviation mechanism provided by the RDF serialization syntax. 
+</p>
+
+<center>
+<table cellpadding="5" border="1" width="95%">
+<tbody><tr>
+<td><pre><code>
+&lt;rdf:RDF xml:lang="en"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+
+&lt;!-- Note: this RDF schema would typically be used in RDF instance data 
+     by referencing it with an XML namespace declaration, for example
+     xmlns:xyz="http://www.w3.org/2000/03/example/vehicles#".  This allows
+     us to use abbreviations such as xyz:MotorVehicle to refer
+     unambiguously to the RDF class 'MotorVehicle'. --&gt;
+
+&lt;rdf:Description ID="MotorVehicle"&gt;
+ &lt;rdf:type resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+ &lt;rdfs:subClassOf
+  rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Description&gt;
+
+&lt;rdf:Description ID="PassengerVehicle"&gt;
+ &lt;rdf:type resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+ &lt;rdfs:subClassOf rdf:resource="#MotorVehicle"/&gt;
+&lt;/rdf:Description&gt;
+
+&lt;rdf:Description ID="Truck"&gt;
+ &lt;rdf:type resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+ &lt;rdfs:subClassOf rdf:resource="#MotorVehicle"/&gt;
+&lt;/rdf:Description&gt;
+
+&lt;rdf:Description ID="Van"&gt;
+ &lt;rdf:type resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+ &lt;rdfs:subClassOf rdf:resource="#MotorVehicle"/&gt;
+&lt;/rdf:Description&gt;
+
+&lt;rdf:Description ID="MiniVan"&gt;
+ &lt;rdf:type resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+ &lt;rdfs:subClassOf rdf:resource="#Van"/&gt;
+ &lt;rdfs:subClassOf rdf:resource="#PassengerVehicle"/&gt;
+&lt;/rdf:Description&gt;
+
+&lt;/rdf:RDF&gt;
+</code></pre></td>
+</tr>
+</tbody></table>
+</center>
+
+
+
+
+<a name="s2.3.3"></a>
+<h4>2.3.3. rdfs:subPropertyOf</h4>
+
+<p>
+The property <code>rdfs:subPropertyOf</code> is an instance of 
+<code>rdf:Property</code> that is used to specify that one
+property is a specialization of another.
+A property may be a specialization of zero, one or more properties.
+If some property P2 is a <code>subPropertyOf</code> another more
+general property P1, and if a resource A has a P2 property with a value B,
+this implies that the resource A also has a P1 property with
+value B.
+</p>
+
+<p>
+A property can never be declared to be a subproperty of itself, nor of
+any of its own subproperties. Note that this constraint is <em>not</em>
+expressible using the RDF Schema constraint facilities provided below,
+and so does not appear in the RDF version of this specification given in
+Appendix A.
+</p>
+
+
+
+
+<a name="s2.3.3.1"></a>
+<h5>2.3.3.1. Example</h5>
+<p>
+If the property <code>biologicalFather</code> is a
+subproperty of the broader property <code>biologicalParent</code>, and if
+Fred is the 
+<code>biologicalFather</code> of John, then it is implied that Fred is also the
+<code>biologicalParent</code> of John.
+</p>
+
+
+
+<center>
+<table cellpadding="5" border="1" width="95%">
+<tbody><tr>
+<td><pre><code>
+&lt;rdf:RDF xml:lang="en"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+
+&lt;rdf:Description ID="biologicalParent"&gt;
+ &lt;rdf:type resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdf:Description&gt;
+
+&lt;rdf:Description ID="biologicalFather"&gt;
+ &lt;rdf:type resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+ &lt;rdfs:subPropertyOf rdf:resource="#biologicalParent"/&gt;
+&lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
+
+</code></pre></td>
+</tr>
+</tbody></table>
+</center>
+
+
+
+
+
+<a name="s2.3.4"></a>
+<h4>2.3.4. rdfs:seeAlso</h4>
+
+<p>
+The property <code>rdfs:seeAlso</code>
+specifies a resource that might provide additional information about the
+subject resource. This
+property may be specialized using <code>rdfs:subPropertyOf</code> to more precisely
+indicate the nature of the information the object resource has about the 
+subject resource. The object and the subject resources are <a href="#constraints">constrained</a> only to be instances of the class
+<code>rdfs:Resource</code>.
+</p>
+
+
+
+
+<a name="s2.3.5"></a>
+<h4>2.3.5. rdfs:isDefinedBy</h4>  
+
+<p>
+The property <code>rdfs:isDefinedBy</code> is a subproperty of
+<code>rdfs:seeAlso</code>, and indicates the resource 
+defining the subject resource. As with <code>rdf:seeAlso</code>, this
+property can be applied to any instance of <code>rdfs:Resource</code> and may have
+as its value any <code>rdfs:Resource</code>.
+</p>
+
+<p>
+The most common anticipated usage is to identify an RDF schema, given a
+name for one of the properties or classes defined by that schema.
+Although XML namespace declarations will typically provide the URI where
+RDF
+vocabulary resources are defined, there are cases where additional
+information is required.  
+</p>
+
+<p>
+For example, constructs such as <br>
+<code>&lt;rdfs:subPropertyOf
+rdf:resource="http://purl.org/dc/elements/1.0/Creator"/&gt;</code><br>
+do not 
+indicate the URI of the schema that includes the vocabulary item
+<code>Creator</code> (i.e., <code>http://purl.org/dc/elements/1.0/</code>). 
+</p>
+
+<p>
+In such cases, the <code>rdfs:isDefinedBy</code> property can be used to explicitly
+represent that
+information. This approach will also work when the URIs of the namespace and its
+components have no obvious relationship, as would be the case if they
+were identified using schemes such as GUIDs or MD-5 hashes.
+</p>
+
+
+
+
+
+
+<a name="s3"></a>
+<h2><a name="constraints"></a>3. Constraints</h2>
+
+<p>
+This specification introduces an RDF vocabulary for making statements
+about constraints on the use of properties and classes in RDF data. For example, an RDF schema
+might describe limitations on the types of values that are valid for some property, or on
+the classes to which it makes sense to ascribe such properties.
+</p>
+
+<p>
+RDF Schema provides a mechanism for describing such constraints, but does
+not say whether or how an application must process the constraint information.
+For example, while an RDF schema can assert that  
+an <code>author</code> property is used to indicate resources that are members of
+the class <code>Person</code>, it does not say whether or how an application should act in processing
+that class information. We expect that different applications will use these
+constraints in different ways - e.g., a validator will look for errors,
+an interactive editor might suggest legal values, and a reasoning
+application might infer the class and then announce any inconsistencies.
+</p>
+
+<p>
+RDF schemas can express constraints that relate vocabulary items from
+multiple independently developed schemas. Since URI references are used to
+identify classes and properties, it is possible to create new properties
+whose <code>domain</code> or <code>range</code> constraints
+reference classes defined in another namespace.
+</p>
+
+
+<p>
+The following constraints are specified in RDF Schema 1.0: <code>rdfs:domain</code>
+and <code>rdfs:range</code> constraints on property usage,
+the rule that <code>rdfs:subPropertyOf</code> and <code>rdfs:subClassOf</code> properties
+should not form loops, plus any further constraints defined using the
+<code>rdfs:ConstraintResource</code> extensibility mechanism.
+Different applications may exhibit different behaviors when dealing with
+RDF constraints.
+</p>
+
+<p>
+Some examples of constraints include:
+</p>
+
+<ul>
+ <li>
+ That the value of a property should be a resource of a designated class.
+This is known as a <em>range</em> constraint. For example, a range
+ constraint applying to the <code>author</code> property might express that the
+ value of an <code>author</code> property must be a resource of class <code>Person</code>.
+ </li>
+
+ <li>
+ That a property may be used on resources of a certain class.
+This is known as a <em>domain</em> constraint.
+ For example, that the <code>author</code> property could only originate from a
+ resource that was an instance of class <code>Book</code>.
+ </li>
+</ul>
+
+
+<p>
+This specification does not attempt to enumerate every possible form of 
+constraint applicable to RDF vocabulary description. Instead, some basic 
+constraint mechanisms are defined here, accompanied by an <a href="#extensibility">extension facility</a> to allow for the subsequent
+additions of new types of constraint.
+</p>
+
+<p>
+Although the RDF data model does not allow for explicit properties (such
+as an <code>rdf:type</code> property) to be ascribed to Literals (atomic values),
+we nevertheless consider these entities to be members of classes (e.g.,
+the string "John Smith" is considered to be a member of the class
+<code>rdfs:Literal</code>.)
+</p>
+
+<blockquote>
+Note: We expect future work in RDF and XML data-typing to provide
+clarifications in this area.
+</blockquote>
+
+
+
+
+<a name="s3.1"></a>
+<h3>3.1. Core Constraints</h3>
+
+
+
+<a name="s3.1.1"></a>
+<h4>3.1.1. rdfs:ConstraintResource</h4>
+<p>
+This resource defines a subclass of <code>rdfs:Resource</code> whose
+instances are RDF schema constructs involved in the expression of
+constraints.  The purpose of this class is to provide a mechanism
+that allows RDF processors to assess their ability to use the constraint
+information associated with an RDF model. Since this specification does not provide a
+mechanism for the dynamic discovery of new forms of constraint, an RDF
+Schema 1.0 processor encountering previously unknown instances of
+<code>rdfs:ConstraintResource</code> can be sure that it is
+unqualified to determine the meaning of those constraints.
+</p>
+
+
+
+<a name="s3.1.2"></a>
+<h4>3.1.2. rdfs:ConstraintProperty</h4>
+
+<p>
+This resource defines a subclass of <code>rdf:Property</code>, all of whose instances
+are properties used to specify constraints. This class is a subclass
+of <code>rdfs:ConstraintResource</code> and corresponds to the subset of
+that class representing properties. Both <code>rdfs:domain</code>
+and <code>rdfs:range</code> are instances of
+<code>rdfs:ConstraintProperty</code>.
+</p>
+
+
+
+
+<a name="s3.1.3"></a>
+<a name="range_description"></a>
+<h4>3.1.3. rdfs:range</h4>
+
+<p>
+An instance of <code>ConstraintProperty</code> that is used to
+indicate the class(es) that the values of a property must be members of.
+The value of a <code>range</code> property is always a
+<code>Class</code>. Range constraints are only applied to properties.
+</p>
+
+<p>
+A property can have at most one <em>range</em> property. It is possible for it to have <em>no</em> range, in which case the class of the property value is unconstrained.
+</p>
+
+<h5>Constraints on rdfs:range</h5>
+
+<p>
+The <code>rdfs:domain</code> of <code>rdfs:range</code> is the class
+<code>rdf:Property</code>. 
+This indicates that the <code>range</code> property applies to resources that are themselves properties.
+</p>
+
+<p>
+The <code>rdfs:range</code> of <code>rdfs:range</code> is the class
+<code>rdfs:Class</code>. 
+This indicates that any resource that is the value of a range property will be a class.
+</p>
+
+<h5>Note: specifying multiple range classes</h5>
+<blockquote>
+Although it is not permitted to express two or more <code>range</code>
+constraints on a property,
+a similar outcome can be achieved by defining a common superclass for any classes
+that represent appropriate values for some property. For example, to express the
+constraint that a property <code>xyz:drivesMotorVehicle</code> can have
+values which are Vans, Trucks or PassengerVehicles, we assert that
+<code>xyz:drivesMotorVehicle</code> has a <code>rdfs:range</code> of
+<code>MotorVehicle</code>. If <code>Van</code>, <code>Truck</code> and
+<code>PassengerVehicle</code> are known to be subclasses of
+<code>MotorVehicle</code>, then all these types of resource are acceptable
+values for <code>xyz:drivesMotorVehicle</code>. In cases where a common superclass
+does not exist, one can be defined in a schema in the normal manner.
+</blockquote>
+
+
+
+
+
+<a name="s3.1.4"></a>
+<a name="domain_description"></a>
+<h4>3.1.4. rdfs:domain</h4>
+
+<p>
+An instance of <code>ConstraintProperty</code> that is used to indicate 
+the class(es) on whose members a property can be used. 
+</p>
+
+<p>A property may have
+zero, one, or more than one class as its domain. If there is no domain
+property, it may be used with any resource. If there is exactly one domain
+property, it may only be used on instances of that class (which is the
+value of the domain property).
+If there is more than one domain property, the constrained property
+can be used with instances of <em>any</em> of the classes (that are values of
+those domain properties).
+</p>
+
+<h5>Constraints on rdfs:domain</h5>
+
+<p>
+The <code>rdfs:domain</code> of <code>rdfs:domain</code> is the class
+<code>rdf:Property</code>. 
+This indicates that the domain property is used on resources that are properties.
+
+</p>
+
+<p>
+The <code>rdfs:range</code> of <code>rdfs:domain</code> is the class
+<code>rdfs:Class</code>. 
+This indicates that any resource that is the value of a domain property 
+will be a class.
+</p>
+
+
+
+
+<blockquote>
+Note: This specification does not constraint the number of
+<code>rdfs:domain</code> properties that a property may have.
+If there is no <code>domain</code> property, we know nothing about the classes with which
+the property is used. If there is more than one <code>rdfs:domain</code> property,
+the constrained property can be used with resources that are members of <em>any</em>
+ of the indicated classes.  Note that unlike <code>range</code> this is
+a very weak constraint.
+</blockquote>
+
+
+<a name="fig4_constraints"></a>
+<h4>Figure 4: Constraints in the RDF Schema</h4>
+<p>
+The RDF Schema uses the constraint properties to constrain how its
+own properties can be used. These constraints are shown below in
+<strong>figure 4</strong>. Nodes with <b>bold</b> outlines are instances of
+<code>rdfs:Class</code>.
+</p>
+
+<center>
+	<p>
+	<img src="Resource%20Description%20Framework%20%28RDF%29%20Schema%20Specification%201.0_files/constraints.gif" alt="Figure 3:  Constraints in the RDF Schema">
+	<br><b>Figure 3</b>: Constraints in the RDF Schema
+	</p>
+</center>
+
+
+
+
+
+<a name="s3.2"></a>
+<h4>3.2. Example</h4>
+
+<p>
+Continuing with our earlier example of <code>MotorVehicle</code>, in this
+example,
+we define two properties : <code>registeredTo</code> and
+<code>rearSeatLegRoom</code>.
+The <code>registeredTo</code> property is applicable to any
+<code>MotorVehicle</code>
+and its value is a <code>Person</code> (defined in the examples
+below). For the sake of this example, <code>rearSeatLegRoom</code> only
+applies to <code>Minivan</code>s and
+<code>PassengerVehicle</code>s. The value is a <code>Number</code> (we
+anticipate that some concept like this will be provided by future work on
+data types), which is the number of centimeters of rear seat legroom.
+</p>
+
+<center>
+<table cellpadding="5" border="1" width="95%">
+<tbody><tr>
+<td><pre><code>
+&lt;rdf:RDF xml:lang="en"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+
+&lt;rdf:Description ID="registeredTo"&gt;
+ &lt;rdf:type resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+ &lt;rdfs:domain rdf:resource="#MotorVehicle"/&gt;
+ &lt;rdfs:range rdf:resource="#Person"/&gt;
+&lt;/rdf:Description&gt;
+
+&lt;rdf:Description ID="rearSeatLegRoom"&gt;
+ &lt;rdf:type resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+ &lt;rdfs:domain rdf:resource="#PassengerVehicle"/&gt;
+ &lt;rdfs:domain rdf:resource="#Minivan"/&gt;
+ &lt;rdfs:range rdf:resource="http://www.w3.org/2000/03/example/classes#Number"/&gt;
+&lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
+
+</code></pre></td>
+</tr>
+</tbody></table>
+</center>
+
+
+
+
+<a name="s4"></a>
+<a name="extensibility"></a>
+<h2>4. Extensibility Mechanisms</h2>
+
+<p>
+The RDF Schema specification builds upon the foundations
+provided by XML and by the RDF Model and Syntax.
+It provides some additional facilities to support the
+evolution both of individual RDF vocabularies, and of the core RDF Schema
+specification vocabulary introduced in this document.
+</p>
+
+
+
+
+<a name="s4.1"></a>
+<h3>4.1. Evolvability of RDF vocabularies</h3>
+
+<p>
+The Resource Description Framework is intended to be flexible and easily
+extensible; this suggests that a great variety of schemas will be created
+and that new and improved versions of these schemas will be a common
+occurrence on the Web.  
+</p>
+
+
+
+<a name="s4.1.1"></a>
+<h4>4.1.1. Terminology</h4>
+<p>
+The phrase 'RDF vocabulary' is used here to refer to those resources which
+evolve over time; 'RDF schema' is used to denote those resources which
+constitute the particular (unchanging) versions of an RDF vocabulary at
+any point in time. Thus we might talk about the evolution of the
+Dublin Core vocabulary. Each version of the Dublin Core
+vocabulary would be a different RDF <em>schema</em>, and would have a
+corresponding RDF model and concrete syntactic representation.
+</p>
+
+
+
+
+
+
+<a name="s4.1.2"></a>
+<h4>4.1.2. Versioning and URI references</h4>
+
+<p>
+RDF uses the XML Namespace facility [<a href="#xmlnscite">XMLNS</a>] to
+identify the schema in which the properties and classes are defined.
+Since changing the logical structure of a schema risks
+breaking other RDF models which depend on that schema, this specification
+recommends that a new namespace URI should be declared
+whenever an RDF schema is changed.
+</p>
+
+<p>
+In effect, changing the RDF statements which constitute a schema creates a
+new one; new schema namespaces should have their own URI to avoid
+ambiguity. Since an RDF Schema URI unambiguously identifies a single
+version of a schema, software that uses or manages RDF (eg., caches)
+should be able to safely store copies of RDF schema models for an
+indefinite period. The problems of RDF schema evolution share many
+characteristics with XML DTD version management and the general problem
+of Web resource versioning. A general approach to these issues is beyond
+the scope of this specification.
+</p>
+
+<p>
+Since each RDF schema has its own unchanging URI, these can be used to
+construct unique URI references for the resources defined in a schema. This is
+achieved by combining the local identifier for a resource with the URI
+associated with that schema namespace. The XML representation of RDF uses
+the XML namespace mechanism for associating elements and attributes with
+URI references for each vocabulary item used.
+</p>
+
+
+
+
+
+
+<a name="s4.1.3"></a>
+<h4>4.1.3. Inter-Vocabulary Relationships</h4>
+
+<p>
+The resources defined in RDF schemas are themselves Web resources, and
+can be described in other RDF schemas. This principle provides the
+basic mechanism for RDF vocabulary evolution. This specification does not
+attempt to provide a full framework for expressing mappings between
+schemas; it does however provide the <code>rdfs:subClassOf</code> and
+<code>rdfs:subPropertyOf</code> properties. The ability to express
+specialization relationships between classes (<code>subClassOf</code>) and
+between properties (<code>subPropertyOf</code>) provides a simple
+mechanism for making statements about how such resources map to
+their predecessors.
+</p>
+
+<p>
+There are many scenarios for which these simple mechanisms are not
+adequate; a more comprehensive schema mapping mechanism for RDF may be developed
+in future W3C Activity.
+</p>
+
+
+
+<a name="s4.1.3.1"></a>
+<h5>4.1.3.1. Examples</h5>
+
+<p>
+A schema representing version 1.0 of some vocabulary might define
+classes corresponding to a number of vehicle types. The schema for version
+2.0 of this vocabulary constitutes a different Web resource. If the new
+schema defines for example a class 'Van' whose members are a subset of the
+members of the class 'Van' in version 1.0, the
+<code>rdfs:subClassOf</code> property can be used to state that all
+instances of <code>V2:Van</code> are also instances of
+<code>V1:Van</code>.
+</p>
+
+<p>
+Where the vocabulary defines properties, the same approach can be taken,
+using <code>rdfs:subPropertyOf</code> to make statements about
+relationships between properties defined in successive versions of an RDF
+vocabulary.
+</p>
+
+
+
+
+<a name="s4.2"></a>
+<h3>4.2. Evolvability of the RDF Schema Constraint Mechanism</h3>
+
+<p>
+This specification defines a subclass of resources known as 'constraint
+resources' (section <a href="#s3.1">3.1</a>). This is provided to allow
+for the addition of new ways of expressing RDF constraints.
+Future extensions to the Resource Description Framework may
+introduce new resources that are instances of the
+<code>rdfs:ConstraintResource</code> class. It is
+necessary to anticipate RDF content which draws upon properties or
+classes defined using constraints other than those
+available in this version of RDF. As yet
+unknown constraints may contribute to a more expressive
+framework for specifying RDF constraints.
+</p>
+
+<p>
+RDF agents unfamiliar with the semantics of unknown instances of
+<code>rdfs:ConstraintResource</code> may therefore lack the
+knowledge to evaluate constraint satisfaction when vocabulary items are
+defined using those unknown constraints.
+Since RDF itself may not represent declaratively the full
+meaning of these constraint resources, the acquisition of RDF
+statements about a new <code>ConstraintResource</code> may not
+provide enough information to enable its use.
+For example, when encountering a previously unknown constraint property
+type called <code>RDF3:mysteryConstraint</code> we may learn
+from a schema that it has a range of <code>rdfs:Class</code> and a domain of
+<code>rdf:Property</code>. The range and domain constraints if
+encountered alone would be enough to tell us how to legally use
+<code>RDF3:mysteryConstraint</code>, but they
+do not tell us anything about the nature of the constraint expressed when
+it is used in that fashion.
+</p>
+
+<p>
+The <code>rdfs:ConstraintResource</code>
+construct is provided here as a simple future-proofing mechanism, and
+addresses some of the issues discussed at greater length in the Extensible
+Web Languages W3C NOTE [<a href="#refs">EXTWEB</a>]. By flagging new forms
+of constraint as members of this class, we indicate that they are intended to express RDF Schema
+language constraints whose semantics must be understood for
+constraint checking to be possible. 
+</p>
+<p>
+Membership in the <code>rdfs:ConstraintResource</code> class suggests, but does not imply, that those semantics may be inexpressible
+in a declarative form. Since the expressive facilities available within
+RDF for doing so are also likely to evolve, this distinction itself presents
+a moving target. All RDF agents will have implicit knowledge of certain
+constraints (for example, this specification declares that <code>subClassOf</code>
+properties must not form a loop in an RDF graph) which may or may not be capable of
+representation within (some version of) RDF. It may be the case that some future RDF
+specification provides facilities which will allow RDF agents to
+comprehend declarative specifications for as-yet uninvented
+constraint properties. In such a case, these agents could safely
+comprehend (some) previously unencountered forms of constraint. By
+providing the basic <code>rdfs:ConstraintResource</code> class, we
+anticipate such developments. All RDF agents written solely to this
+specification will appreciate their ignorance of the meaning of unknown instances
+of that class, since this specification provides no mechanism for learning
+about such constraints through the interpretation of RDF statements.
+Future specifications, should they offer such facilities, could also
+define subclasses of <code>ConstraintProperty</code> to classify new constructs
+according to whether or not they had inexpressible semantics.
+</p>
+
+
+
+
+
+<a name="s5"></a>
+<a name="doc"></a>
+<h2>5. Documentation</h2>
+
+<p>
+The following properties are provided to support simple documentation
+and user-interface related annotations within RDF schemas. Multilingual
+documentation of schemas is supported at the syntactic level through
+ use of the <code>xml:lang</code> language tagging facility. Since RDF schemas are
+expressed within the RDF data model, vocabularies defined in other namespaces may be used
+to provide richer documentation. 
+</p>
+
+
+
+
+<a name="s5.1"></a>
+<h4>5.1. rdfs:comment</h4>
+
+<p>
+This is used to provide a human-readable description of a resource.
+</p>
+
+
+
+<a name="s5.2"></a>
+<h4>5.2. rdfs:label</h4>
+
+<p>
+This is used to provide a human-readable version of a resource name.
+</p>
+
+
+
+
+
+<a name="s6"></a>
+<a name="mns"></a>
+<h2>6. Model and Syntax concepts</h2>
+
+<p>
+The RDF Model and Syntax specification [<a href="#refs">RDFMS</a>]
+introduces the base concepts of RDF.  A number of these
+are defined formally in the RDF Schema whose namespace URI
+is <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.  In
+addition, some further concepts are introduced in the RDF Model and Syntax
+specification but do not appear in the RDF Model and Syntax
+schema. These formally belong in the Schema namespace (for example,
+<code>rdfs:Literal</code> and <code>rdfs:Resource</code>). In cases where
+an RDF resource belongs to the <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>
+namespace, this document can provide only a convenience copy of
+that resource's definition.
+</p>
+
+<p>
+<a href="#xmlcore">Appendix A</a> provides an RDF/XML schema for the RDF resources
+defined in this document, including RDF Model concepts such as
+<code>Literal</code> and <code>Resource</code>.
+The RDF/XML Schema in Appendix A also makes RDF statements about resources
+defined in the RDF Model and Syntax namespace. These have the status of
+<em>annotations</em> rather than <em>definitions</em>.
+</p>
+
+
+
+
+<a name="s6.1"></a>
+<h4>6.1. rdfs:Literal</h4>
+
+<p>
+This corresponds to the set called the 'Literals' in the formal model for RDF
+presented in section 5 of the Model and Syntax
+specification [<a href="#refs">RDFMS</a>]. Atomic values such as textual strings are examples of
+RDF literals.
+</p>
+
+
+
+<a name="s6.2"></a>
+<h4>6.2. rdf:Statement</h4>
+<p>
+This corresponds to the set called the 'Statement' in the formal model for RDF
+presented in section 5 of the Model and Syntax
+specification [<a href="#refs">RDFMS</a>].
+</p>
+
+
+
+
+<a name="s6.3"></a>
+<h4>6.3. rdf:subject</h4>
+<p>
+This corresponds to the property called the 'subject' in the formal model for RDF
+presented in section 5 of the Model and Syntax
+specification [<a href="#refs">RDFMS</a>]. Its  <code>rdfs:domain</code>
+is  <code>rdf:Statement</code>  and  <code>rdfs:range</code> is
+<code>rdfs:Resource</code>. This is used to specify the resource
+described by a reified statement.
+</p>
+
+
+
+
+<a name="s6.4"></a>
+<h4>6.4. rdf:predicate</h4>
+<p>
+This corresponds to the property called the 'predicate' in the formal model for RDF
+presented in section 5 of the Model and Syntax
+specification [<a href="#refs">RDFMS</a>]. Its  <code>rdfs:domain</code>
+is <code>rdf:Statement</code> and  <code>rdfs:range</code> is
+<code>rdf:Property</code>. This is used to identify the property used
+in the modeled statement.
+</p>
+
+
+
+
+
+<a name="s6.5"></a>
+<h4>6.5. rdf:object</h4>
+<p>
+This corresponds to the property called the 'object' in the formal model
+for RDF  presented in section 5 of the Model and Syntax
+specification [<a href="#refs">RDFMS</a>]. Its rdfs:domain is <code>rdf:Statement</code>.
+This is used to identify the property value in the modeled statement.
+</p>
+
+
+
+
+<a name="s6.6"></a>
+<h4>6.6. rdfs:Container</h4>
+<p>
+This class is used to represent the Container classes described in section 3
+of the Model and Syntax specification [<a href="#refs">RDFMS</a>]. It is
+an instance of <code>rdfs:Class</code> and <code>rdfs:subClassOf</code> of
+<code>rdfs:Resource</code>.
+</p>
+
+
+
+<a name="s6.7"></a>
+<h4>6.7. rdf:Bag</h4>
+<p>
+This corresponds to the class called 'Bag' in the formal model for RDF presented
+in section 5 of the Model and Syntax specification [<a href="#refs">RDFMS</a>]. It
+is an instance of <code>rdfs:Class</code> and
+<code>rdfs:subClassOf</code> <code>rdfs:Container</code>.
+</p>
+
+
+
+
+
+<a name="s6.8"></a>
+<h4>6.8. rdf:Seq</h4>
+<p>
+This corresponds to the class called 'Sequence' in the formal model for RDF
+presented in section 5 of the Model and Syntax specification [<a href="#refs">RDFMS</a>]. It is an instance of <code>rdfs:Class</code> and
+<code>rdfs:subClassOf</code> <code>rdfs:Container</code>.
+</p>
+
+
+
+
+<a name="s6.9"></a>
+<h4>6.9. rdf:Alt</h4>
+<p>
+This corresponds to the class called 'Alternative' in the formal model for RDF
+presented in section 5 of the Model and Syntax
+specification [<a href="#refs">RDFMS</a>]. It is an instance of <code>rdfs:Class</code> and
+<code>rdfs:subClassOf</code> <code>rdfs:Container</code>.
+</p>
+
+
+
+
+<a name="s6.10"></a>
+<h4>6.10. rdfs:ContainerMembershipProperty</h4>
+<p>
+This class has as members the properties <code>_1, _2, _3 ...</code> used 
+to indicate container membership, as described in  section 3
+of the Model and Syntax specification [<a href="#refs">RDFMS</a>]. This is a
+<code>rdfs:subClassOf</code> <code>rdf:Property</code>.
+</p>
+
+
+
+
+<a name="s6.11"></a>
+<h4>6.11. rdf:value</h4>
+<p>
+This corresponds to the 'value' property described in section 2.3
+of the Model and Syntax specification [<a href="#refs">RDFMS</a>].
+</p>
+
+
+
+
+
+<a name="s7"></a>
+<h2><a name="examples"></a>7. Examples</h2>
+
+
+<p>
+This section gives some brief examples of using the RDF Schema
+machinery to define classes and properties for some possible
+applications. Note that some of these examples use the
+abbreviated RDF syntax (mentioned in 2.3.2.1 above) to express class
+membership.
+</p>
+
+
+
+
+<a name="s7.1"></a>
+<h3>7.1. Example 1</h3>
+
+<p>
+In this example, <code>Person</code> is a class with a corresponding
+human-readable description of "The class of people".
+<code>Animal</code> is a class presumed to be defined in another schema.
+All persons are animals, so we declare that
+<code>Person</code> is a subclass of <code>Animal</code>.  A
+Person may have an age property.  The value of age is an integer.  A Person may
+also have an <code>ssn</code> ("Social Security Number") property.  The value of 
+<code>ssn</code> is an
+<code>integer</code>.  A Person's marital status is one of
+{Single, Married, Divorced, Widowed}. This is achieved through use of the
+<code>rdfs:range</code> constraint: we define both a
+<code>maritalStatus</code>
+property and a class <code>MaritalStatus</code>
+(adopting the convention of using lower case letters to begin the names of
+properties, and capitals for classes). We then use <code>rdfs:range</code> to state
+that a <code>maritalStatus</code> property only 'makes sense' when it has
+a value which is an instance of the class <code>MaritalStatus</code>. The
+schema then defines a number of instances of this class. Whether
+resources declared to be of type <code>MaritalStatus</code> in another
+graph are trusted is an application level decision.
+</p>
+
+
+<table cellpadding="5" border="1" width="95%">
+<tbody><tr>
+<td><pre><code>
+
+&lt;rdf:RDF xml:lang="en"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+
+&lt;rdfs:Class rdf:ID="Person"&gt;
+  &lt;rdfs:comment&gt;The class of people.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/03/example/classes#Animal"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdf:Property ID="maritalStatus"&gt;
+  &lt;rdfs:range rdf:resource="#MaritalStatus"/&gt;
+  &lt;rdfs:domain rdf:resource="#Person"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="ssn"&gt;
+  &lt;rdfs:comment&gt;Social Security Number&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/03/example/classes#Integer"/&gt;
+  &lt;rdfs:domain rdf:resource="#Person"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="age"&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/03/example/classes#Integer"/&gt;
+  &lt;rdfs:domain rdf:resource="#Person"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdfs:Class rdf:ID="MaritalStatus"/&gt;
+
+&lt;MaritalStatus rdf:ID="Married"/&gt;
+&lt;MaritalStatus rdf:ID="Divorced"/&gt;
+&lt;MaritalStatus rdf:ID="Single"/&gt;
+&lt;MaritalStatus rdf:ID="Widowed"/&gt;
+
+&lt;/rdf:RDF&gt;
+</code></pre></td>
+</tr>
+</tbody></table>
+
+
+
+
+
+<a name="s7.2"></a>
+<h3>7.2. Example 2</h3>
+
+<p>
+In this example we sketch an outline of an RDF vocabulary for
+use with searchable Internet services. <code>SearchQuery</code>
+is declared to be a class. Every <code>SearchQuery</code> can have both a
+<code>queryString</code> whose value is an <code>rdfs:Literal</code> and a
+<code>queryService</code> whose value is a <code>SearchService</code>.
+A <code>SearchService</code> is a subclass of <code>InternetService</code> (which is
+defined elsewhere). A <code>SearchQuery</code> has some number of <code>result</code>
+properties (whose value is <code>SearchResult</code>). Each <code>SearchResult</code> has
+a <code>title</code> (value is a <code>rdfs:Literal</code>), a
+<code>rating</code> and of course, the page itself.
+</p>
+
+<p>
+The modularity of RDF allows other vocabularies to be combined with simple
+schemas such as this to characterize more fully the properties of
+networked resources. For example, Dublin Core or a
+library-based classification vocabulary might be used to describe the
+subject coverage or collections-level properties for each SearchService,
+while an independently managed "search protocols" vocabulary could
+be used to describe connection details for (say)
+<a href="http://www.ietf.org/rfc/rfc1777.txt">LDAP</a>,
+<a href="http://www.ietf.org/rfc/rfc1835.txt">WHOIS++</a> or
+<a href="http://lcweb.loc.gov/z3950/agency/document.html">Z39.50</a>
+search interfaces offered by the service. By allowing the
+creation of statements which draw upon specialized schemas from various
+domains, RDF makes it possible for diverse communities of expertise to
+contribute to a decentralized web of machine-readable vocabularies.
+</p>
+
+<table cellpadding="5" border="1" width="95%">
+<tbody><tr>
+<td><pre><code>
+
+&lt;rdf:RDF xml:lang="en"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+
+&lt;rdfs:Class rdf:ID="SearchQuery"&gt;
+  &lt;rdfs:subClassOf
+   rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:ID="SearchResult"&gt;
+  &lt;rdfs:subClassOf
+   rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:ID="SearchService"&gt;
+  &lt;rdfs:subClassOf
+   rdf:resource="http://www.w3.org/2000/03/example/classes#InternetService"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdf:Property ID="queryString"&gt;
+  &lt;rdfs:domain rdf:resource="#SearchQuery"/&gt;
+  &lt;rdfs:range
+   rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="queryService"&gt;
+  &lt;rdfs:domain rdf:resource="#SearchQuery"/&gt;
+  &lt;rdfs:range rdf:resource="#SearchService"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="result"&gt;
+  &lt;rdfs:domain rdf:resource="#SearchQuery"/&gt;
+  &lt;rdfs:range rdf:resource="#SearchResult"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="queryResultPage"&gt;
+  &lt;rdfs:domain rdf:resource="#SearchResult"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/03/example/classes#WebPage"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="queryResultTitle"&gt;
+  &lt;rdfs:domain rdf:resource="#SearchResult"/&gt;
+  &lt;rdfs:range
+   rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="queryResultRating"&gt;
+  &lt;rdfs:domain rdf:resource="#SearchResult"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/03/example/classes#FloatZeroToOne"/&gt;
+&lt;/rdf:Property&gt;
+&lt;/rdf:RDF&gt;
+
+</code></pre></td>
+</tr>
+</tbody></table>
+
+
+
+
+
+
+<br>
+
+
+
+<a name="s8"></a>
+ <h2><a name="refs"></a>8. References</h2>
+
+<a name="s8.1"></a>
+<h3>8.1. Normative References</h3>
+
+<dl><dt>
+<a name="rdfmscite"></a>
+[RDFMS]</dt><dd>
+<a href="http://www.w3.org/TR/1999/REC-rdf-syntax-19990222"><cite>Resource Description Framework (RDF) Model and Syntax</cite></a>,
+W3C Recommendation, 22 February 1999
+<br><small><tt><a href="http://www.w3.org/TR/1999/REC-rdf-syntax-19990222">http://www.w3.org/TR/1999/REC-rdf-syntax-19990222</a></tt></small>
+<br>
+</dd><dt><a name="xmlnscite"></a>[XMLNS]</dt><dd><a href="http://www.w3.org/TR/1999/REC-xml-names-19990114"><cite>Namespaces in XML</cite></a>; W3C Recommendation, 14 January 1999
+<br><small><tt><a href="http://www.w3.org/TR/1999/REC-xml-names-19990114">http://www.w3.org/TR/1999/REC-xml-names-19990114</a></tt></small>
+<br>
+</dd></dl>
+
+
+<a name="s8.2"></a>
+<h3>8.2. Informational References</h3>
+
+<dl><dt>
+<a name="niamcite"></a>
+[NIAM]</dt><dd>
+G. M. Nijssen and Terry Halpin, <cite>Conceptual Schema and Relational Database
+Design</cite>, (Prentice Hall, Sydney:1989)
+<br>
+</dd><dt><a name="rdfnotcite">[BERNERS-LEE98]</a></dt><dd><a href="http://www.w3.org/DesignIssues/RDFnot.html"><cite>What the Semantic Web can represent</cite></a>, Tim Berners-Lee, 1998
+<br><small><tt><a href="http://www.w3.org/DesignIssues/RDFnot.html">http://www.w3.org/DesignIssues/RDFnot.html</a></tt></small>
+<br>
+</dd><dt>
+<a name="cyclcite"></a>
+[CycL]</dt><dd>
+<a href="http://www.cyc.com/tech.html#cycl"><cite>CycL: The CYC Representation Language</cite></a>
+<br>
+</dd><dt>
+<a name="kifcite"></a>
+[KIF]</dt><dd>
+<a href="http://logic.stanford.edu/kif/kif.html"><cite>Knowledge Interchange Format (KIF)</cite></a>
+<br>
+</dd><dt><a name="wfcite"></a>[WF]</dt><dd>
+<a href="http://cs-tr.cs.cornell.edu/Dienst/UI/2.0/Describe/ncstrl.cornell/TR96-1593"><cite>The Warwick Framework: A Container Architecture for Aggregating Sets
+of Metadata</cite></a>; Carl Lagoze, Clifford A. Lynch and Ron Daniel Jr., 1996
+<br><small><tt><a href="http://cs-tr.cs.cornell.edu/Dienst/UI/2.0/Describe/ncstrl.cornell/TR96-1593">http://cs-tr.cs.cornell.edu/Dienst/UI/2.0/Describe/ncstrl.cornell/TR96-1593</a></tt></small><br>
+</dd><dt><a name="xlcite"></a>[EXTWEB]</dt><dd>
+<a href="http://www.w3.org/TR/1998/NOTE-webarch-extlang-19980210"><cite>Web Architecture: Extensible Languages</cite></a>,
+Tim Berners-Lee and  Dan Connolly, 1998
+<br><small><tt><a href="http://www.w3.org/TR/1998/NOTE-webarch-extlang-19980210">http://www.w3.org/TR/1998/NOTE-webarch-extlang-19980210</a></tt></small><br>
+</dd><dt><a name="picscite"></a>[PICS]</dt><dd>
+<a href="http://www.w3.org/PICS/"><cite>Platform for Internet Content Selection</cite></a>;
+<br><small><tt><a href="http://www.w3.org/PICS/">http://www.w3.org/PICS/</a></tt></small>
+<br>
+</dd><dt><a name="picsrdfcite"></a>[PICS in XML/RDF]</dt><dd>
+<a href="http://www.w3.org/TR/2000/NOTE-rdf-pics-20000327"><cite>PICS Rating Vocabularies in XML/RDF</cite></a>,
+Brickley and Swick, 2000
+<br><small><tt><a href="http://www.w3.org/TR/2000/NOTE-rdf-pics-20000327">http://www.w3.org/TR/2000/NOTE-rdf-pics-20000327</a></tt></small>
+<br>
+</dd><dt>
+<a name="dccite"></a>
+[DC]</dt><dd>
+<a href="http://purl.org/dc/"><cite>Dublin Core Metadata Initiative</cite></a>
+<br><small><tt><a href="http://purl.org/dc/">http://purl.org/dc/</a></tt></small>
+<br>
+</dd><dt><a name="cccite"></a>[SCHEMA-ARCH]</dt><dd>
+<a href="http://www.w3.org/TR/1999/NOTE-schema-arch-19991007"><cite>The Cambridge Communiqué</cite></a>,
+W3C NOTE, 7 October 1999, Swick and Thompson
+<br><small><tt><a href="http://www.w3.org/TR/1999/NOTE-schema-arch-19991007">http://www.w3.org/TR/1999/NOTE-schema-arch-19991007</a></tt></small>
+<br>
+</dd><dt>
+<a name="umlcite"></a>
+[UML]</dt><dd>
+<a href="http://www.rational.com/uml/resources"><cite>Unified Modeling Language (UML)</cite></a>
+<br>
+<small><tt><a href="http://www.rational.com/uml/resources">http://www.rational.com/uml/resources</a></tt></small>
+<br>
+</dd><dt><a name="dtdcite"></a>[XML]</dt><dd><a href="http://www.w3.org/TR/1998/REC-xml-19980210"><cite>Extensible Markup Language (XML) 1.0</cite></a>,
+W3C Recommendation, 10-February-1988, Section 3.2 Element Type Declarations
+<br><small><tt><a href="http://www.w3.org/TR/1998/REC-xml-19980210.html#elemdecls">http://www.w3.org/TR/1998/REC-xml-19980210.html#elemdecls</a></tt></small>
+<br>
+</dd><dt>
+<a name="xmldatacite"></a>
+[XML-Data]</dt><dd>
+<a href="http://www.w3.org/TR/1998/NOTE-XML-data-0105/"><cite>XML Data</cite></a>, Layman, et. al., W3C Note, 1998
+<br>
+<small><tt><a href="http://www.w3.org/Submission/1998/01/">http://www.w3.org/Submission/1998/01/</a></tt></small>
+<br>
+</dd><dt><a name="xmlschemacite"></a>[XMLSCHEMA]</dt><dd><a href="http://www.w3.org/TR/2000/WD-xmlschema-1-20000225/"><cite>XML Schema Part 1: Structures</cite></a>,
+W3C Working Draft 25 February 2000
+<br><small><tt><a href="http://www.w3.org/TR/2000/WD-xmlschema-1-20000225/">http://www.w3.org/TR/2000/WD-xmlschema-1-20000225/</a></tt></small>
+<br>
+</dd><dt><a name="xmldatatypescite"></a>[XMLDATATYPES]</dt><dd><a href="http://www.w3.org/TR/2000/WD-xmlschema-2-20000225/"><cite>XML Schema Part 2: Datatypes</cite></a>,
+W3C Working Draft 25 February 2000
+<br><small><tt><a href="http://www.w3.org/TR/2000/WD-xmlschema-2-20000225/">http://www.w3.org/TR/2000/WD-xmlschema-2-20000225/</a></tt></small>
+<br>
+</dd><dt>
+<a name="xlinkcite"></a>
+[XML-Link]</dt><dd>
+<a href="http://www.w3.org/TR/WD-xml-link"><cite>XML Linking Language
+(XLink)</cite></a>, W3C Working Draft, 21 February 2000
+<br><small><tt><a href="http://www.w3.org/TR/WD-xml-link">http://www.w3.org/TR/WD-xml-link</a></tt></small>
+<br>
+</dd></dl>
+
+
+
+<a name="ack"></a>
+<h2>8. Acknowledgements</h2>
+
+<p>
+Note: This document was prepared and approved for publication by the W3C
+RDF Schema Working Group (WG). WG approval of this document does not necessarily
+imply that all WG members voted for its approval.
+</p>
+
+<p>
+David Singer of IBM was the chair of the group throughout most of the
+development of this specification; we thank David for his
+efforts and thank IBM for supporting him and us in this endeavor. 
+Particular thanks are also due to Andrew Layman for his editorial work 
+on earlier versions of this specification.
+</p>
+
+<p>The working group membership has included:</p>
+
+<p>Nick Arnett (Verity), Dan Brickley (ILRT / University of Bristol),
+Walter Chang (Adobe), Sailesh Chutani (Oracle), Ron Daniel (DATAFUSION),
+Charles Frankston (Microsoft), Joe Lapp
+(webMethods Inc.), Patrick Gannon (CommerceNet), RV Guha
+(Epinions, previously of Netscape Communications), Tom
+Hill (Apple Computer), Renato Iannella (DSTC), Sandeep Jain (Oracle), Kevin
+Jones, (InterMind), Emiko Kezuka (Digital Vision Laboratories), Ora Lassila
+(Nokia Research Center), Andrew Layman (Microsoft), John McCarthy (Lawrence
+Berkeley National Laboratory), Michael Mealling (Network Solutions), Norbert Mikula (DataChannel), Eric Miller
+(OCLC), Frank Olken (Lawrence Berkeley National Laboratory), Sri Raghavan
+(Digital/Compaq), Lisa Rein (webMethods Inc.), Tsuyoshi Sakata (Digital
+Vision Laboratories), Leon Shklar (Pencom Web Works), David Singer (IBM), Wei
+(William) Song (SISU), Neel Sundaresan (IBM), Ralph Swick (W3C), Naohiko
+Uramoto (IBM), Charles Wicksteed (Reuters Ltd.), Misha Wolf (Reuters Ltd.)
+</p>
+
+<p>
+Not all of the people listed above have been members throughout the
+entire duration of the working group, but all have contributed to the evolution
+of this document.
+</p>
+
+<hr>
+<a name="xmlcore"></a>
+
+<h2>Appendix A: XML Serialization</h2>
+
+<p>
+An RDF specification of the core RDF Schema model is given here in RDF/XML
+serialization syntax. Please note that the namespace URI for the RDF Schema Specification 
+will change in future versions of this specification if the schema
+changes. This RDF schema includes annotations describing RDF
+resources defined formally in the RDF Model and Syntax specification, as well as
+definitions for new resources belonging to the RDF Schema namespace.
+</p>
+
+<p>
+Note that there are some constraints (such as those given in 2.3.2
+above) on certain RDF Schema resources which are themselves not fully
+expressible using the RDF Schema specification. For example, the
+RDF below does not tell us that subClassOf arcs should not (to use terminology from the
+nodes and arcs representation) form loops in any RDF model.
+</p>
+
+<table cellpadding="5" border="1" width="95%">
+<tbody><tr>
+<td><pre><code>
+&lt;rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+
+&lt;rdfs:Class rdf:ID="Resource"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Resource&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Ressource&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The most general class&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdf:Property about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;type&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;type&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Indicates membership of a class&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="#Class"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="comment"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;comment&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;commentaire&lt;/rdfs:label&gt;
+  &lt;rdfs:domain rdf:resource="#Resource"/&gt;
+  &lt;rdfs:comment&gt;Use this for descriptions&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="#Literal"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="label"&gt;
+ &lt;rdf:type resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+ &lt;rdfs:label xml:lang="en"&gt;label&lt;/rdfs:label&gt;
+ &lt;rdfs:label xml:lang="fr"&gt;label&lt;/rdfs:label&gt;
+ &lt;rdfs:domain rdf:resource="#Resource"/&gt;
+ &lt;rdfs:comment&gt;Provides a human-readable version of a resource name.&lt;/rdfs:comment&gt;
+ &lt;rdfs:range rdf:resource="#Literal"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdfs:Class rdf:ID="Class"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Class&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Classe&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The concept of Class&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Resource"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdf:Property ID="subClassOf"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;subClassOf&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;sousClasseDe&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Indicates membership of a class&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="#Class"/&gt;
+  &lt;rdfs:domain rdf:resource="#Class"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="subPropertyOf"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;subPropertyOf&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;sousPropriétéDe&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Indicates specialization of properties&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="seeAlso"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;seeAlso&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;voirAussi&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Indicates a resource that provides information about the subject resource.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property ID="isDefinedBy"&gt;
+  &lt;rdf:type resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+  &lt;rdfs:subPropertyOf rdf:resource="#seeAlso"/&gt;
+  &lt;rdfs:label xml:lang="en"&gt;isDefinedBy&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;esDéfiniPar&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Indicates a resource containing and defining the subject resource.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdfs:Class rdf:ID="ConstraintResource"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;ConstraintResource&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;RessourceContrainte&lt;/rdfs:label&gt;
+  &lt;rdf:type resource="#Class"/&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Resource"/&gt;
+  &lt;rdfs:comment&gt;Resources used to express RDF Schema constraints.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:ID="ConstraintProperty"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;ConstraintProperty&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;PropriétéContrainte&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+  &lt;rdfs:subClassOf rdf:resource="#ConstraintResource"/&gt;
+  &lt;rdfs:comment&gt;Properties used to express RDF Schema constraints.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:ConstraintProperty rdf:ID="domain"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;domain&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;domaine&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;This is how we associate a class with
+  properties that its instances can have&lt;/rdfs:comment&gt;
+&lt;/rdfs:ConstraintProperty&gt;
+
+&lt;rdfs:ConstraintProperty rdf:ID="range"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;range&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;étendue&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Properties that can be used in a
+  schema to provide constraints&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="#Class"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdfs:ConstraintProperty&gt;
+
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Property&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Propriété&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The concept of a property.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Resource"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:ID="Literal"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Literal&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Littéral&lt;/rdfs:label&gt;
+  &lt;rdf:type resource="#Class"/&gt;
+  &lt;rdfs:comment&gt;This represents the set of atomic values, eg. textual strings.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Statement&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Déclaration&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Resource"/&gt;
+  &lt;rdfs:comment&gt;This represents the set of reified statements.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdf:Property about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;subject&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;sujet&lt;/rdfs:label&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;
+  &lt;rdfs:range rdf:resource="#Resource"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;predicate&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;prédicat&lt;/rdfs:label&gt;
+  &lt;rdf:type resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdf:Property about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;object&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;objet&lt;/rdfs:label&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;
+&lt;/rdf:Property&gt;
+
+&lt;rdfs:Class rdf:ID="Container"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Container&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Enveloppe&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Resource"/&gt;
+  &lt;rdfs:comment&gt;This represents the set Containers.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Bag&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Ensemble&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Container"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Sequence&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Séquence&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Container"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;Alt&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;Choix&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="#Container"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdfs:Class rdf:ID="ContainerMembershipProperty"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;ContainerMembershipProperty&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdfs:Class&gt;
+
+&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"&gt;
+  &lt;rdfs:label xml:lang="en"&gt;object&lt;/rdfs:label&gt;
+  &lt;rdfs:label xml:lang="fr"&gt;value&lt;/rdfs:label&gt;
+&lt;/rdf:Property&gt;
+
+&lt;/rdf:RDF&gt;
+
+</code></pre></td>
+</tr>
+</tbody></table>
+
+<a name="ABOUTW3CDOCS"></a>
+<h2>Appendix B. About W3C Documents</h2>
+
+<p>
+  To promote confidence and stability, W3C has instituted the following publication
+  policies:
+</p>
+
+  <ol>
+    <li>
+      Each technical report is a stable published document that has a unique identifier
+      (URI).</li>
+    <li>
+      Each stable published document will always be available, unchanged, at that
+      URI. Retrieving (e.g., by bookmarking) the resource at that URI will always
+      return the same content.</li>
+    <li>
+      A specific revision of a document is generally one of a series of related
+      documents (e.g., from Working Draft to Recommendation). Each series has a
+      unique identifier (URI) that when followed, will return the <em>latest</em>
+      stable published document available in the series.</li>
+    <li>
+      Each document includes a "Status" section that describes the document's
+      publication context <em>on the date of publication</em>. Note that since
+      W3C does not change stable published documents, the status section of a published
+      document cannot be changed, even if the document becomes obsolete at a later
+      date.</li>
+    <li>
+      Each document in the series includes links to up-to-date status information
+      for the series.</li>
+  </ol>
+
+<hr>
+<address><a href="mailto:www-rdf-comments@w3.org">Comments</a><br>
+$Date$
+</address>
+
+</body></html>

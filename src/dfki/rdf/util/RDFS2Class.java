@@ -90,6 +90,30 @@ protected static final String PROTEGE_NS = "http://protege.stanford.edu/system#"
 final static String LIST_CLASS = "java.util.LinkedList";
 final static String SET_CLASS  = "java.util.HashSet";
 
+private static int m_iNrMessages = 0;
+private static int m_iNrWarnings = 0;
+private static int m_iNrErrors = 0;
+
+//----------------------------------------------------------------------------------------------------
+private static void message( String s )
+{
+    System.out.println( s );
+    m_iNrMessages++;
+}
+
+//----------------------------------------------------------------------------------------------------
+private static void warning( String s )
+{
+    System.out.println( "WARNING: " + s );
+    m_iNrWarnings++;
+}
+
+//----------------------------------------------------------------------------------------------------
+private static void error( String s )
+{
+    System.out.println( "ERROR: " + s );
+    m_iNrErrors++;
+}
 
 //----------------------------------------------------------------------------------------------------
 /** Constructs a new RDFS2Class generator.
@@ -266,9 +290,9 @@ public static void main (String[] args)
 
         if (!bQuiet)
         {
-            System.out.println("sRDFSFile     : "+sRDFSFile);
-            System.out.println("sOutputSrcDir : "+sOutputSrcDir);
-            System.out.println("maping:");
+            message("sRDFSFile     : "+sRDFSFile);
+            message("sOutputSrcDir : "+sOutputSrcDir);
+            message("maping:");
         }
         HashMap mapNS2Pkg = new HashMap();
         while (iArg < args.length)
@@ -276,11 +300,11 @@ public static void main (String[] args)
             String sNamespace = args[iArg++];
             String sPackage   = args[iArg++];
             if (!bQuiet)
-                System.out.println("  " + sNamespace + " -> " + sPackage);
+                message("  " + sNamespace + " -> " + sPackage);
             mapNS2Pkg.put(sNamespace, sPackage);
         }
         if (!bQuiet)
-            System.out.println();
+            message("");
 
         RDFS2Class gen = new RDFS2Class(sRDFSFile, sOutputSrcDir, mapNS2Pkg);
         gen.setQuiet(bQuiet);
@@ -316,6 +340,16 @@ public static void main (String[] args)
             debug().error(ex);
     }
 
+    // print out #warnings and #errors
+    System.out.println();
+    if( m_iNrWarnings > 0 )
+        System.out.println( "" + m_iNrWarnings + " warnings" );
+    if( m_iNrErrors > 0 )
+        System.out.println( "" + m_iNrErrors + " errors" );
+    if( m_iNrWarnings <= 0 && m_iNrErrors <= 0 )
+        System.out.println( "ok (no warnings, no errors)" );
+    System.out.println();
+
     System.exit(0);
 }
 
@@ -329,19 +363,19 @@ public static void main (String[] args)
 public void createClasses ()   throws Exception
 {
     if (!m_bQuiet)
-        System.out.println("loading in the RDFS file...");
+        message("loading in the RDFS file...");
     loadRDFS();
 
     if (!m_bQuiet)
-        System.out.println("examining properties...");
+        message("examining properties...");
     examineProperties();
 
     if (!m_bQuiet)
-        System.out.println("creating the RDFS classes...");
+        message("creating the RDFS classes...");
     createTheClasses();
 
     if (!m_bQuiet)
-        System.out.println("ready.");
+        message("ready.");
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -384,7 +418,7 @@ protected void createClass (Resource resCls)   throws Exception
     String sClsNS = resCls.getNamespace();
     String sClsName = resCls.getLocalName();
     if (!m_bQuiet)
-        System.out.print(sClsNS + sClsName);
+        message(sClsNS + sClsName);
 
     String sPkg = (String)m_mapNamespaceToPackage.get(sClsNS);
     if (sPkg == null)
@@ -392,7 +426,7 @@ protected void createClass (Resource resCls)   throws Exception
     String sPath = packageToPath(sPkg);
     String sFile = sClsName + ".java";
     if (!m_bQuiet)
-        System.out.println(" -> " + sPath + "/" + sFile);
+        message(" -> " + sPath + "/" + sFile);
 
     PrintWriter pwClsFile = null;
     String sAbsolutePath = m_sClsPath + "/" + sPath;
@@ -432,14 +466,14 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
     {
         resSuperClass = (Resource)RDF.get1(modelSuperClass).object();
 
-        // System.out.println("resSuperClass="+resSuperClass);
+        // message("resSuperClass="+resSuperClass);
         if (resSuperClass.equals(m_resRDFSClass))
         {
             sSuperClassName = "dfki.rdf.util.THING";  //// = "Class";
             sSuperClassNS = null;
             sSuperClassPkg = null;  //// = "java.lang";
-            System.out.println("# super class THING (not 'Class'!!) used for class '"+resCls+"'");
-            ////System.out.println("# super class 'Class' used for class '"+resCls+"'");
+            warning("# super class THING (not 'Class'!!) used for class '"+resCls+"'");
+            ////warning("# super class 'Class' used for class '"+resCls+"'");
         }
         else
         if (!resSuperClass.equals(m_resRDFSResource))
@@ -579,7 +613,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 for( Iterator it = pi.setResRange.iterator(); it.hasNext(); )
                 {
                     Resource resRCls = (Resource)it.next();
-                    ////System.out.println( " --- resRCls: " + resRCls );
+                    ////message( " --- resRCls: " + resRCls );
                     String sRClsName = null;
                     if( resRCls.equals( m_resRDFSLiteral ) )
                     {
@@ -594,9 +628,9 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                         String sRClsNS = resRCls.getNamespace();
                         String sRClsPkg = (String)m_mapNamespaceToPackage.get(sRClsNS);
                         sRClsName = resRCls.getLocalName();
-                        ////System.out.println( " --- sRClsNS: " + sRClsNS );
-                        ////System.out.println( " --- sRClsPkg: " + sRClsPkg );
-                        ////System.out.println( " --- sRClsName: " + sRClsName );
+                        ////message( " --- sRClsNS: " + sRClsNS );
+                        ////message( " --- sRClsPkg: " + sRClsPkg );
+                        ////message( " --- sRClsName: " + sRClsName );
                         if (!sRClsPkg.equals(sPkg)) sRClsName = sRClsPkg + "." + sRClsName;
                     }
                     sb.append( sRClsName + ".class" );
@@ -690,7 +724,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+":\\n\");\n");
                 sbToStringStuff.append(sIndent + "        for (Iterator it_" + pi.sSlotName + " = ((java.util.Collection)m_" + pi.sSlotName + ".getValue()).iterator(); it_" + pi.sSlotName + ".hasNext(); ) {\n");
                 if (sRangePkgAndCls.equals("String"))
-                    sbToStringStuff.append(sIndent + "            sb.append( (String)it_" + pi.sSlotName + ".next() );\n");
+                    sbToStringStuff.append(sIndent + "            sb.append( (String)it_" + pi.sSlotName + ".next() + \"\\n\" );\n");
                 else
                 if (sRangePkgAndCls.equals("Object"))
                     sbToStringStuff.append(sIndent + "            " + sPreShort     + "sb.append( sIndent+\"       \" + it_" + pi.sSlotName + ".next() + \"\\n\" );\n" );
@@ -782,13 +816,13 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 String sPreRecursive = ( m_bIncludeToStringStuffRecursive  ?  ""     :  "// " );
                 sbToStringStuff.append(sIndent + "    if (m_"+pi.sSlotName+".getValue() != null) {\n");
                 if (sRangePkgAndCls.equals("String"))  //FIXME: hier noch nach "int" etc. testen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+": \"+m_"+pi.sSlotName+".getValue()+\"\\n\");\n");
+                    sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+": \"+m_"+pi.sSlotName+".getValue() + \"\\n\");\n");
                 else
                 if (sRangePkgAndCls.equals("Object"))
-                    sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+": \"+m_"+pi.sSlotName+".getValue()+\"\\n\");\n");
+                    sbToStringStuff.append(sIndent + "        sb.append(sIndent+\"-> "+pi.sSlotName+": \"+m_"+pi.sSlotName+".getValue() + \"\\n\");\n");
                 else
                 {
-                    sbToStringStuff.append(sIndent + "        " + sPreShort     + "sb.append(sIndent+\"-> "+pi.sSlotName+":\\n\"+sIndent+\"       \"+((dfki.rdf.util.RDFResource)m_"+pi.sSlotName+".getValue()).toStringShort()+\"\\n\");\n");
+                    sbToStringStuff.append(sIndent + "        " + sPreShort     + "sb.append(sIndent+\"-> "+pi.sSlotName+":\\n\"+sIndent+\"       \"+((dfki.rdf.util.RDFResource)m_"+pi.sSlotName+".getValue()).toStringShort() + \"\\n\");\n");
                     sbToStringStuff.append(sIndent + "        " + sPreRecursive + "sb.append(sIndent+\"-> "+pi.sSlotName+":\\n\"+((dfki.rdf.util.RDFResource)m_"+pi.sSlotName+".getValue()).toString(sIndent+\"       \"));\n");
                 }
                 sbToStringStuff.append(sIndent + "    }\n");
@@ -1185,13 +1219,15 @@ private static Debug debug ()
             }
             if (!setResRange.isEmpty())
             {
-                RDFNode rdfnodeRange = (RDFNode)setResRange.iterator().next();
-                // System.out.println("# "+sSlotName+" -> "+rdfnodeRange);
-                if( rdfnodeRange.equals(m_resRDFSResource) )
+                // message("# "+sSlotName+" -> "+setResRange);
+//SS:2003-03-31: wofür war das (hatte was mit heiko's kram zu tun -> wwf/model...)
+//FIXME: das ist der absolute hack hier:
+                if( setResRange.size() == 1 && setResRange.contains( m_resRDFSResource ) )
                     setResRange.clear();
                 Model modelAllowedClasses = m_modelRDFS.find(resProperty, m_resProtegeAllowedClasses, null);
                 if( !modelAllowedClasses.isEmpty() )
                     setResRange = objectsToSet( modelAllowedClasses );
+                // message("# (after a:allowed): -> "+setResRange);
             }
 
             if (setResRange.size() > 1)
@@ -1247,9 +1283,9 @@ private static Debug debug ()
                         sRangeCls = ((Resource)rdfnodeRange).getLocalName();
                         String sRangeClsNS = ((Resource)rdfnodeRange).getNamespace();
                         sRangeClsPkg = (String)m_mapNamespaceToPackage.get(sRangeClsNS);
-                        // System.out.println( "### slot " + sSlotName + " -> " + sRangeClsNS + " . " + sRangeCls + " -> " + sRangeClsPkg );
+                        // message( "### slot " + sSlotName + " -> " + sRangeClsNS + " . " + sRangeCls + " -> " + sRangeClsPkg );
                         if( sRangeClsPkg == null )
-                            System.out.println( "# no package mapping for namespace " + sRangeClsNS + " (slot " + sSlotName + ")" );
+                            error( "# no package mapping for namespace " + sRangeClsNS + " (slot " + sSlotName + ")" );
                     }
                 }
                 bNeedsRangeInterface = false;
