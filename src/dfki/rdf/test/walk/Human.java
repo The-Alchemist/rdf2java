@@ -15,7 +15,7 @@ public abstract class Human
 {
     //------------------------------------------------------------------------------
     /** RDFS2Class: slot name **/
-    protected dfki.rdf.util.PropertyInfo m_name = dfki.rdf.util.PropertyInfo.createStringProperty( "name", false );
+    protected dfki.rdf.util.PropertyInfo m_name = dfki.rdf.util.PropertyInfo.createStringProperty( "http://dfki.rdf.test/walk#", "name", false );
 
     /** RDFS2Class: putter for slot name **/
     public void putName (String p_name)
@@ -33,7 +33,7 @@ public abstract class Human
 
     //------------------------------------------------------------------------------
     /** RDFS2Class: slot hasFather **/
-    protected dfki.rdf.util.PropertyInfo m_hasFather = dfki.rdf.util.PropertyInfo.createInstanceProperty( "hasFather", new Class[]{Man.class}, false );
+    protected dfki.rdf.util.PropertyInfo m_hasFather = dfki.rdf.util.PropertyInfo.createInstanceProperty( "http://dfki.rdf.test/walk#", "hasFather", new Class[]{Man.class}, false );
 
     /** RDFS2Class: putter for slot hasFather **/
     public void putHasFather (Man p_hasFather)
@@ -59,7 +59,7 @@ public abstract class Human
 
     //------------------------------------------------------------------------------
     /** RDFS2Class: slot hasMother **/
-    protected dfki.rdf.util.PropertyInfo m_hasMother = dfki.rdf.util.PropertyInfo.createInstanceProperty( "hasMother", new Class[]{Woman.class}, false );
+    protected dfki.rdf.util.PropertyInfo m_hasMother = dfki.rdf.util.PropertyInfo.createInstanceProperty( "http://dfki.rdf.test/walk#", "hasMother", new Class[]{Woman.class}, false );
 
     /** RDFS2Class: putter for slot hasMother **/
     public void putHasMother (Woman p_hasMother)
@@ -85,7 +85,7 @@ public abstract class Human
 
     //------------------------------------------------------------------------------
     /** RDFS2Class: slot hasChild **/
-    protected dfki.rdf.util.PropertyInfo m_hasChild = dfki.rdf.util.PropertyInfo.createInstanceProperty( "hasChild", new Class[]{Human.class}, true );
+    protected dfki.rdf.util.PropertyInfo m_hasChild = dfki.rdf.util.PropertyInfo.createInstanceProperty( "http://dfki.rdf.test/walk#", "hasChild", new Class[]{Human.class}, true );
 
     /** RDFS2Class: putter for slot hasChild **/
     public void putHasChild (Human p_hasChild)
@@ -132,6 +132,7 @@ public abstract class Human
     public Human()
     {
         super();
+        putRDFSClass( new dfki.rdf.util.RDFResource( "http://dfki.rdf.test/walk#", "Human" ) );
         initPropertyStore();
     }
     // RDFS2Class: end of default constructor

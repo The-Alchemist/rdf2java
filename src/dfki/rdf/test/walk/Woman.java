@@ -15,7 +15,7 @@ public  class Woman
 {
     //------------------------------------------------------------------------------
     /** RDFS2Class: slot hasHusband **/
-    protected dfki.rdf.util.PropertyInfo m_hasHusband = dfki.rdf.util.PropertyInfo.createInstanceProperty( "hasHusband", new Class[]{Man.class}, false );
+    protected dfki.rdf.util.PropertyInfo m_hasHusband = dfki.rdf.util.PropertyInfo.createInstanceProperty( "http://dfki.rdf.test/walk#", "hasHusband", new Class[]{Man.class}, false );
 
     /** RDFS2Class: putter for slot hasHusband **/
     public void putHasHusband (Man p_hasHusband)
@@ -58,6 +58,7 @@ public  class Woman
     public Woman()
     {
         super();
+        putRDFSClass( new dfki.rdf.util.RDFResource( "http://dfki.rdf.test/walk#", "Woman" ) );
         initPropertyStore();
     }
     // RDFS2Class: end of default constructor
