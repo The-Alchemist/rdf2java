@@ -33,44 +33,71 @@ public KnowledgeBase ()
 }
 
 //---------------------------------------------------------------------------
+static
+{
+    ms_staticKnowledgeBase = new KnowledgeBase();
+}
+
+//---------------------------------------------------------------------------
+/**
+ * Returns the <b>static</b> KnowledgeBase object - 
+ * this can be used to realise blackboard-like knowledge sharing.
+ */
 public static KnowledgeBase getStaticKnowledgeBase()
 {
-    if( ms_staticKnowledgeBase == null )
-        ms_staticKnowledgeBase = new KnowledgeBase();
     return ms_staticKnowledgeBase;
 }
 
 //---------------------------------------------------------------------------
 public void setNS2PkgMap( Map mapNS2Pkg )
 {
-    m_mapNS2Pkg = mapNS2Pkg;
+    synchronized( m_mapNS2Pkg )
+    {
+        if( m_mapNS2Pkg == null )
+            m_mapNS2Pkg = mapNS2Pkg;
+        else
+            m_mapNS2Pkg.putAll( mapNS2Pkg );
+    }
 }
 
 //---------------------------------------------------------------------------
 public void setPkg2NSMap( Map mapPkg2NS )
 {
-    m_mapPkg2NS = mapPkg2NS;
+    synchronized( m_mapPkg2NS )
+    {
+        if( m_mapPkg2NS == null )
+            m_mapPkg2NS = mapPkg2NS;
+        else
+            m_mapPkg2NS.putAll( mapPkg2NS );
+    }
 }
 
 //---------------------------------------------------------------------------
 public void clear ()
 {
-    m_mapObjects.clear();
+    // synchronized( m_mapObjects )
+    {
+        m_mapObjects.clear();
+    }
 }
 
 //---------------------------------------------------------------------------
 public Object put (String sURIKey, Object obj)
 {
-    return m_mapObjects.put(sURIKey, obj);
+    synchronized( m_mapObjects )
+    {
+        return m_mapObjects.put(sURIKey, obj);
+    }
 }
 
 //---------------------------------------------------------------------------
 public Object put (Object objKey, Object objValue)
 {
-    try {
+    try 
+    {
         if (objKey instanceof String)
             return put( (String)objKey, objValue );
-        else
+        else 
         if (objKey instanceof org.w3c.rdf.model.Resource)
             return put( ((org.w3c.rdf.model.Resource)objKey).getURI(), objValue );
         else
@@ -103,28 +130,34 @@ protected Object put (Object obj)
 //---------------------------------------------------------------------------
 public Object remove (String sURI)
 {
-    return m_mapObjects.remove(sURI);
+    synchronized( m_mapObjects )
+    {
+        return m_mapObjects.remove(sURI);
+    }
 }
 
 //---------------------------------------------------------------------------
 public Object get (Object key)
 {
-    try {
-        if (key == null)
-            return null;
-        if (key instanceof org.w3c.rdf.model.Resource)
-            key = ((org.w3c.rdf.model.Resource)key).getURI();
-        else
-        if ( !(key instanceof String) )
-            throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . get; key was no String (not even a Resource)");
-        return m_mapObjects.get(key);
+    synchronized( m_mapObjects )
+    {
+        try {
+            if (key == null)
+                return null;
+            if (key instanceof org.w3c.rdf.model.Resource)
+                key = ((org.w3c.rdf.model.Resource)key).getURI();
+            else
+            if ( !(key instanceof String) )
+                throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . get; key was no String (not even a Resource)");
+            return m_mapObjects.get(key);
+        }
+        catch (org.w3c.rdf.model.ModelException ex) {
+            System.out.println("ModelException occurred in dfki.rdf.util.KnowledgeBase . get: " + ex.getMessage());
+            ex.printStackTrace();
+            throw new Error("ModelException occurred in dfki.rdf.util.KnowledgeBase . get: " + ex.getMessage());
+        }
     }
-    catch (org.w3c.rdf.model.ModelException ex) {
-        System.out.println("ModelException occurred in dfki.rdf.util.KnowledgeBase . get: " + ex.getMessage());
-        ex.printStackTrace();
-        throw new Error("ModelException occurred in dfki.rdf.util.KnowledgeBase . get: " + ex.getMessage());
-    }
-}
+}    
 
 //---------------------------------------------------------------------------
 public void putAll (Map map)
@@ -141,29 +174,38 @@ public void putAll (Map map)
 //---------------------------------------------------------------------------
 public Collection values ()
 {
-    return new HashSet( m_mapObjects.values() );
+    synchronized( m_mapObjects )
+    {
+        return new HashSet( m_mapObjects.values() );
+    }
 }
 
 //---------------------------------------------------------------------------
 public Set keySet ()
 {
-    return new HashSet( m_mapObjects.keySet() );
+    synchronized( m_mapObjects )
+    {
+        return new HashSet( m_mapObjects.keySet() );
+    }
 }
 
 //---------------------------------------------------------------------------
 public String toString ()
 {
-    StringBuffer sb = new StringBuffer();
-    sb.append("----  KB [begin]  ---------------------------------------------------------\n");
-    for (Iterator it = keySet().iterator(); it.hasNext(); )
+    synchronized( m_mapObjects )
     {
-        Object key = it.next();
-        Object obj = m_mapObjects.get(key);
-        sb.append("\n::: " + key + " :::\n" + obj + "\n");
+        StringBuffer sb = new StringBuffer();
+        sb.append("----  KB [begin]  ---------------------------------------------------------\n");
+        for (Iterator it = keySet().iterator(); it.hasNext(); )
+        {
+            Object key = it.next();
+            Object obj = m_mapObjects.get(key);
+            sb.append("\n::: " + key + " :::\n" + obj + "\n");
+        }
+        sb.append("----  KB [end]  -----------------------------------------------------------\n");
+        return sb.toString();
     }
-    sb.append("----  KB [end]  -----------------------------------------------------------\n");
-    return sb.toString();
-}
+}    
 
 //---------------------------------------------------------------------------
 public void updateRDFResourceSlots ()

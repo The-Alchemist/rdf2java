@@ -2,6 +2,10 @@ package dfki.rdf.test.staticKnowledgeBase;
 
 import java.util.Iterator;
 
+import com.sun.rsasign.al;
+
+import EDU.oswego.cs.dl.util.concurrent.ThreadFactory;
+
 import junit.framework.TestCase;
 import dfki.rdf.util.KnowledgeBase;
 import dfki.rdf.util.RDFResource;
@@ -9,10 +13,6 @@ import dfki.rdf.util.RDFResource;
 
 public class Test extends TestCase
 {
-    Thread1 m_t1;
-    Thread2 m_t2;
-
-    
     public static void main( String[] args )
     {
         junit.textui.TestRunner.run( Test.class );
@@ -31,12 +31,23 @@ public class Test extends TestCase
     
     public void test1()
     {
-        m_t1 = new Thread1();       m_t1.start();
-        m_t2 = new Thread2();       m_t2.start();
+        Thread1 t1 = new Thread1();     t1.start();
+        Thread2 t2 = new Thread2();     t2.start();
         
         try{ Thread.sleep( 15000 ); } catch( InterruptedException ex ) {}
         
-        assertTrue( m_t1.isOK()  &&  m_t2.isOK() );        
+        assertTrue( t1.isOK()  &&  t2.isOK() );
+    }
+
+
+    public void test2()
+    {
+        ThreadFastPutter tPutter = new ThreadFastPutter();     tPutter.start();
+        ThreadFastGetter tGetter = new ThreadFastGetter();     tGetter.start();
+        
+        try{ Thread.sleep( 25000 ); } catch( InterruptedException ex ) {}
+        
+        assertTrue( tPutter.isOK()  &&  tGetter.isOK() );
     }
     
     
@@ -48,19 +59,19 @@ public class Test extends TestCase
             KnowledgeBase kb = KnowledgeBase.getStaticKnowledgeBase();
 
             sleepy( 1000 ); 
-            System.out.println( "                               [t1] adding res1" ); System.out.flush();
+            System.out.println( "                               [t1] adding res1" ); 
             kb.put( new RDFResource( "res1" ) );            
-            System.out.println( "                               [t1] added  res1" ); System.out.flush();
+            System.out.println( "                               [t1] added  res1" ); 
 
             sleepy( 1000 ); 
-            System.out.println( "                               [t1] adding res2" ); System.out.flush();
+            System.out.println( "                               [t1] adding res2" ); 
             kb.put( new RDFResource( "res2" ) );
-            System.out.println( "                               [t1] added  res2" ); System.out.flush();
+            System.out.println( "                               [t1] added  res2" ); 
             
             sleepy( 1000 ); 
-            System.out.println( "                               [t1] adding res3" ); System.out.flush();
+            System.out.println( "                               [t1] adding res3" ); 
             kb.put( new RDFResource( "res3" ) );
-            System.out.println( "                               [t1] added  res3" ); System.out.flush();
+            System.out.println( "                               [t1] added  res3" ); 
             
             state = 2;
         }
@@ -141,10 +152,124 @@ public class Test extends TestCase
                 RDFResource res = (RDFResource)it.next();
                 sb.append( "    <" + res.getURI() + "/" + res.getLabel() + ">" );
             }
-            System.out.println( "[t2] kb: " + sb.toString() ); System.out.flush();
+            System.out.println( "[t2] kb: " + sb.toString() ); ;
         }
                 
     } // end of class Thread2
+    
+
+    class ThreadFastPutter   extends ThreadX
+    {
+        int nr = 100;
+        boolean[] alreadyChecked;   
+        int nrChecked = 0;
+     
+        public ThreadFastPutter()
+        {
+            alreadyChecked = new boolean[ nr ];
+            for( int i = 0; i < nr; i++ )
+            {
+                alreadyChecked[i] = false;
+            }
+        }
+
+        protected void state_1()
+        {
+            if( nrChecked >= nr )
+            {
+                ok = true;
+                state = 0;
+                System.out.println( "### put finished" );
+                return;
+            }
+            
+            KnowledgeBase kb = KnowledgeBase.getStaticKnowledgeBase();
+            int i = (int)( Math.random() * (double)nr ); 
+            String sURI = "res__" + i;            
+            System.out.println( "### get " + sURI + " (" + nrChecked + " / " + nr + ")" );
+            ;
+            RDFResource res2 = (RDFResource)kb.get( sURI );
+            if( res2 != null ) 
+            {
+                System.out.println( "### get " + sURI + " -> already checked " +
+                                    "(" + nrChecked + " / " + nr + ")" );
+                sleepy( 10 );
+                return;
+            }
+            
+            System.out.println( "### put " + sURI + " (" + nrChecked + " / " + nr + ")" );
+            ;
+            RDFResource res = new RDFResource( sURI );
+            kb.put( res );
+            alreadyChecked[i] = true;
+            nrChecked++;
+            System.out.println( "### put " + sURI + "\t[ready] (" + nrChecked + " / " + nr + ")" );
+            ;
+            sleepy( 10 );
+        }
+        
+        protected void state_2()
+        {
+        }
+
+        protected void state_3()
+        {
+        }
+        
+    } // end of class ThreadPutter
+    
+
+    class ThreadFastGetter   extends ThreadX
+    {
+        int nr = 100;
+        boolean[] alreadyChecked;
+        int nrChecked = 0;
+        
+        ThreadFastGetter()
+        {
+            alreadyChecked = new boolean[ nr ];
+            for( int i = 0; i < nr; i++ )
+            {
+                alreadyChecked[i] = false;
+            }
+        }
+        
+        protected void state_1()
+        {
+            KnowledgeBase kb = KnowledgeBase.getStaticKnowledgeBase();
+            int i = (int)( Math.random() * (double)nr ); 
+            String sURI = "res__" + i;            
+            System.out.println( "--- get " + sURI );
+            RDFResource res = (RDFResource)kb.get( sURI );
+            if( res != null )
+            {
+                if( !alreadyChecked[i] )
+                    nrChecked++;
+                alreadyChecked[i] = true;
+            }
+            System.out.println( "--- get " + sURI + "\t: " + (res != null ? "found    " : "not found") + 
+                                "(" + nrChecked + " / " + nr + ")" );
+
+            if( nrChecked >= nr )
+            {
+                ok = true;
+                state = 0;
+                System.out.println( "--- get finished" );
+                return;
+            }
+            
+            sleepy( 10 );
+        }
+        
+        protected void state_2()
+        {
+        }
+
+        protected void state_3()
+        {
+        }
+        
+    } // end of class ThreadFastGetter
     
 
     abstract class ThreadX   extends Thread
