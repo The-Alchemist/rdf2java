@@ -2,24 +2,13 @@ package dfki.rdf.util;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
 
 import org.w3c.rdf.model.Resource;
-import org.w3c.rdf.vocabulary.rdf_schema_200001.RDFS;
 
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLTextNode;
 import dfki.util.debug.Debug;
-import dfki.util.rdf.RDF;
 
 
 public class RDFResource   extends Object   
@@ -239,25 +228,30 @@ public PropertyStore getPropertyStore()
 
 
 //----------------------------------------------------------------------------------------------------
-public String toStringAsRDF()
+public String toStringAsRdf()
 {
-    return toStringAsRDF( null, null, ToStringAsRdfWalkerController.DEFAULT_TO_STRING_CONTROLLER );
+    return toStringAsRDF( null, null, ToStringController.NONRECURSIVE_TOSTRING_CONTROLLER );
+}
+
+public String toStringAsRdfRecursive()
+{
+    return toStringAsRDF( null, null, ToStringController.RECURSIVE_TOSTRING_CONTROLLER );
 }
 
 public String toStringAsRDF( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
-                             ToStringAsRdfWalkerController.ToStringController tsc )
+                             ToStringController tsc )
 {
     
     ToStringAsRdfWalkerController wc = new ToStringAsRdfWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
     JavaGraphWalker walker = new JavaGraphWalker( wc );
     walker.walk( this );
     
-    return wc.xmlDoc.serialize();
+    return wc.serialzeXMLDocumentAsString();
 }
 
 static public String toStringAsRDF( Collection/*RDFResource*/ collResources,
                                     Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
-                                    ToStringAsRdfWalkerController.ToStringController tsc )
+                                    ToStringController tsc )
 {
     ToStringAsRdfWalkerController wc = new ToStringAsRdfWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
     JavaGraphWalker walker = new JavaGraphWalker( wc );
@@ -268,18 +262,23 @@ static public String toStringAsRDF( Collection/*RDFResource*/ collResources,
         walker.walk( res );
     }
     
-    return wc.xmlDoc.serialize();
+    return wc.serialzeXMLDocumentAsString();
 }
 
 
 //----------------------------------------------------------------------------------------------------
 public String toStringPacked()
 {
-    return toStringPacked( null, null, ToStringPackedWalkerController.DEFAULT_TO_STRING_CONTROLLER );
+    return toStringPacked( null, null, ToStringController.NONRECURSIVE_TOSTRING_CONTROLLER );
+}
+
+public String toStringPackedRecursive()
+{
+    return toStringPacked( null, null, ToStringController.RECURSIVE_TOSTRING_CONTROLLER );
 }
 
 public String toStringPacked( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
-                              ToStringPackedWalkerController.ToStringController tsc )
+                              ToStringController tsc )
 {
     
     ToStringPackedWalkerController wc = new ToStringPackedWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
@@ -291,7 +290,7 @@ public String toStringPacked( Map/*String->String*/ mapPkg2NS, String sRdfsNames
 
 static public String toStringPacked( Collection/*RDFResource*/ collResources,
                                      Map/*String->String*/ mapPkg2NS, String sRdfsNamespace,
-                                     ToStringPackedWalkerController.ToStringController tsc )
+                                     ToStringController tsc )
 {
     ToStringPackedWalkerController wc = new ToStringPackedWalkerController( mapPkg2NS, sRdfsNamespace, tsc );
     JavaGraphWalker walker = new JavaGraphWalker( wc );

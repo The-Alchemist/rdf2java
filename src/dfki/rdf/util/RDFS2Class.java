@@ -11,37 +11,44 @@ import org.w3c.rdf.model.*;
 import org.w3c.rdf.syntax.RDFParser;
 import org.w3c.rdf.util.RDFFactory;
 
-/** The <code>RDFS2Class</code> tool.<br>
-  * This tool generates Java Classes according to a given RDFS-file.
-  * <p>
-  * By now only umcompiled Java files for the classes are generated.
-  * Hence you need to compile them later, before you can use Michael
-  * Sintek's <code>rdf2java</code> tool. But as you often enhance the Java files
-  * with additional functionality, this is no real problem...
-  * <p>
-  * Usage (calling the {@link #main main} method):<br>
-  * <code>
-  * RDFS2Class [options] &lt;file.rdfs&gt; &lt;outputSrcDir&gt; {&lt;namespace&gt; &lt;package&gt;}+<br>
-  * options:<br>
-  *           -q: quiet operation, no output<br>
-  *           -s: include toString()-stuff in generated java-files<br>
-  *           -S: recursive version of toString()-stuff<br>
-  *           -o: retain ordering of triples (usage of rdf:Seq in rdf-file)
-  *               by using arrays instead of sets<br>
-  *           -I: insert stuff for incremental file-generation
-  *               (needed for potential later usage of -i);
-  *               ATTENTION: this option completely re-creates java-files and erases every
-  *               user-defined methods and slots, maybe you'd better use "-i"?!<br>
-  *           -i: incremental generation of java-files, i.e. user added slots
-  *               are kept in the re-generated java-files
-  *               (this option includes already -I)
-  * </code>
-  * <p>
-  * Of course you can also use this class and its public methods.
-  * <p>
-  * @author  Sven.Schwarz@dfki.de
-  * @version 1.4.3
-  */
+/** 
+ * The <code>RDFS2Class</code> tool.<br>
+ * This tool generates Java Classes according to a given RDFS-file.
+ * <p>
+ * By now only umcompiled Java files for the classes are generated.
+ * Hence you need to compile them later, before you can use Michael
+ * Sintek's <code>rdf2java</code> tool. But as you often enhance the Java files
+ * with additional functionality, this is no real problem...
+ * <p>
+ * Usage (calling the {@link #main main} method):<br>
+ * <code>
+ * RDFS2Class [options] &lt;file.rdfs&gt; &lt;outputSrcDir&gt; {&lt;namespace&gt; &lt;package&gt;}+<br>
+ * options:<br>
+ *           -q: quiet operation, no output<br>
+ *           -s: include toString()-stuff in generated java-files<br>
+ *           -S: (used instead of -s) include recursive toString()-stuff in generated java-files<br>
+ *           -s({r}{p}): specifies further toString options:<br>
+ *               r: output in RDF format<br>
+ *               p: output in packed format (simpler + easier to read)<br>
+ *               s: follow to subgraphs = recursion turned ON<br>
+ *               example: s(rs) results in a hierarchical, recursive RDF output<br>
+ *               if there's no 'r' and no 'p', then 'p' is assumed as default<br>
+ *           -S: include recursive toString()-stuff in generated java-files<br>
+ *               (used instead of -s)<br>
+ *           -S({r}{p}): specifies further toString options see s(...) above<br>
+ *           -o: retain ordering of triples (usage of rdf:Seq in rdf-file)<br>
+ *               by using arrays instead of sets<br>
+ *           -I: insert stuff for incremental file-generation
+ *               (needed for potential later usage of -i)<br>
+ *           -i: incremental generation of java-files, i.e. user added slots<br>
+ *               are kept in the re-generated java-files (this option includes already -I)
+ * </code>
+ * <p>
+ * Of course you can also use this class and its public methods.
+ * <p>
+ * @author  Sven.Schwarz@dfki.de
+ * @version 1.4.4
+ */
 public class RDFS2Class
 {
 //----------------------------------------------------------------------------------------------------
@@ -67,6 +74,11 @@ boolean m_bQuiet;
 boolean m_bInsertIncrementalInfo;
 boolean m_bIncrementalGeneration;
 boolean m_bGenerateMethodsAboveUserMethods;
+
+String m_sIncludeToStringStuffOptions = "";
+final static public char TOSTRING_PACKED        = 'p';      // opposite of RDF
+final static public char TOSTRING_RDF           = 'r';      // opposite of PACKED
+final static public char TOSTRING_RECURSIVE     = 's';
 
 RDFFactory m_rdfFactory;
 RDFParser m_rdfParser;
@@ -99,20 +111,29 @@ private static int m_iNrErrors = 0;
 
 
 //----------------------------------------------------------------------------------------------------
-/** Usage (the given String <code>args</code> should be like everything after "RDFS2Class"):<br>
+/** 
+ * Usage (the given String <code>args</code> should be like everything after "RDFS2Class"):<br>
  * <code>
  * RDFS2Class [options] &lt;file.rdfs&gt; &lt;outputSrcDir&gt; {&lt;namespace&gt; &lt;package&gt;}+<br>
  * options:<br>
  *           -q: quiet operation, no output<br>
  *           -s: include toString()-stuff in generated java-files<br>
  *           -S: (used instead of -s) include recursive toString()-stuff in generated java-files<br>
- *           -o: retain ordering of triples (usage of rdf:Seq in rdf-file)
+ *           -s({r}{p}): specifies further toString options:<br>
+ *               r: output in RDF format<br>
+ *               p: output in packed format (simpler + easier to read)<br>
+ *               s: follow to subgraphs = recursion turned ON<br>
+ *               example: s(rs) results in a hierarchical, recursive RDF output<br>
+ *               if there's no 'r' and no 'p', then 'p' is assumed as default<br>
+ *           -S: include recursive toString()-stuff in generated java-files<br>
+ *               (used instead of -s)<br>
+ *           -S({r}{p}): specifies further toString options see s(...) above<br>
+ *           -o: retain ordering of triples (usage of rdf:Seq in rdf-file)<br>
  *               by using arrays instead of sets<br>
  *           -I: insert stuff for incremental file-generation
  *               (needed for potential later usage of -i)<br>
- *           -i: incremental generation of java-files, i.e. user added slots
- *               are kept in the re-generated java-files
- *               (this option includes already -I)
+ *           -i: incremental generation of java-files, i.e. user added slots<br>
+ *               are kept in the re-generated java-files (this option includes already -I)
  * </code>
  */
 public static void main (String[] args)
@@ -124,6 +145,8 @@ public static void main (String[] args)
        boolean bRetainOrdering = false;
        boolean bInsertIncrementalInfo = false;
        boolean bIncrementalGeneration = false;
+       
+       String sIncludeToStringStuffOptions = "";
 
        int iArg = 0;
        while (args[iArg].startsWith("-"))
@@ -134,9 +157,31 @@ public static void main (String[] args)
                if (sFlags.charAt(i) == 'q')
                    bQuiet = true;
                else if (sFlags.charAt(i) == 's')
+               {
                    bIncludeToStringStuff = true;
+                   if( sFlags.length() > i+1  &&  sFlags.charAt(i+1) == '(' )
+                   {
+                       int j = sFlags.indexOf( ')', i+2 );
+                       if( j < 0 )
+                           throw new Exception("RDFS2Class: Closing bracket missing for option "+sFlags.charAt(i)+"(...");
+                       sIncludeToStringStuffOptions = sFlags.substring( i+2, j );
+                       i = j;
+                   }
+               }
                else if (sFlags.charAt(i) == 'S')
+               {
                    bIncludeToStringStuffRecursive = true;
+                   if( sFlags.length() > i+1  &&  sFlags.charAt(i+1) == '(' )
+                   {
+                       int j = sFlags.indexOf( ')', i+2 );
+                       if( j < 0 )
+                           throw new Exception("RDFS2Class: Closing bracket missing for option "+sFlags.charAt(i)+"(...");
+                       sIncludeToStringStuffOptions = sFlags.substring( i+2, j );
+                       i = j;
+                   }
+                   if( sIncludeToStringStuffOptions.indexOf( TOSTRING_RECURSIVE ) < 0 )
+                       sIncludeToStringStuffOptions += TOSTRING_RECURSIVE;
+               }
                else if (sFlags.charAt(i) == 'o')
                    bRetainOrdering = true;
                else if (sFlags.charAt(i) == 'I')
@@ -209,6 +254,7 @@ public static void main (String[] args)
        gen.setQuiet(bQuiet);
        gen.setIncludeToStringStuff(bIncludeToStringStuff);
        gen.setIncludeToStringStuffRecursive(bIncludeToStringStuffRecursive);
+       gen.m_sIncludeToStringStuffOptions = sIncludeToStringStuffOptions;       //TODO: nice this!
        gen.setRetainOrdering(bRetainOrdering);
        gen.setInsertIncrementalInfo(bInsertIncrementalInfo);
        gen.setIncrementalGeneration(bIncrementalGeneration);
@@ -222,8 +268,15 @@ public static void main (String[] args)
            System.out.println( "\n" + sMsg + "\nusage: RDFS2Class [options] <file.rdfs> <outputSrcDir> {<namespace> <package>}+\n" +
                                "options:  -q: quiet operation, no output\n" +
                                "          -s: include toString()-stuff in generated java-files\n" +
+                               "          -s({r}{p}): specifies further toString options:\n" +
+                               "              r: output in RDF format\n" +
+                               "              p: output in packed format (simpler + easier to read)\n" +
+                               "              s: follow to subgraphs = recursion turned ON\n" +
+                               "              example: s(rs) results in a hierarchical, recursive RDF output\n" +
+                               "              if there's no 'r' and no 'p', then 'p' is assumed as default\n" +
                                "          -S: include recursive toString()-stuff in generated java-files\n" +
                                "              (used instead of -s)\n" +
+                               "          -S({r}{p}): specifies further toString options see s(...) above\n" +
                                "          -o: retain ordering of triples (usage of rdf:Seq in rdf-file)\n" +
                                "              by using arrays instead of sets\n" +
                                "          -I: insert stuff for incremental file-generation\n" +
@@ -792,6 +845,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 pwClsFile.print("\n" + sIndent + "// RDFS2Class: end of getter for slot " + pi.sSlotName);
             pwClsFile.println("\n");
 
+            /***
             if (m_bIncludeToStringStuff)
             {
                 // toString stuff
@@ -811,6 +865,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 sbToStringStuff.append(sIndent + "        }\n" +
                                        sIndent + "    }\n");
             }
+            ***/
         }
         else  // !(pi.bMultiple) => single value slot
         {
@@ -886,6 +941,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 pwClsFile.print("\n" + sIndent + "// RDFS2Class: end of getter for slot " + pi.sSlotName);
             pwClsFile.println("\n");
 
+            /***
             if (m_bIncludeToStringStuff)
             {
                 // toString stuff
@@ -904,26 +960,64 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 }
                 sbToStringStuff.append(sIndent + "    }\n");
             }
+            ***/
         }
     }
 
     // toStringStuff comes here
-    if (m_bIncludeToStringStuff && sbToStringStuff.length() > 0)
+    if( m_bIncludeToStringStuff )
     {
         // toString stuff
         pwClsFile.println(sIndent + sSeparator);
-        if (m_bInsertIncrementalInfo)
-            pwClsFile.println(sIndent + "/** RDFS2Class: toString()-stuff **/");
-        pwClsFile.println(sIndent + "public void toString (StringBuffer sb, String sIndent)\n" +
-                          sIndent + "{\n" +
-                          sIndent + "    super.toString(sb, sIndent);");
-        pwClsFile.print(sbToStringStuff.toString());
-        pwClsFile.println(sIndent + "}");
-        if (m_bInsertIncrementalInfo)
-            pwClsFile.println(sIndent + "// RDFS2Class: end of toString()-stuff");
+        if( m_bInsertIncrementalInfo )
+            pwClsFile.println( sIndent + "/** RDFS2Class: toString()-stuff **/" );
+        pwClsFile.println( sIndent + "public String toString()\n" +
+                           sIndent + "{" );
+        
+        if( m_sIncludeToStringStuffOptions.indexOf( 'r' ) >= 0 )
+        {
+            if( m_sIncludeToStringStuffOptions.indexOf( 's' ) >= 0 )
+                pwClsFile.println( sIndent + "    return toStringAsRdfRecursive();" );
+            else
+                pwClsFile.println( sIndent + "    return toStringAsRdf();" );
+        }
+        else if( m_sIncludeToStringStuffOptions.indexOf( 'p' ) >= 0 )
+        {
+            if( m_sIncludeToStringStuffOptions.indexOf( 's' ) >= 0 )
+                pwClsFile.println( sIndent + "    return toStringPackedRecursive();" );
+            else
+                pwClsFile.println( sIndent + "    return toStringPacked();" );
+        }
+        else
+        {
+            if( m_sIncludeToStringStuffOptions.indexOf( 's' ) >= 0 )
+                pwClsFile.println( sIndent + "    return toStringPackedRecursive();" );
+            else
+                pwClsFile.println( sIndent + "    return toStringPacked();" );
+        }
+                
+        pwClsFile.println( sIndent + "}" );
+        if( m_bInsertIncrementalInfo )
+            pwClsFile.println( sIndent + "// RDFS2Class: end of toString()-stuff" );
         pwClsFile.println();
     }
-
+    //old:
+    //    if (m_bIncludeToStringStuff && sbToStringStuff.length() > 0)
+    //    {
+    //        // toString stuff
+    //        pwClsFile.println(sIndent + sSeparator);
+    //        if (m_bInsertIncrementalInfo)
+    //            pwClsFile.println(sIndent + "/** RDFS2Class: toString()-stuff **/");
+    //        pwClsFile.println(sIndent + "public void toString (StringBuffer sb, String sIndent)\n" +
+    //                          sIndent + "{\n" +
+    //                          sIndent + "    super.toString(sb, sIndent);");
+    //        pwClsFile.print(sbToStringStuff.toString());
+    //        pwClsFile.println(sIndent + "}");
+    //        if (m_bInsertIncrementalInfo)
+    //            pwClsFile.println(sIndent + "// RDFS2Class: end of toString()-stuff");
+    //        pwClsFile.println();
+    //    }
+    
     // information about sub classes are coming here
     Model modelSubClasses = m_modelRDFS.find( null, m_resRDFSPredSubClassOf, resCls );
     Set setSubClasses = subjectsToSet( modelSubClasses );

@@ -41,13 +41,9 @@ public  class Woman
 
     //------------------------------------------------------------------------------
     /** RDFS2Class: toString()-stuff **/
-    public void toString (StringBuffer sb, String sIndent)
+    public String toString()
     {
-        super.toString(sb, sIndent);
-        if (m_hasHusband.getValue() != null) {
-            sb.append(sIndent+"-> hasHusband:\n"+sIndent+"       "+((dfki.rdf.util.RDFResource)m_hasHusband.getValue()).toStringShort() + "\n");
-            // sb.append(sIndent+"-> hasHusband:\n"+((dfki.rdf.util.RDFResource)m_hasHusband.getValue()).toString(sIndent+"       "));
-        }
+        return toStringPacked();
     }
     // RDFS2Class: end of toString()-stuff
 

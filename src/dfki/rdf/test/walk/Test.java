@@ -20,7 +20,7 @@ import dfki.rdf.util.RDFExport;
 import dfki.rdf.util.RDFImport;
 import dfki.rdf.util.RDFResource;
 import dfki.rdf.util.ToStringAsRdfWalkerController;
-import dfki.rdf.util.ToStringPackedWalkerController;
+import dfki.rdf.util.ToStringController;
 
 public class Test
 {
@@ -367,7 +367,7 @@ void go_4()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new ToStringAsRdfWalkerController.ToStringController() {
+            new ToStringController() {
                 public int propertyImportance( RDFResource source, String prop )
                 {
                     return 0;
@@ -408,7 +408,7 @@ void go_5()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new ToStringAsRdfWalkerController.ToStringController() {
+            new ToStringController() {
                 public int propertyImportance( RDFResource source, String prop )
                 {
                     if( prop.equals( "hasChild" ) )         return 10;
@@ -457,7 +457,7 @@ void go_5b()
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     RDFResource resMarch = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "March" );
     
-    ToStringAsRdfWalkerController.ToStringController tsc = new ToStringAsRdfWalkerController.ToStringController() {
+    ToStringController tsc = new ToStringController() {
         public int propertyImportance( RDFResource source, String prop )
         {
             return 0;
@@ -507,7 +507,7 @@ void go_6()
     
     // String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, null );
     String sAsRDF = resHomer.toStringAsRDF( m_mapPkg2NS, RDFS._Namespace,
-            new ToStringAsRdfWalkerController.ToStringController() {
+            new ToStringController() {
                 public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
                 {
                     return true;
@@ -536,7 +536,7 @@ void go_7()
     System.out.println( "\n\n\ngo_7:\n" );
     RDFResource resHomer = (RDFResource)m_kbCachedObjects.get( NAMESPACE + "Homer" );
     
-    ToStringPackedWalkerController.ToStringController tsc = new ToStringPackedWalkerController.ToStringController() {
+    ToStringController tsc = new ToStringController() {
         public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
         {
             return true;

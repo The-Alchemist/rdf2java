@@ -27,7 +27,7 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
 
     
     public ToStringAsRdfWalkerController( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace, 
-                                     ToStringController tsc )
+                                          ToStringController tsc )
     {
         xmlDoc = new TinyXMLDocument( null, sRdfsNamespace );
         elDoc = xmlDoc.createElement( RDF.DEFAULT_SYNTAX_NAMESPACE + "RDF" );
@@ -210,33 +210,7 @@ public class ToStringAsRdfWalkerController extends JavaGraphWalker.WalkerControl
     {
         return tsc.propertyImportance( source, prop );
     }
-    
-    
-    
-    
-    static public class ToStringController
-    {
-        public int propertyImportance( RDFResource source, String prop )
-        {
-            return 0;
-        }    
-        
-        public boolean hideProperty( RDFResource source, String prop )
-        {
-            return false;
-        }
-
-        public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
-        {
-            return true;
-        }
-        
-    } // end of class ToStringController
 
 
-    public final static ToStringController DEFAULT_TO_STRING_CONTROLLER = new ToStringController();
-
-    
-    
 } // end of class ToStringWalkerController
 

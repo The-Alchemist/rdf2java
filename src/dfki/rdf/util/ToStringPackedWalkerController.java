@@ -1,17 +1,10 @@
 package dfki.rdf.util;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import dfki.rdf.util.ToStringAsRdfWalkerController.ToStringController;
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLDocument;
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLElement;
-import dfki.rdf.util.nice.tinyxmldoc.TinyXMLTextNode;
-import dfki.util.rdf.RDF;
 
 
 public class ToStringPackedWalkerController extends JavaGraphWalker.WalkerController
@@ -22,7 +15,7 @@ public class ToStringPackedWalkerController extends JavaGraphWalker.WalkerContro
 
     
     public ToStringPackedWalkerController( Map/*String->String*/ mapPkg2NS, String sRdfsNamespace, 
-                                     ToStringController tsc )
+                                           ToStringController tsc )
     {
         sb = new StringBuffer();
         this.tsc = tsc;
@@ -178,32 +171,6 @@ public class ToStringPackedWalkerController extends JavaGraphWalker.WalkerContro
     {
         return tsc.propertyImportance( source, prop );
     }
-    
-    
-    
-    
-    static public class ToStringController
-    {
-        public int propertyImportance( RDFResource source, String prop )
-        {
-            return 0;
-        }    
-        
-        public boolean hideProperty( RDFResource source, String prop )
-        {
-            return false;
-        }
-
-        public boolean expandProperty( RDFResource source, String prop, RDFResource dest )
-        {
-            return true;
-        }
-        
-    } // end of class ToStringController
-
-
-    public final static ToStringController DEFAULT_TO_STRING_CONTROLLER = new ToStringController();
-
     
     
 } // end of class ToStringPackedWalkerController
