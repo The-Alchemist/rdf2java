@@ -213,7 +213,7 @@ public class IconLoader
             {
                 String iconName = (String)enum.nextElement();
                 String iconPath = resourceBundle.getString(iconName);
-                debug().message("iconName: " + iconName +"  iconPath: " + iconPath);
+//                debug().message("iconName: " + iconName +"  iconPath: " + iconPath);
                 
                 m_uri2iconsMap.put( iconName, loadIcon(iconPath) );
                 
