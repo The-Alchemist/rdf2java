@@ -9,6 +9,7 @@ import java.util.HashSet;
 public class PropertyInfo   implements Serializable
 {
 //------------------------------------------------------------------------------
+private String m_sNamespace;
 private String m_sName;
 private boolean m_bMultiValue;
 private Object m_singleValue;
@@ -27,7 +28,13 @@ private String[] m_asAllowedSymbols;
 //------------------------------------------------------------------------------
 public static PropertyInfo createStringProperty( String name, boolean hasMultiValue )
 {
-    return new PropertyInfo( name, VT_STRING, null, null, hasMultiValue );
+    return new PropertyInfo( null, name, VT_STRING, null, null, hasMultiValue );
+}
+
+//------------------------------------------------------------------------------
+public static PropertyInfo createStringProperty( String namespace, String name, boolean hasMultiValue )
+{
+    return new PropertyInfo( namespace, name, VT_STRING, null, null, hasMultiValue );
 }
 
 //------------------------------------------------------------------------------
@@ -38,7 +45,18 @@ public static PropertyInfo createInstanceProperty(
                                 String name, Class[] allowedValueClasses,
                                 boolean hasMultiValue )
 {
-    return new PropertyInfo( name, VT_INSTANCE, allowedValueClasses, null, hasMultiValue );
+    return new PropertyInfo( null, name, VT_INSTANCE, allowedValueClasses, null, hasMultiValue );
+}
+
+//------------------------------------------------------------------------------
+/** <code>allowedValueClasses</code> may be set to null,
+  * meaning there are no value class restrictions.
+  */
+public static PropertyInfo createInstanceProperty(
+                                String namespace, String name, Class[] allowedValueClasses,
+                                boolean hasMultiValue )
+{
+    return new PropertyInfo( namespace, name, VT_INSTANCE, allowedValueClasses, null, hasMultiValue );
 }
 
 //------------------------------------------------------------------------------
@@ -51,11 +69,19 @@ public static PropertyInfo createSymbolProperty(
 
 //------------------------------------------------------------------------------
 public static PropertyInfo createSymbolProperty(
+                                String namespace, String name, String[] allowedSymbols,
+                                boolean hasMultiValue )
+{
+    return createSymbolProperty( namespace, name, allowedSymbols, null, hasMultiValue );
+}
+
+//------------------------------------------------------------------------------
+public static PropertyInfo createSymbolProperty(
                                 String name, String[] allowedSymbols,
                                 String[] defaultValues,
                                 boolean hasMultiValue )
 {
-    PropertyInfo pi = new PropertyInfo( name, VT_SYMBOL, null, allowedSymbols, hasMultiValue );
+    PropertyInfo pi = new PropertyInfo( null, name, VT_SYMBOL, null, allowedSymbols, hasMultiValue );
     if( defaultValues != null && defaultValues.length > 0 )
     {
         if( hasMultiValue )
@@ -67,10 +93,28 @@ public static PropertyInfo createSymbolProperty(
 }
 
 //------------------------------------------------------------------------------
-private PropertyInfo( String name, int valueType,
-                     Class[] allowedValueClasses, String[] allowedSymbols,
-                     boolean hasMultiValue )
+public static PropertyInfo createSymbolProperty(
+                                String namespace, String name, String[] allowedSymbols,
+                                String[] defaultValues,
+                                boolean hasMultiValue )
 {
+    PropertyInfo pi = new PropertyInfo( namespace, name, VT_SYMBOL, null, allowedSymbols, hasMultiValue );
+    if( defaultValues != null && defaultValues.length > 0 )
+    {
+        if( hasMultiValue )
+            pi.setValues( Arrays.asList( defaultValues ) );
+        else
+            pi.putValue( defaultValues[0] );
+    }
+    return pi;
+}
+
+//------------------------------------------------------------------------------
+private PropertyInfo( String namespace, String name, int valueType,
+                      Class[] allowedValueClasses, String[] allowedSymbols,
+                      boolean hasMultiValue )
+{
+    m_sNamespace = namespace;
     m_sName = name;
     m_iValueType = valueType;
     m_collAllowedValueClasses = new HashSet();
@@ -85,7 +129,13 @@ private PropertyInfo( String name, int valueType,
 
     m_bMultiValue = hasMultiValue;
     m_singleValue = null;
-    m_collMultiValue = ( hasMultiValue  ?  new HashSet()  :  null );  // UNORDERED, LIST DUE TO USING SET !!!!!!!!!!!
+    m_collMultiValue = ( hasMultiValue  ?  new HashSet()  :  null );  // UNORDERED LIST DUE TO USING SET !!!!!!!!!!!
+}
+
+//------------------------------------------------------------------------------
+public String getNamespace()
+{
+    return m_sNamespace;
 }
 
 //------------------------------------------------------------------------------

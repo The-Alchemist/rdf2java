@@ -704,7 +704,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
         if( sRangePkgAndCls.equals("String") )
         {
             if( pi.setAllowedSymbols == null || pi.setAllowedSymbols.isEmpty() )
-                pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createStringProperty( \"" + pi.sSlotName + "\", " + sPropInfoHasMultiValue + " );\n");
+                pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createStringProperty( \"" + pi.sSlotNS + "\", \"" + pi.sSlotName + "\", " + sPropInfoHasMultiValue + " );\n");
             else
             {   // symbol type
                 StringBuffer sb = new StringBuffer( "new String[]{" );
@@ -731,7 +731,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                     sPropInfoDefaultValues = sb.toString();
                 }
 
-                pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createSymbolProperty( \"" + pi.sSlotName + "\", " + sPropInfoAllowedSymbols + ", " + sPropInfoDefaultValues + ", " + sPropInfoHasMultiValue + " );\n");
+                pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createSymbolProperty( \"" + pi.sSlotNS + "\", \"" + pi.sSlotName + "\", " + sPropInfoAllowedSymbols + ", " + sPropInfoDefaultValues + ", " + sPropInfoHasMultiValue + " );\n");
             }
         }
         else
@@ -773,7 +773,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             {
                 sPropInfoAllowedValueClasses = "new Class[]{" + sRangePkgAndCls + ".class}";
             }
-            pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createInstanceProperty( \"" + pi.sSlotName + "\", " + sPropInfoAllowedValueClasses + ", " + sPropInfoHasMultiValue + " );\n");
+            pwClsFile.println(sIndent + "protected dfki.rdf.util.PropertyInfo m_" + pi.sSlotName + " = dfki.rdf.util.PropertyInfo.createInstanceProperty( \"" + pi.sSlotNS + "\", \"" + pi.sSlotName + "\", " + sPropInfoAllowedValueClasses + ", " + sPropInfoHasMultiValue + " );\n");
         }
         //--- END --- property info (variable) for this slot
 
@@ -1051,6 +1051,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
     pwClsFile.println( sIndent + "public " + sClsName + "()\n" +
                        sIndent + "{\n" +
                        sIndent + "    super();\n" +
+                       sIndent + "    putRDFSClass( new dfki.rdf.util.RDFResource( \"" + resCls.getNamespace() + "\", \"" + resCls.getLocalName() + "\" ) );\n" +
                        sIndent + "    initPropertyStore();\n" +
                        sIndent + "}" );
     if (m_bInsertIncrementalInfo)
@@ -1349,6 +1350,7 @@ private static Debug debug ()
     {
         Resource resProperty;
         String sSlotPkg;
+        String sSlotNS;
         String sSlotName;
         Set setResDomain;
         Set setResRange;
@@ -1365,7 +1367,7 @@ private static Debug debug ()
         PropertyInfo (Resource _resProperty)   throws Exception
         {
             resProperty = _resProperty;
-            String sSlotNS = resProperty.getNamespace();
+            sSlotNS = resProperty.getNamespace();
             sSlotPkg = (String)m_mapNamespaceToPackage.get(sSlotNS);
             sSlotName = resProperty.getLocalName();
             Model modelDomain = m_modelRDFS.find(resProperty, m_resRDFSPredDomain, null);

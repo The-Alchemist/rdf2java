@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.w3c.rdf.model.ModelException;
 import org.w3c.rdf.model.Resource;
 
 import com.hp.hpl.jena.rdf.model.AnonId;
@@ -30,9 +31,11 @@ private static Model ms_serializationModel = ModelFactory.createDefaultModel();
 private String m_namespace;
 private String m_localName;
 private String m_uri;
-private String m_label;     //SS:2004-08-05
+private String m_label;         //SS:2004-08-05
+private Resource m_rdfsClass;   //SS:2004-09-21
 
 protected PropertyStore m_propertyStore;
+
 
 //----------------------------------------------------------------------------------------------------
 public static Debug debug()
@@ -47,6 +50,7 @@ protected RDFResource ()
     m_localName = null;
     m_uri = null;
     m_label = null;
+    m_rdfsClass = null;
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -131,6 +135,17 @@ public String toString (String sIndent)
     return sIndent + toString();
 }
 
+//----------------------------------------------------------------------------------------------------
+public void putRDFSClass( Resource rdfsClass )
+{
+    m_rdfsClass = rdfsClass;
+}
+
+//----------------------------------------------------------------------------------------------------
+public Resource getRDFSClass()
+{
+    return m_rdfsClass;
+}
 
 //----------------------------------------------------------------------------------------------------
 /** Gets the class name of this object.
@@ -351,12 +366,21 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ 
         res = ms_serializationModel.createResource( new AnonId( getAddressOnlyHex() ) );
     if( getLabel() != null ) 
         res.addProperty( RDFS.label, getLabel() );
+
+    String sClassURI = null;
+    if( getRDFSClass() != null )
+    {
+        try{ sClassURI = getRDFSClass().getURI(); } 
+        catch( ModelException ex ) {}
+    }
+    if( sClassURI == null )
+    {
+        if( mapPkg2NS == null ) 
+            return res;
+        String sClassNamespace = (String)mapPkg2NS.get( RDFResource.getClassPackage( getClass() ) );    
+        sClassURI = sClassNamespace + RDFResource.getClassName( getClass() );
+    }
     
-    if( mapPkg2NS == null )
-        return res;
-    
-    String sClassNamespace = (String)mapPkg2NS.get( RDFResource.getClassPackage( getClass() ) );    
-    String sClassURI = sClassNamespace + RDFResource.getClassName( getClass() );    
     com.hp.hpl.jena.rdf.model.Resource resClass = ms_serializationModel.getResource( sClassURI );
     if( resClass == null )
         resClass = ms_serializationModel.createResource( sClassURI );
@@ -367,8 +391,14 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ 
     {
         PropertyInfo pi = (PropertyInfo)it.next();
         String sPropLocalName = pi.getName();
-        String sPropPackage = getClassPackage( getClass() );
-        String sPropNamespace = (String)mapPkg2NS.get( sPropPackage );
+        String sPropNamespace = pi.getNamespace();
+        if( sPropNamespace == null )
+        {
+            String sPropPackage = getClassPackage( getClass() );
+            if( mapPkg2NS == null ) continue;
+            sPropNamespace = (String)mapPkg2NS.get( sPropPackage );
+            if( sPropNamespace == null ) continue;
+        }
         Property prop = ms_serializationModel.createProperty( sPropNamespace, sPropLocalName );
         Object value = pi.getValue();
         if( value == null ) continue;
@@ -410,6 +440,7 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ 
     
     return res;
 }
+
 
 //----------------------------------------------------------------------------------------------------
 } // end of class RDFResource
