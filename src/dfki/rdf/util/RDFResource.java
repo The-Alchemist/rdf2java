@@ -183,14 +183,24 @@ public String toStringShort ()
 //----------------------------------------------------------------------------------------------------
 public boolean equals (Object other)
 {
-    // objects are hereby declared as identical iff their URIs are equal
-    if ( other != null  &&  (other instanceof org.w3c.rdf.model.Resource) )
-    {
-        try { return getURI().equals(((org.w3c.rdf.model.Resource)other).getURI()); }
-        catch (Exception ex) { return false; }
+    // objects are hereby declared as identical   iff   one of the following applies: 
+    // (a) their URIs are not null AND equal
+    // (b) their URIs are     null AND they are the same objects, 
+    //                                 i.e. their hashCode's (pointers) are the same
+    try 
+    { 
+        if ( other != null  &&  (other instanceof org.w3c.rdf.model.Resource) )
+        {
+            org.w3c.rdf.model.Resource resOther = (org.w3c.rdf.model.Resource)other;
+            if( getURI() != null )
+                return( getURI().equals( resOther.getURI() ) );
+            if( getURI() == null  &&  resOther.getURI() == null )
+                return( hashCode() == resOther.hashCode() );
+        }
     }
-    else
-        return false;
+    catch (Exception ex) {}
+    // fallout: no chance for a positive equals left
+    return false;
 }
 
 //----------------------------------------------------------------------------------------------------
