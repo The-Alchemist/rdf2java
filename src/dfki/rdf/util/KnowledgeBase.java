@@ -38,6 +38,8 @@ public Object put (Object objKey, Object objValue)
             throw new Error("Wrong class (" + objKey.getClass() + ") used as key in dfki.rdf.util.KnowledgeBase . put");
     }
     catch (org.w3c.rdf.model.ModelException ex) {
+        System.out.println("ModelException occurred in dfki.rdf.util.KnowledgeBase . put:\n" + ex.getMessage());
+        ex.printStackTrace();
         throw new Error("ModelException occurred in dfki.rdf.util.KnowledgeBase . put:\n" + ex.getMessage());
     }
 }
@@ -77,6 +79,8 @@ public Object get (Object key)
         return m_mapObjects.get(key);
     }
     catch (org.w3c.rdf.model.ModelException ex) {
+        System.out.println("ModelException occurred in dfki.rdf.util.KnowledgeBase . get: " + ex.getMessage());
+        ex.printStackTrace();
         throw new Error("ModelException occurred in dfki.rdf.util.KnowledgeBase . get: " + ex.getMessage());
     }
 }

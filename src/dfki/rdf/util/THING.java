@@ -179,6 +179,8 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
                     methodPut.invoke( this, new Object[] { cachedObject } );
                 }
                 catch (Exception ex) {
+                    System.out.println("Exception occurred: "+ex.getMessage());
+                    ex.printStackTrace();
                     throw new Error(ex.getMessage());
                 }
             }
@@ -190,6 +192,8 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects)
     catch (Exception ex)
     {
         System.out.println("dfki.rdf.util.THING . updateRDFResourceSlots: Exception occurred" + ex);
+        ex.printStackTrace();
+        throw new Error(ex.getMessage());
     }
 }
 
@@ -240,6 +244,8 @@ public void assign (THING newThing, KnowledgeBase kb)
     }
     catch (Exception ex)
     {
+        System.out.println("Exception occurred: "+ex.getMessage());
+        ex.printStackTrace();
         throw new Error(ex.getMessage());
     }
 }
