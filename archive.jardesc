@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jardesc>
     <jar path="E:/java/rdf2java/lib/rdf2java.jar"/>
-    <options buildIfNeeded="true" compress="true"
+    <options overwrite="true" compress="true" exportErrors="true"
+        exportWarnings="true" saveDescription="true"
         descriptionLocation="/rdf2java/archive.jardesc"
-        exportErrors="true" exportWarnings="true" overwrite="true"
-        saveDescription="true" useSourceFolders="false"/>
-    <manifest generateManifest="true" manifestLocation=""
-        manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        useSourceFolders="false" buildIfNeeded="true"/>
+    <manifest manifestVersion="1.0" usesManifest="true"
+        reuseManifest="false" saveManifest="false"
+        generateManifest="true" manifestLocation="">
         <sealing sealJar="false">
             <packagesToSeal/>
             <packagesToUnSeal/>

@@ -17,7 +17,8 @@ public class RDFExport {
   NodeFactory _nodeFactory;
   Model _model;
 
-  final static String _anonNamespacePrefix = "http://www.anonymous.org/";
+  public final static String NAMESPACE_FOR_TEMPORARIES = "http://dfki.km.rdf2java/temporaries#"; 
+  final static String _anonNamespacePrefix = NAMESPACE_FOR_TEMPORARIES;
   String _anonNamespace;
   String _defaultNamespace; // used when package is not in map below
   Map _packagesNamespaces;
@@ -145,7 +146,7 @@ public class RDFExport {
   void exportObjectsToModel(Collection objects) {
     // init
     long timestamp = new Date().getTime();
-    _anonNamespace = _anonNamespacePrefix + timestamp + "#";
+    _anonNamespace = _anonNamespacePrefix + timestamp + "_";
     _genid = 1;
     _rdfFactory = new RDFFactoryImpl();
     _model = _rdfFactory.createModel();
