@@ -142,17 +142,23 @@ public void updateRDFResourceSlots ()
 //---------------------------------------------------------------------------
 public void assign (THING thingToAssign)
 {
+    assign( thingToAssign, true /*update resource slots*/ );
+}
+
+//---------------------------------------------------------------------------
+public void assign (THING thingToAssign, boolean bUpdateResourceSlots)
+{
     THING thingOld = (THING)get( thingToAssign.getURI() );
     if (thingOld != null)
         thingOld.assign( thingToAssign, this );
     else
     {
         put( thingToAssign );
-        //SS:2002.10.09: the following is needed for the slots inside!
-        updateRDFResourceSlots();
+        // movebelow:    updateRDFResourceSlots();
     }
 
-    updateRDFResourceSlots();
+    if (bUpdateResourceSlots)
+        updateRDFResourceSlots();
 }
 
 //---------------------------------------------------------------------------
@@ -162,8 +168,9 @@ public void assignAllThings (Collection coll)
     {
         Object obj = it.next();
         if (obj instanceof THING)
-            assign( (THING)obj );
+            assign( (THING)obj, false /*defer resource slots*/ );
     }
+    updateRDFResourceSlots();
 }
 
 //---------------------------------------------------------------------------
