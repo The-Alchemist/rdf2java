@@ -177,21 +177,20 @@ protected String getAddressOnlyHex ()
 //----------------------------------------------------------------------------------------------------
 /** Creates a new URI (with default namespace) and {@link #putURI stores} this URI in this object.
   */
-public void makeNewURI ()
+public String makeNewURI ()
 {
-    Date date = new Date();
-    String sNewURI = "http://dfki.frodo/default#" + "id_" + date.getTime() + "_" + getAddressOnlyHex();
-    putURI(sNewURI);
+    return makeNewURI("http://dfki.frodo/default#");
 }
 
 //----------------------------------------------------------------------------------------------------
 /** Creates a new URI (with given namespace) and {@link #putURI stores} this URI in this object.
   */
-public void makeNewURI (String sNamespace)
+public String makeNewURI (String sNamespace)
 {
     Date date = new Date();
     String sNewURI = sNamespace + "id_" + date.getTime() + "_" + getAddressOnlyHex();
     putURI(sNewURI);
+    return sNewURI;
 }
 
 //----------------------------------------------------------------------------------------------------

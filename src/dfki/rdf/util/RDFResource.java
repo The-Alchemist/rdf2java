@@ -7,13 +7,36 @@ public class RDFResource   implements Resource
 {
     String namespace;
     String localName;
-    public Resource storedRes;
+    ////public Resource storedRes;
 
     public RDFResource (Resource res)      throws org.w3c.rdf.model.ModelException
     {
         namespace = res.getNamespace();
         localName = res.getLocalName();
-        storedRes = res;
+        ////storedRes = res;
+    }
+
+    public RDFResource (String namespace, String localName)
+    {
+        this.namespace = namespace;
+        this.localName = localName;
+        ////storedRes = null;  //FIXME: hope, this won't get critical somewhen...
+    }
+
+    public RDFResource (String uri)
+    {
+        // guess namespace and localname
+        int pos = uri.indexOf("#");
+        if (pos >= 0)
+        {
+            namespace = uri.substring(0, pos+1);
+            localName = uri.substring(pos+1);
+        }
+        else
+        {   // no namespace; this should NOT be allowed, really, should it?
+            namespace = null;
+            localName = uri;
+        }
     }
 
     public String getNamespace ()

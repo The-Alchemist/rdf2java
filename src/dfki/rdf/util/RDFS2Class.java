@@ -611,12 +611,14 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
                 }
                 pwClsFile.println(")\n"+sIndent+"        throw new Error(\"not an allowed class\");");
             }
-            pwClsFile.print(sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
+            pwClsFile.print(sIndent + "    " + makeMethodName("clear", pi.sSlotName) + "();\n" +
+                            sIndent + "    m_" + pi.sSlotName + " = p_" + pi.sSlotName + ";\n" +
                             sIndent + "}\n");
             // second putter (URI)
-            pwClsFile.println(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
-                              sIndent + "{");
-            pwClsFile.print(sIndent + "    m_" + pi.sSlotName + SLOT_RES_APPENDIX + " = p_" + pi.sSlotName + ";\n" +
+            pwClsFile.print(sIndent + "public void " + makeMethodName("put", pi.sSlotName) + " (dfki.rdf.util.RDFResource p_" + pi.sSlotName +")\n" +
+                            sIndent + "{\n" +
+                            sIndent + "    " + makeMethodName("clear", pi.sSlotName) + "();\n" +
+                            sIndent + "    m_" + pi.sSlotName + SLOT_RES_APPENDIX + " = p_" + pi.sSlotName + ";\n" +
                             sIndent + "}\n");
             pwClsFile.print(sIndent + "public void " + makeMethodName("clear", pi.sSlotName) + " ()\n" +
                             sIndent + "{\n" +
