@@ -273,7 +273,7 @@ public void assign (THING thingToAssign, boolean bUpdateResourceSlots)
     else
     {
         put( thingToAssign );
-        // movebelow:    updateRDFResourceSlots();
+        //  thingToAssign.assign( thingToAssign, this );  //2003-01-07: a first try
     }
 
     long iTimeAfterAssign = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );

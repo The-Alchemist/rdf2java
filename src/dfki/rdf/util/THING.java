@@ -174,9 +174,9 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateN
         if (m_lLastUpdateNumber == lUpdateNumber) return;  // already visited this THING
         m_lLastUpdateNumber = lUpdateNumber;
 
-//        //SS:2002-12-18
-//        if( kbCachedObjects.get( getURI() ) == null )
-//            kbCachedObjects.put( this );
+        //SS:2002-12-18, 2003-01-07:
+        if( kbCachedObjects.get( getURI() ) == null )
+            kbCachedObjects.put( this );
 
         Collection collProperties = getProperties();
         for (Iterator itProperties = collProperties.iterator(); itProperties.hasNext(); )
@@ -327,6 +327,10 @@ void assignValues (Collection collOldValues, Collection collNewValues,
         putPropertyValue( sPropertyName, oldValue );
         // mark, that we've already handled that new slot value (inspected below)
         remove(collNewValues, ((RDFResource)newValue).getURI());
+
+        //  //2003-01-07: a first try
+        //  if( oldValue instanceof THING )
+        //      kb.put( oldValue );
     }
 
     // if collNewValues still contains some slot values => add them all
