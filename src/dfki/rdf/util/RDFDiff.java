@@ -11,27 +11,24 @@ import org.w3c.rdf.syntax.RDFSerializer;
 import org.w3c.rdf.util.RDFFactory;
 
 
+/**
+ * <p>
+ * RDFDiff - calculates difference between two RDF files.
+ * </p><p>
+ * This is a command-line-only application, i.e. the only public method
+ * is {@link #main}.
+ * </p><p>
+ * Calling RDFDiff results in two more RDF files. If you called, e.g.,
+ * <code>RDFDiff abc.rdf xyz.rdf</code>, then
+ * the newly created file <code>abc.rdf.diff.rdf</code> will contain all
+ * statements of <code>abc.rdf</code> minus the ones in <code>xyz.rdf</code>.
+ * Analogously a file <code>xyz.rdf.diff.rdf</code> is created, too.
+ */
 public class RDFDiff
 {
-//------------------------------------------------------------------------------
-private String m_sFilename1;
-private String m_sFilename2;
-private String m_sFilenameDiff1minus2;
-private String m_sFilenameDiff2minus1;
-
-RDFFactory m_rdfFactory;
-RDFParser m_rdfParser;
-NodeFactory m_nodeFactory;
-
-
-//------------------------------------------------------------------------------
-public RDFDiff()   throws Exception
-{
-    m_rdfFactory = RDF.factory();
-    m_rdfParser = m_rdfFactory.createParser();
-}
-
-//------------------------------------------------------------------------------
+/*******************************************************************************
+ * Usage: <code>RDFDiff &lt;rdf-file1&gt; &lt;rdf-file2&gt;</code>
+ */
 static public void main( String[] args )
 {
     try
@@ -47,6 +44,13 @@ static public void main( String[] args )
         System.out.println( ex );
         ex.printStackTrace();
     }
+}
+
+//------------------------------------------------------------------------------
+private RDFDiff()   throws Exception
+{
+    m_rdfFactory = RDF.factory();
+    m_rdfParser = m_rdfFactory.createParser();
 }
 
 //------------------------------------------------------------------------------
@@ -146,6 +150,18 @@ private void add( Model mDest, Model mSource )   throws Exception
         mDest.add( st );
     }
 }
+
+
+//------------------------------------------------------------------------------
+private String m_sFilename1;
+private String m_sFilename2;
+private String m_sFilenameDiff1minus2;
+private String m_sFilenameDiff2minus1;
+
+private RDFFactory m_rdfFactory;
+private RDFParser m_rdfParser;
+private NodeFactory m_nodeFactory;
+
 
 //------------------------------------------------------------------------------
 } // end of class RDFDiff
