@@ -253,8 +253,7 @@ private void appendInstance( Resource resInstance, Element elAppendHere,
 private Statement takeNextSlotStatement( Model mSlotsRest )   throws Exception
 {
     Statement stBest = null;
-    final double WORST_VALUE = -9999.0;
-    double dBest = WORST_VALUE;
+    double dBest = 0.0;
     for( Enumeration enumSlots = mSlotsRest.elements(); enumSlots.hasMoreElements(); )
     {
         Statement st = (Statement)enumSlots.nextElement();
@@ -263,7 +262,7 @@ private Statement takeNextSlotStatement( Model mSlotsRest )   throws Exception
                 resPred.getURI().equals( m_rdfsURIs.namespace() + "label" ) )
             continue;
         double dVal = getValueForPred( resPred.getURI() );
-        if( dVal > dBest )
+        if( stBest == null  ||  dVal > dBest )
         {
             dBest = dVal;
             stBest = st;
@@ -302,8 +301,7 @@ private Resource takeNextInstance()   throws Exception
 
     Statement stBestInstance = null;
     Resource resBestInstance = null;
-    final double WORST_VALUE = -9999.0;
-    double dBestInstance = WORST_VALUE;
+    double dBestInstance = 0.0;
     for( Enumeration enumInst = mInstances.elements(); enumInst.hasMoreElements(); )
     {
         Statement st = (Statement)enumInst.nextElement();
@@ -328,7 +326,7 @@ private Resource takeNextInstance()   throws Exception
             ////System.out.println( "     " + getValueForPred( sPred ) + " # " + sPred );
         }
         ////System.out.println( "   # " + dInstanceValue + " # " + resSubject.getURI() );
-        if( dInstanceValue > dBestInstance )
+        if( stBestInstance == null  ||  dInstanceValue > dBestInstance )
         {
             dBestInstance = dInstanceValue;
             resBestInstance = resSubject;

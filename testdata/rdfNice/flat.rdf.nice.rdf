@@ -29,6 +29,7 @@
                     </organisationalmodel:ProcessRole>
                 </task:performedBy>
                 <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+                <task:rootTask resource="&amp;default;id_1029933827946_517e5e"/>
             </task:TaskInstance>
         </task:subTask>
         <task:subTask>
@@ -37,6 +38,7 @@
                 <task:taskState>processible</task:taskState>
                 <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
                 <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+                <task:rootTask resource="&amp;default;id_1029933827946_517e5e"/>
             </task:TaskInstance>
         </task:subTask>
         <task:subTask>
@@ -45,6 +47,7 @@
                 <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
                 <task:taskState>processible</task:taskState>
                 <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+                <task:rootTask resource="&amp;default;id_1029933827946_517e5e"/>
             </task:TaskInstance>
         </task:subTask>
         <task:subTask>
@@ -104,6 +107,7 @@
                     </task:Rule>
                 </task:rule>
                 <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+                <task:rootTask resource="&amp;default;id_1029933827946_517e5e"/>
             </task:TaskInstance>
         </task:subTask>
         <task:subTask>
@@ -127,6 +131,7 @@
                 <task:taskState>initiated</task:taskState>
                 <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
                 <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+                <task:rootTask resource="&amp;default;id_1029933827946_517e5e"/>
             </task:TaskInstance>
         </task:subTask>
         <task:subTask>
@@ -150,6 +155,7 @@
                 <task:taskState>initiated</task:taskState>
                 <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
                 <task:parentTask resource="&amp;default;id_1029933827946_517e5e"/>
+                <task:rootTask resource="&amp;default;id_1029933827946_517e5e"/>
             </task:TaskInstance>
         </task:subTask>
         <task:performedBy resource="&amp;default;id_1029933827946_3f5841"/>
