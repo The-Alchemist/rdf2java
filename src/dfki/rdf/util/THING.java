@@ -399,6 +399,8 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     for (Iterator itOldValues = collOldValues.iterator(); itOldValues.hasNext(); )
     {
         Object oldValue = itOldValues.next();
+        if ( !(oldValue instanceof dfki.rdf.util.THING) && !(oldValue instanceof dfki.rdf.util.RDFResource) )
+            continue;  // slot value is a LITERAL => handle that case below => assign NEW slot value (overwrite old value)
         Object newValue = find(collNewValues, getURI(oldValue));
 
         // if newValue == null, then the old slot value (subA_this) has to be removed
@@ -411,13 +413,13 @@ void assignValues (Collection collOldValues, Collection collNewValues,
         // as this case is handled deeper below, too, we only do the other case here:
         // A L T H O U G H :   note, that this disturbs the order of the slot values !!!
         // OR WELL... DOES IT REALLY ???????????????????????????????????????????????????
-        if ( !(newValue instanceof dfki.rdf.util.THING) )
-        {
-            Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { newValue.getClass() } );
-            methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
-            // mark, that we've already handled that new slot value for later
-            remove(collNewValues, getURI(newValue));
-        }
+        if ( newValue instanceof dfki.rdf.util.THING )
+            continue;  // newValue is not remove from collNewValues and will therfore be handled again below
+
+        Method methodPut = myGetMethod( getClass(), sPutMethodName, new Class[] { oldValue.getClass() } );
+        methodPut.invoke( this, new Object[] { oldValue } );  // insert the newer slot value
+        // mark, that we've already handled that new slot value (inspected below)
+        remove(collNewValues, getURI(newValue));
     }
 
     // if collNewValues still contains some slot values => add them all
