@@ -23,20 +23,20 @@ public void clear ()
 }
 
 //---------------------------------------------------------------------------
-public void put (String sURIKey, Object obj)
+public Object put (String sURIKey, Object obj)
 {
-    m_mapObjects.put(sURIKey, obj);
+    return m_mapObjects.put(sURIKey, obj);
 }
 
 //---------------------------------------------------------------------------
-public void put (Object objKey, Object objValue)
+public Object put (Object objKey, Object objValue)
 {
     try {
         if (objKey instanceof String)
-            put( (String)objKey, objValue );
+            return put( (String)objKey, objValue );
         else
         if (objKey instanceof org.w3c.rdf.model.Resource)
-            put( ((org.w3c.rdf.model.Resource)objKey).getURI(), objValue );
+            return put( ((org.w3c.rdf.model.Resource)objKey).getURI(), objValue );
         else
             throw new Error("Wrong class (" + objKey.getClass() + ") used as key in dfki.rdf.util.KnowledgeBase . put");
     }
@@ -46,11 +46,11 @@ public void put (Object objKey, Object objValue)
 }
 
 //---------------------------------------------------------------------------
-public void put (dfki.rdf.util.THING obj)
+public Object put (dfki.rdf.util.THING obj)
 {
     String sURI = obj.getURI();
     if (sURI == null) throw new Error("tried to put an obj in the map w/o URI in dfki.rdf.util.KnowledgeBase . put");
-    put (sURI, obj);
+    return put (sURI, obj);
 }
 
 //---------------------------------------------------------------------------
