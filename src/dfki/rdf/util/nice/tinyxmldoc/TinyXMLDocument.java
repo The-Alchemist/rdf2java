@@ -96,7 +96,8 @@ String getPrefix( String sNamespace )
     if( sPrefix == null )
     {
         sPrefix = calcPrefix( sNamespace );
-        m_mapNamespace2Prefix.put( sNamespace, sPrefix );
+        if( sPrefix != null )
+            m_mapNamespace2Prefix.put( sNamespace, sPrefix );
     }
     return sPrefix;
 }
@@ -106,7 +107,7 @@ private String calcPrefix( String sNamespace )
 {
     int pos = sNamespace.lastIndexOf( '/' );
     if( pos < 0  ||  sNamespace.charAt( sNamespace.length()-1 ) != '#' )
-        return "ns_" + Integer.toHexString( sNamespace.hashCode() );
+        return null;  //old: return "ns_" + Integer.toHexString( sNamespace.hashCode() );
     return sNamespace.substring( pos+1, sNamespace.length()-1 );
 }
 
@@ -115,7 +116,10 @@ String uri2qname( String sURI )
 {
     String sPrefix = getPrefix( getNamespace( sURI ) );
     String sLocalName = getLocalName( sURI );
-    return sPrefix + ":" + sLocalName;
+    if( sPrefix != null )
+        return sPrefix + ":" + sLocalName;
+    else
+        return sLocalName;
 }
 
 //------------------------------------------------------------------------------
@@ -123,7 +127,10 @@ String uri2entityref( String sURI )
 {
     String sPrefix = getPrefix( getNamespace( sURI ) );
     String sLocalName = getLocalName( sURI );
-    return "&" + sPrefix + ";" + sLocalName;
+    if( sPrefix != null )
+        return "&" + sPrefix + ";" + sLocalName;
+    else
+        return sLocalName;
 }
 
 //------------------------------------------------------------------------------

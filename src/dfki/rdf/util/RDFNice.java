@@ -267,8 +267,9 @@ private TinyXMLTextNode createTextNode( String sText )   throws Exception
 private void appendInstance( Resource resInstance, TinyXMLElement elAppendHere,
                              Set/*String*/ setProcessedResources )   throws Exception
 {
-    removeInstanceFromRDFModelRest( resInstance );
-    if( setProcessedResources.contains( resInstance.getURI() ) )
+    boolean bInstanceWasStillInList = removeInstanceFromRDFModelRest( resInstance );
+    if(     setProcessedResources.contains( resInstance.getURI() ) ||
+            !bInstanceWasStillInList )
     {
         elAppendHere.setAttribute( m_resPredResource.getURI(), resInstance );
         return;
@@ -406,19 +407,23 @@ private Resource takeNextInstance()   throws Exception
     if( stBestInstance == null )
         return null;
 
-    m_modelRest.remove( stBestInstance );
+    // m_modelRest.remove( stBestInstance );
+    
     return resBestInstance;
 }
 
 //------------------------------------------------------------------------------
-private void removeInstanceFromRDFModelRest( Resource resInstance )   throws Exception
+private boolean removeInstanceFromRDFModelRest( Resource resInstance )   throws Exception
 {
     Model m = m_modelRest.find( resInstance, m_resPredType, null );
+    boolean bFoundAndRemovedFromList = false;
     for( Enumeration enum = m.elements(); enum.hasMoreElements(); )
     {
         Statement st = (Statement)enum.nextElement();
         m_modelRest.remove( st );
+        bFoundAndRemovedFromList = true;
     }
+    return bFoundAndRemovedFromList;
 }
 
 //------------------------------------------------------------------------------
