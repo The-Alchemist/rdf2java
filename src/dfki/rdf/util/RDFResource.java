@@ -43,7 +43,7 @@ public void putURI (String namespace, String localName)
 {
     m_namespace = namespace;
     m_localName = localName;
-    m_uri = m_namespace + m_localName;
+    m_uri = ( m_namespace != null  ?  m_namespace + m_localName  :  m_localName );
 }
 
 //----------------------------------------------------------------------------------------------------
