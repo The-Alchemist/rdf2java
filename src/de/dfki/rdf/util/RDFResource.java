@@ -437,8 +437,14 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ 
                     Object oneValue = itValues.next();
                     if( oneValue instanceof RDFResource )
                     {
-                        com.hp.hpl.jena.rdf.model.Resource resValue = model.createResource( ((RDFResource)oneValue).getURI() );
-                        res.addProperty( prop, resValue );
+                        com.hp.hpl.jena.rdf.model.Resource resValue = null;
+                        if( ((RDFResource)oneValue).getURI() != null )
+                            resValue = model.createResource( ((RDFResource)oneValue).getURI() );
+                        else if( (oneValue instanceof THING) )
+                            resValue = ((THING)oneValue).asJenaResource( mapPkg2NS, model );
+                        
+                        if( resValue != null )
+                            res.addProperty( prop, resValue );
                     }
                     else
                     {
@@ -452,8 +458,14 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ 
         {
             if( value instanceof RDFResource )
             {
-                com.hp.hpl.jena.rdf.model.Resource resValue = model.createResource( ((RDFResource)value).getURI() );
-                res.addProperty( prop, resValue );
+                com.hp.hpl.jena.rdf.model.Resource resValue = null;
+                if( ((RDFResource)value).getURI() != null )
+                    resValue = model.createResource( ((RDFResource)value).getURI() );
+                else if( (value instanceof THING) )
+                    resValue = ((THING)value).asJenaResource( mapPkg2NS, model );
+                
+                if( resValue != null )
+                    res.addProperty( prop, resValue );
             }
             else
             {
@@ -539,12 +551,19 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource(
                     Object oneValue = itValues.next();
                     if( oneValue instanceof RDFResource )
                     {
-                        com.hp.hpl.jena.rdf.model.Resource resValue;
-                        if( ctrl.expandProperty( this, prop, (RDFResource)oneValue ) )
+                        com.hp.hpl.jena.rdf.model.Resource resValue = null;
+                        if( ((RDFResource)oneValue).getURI() != null )
+                        {
+                            if( (oneValue instanceof THING) && ctrl.expandProperty( this, prop, (RDFResource)oneValue ) )
+                                resValue = ((RDFResource)oneValue).asJenaResource( mapPkg2NS, model, ctrl, mapThing2JenaRes );
+                            else 
+                                resValue = model.createResource( ((RDFResource)oneValue).getURI() );
+                        }
+                        else if( (oneValue instanceof THING) )
                             resValue = ((RDFResource)oneValue).asJenaResource( mapPkg2NS, model, ctrl, mapThing2JenaRes );
-                        else
-                            resValue = model.createResource( ((RDFResource)oneValue).getURI() );
-                        res.addProperty( prop, resValue );
+                        
+                        if( resValue != null )
+                            res.addProperty( prop, resValue );
                     }
                     else
                     {
@@ -558,12 +577,19 @@ public com.hp.hpl.jena.rdf.model.Resource asJenaResource(
         {
             if( value instanceof RDFResource )
             {
-                com.hp.hpl.jena.rdf.model.Resource resValue;
-                if( ctrl.expandProperty( this, prop, (RDFResource)value ) )
+                com.hp.hpl.jena.rdf.model.Resource resValue = null;
+                if( ((RDFResource)value).getURI() != null )
+                {
+                    if( (value instanceof THING) && ctrl.expandProperty( this, prop, (RDFResource)value ) )
+                        resValue = ((RDFResource)value).asJenaResource( mapPkg2NS, model, ctrl, mapThing2JenaRes );
+                    else 
+                        resValue = model.createResource( ((RDFResource)value).getURI() );
+                }
+                else if( (value instanceof THING) )
                     resValue = ((RDFResource)value).asJenaResource( mapPkg2NS, model, ctrl, mapThing2JenaRes );
-                else
-                    resValue = model.createResource( ((RDFResource)value).getURI() );
-                res.addProperty( prop, resValue );
+                
+                if( resValue != null )
+                    res.addProperty( prop, resValue );
             }
             else
             {
