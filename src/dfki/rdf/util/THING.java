@@ -425,6 +425,7 @@ void assignValues (Collection collOldValues, Collection collNewValues,
     {
         Object newValue = itNewValues.next();
 
+        Method[] aMethods = getClass().getMethods();
         Method methodPut = getClass().getMethod( sPutMethodName, new Class[] { newValue.getClass() } );
         methodPut.invoke( this, new Object[] { newValue } );  // insert the newer slot value
 
