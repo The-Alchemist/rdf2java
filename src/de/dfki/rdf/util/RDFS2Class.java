@@ -307,7 +307,7 @@ public static void main (String[] args)
                                "          rdfs=<namespace>    : set different RDFS namespace\n" +
                                "          rdf=<namespace>     : set different RDF namespace\n" +
                                "          protege=<namespace> : set different Protege namespace\n" );
-          System.exit(0);
+          // System.exit(0);
        }
        else
            debug().error(ex);
@@ -323,7 +323,7 @@ public static void main (String[] args)
        System.out.println( "ok (no warnings, no errors)" );
    System.out.println();
 
-   System.exit(0);
+   //// System.exit(0);
 }
 
 //----------------------------------------------------------------------------------------------------

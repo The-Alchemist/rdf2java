@@ -2,12 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry sourcepath="import/rdf-api-2001-01-19.jar" kind="lib" path="import/rdf-api-2001-01-19.jar"/>
+	<classpathentry exported="true" sourcepath="import/rdf-api-2001-01-19.jar" kind="lib" path="import/rdf-api-2001-01-19.jar"/>
 	<classpathentry kind="lib" path="import/xercesImpl.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="import/Jena2/concurrent.jar"/>
 	<classpathentry kind="lib" path="import/Jena2/icu4j.jar"/>
-	<classpathentry sourcepath="import/Jena2/jena-2.1_all.jar" kind="lib" path="import/Jena2/jena-2.1_all.jar"/>
+	<classpathentry exported="true" sourcepath="import/Jena2/jena-2.1_all.jar" kind="lib" path="import/Jena2/jena-2.1_all.jar"/>
 	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.0.0/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="lib" path="import/Jena2/commons-logging.jar"/>
 	<classpathentry kind="lib" path="import/Jena2/log4j-1.2.7.jar"/>
