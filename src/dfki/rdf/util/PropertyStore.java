@@ -35,6 +35,12 @@ public Set getProperties()
 }
 
 //------------------------------------------------------------------------------
+public Collection/*PropertyInfo*/ getPropertyInfos()
+{
+    return m_mapProperty2Info.values();
+}
+
+//------------------------------------------------------------------------------
 public Object getPropertyValue (String sPropertyName)
 {
     PropertyInfo pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName );

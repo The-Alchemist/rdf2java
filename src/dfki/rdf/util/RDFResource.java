@@ -201,5 +201,11 @@ public PropertyStore createPropertyStore()
 }
 
 //----------------------------------------------------------------------------------------------------
+public PropertyStore getPropertyStore()
+{
+    return m_propertyStore;
+}
+
+//----------------------------------------------------------------------------------------------------
 } // end of class RDFResource
 
