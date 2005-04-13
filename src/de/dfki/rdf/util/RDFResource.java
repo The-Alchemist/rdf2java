@@ -366,117 +366,117 @@ public static String getClassName( Class cls )
 //----------------------------------------------------------------------------------------------------
 public com.hp.hpl.jena.rdf.model.Resource asJenaResource()
 {
-  return asJenaResource( null, ms_serializationModel );
+  return asJenaResource( null, ms_serializationModel, null );
 }
 
 //----------------------------------------------------------------------------------------------------
 public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Model model )
 {
-  return asJenaResource( null, model );
+  return asJenaResource( null, model, null );
 }
 
 //----------------------------------------------------------------------------------------------------
 public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ mapPkg2NS )
 {
-    return asJenaResource( mapPkg2NS, ms_serializationModel );
+    return asJenaResource( mapPkg2NS, ms_serializationModel, null );
 }
 
 //----------------------------------------------------------------------------------------------------
-public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ mapPkg2NS, Model model )
-{
-    com.hp.hpl.jena.rdf.model.Resource res;
-    if( getURI() != null )
-        res = model.createResource( getURI() );
-    else
-        res = model.createResource( new AnonId( getAddressOnlyHex() ) );
-    if( getLabel() != null ) 
-        res.addProperty( RDFS.label, getLabel() );
-
-    String sClassURI = null;
-    if( getRDFSClass() != null )
-    {
-        try{ sClassURI = getRDFSClass().getURI(); } 
-        catch( ModelException ex ) {}
-    }
-    if( sClassURI == null )
-    {
-        if( mapPkg2NS == null ) 
-            return res;
-        String sClassNamespace = (String)mapPkg2NS.get( RDFResource.getClassPackage( getClass() ) );    
-        sClassURI = sClassNamespace + RDFResource.getClassName( getClass() );
-    }
-    
-    com.hp.hpl.jena.rdf.model.Resource resClass = model.getResource( sClassURI );
-    if( resClass == null )
-        resClass = model.createResource( sClassURI );
-    res.addProperty( RDF.type, resClass );
-    
-    PropertyStore ps = getPropertyStore();
-    for( Iterator it = ps.getPropertyInfos().iterator(); it.hasNext(); )
-    {
-        PropertyInfo pi = (PropertyInfo)it.next();
-        String sPropLocalName = pi.getName();
-        String sPropNamespace = pi.getNamespace();
-        if( sPropNamespace == null )
-        {
-            String sPropPackage = getClassPackage( getClass() );
-            if( mapPkg2NS == null ) continue;
-            sPropNamespace = (String)mapPkg2NS.get( sPropPackage );
-            if( sPropNamespace == null ) continue;
-        }
-        Property prop = model.createProperty( sPropNamespace, sPropLocalName );
-        Object value = pi.getValue();
-        if( value == null ) continue;
-        if( pi.hasMultiValue() )
-        {
-            Collection collValues = (Collection)value;
-            if( collValues.size() > 0 )
-            {
-                for( Iterator itValues = collValues.iterator(); itValues.hasNext(); )
-                {
-                    Object oneValue = itValues.next();
-                    if( oneValue instanceof RDFResource )
-                    {
-                        com.hp.hpl.jena.rdf.model.Resource resValue = null;
-                        if( ((RDFResource)oneValue).getURI() != null )
-                            resValue = model.createResource( ((RDFResource)oneValue).getURI() );
-                        else if( (oneValue instanceof THING) )
-                            resValue = ((THING)oneValue).asJenaResource( mapPkg2NS, model );
-                        
-                        if( resValue != null )
-                            res.addProperty( prop, resValue );
-                    }
-                    else
-                    {
-                        Literal litValue = model.createLiteral( oneValue );
-                        res.addProperty( prop, litValue );
-                    }
-                }
-            }
-        }
-        else
-        {
-            if( value instanceof RDFResource )
-            {
-                com.hp.hpl.jena.rdf.model.Resource resValue = null;
-                if( ((RDFResource)value).getURI() != null )
-                    resValue = model.createResource( ((RDFResource)value).getURI() );
-                else if( (value instanceof THING) )
-                    resValue = ((THING)value).asJenaResource( mapPkg2NS, model );
-                
-                if( resValue != null )
-                    res.addProperty( prop, resValue );
-            }
-            else
-            {
-                Literal litValue = model.createLiteral( value );
-                res.addProperty( prop, litValue );
-            }
-        }
-    }
-    
-    return res;
-}
+//public com.hp.hpl.jena.rdf.model.Resource asJenaResource( Map/*String->String*/ mapPkg2NS, Model model )
+//{
+//    com.hp.hpl.jena.rdf.model.Resource res;
+//    if( getURI() != null )
+//        res = model.createResource( getURI() );
+//    else
+//        res = model.createResource( new AnonId( getAddressOnlyHex() ) );
+//    if( getLabel() != null ) 
+//        res.addProperty( RDFS.label, getLabel() );
+//
+//    String sClassURI = null;
+//    if( getRDFSClass() != null )
+//    {
+//        try{ sClassURI = getRDFSClass().getURI(); } 
+//        catch( ModelException ex ) {}
+//    }
+//    if( sClassURI == null )
+//    {
+//        if( mapPkg2NS == null ) 
+//            return res;
+//        String sClassNamespace = (String)mapPkg2NS.get( RDFResource.getClassPackage( getClass() ) );    
+//        sClassURI = sClassNamespace + RDFResource.getClassName( getClass() );
+//    }
+//    
+//    com.hp.hpl.jena.rdf.model.Resource resClass = model.getResource( sClassURI );
+//    if( resClass == null )
+//        resClass = model.createResource( sClassURI );
+//    res.addProperty( RDF.type, resClass );
+//    
+//    PropertyStore ps = getPropertyStore();
+//    for( Iterator it = ps.getPropertyInfos().iterator(); it.hasNext(); )
+//    {
+//        PropertyInfo pi = (PropertyInfo)it.next();
+//        String sPropLocalName = pi.getName();
+//        String sPropNamespace = pi.getNamespace();
+//        if( sPropNamespace == null )
+//        {
+//            String sPropPackage = getClassPackage( getClass() );
+//            if( mapPkg2NS == null ) continue;
+//            sPropNamespace = (String)mapPkg2NS.get( sPropPackage );
+//            if( sPropNamespace == null ) continue;
+//        }
+//        Property prop = model.createProperty( sPropNamespace, sPropLocalName );
+//        Object value = pi.getValue();
+//        if( value == null ) continue;
+//        if( pi.hasMultiValue() )
+//        {
+//            Collection collValues = (Collection)value;
+//            if( collValues.size() > 0 )
+//            {
+//                for( Iterator itValues = collValues.iterator(); itValues.hasNext(); )
+//                {
+//                    Object oneValue = itValues.next();
+//                    if( oneValue instanceof RDFResource )
+//                    {
+//                        com.hp.hpl.jena.rdf.model.Resource resValue = null;
+//                        if( ((RDFResource)oneValue).getURI() != null )
+//                            resValue = model.createResource( ((RDFResource)oneValue).getURI() );
+//                        else if( (oneValue instanceof THING) )
+//                            resValue = ((THING)oneValue).asJenaResource( mapPkg2NS, model );
+//                        
+//                        if( resValue != null )
+//                            res.addProperty( prop, resValue );
+//                    }
+//                    else
+//                    {
+//                        Literal litValue = model.createLiteral( oneValue );
+//                        res.addProperty( prop, litValue );
+//                    }
+//                }
+//            }
+//        }
+//        else
+//        {
+//            if( value instanceof RDFResource )
+//            {
+//                com.hp.hpl.jena.rdf.model.Resource resValue = null;
+//                if( ((RDFResource)value).getURI() != null )
+//                    resValue = model.createResource( ((RDFResource)value).getURI() );
+//                else if( (value instanceof THING) )
+//                    resValue = ((THING)value).asJenaResource( mapPkg2NS, model );
+//                
+//                if( resValue != null )
+//                    res.addProperty( prop, resValue );
+//            }
+//            else
+//            {
+//                Literal litValue = model.createLiteral( value );
+//                res.addProperty( prop, litValue );
+//            }
+//        }
+//    }
+//    
+//    return res;
+//}
 
 //----------------------------------------------------------------------------------------------------
 public com.hp.hpl.jena.rdf.model.Resource asJenaResource( 
