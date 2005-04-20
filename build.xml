@@ -5,6 +5,7 @@
 	<property name="source.dir" value="${basedir}/src" />
 	<property name="apidoc.dir" value="${basedir}/apidoc" />
 	<property name="rdf2java.jar.name" value="${lib.dir}/rdf2java.jar"/>
+	<property name="rdf2javaApidoc.jar.name" value="${lib.dir}/rdf2javaApidoc.jar"/>
 	<!--<property name="java.version" value="1.4" />  -->
 	
 	<patternset id="compile.sources">
@@ -42,6 +43,9 @@
 		</javac>
 	</target>	
 
+	<target name="apidoc_jar" depends="apidoc">
+		<jar destfile="${rdf2javaApidoc.jar.name}" basedir="${apidoc.dir}"/>
+	</target>
 	<target name="apidoc">
 		<mkdir dir="${apidoc.dir}" />
 		<javadoc destdir="${apidoc.dir}"
