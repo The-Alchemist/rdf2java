@@ -35,9 +35,9 @@ public class RDFDump
 
             // print out plain RDF
             StringBuffer sb = new StringBuffer();
-            for( Enumeration enum = model.elements(); enum.hasMoreElements(); )
+            for( Enumeration en = model.elements(); en.hasMoreElements(); )
             {
-                Statement s = (Statement)enum.nextElement();
+                Statement s = (Statement)en.nextElement();
                 sb.append( s.subject() + "\t" + s.predicate() + "\t" + s.object() + "\n" );
             }
             System.out.println( sb.toString() );

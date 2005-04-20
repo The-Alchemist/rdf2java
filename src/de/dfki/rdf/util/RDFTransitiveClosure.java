@@ -82,9 +82,9 @@ private void include( Model m1, Resource res, Model m2 )   throws Exception
 	Model mOutgoing = m1.find( res, null, null );
 	if( copyStatements( mOutgoing, m2 ) )
 	{	
-		for( Enumeration enum = mOutgoing.elements(); enum.hasMoreElements(); )
+		for( Enumeration en = mOutgoing.elements(); en.hasMoreElements(); )
 		{
-			Statement st = (Statement)enum.nextElement(); 
+			Statement st = (Statement)en.nextElement(); 
 			Resource p = st.predicate();
 			include( m1, p, m2 );
 			RDFNode o = st.object();
@@ -96,9 +96,9 @@ private void include( Model m1, Resource res, Model m2 )   throws Exception
 	Model mIncoming = m1.find( null, null, res );
 	if( copyStatements( mIncoming, m2 ) )
 	{	
-		for( Enumeration enum = mIncoming.elements(); enum.hasMoreElements(); )
+		for( Enumeration en = mIncoming.elements(); en.hasMoreElements(); )
 		{
-			Statement st = (Statement)enum.nextElement(); 
+			Statement st = (Statement)en.nextElement(); 
 			Resource s = st.subject();
 			include( m1, s, m2 );
 			Resource p = st.predicate();
@@ -113,9 +113,9 @@ private boolean copyStatements( Model mFrom, Model mTo )   throws Exception
 	boolean bCopiedSomething = false;
 	NodeFactory nodeFactory2 = mTo.getNodeFactory();
 
-	for( Enumeration enum = mFrom.elements(); enum.hasMoreElements(); )
+	for( Enumeration en = mFrom.elements(); en.hasMoreElements(); )
     {
-    	Statement st = (Statement)enum.nextElement(); 
+    	Statement st = (Statement)en.nextElement(); 
 		Resource s = st.subject();
 		Resource p = st.predicate();
 		RDFNode o = st.object();

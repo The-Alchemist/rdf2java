@@ -79,9 +79,9 @@ public class RDFExtract
     {
         Model modelExtract = m_rdfFactory.createModel();
         
-        for( Enumeration enum = modelOrig.elements(); enum.hasMoreElements(); )
+        for( Enumeration en = modelOrig.elements(); en.hasMoreElements(); )
         {
-            Statement st = (Statement)enum.nextElement();
+            Statement st = (Statement)en.nextElement();
             Resource res = st.subject();
             if( !res.getURI().startsWith( sClsUriPattern ) ) continue;
             System.out.println( st );

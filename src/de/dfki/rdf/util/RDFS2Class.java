@@ -1198,10 +1198,10 @@ protected PrintWriter createFile (String sPath, String sFile)   throws Exception
 protected Set objectsToSet (Model modelStatements)   throws Exception
 {
     HashSet hs = new HashSet();
-    Enumeration enum = modelStatements.elements();
-    while (enum.hasMoreElements())
+    Enumeration en = modelStatements.elements();
+    while (en.hasMoreElements())
     {
-        Statement st = (Statement)enum.nextElement();
+        Statement st = (Statement)en.nextElement();
         hs.add(st.object());
     }
     return hs;
@@ -1211,10 +1211,10 @@ protected Set objectsToSet (Model modelStatements)   throws Exception
 protected Set subjectsToSet (Model modelStatements)   throws Exception
 {
     HashSet hs = new HashSet();
-    Enumeration enum = modelStatements.elements();
-    while (enum.hasMoreElements())
+    Enumeration en = modelStatements.elements();
+    while (en.hasMoreElements())
     {
-        Statement st = (Statement)enum.nextElement();
+        Statement st = (Statement)en.nextElement();
         hs.add(st.subject());
     }
     return hs;

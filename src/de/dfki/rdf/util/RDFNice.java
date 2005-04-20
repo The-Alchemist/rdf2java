@@ -380,18 +380,18 @@ private Resource takeNextInstance()   throws Exception
         double dInstanceValue = 0.0;
         Model mTest = m_model.find( null, null, resSubject );
         int nrLinksToInst = 0;
-        for( Enumeration enum = mTest.elements(); enum.hasMoreElements(); )
+        for( Enumeration en = mTest.elements(); en.hasMoreElements(); )
         {
-            Statement s = (Statement)enum.nextElement();
+            Statement s = (Statement)en.nextElement();
             String sPred = s.predicate().getURI();
             dInstanceValue -= getPredValue( sPred );  // NEGATIVE!!!
             ////System.out.println( "     " + (-getPredValue( sPred )) + " # " + sPred );
         }
         mTest = m_model.find( resSubject, null, null );
         int nrLinksFromInst = 0;
-        for( Enumeration enum = mTest.elements(); enum.hasMoreElements(); )
+        for( Enumeration en = mTest.elements(); en.hasMoreElements(); )
         {
-            Statement s = (Statement)enum.nextElement();
+            Statement s = (Statement)en.nextElement();
             String sPred = s.predicate().getURI();
             dInstanceValue += getPredValue( sPred );
             ////System.out.println( "     " + getPredValue( sPred ) + " # " + sPred );
@@ -418,9 +418,9 @@ private boolean removeInstanceFromRDFModelRest( Resource resInstance )   throws 
 {
     Model m = m_modelRest.find( resInstance, m_resPredType, null );
     boolean bFoundAndRemovedFromList = false;
-    for( Enumeration enum = m.elements(); enum.hasMoreElements(); )
+    for( Enumeration en = m.elements(); en.hasMoreElements(); )
     {
-        Statement st = (Statement)enum.nextElement();
+        Statement st = (Statement)en.nextElement();
         m_modelRest.remove( st );
         bFoundAndRemovedFromList = true;
     }

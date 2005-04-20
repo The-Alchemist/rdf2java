@@ -104,9 +104,9 @@ private Model diff( Model m1, Model m2 )   throws Exception
 //------------------------------------------------------------------------------
 private void remove( Model mDest, Model mSource )   throws Exception
 {
-    for( Enumeration enum = mSource.elements(); enum.hasMoreElements(); )
+    for( Enumeration en = mSource.elements(); en.hasMoreElements(); )
     {
-        Statement st = (Statement)enum.nextElement();
+        Statement st = (Statement)en.nextElement();
         remove( mDest, st );
     }
 }
@@ -114,9 +114,9 @@ private void remove( Model mDest, Model mSource )   throws Exception
 //------------------------------------------------------------------------------
 private void remove( Model model, Statement st )   throws Exception
 {
-    for( Enumeration enum = model.elements(); enum.hasMoreElements(); )
+    for( Enumeration en = model.elements(); en.hasMoreElements(); )
     {
-        Statement stInModel = (Statement)enum.nextElement();
+        Statement stInModel = (Statement)en.nextElement();
         if( equal( stInModel, st ) )
             model.remove( stInModel );
     }
@@ -146,9 +146,9 @@ private boolean equal( Statement st1, Statement st2 )   throws Exception
 //------------------------------------------------------------------------------
 private void add( Model mDest, Model mSource )   throws Exception
 {
-    for( Enumeration enum = mSource.elements(); enum.hasMoreElements(); )
+    for( Enumeration en = mSource.elements(); en.hasMoreElements(); )
     {
-        Statement st = (Statement)enum.nextElement();
+        Statement st = (Statement)en.nextElement();
         mDest.add( st );
     }
 }

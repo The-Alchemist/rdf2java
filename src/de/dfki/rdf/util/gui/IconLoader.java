@@ -206,11 +206,11 @@ public class IconLoader
         
         if (resourceBundle != null)
         {
-            Enumeration enum =  resourceBundle.getKeys();
+            Enumeration en =  resourceBundle.getKeys();
             
-            while (enum.hasMoreElements())
+            while (en.hasMoreElements())
             {
-                String iconName = (String)enum.nextElement();
+                String iconName = (String)en.nextElement();
                 String iconPath = resourceBundle.getString(iconName);
 //                debug().message("iconName: " + iconName +"  iconPath: " + iconPath);
                 
