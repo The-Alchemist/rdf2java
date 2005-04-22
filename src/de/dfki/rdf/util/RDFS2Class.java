@@ -31,7 +31,7 @@ import de.dfki.util.rdf.RDF;
  * The <code>RDFS2Class</code> tool.<br>
  * This tool generates Java Classes according to a given RDFS-file.
  * <p>
- * By now only umcompiled Java files for the classes are generated.
+ * By now only uncompiled Java files for the classes are generated.
  * Hence you need to compile them later, before you can use Michael
  * Sintek's <code>rdf2java</code> tool. But as you often enhance the Java files
  * with additional functionality, this is no real problem...
@@ -58,6 +58,10 @@ import de.dfki.util.rdf.RDF;
  *               (needed for potential later usage of -i)<br>
  *           -i: incremental generation of java-files, i.e. user added slots<br>
  *               are kept in the re-generated java-files (this option includes already -I)
+ *           Order of the following options is important!<br>
+ *           rdfs=&lt;namespace&gt;    : set different RDFS namespace<br>
+ *           rdf=&lt;namespace&gt;     : set different RDF namespace<br>
+ *           protege=&lt;namespace&gt; : set different Protege namespace<br>
  * </code>
  * <p>
  * Of course you can also use this class and its public methods.
@@ -68,7 +72,7 @@ import de.dfki.util.rdf.RDF;
 public class RDFS2Class
 {
 //----------------------------------------------------------------------------------------------------
-static String RDFS_NAMESPACE          = "http://www.w3.org/TR/1999/PR-rdf-schema-19990303#";
+static String RDFS_NAMESPACE          = "http://www.w3.org/2000/01/rdf-schema#";
 static String RDF_NAMESPACE           = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 static boolean PRINTOUT_RDFS_URIS     = false;
 
@@ -127,6 +131,7 @@ final static String SET_CLASS  = "java.util.HashSet";
 private static int m_iNrMessages = 0;
 private static int m_iNrWarnings = 0;
 private static int m_iNrErrors = 0;
+private static int m_iNrClassesCreated = 0;
 
 
 //----------------------------------------------------------------------------------------------------
@@ -153,6 +158,10 @@ private static int m_iNrErrors = 0;
  *               (needed for potential later usage of -i)<br>
  *           -i: incremental generation of java-files, i.e. user added slots<br>
  *               are kept in the re-generated java-files (this option includes already -I)
+ *           Order of the following options is important!<br>
+ *           rdfs=&lt;namespace&gt;    : set different RDFS namespace<br>
+ *           rdf=&lt;namespace&gt;     : set different RDF namespace<br>
+ *           protege=&lt;namespace&gt; : set different Protege namespace<br>
  * </code>
  */
 public static void main (String[] args)
@@ -255,7 +264,7 @@ public static void main (String[] args)
        {
            message("sRDFSFile     : "+sRDFSFile);
            message("sOutputSrcDir : "+sOutputSrcDir);
-           message("maping:");
+           message("Namespace mappings:");
        }
        HashMap mapNS2Pkg = new HashMap();
        while (iArg < args.length)
@@ -304,6 +313,7 @@ public static void main (String[] args)
                                "              user-defined methods and slots, maybe you'd better use \"-i\" ? !\n" +
                                "          -i: incremental generation of java-files, i.e. user added slots\n" +
                                "              are kept in the re-generated java-files\n" +
+                               "          Order of the following options is important!\n" +
                                "          rdfs=<namespace>    : set different RDFS namespace\n" +
                                "          rdf=<namespace>     : set different RDF namespace\n" +
                                "          protege=<namespace> : set different Protege namespace\n" );
@@ -321,6 +331,7 @@ public static void main (String[] args)
        System.out.println( "" + m_iNrErrors + " errors" );
    if( m_iNrWarnings <= 0 && m_iNrErrors <= 0 )
        System.out.println( "ok (no warnings, no errors)" );
+   System.out.println( "" + m_iNrClassesCreated + " classes created" + (m_iNrClassesCreated == 0 ? " - check RDF/RDFS namespace settings" : "") );
    System.out.println();
 
    //// System.exit(0);
@@ -555,6 +566,7 @@ protected void createTheClasses ()   throws Exception
     {
         Resource resCls = ((Statement)enumClasses.nextElement()).subject();
         createClass(resCls);
+		m_iNrClassesCreated++;
     }
 }
 
@@ -676,8 +688,6 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
     else
         pwClsFile.println("    extends de.dfki.rdf.util.THING");
 
-
-    //2003-11-12: added serialization
     pwClsFile.print("    implements Serializable");
     /***
     hier fehlt auch das verwenden (import) der packages von den interface classes
