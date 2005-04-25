@@ -22,7 +22,7 @@ static String extractPropertyName (String sMethodName)
 }
 
 //----------------------------------------------------------------------------------------------------
-static String makeMethodName (String sMethodPrefix, String sPropertyName)
+public static String makeMethodName (String sMethodPrefix, String sPropertyName)
 {
     // prop --> getProp
     // Prop --> get_Prop
@@ -34,7 +34,7 @@ static String makeMethodName (String sMethodPrefix, String sPropertyName)
 }
 
 //----------------------------------------------------------------------------------------------------
-static String makeMethodName (String sMethodPrefix, String sPropertyNamespace, String sPropertyName)
+public static String makeMethodName (String sMethodPrefix, String sPropertyNamespace, String sPropertyName)
 {
     String sMembervarName = sPropertyName;
     if( sPropertyNamespace != null )

@@ -1,5 +1,9 @@
 package de.dfki.rdf.test.jena2java;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -73,6 +77,29 @@ public class SkosTest
         System.out.println();
         
         printConceptTree( "", " +  ", cTopics );        
+        
+
+        try
+        {
+            // write jena model
+            String sFilename = "test/de/dfki/rdf/test/jena2java/testdata.rdf";
+            String sModelAsString = RDFTool.modelToString( JenaResourceWrapper.m_defaultModel );
+            System.out.println( "\nmodel:\n" + sModelAsString );
+            FileWriter writer = new FileWriter( sFilename );       
+            writer.write( sModelAsString );
+            writer.flush(); writer.close();
+            
+            // read jena model
+            FileReader reader = new FileReader( sFilename );
+            Model newModel = ModelFactory.createDefaultModel();
+            newModel.read( reader, "http://dummy.base.uri/" );
+            String sNewModelAsString = RDFTool.modelToString( newModel );
+            System.out.println( "\nmodel:\n" + sNewModelAsString );
+        }
+        catch( Exception ex ) 
+        {
+            ex.printStackTrace();
+        }
 	}
     
     public void printConceptTree( String sCurrentIndent, String sIndent, SkosConcept concept )

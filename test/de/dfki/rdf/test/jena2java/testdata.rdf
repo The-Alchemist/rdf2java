@@ -1,0 +1,25 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://www.w3.org/2004/02/skos/core#">
+  <rdf:Description rdf:about="http://km.dfki.de/concepts#TOPICS">
+    <j.0:prefLabel>TOPICS</j.0:prefLabel>
+    <j.0:narrower rdf:parseType="Resource">
+      <j.0:narrower rdf:parseType="Resource">
+        <j.0:prefLabel>EPOS</j.0:prefLabel>
+        <j.0:inScheme>
+          <rdf:Description rdf:about="http://km.dfki.de/concepts#TopicsSchmeme">
+            <j.0:hasTopConcept rdf:resource="http://km.dfki.de/concepts#TOPICS"/>
+            <j.0:prefLabel>TopicsSchmeme</j.0:prefLabel>
+          </rdf:Description>
+        </j.0:inScheme>
+      </j.0:narrower>
+      <j.0:inScheme rdf:resource="http://km.dfki.de/concepts#TopicsSchmeme"/>
+      <j.0:narrower rdf:parseType="Resource">
+        <j.0:inScheme rdf:resource="http://km.dfki.de/concepts#TopicsSchmeme"/>
+        <j.0:prefLabel>FRODO</j.0:prefLabel>
+      </j.0:narrower>
+      <j.0:prefLabel>DFKI</j.0:prefLabel>
+    </j.0:narrower>
+    <j.0:inScheme rdf:resource="http://km.dfki.de/concepts#TopicsSchmeme"/>
+  </rdf:Description>
+</rdf:RDF>
