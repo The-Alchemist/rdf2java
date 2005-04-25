@@ -37,7 +37,7 @@ public class RDFS2Class
 {
     public final static String OLD_RDFS_NAMESPACE = "http://www.w3.org/TR/1999/PR-rdf-schema-19990303#";
     public final static String NEW_RDFS_NAMESPACE = "http://www.w3.org/2000/01/rdf-schema#";
-    public static String RDFS_NAMESPACE           = OLD_RDFS_NAMESPACE;
+    public static String RDFS_NAMESPACE           = NEW_RDFS_NAMESPACE;
     public static String RDF_NAMESPACE            = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     public static String XML_SCHEMA_NAMESPACE     = "http://www.w3.org/2001/XMLSchema-datatypes#";
     public static String PROTEGE_NS               = "http://protege.stanford.edu/system#";
@@ -48,7 +48,6 @@ public class RDFS2Class
     private static boolean m_bQuiet;
 
     private String m_sRDFSFile;
-    private String m_sSchemagenClass;
     private Map m_mapNamespaceToPackage;
     private String m_sClsPath;
 
@@ -116,17 +115,11 @@ public class RDFS2Class
             }
 
             String sRDFSFile = null;
-            String sSchemagenClass = null;
             String sOutputSrcDir = null;
             if( args.length - iArg > 0 ) 
                 sRDFSFile = args[iArg++];
             else
                 throw new Exception( "RDFS2Class: Missing parameter: RDFS file." );
-
-            if( args.length - iArg > 0 ) 
-                sSchemagenClass = args[iArg++];
-            else
-                throw new Exception( "RDFS2Class: Missing parameter: schemagen class file." );
 
             if( args.length - iArg > 0 ) 
                 sOutputSrcDir = args[iArg++];
@@ -141,7 +134,6 @@ public class RDFS2Class
             if( !bQuiet )
             {
                 message( "sRDFSFile      : " + sRDFSFile );
-                message( "sSchemagenClass: " + sSchemagenClass );
                 message( "sOutputSrcDir  : " + sOutputSrcDir );
                 message( "maping:" );
             }
@@ -155,7 +147,7 @@ public class RDFS2Class
             }
             if( !bQuiet ) message( "" );
 
-            RDFS2Class gen = new RDFS2Class( sRDFSFile, sSchemagenClass, sOutputSrcDir, mapNS2Pkg );
+            RDFS2Class gen = new RDFS2Class( sRDFSFile, sOutputSrcDir, mapNS2Pkg );
             gen.setQuiet( bQuiet );
             gen.createClasses();
         }
@@ -168,24 +160,6 @@ public class RDFS2Class
                                 + sMsg
                                 + "\nusage: RDFS2Class [options] <file.rdfs> <outputSrcDir> {<namespace> <package>}+\n"
                                 + "options:  -q: quiet operation, no output\n"
-                                + "          -s: include toString()-stuff in generated java-files\n"
-                                + "          -s({r}{p}): specifies further toString options:\n"
-                                + "              r: output in RDF format\n"
-                                + "              p: output in packed format (simpler + easier to read)\n"
-                                + "              s: follow to subgraphs = recursion turned ON\n"
-                                + "              example: s(rs) results in a hierarchical, recursive RDF output\n"
-                                + "              if there's no 'r' and no 'p', then 'p' is assumed as default\n"
-                                + "          -S: include recursive toString()-stuff in generated java-files\n"
-                                + "              (used instead of -s)\n"
-                                + "          -S({r}{p}): specifies further toString options see s(...) above\n"
-                                + "          -o: retain ordering of triples (usage of rdf:Seq in rdf-file)\n"
-                                + "              by using arrays instead of sets\n"
-                                + "          -I: insert stuff for incremental file-generation\n"
-                                + "              (needed for potential later usage of -i)\n"
-                                + "              ATTENTION: this option completely re-creates java-files and erases every\n"
-                                + "              user-defined methods and slots, maybe you'd better use \"-i\" ? !\n"
-                                + "          -i: incremental generation of java-files, i.e. user added slots\n"
-                                + "              are kept in the re-generated java-files\n"
                                 + "          rdfs=<namespace>    : set different RDFS namespace\n"
                                 + "          rdf=<namespace>     : set different RDF namespace\n"
                                 + "          protege=<namespace> : set different Protege namespace\n" );
@@ -241,10 +215,9 @@ public class RDFS2Class
     }
     
     
-    public RDFS2Class( String sRDFSFile, String sSchemagenClass, String sClsPath, Map mapNamespaceToPackage )   throws Exception
+    public RDFS2Class( String sRDFSFile, String sClsPath, Map mapNamespaceToPackage )   throws Exception
     {
         m_sRDFSFile = sRDFSFile;
-        m_sSchemagenClass = sSchemagenClass;
         m_mapNamespaceToPackage = mapNamespaceToPackage;
         m_sClsPath = sClsPath;
         
@@ -638,13 +611,14 @@ public class RDFS2Class
 
         // getter and setter properties
         String sIndent = "    ";
-        String sSeparator = "//------------------------------------------------------------------------------";
+        String sSeparator = "";
+        // String sSeparator = "//------------------------------------------------------------------------------";
         Set setProperties = getPropertiesOfClass( resCls );
         for( Iterator itProperties = setProperties.iterator(); itProperties.hasNext(); )
         {
             pwClsFile.println( sIndent + sSeparator );
             PropertyInfo pi = (PropertyInfo) itProperties.next();
-            fillClassFile_property( pi, pwClsFile, sIndent );
+            fillClassFile_property( pi, resCls, pwClsFile, sIndent );
         }
         
         // user code
@@ -659,16 +633,39 @@ public class RDFS2Class
         pwClsFile.println( "// EOF\n" );
     }
 
-    protected void fillClassFile_property( PropertyInfo pi, PrintWriter pwClsFile, String sIndent )   throws Exception
+    protected void fillClassFile_property( PropertyInfo pi, Resource resCls, PrintWriter pwClsFile, String sIndent )   throws Exception
     {
         pwClsFile.println( sIndent + "/** RDFS2Class: property " + pi.resProperty.getURI() + " **/" );
-        pwClsFile.println( sIndent + "public void " + RDF2Java.makeMethodName( "put", pi.resProperty.getNameSpace(), pi.resProperty.getLocalName() ) + "( Resource p )\n" +
+
+        if( pi.bMultiple )
+            fillClassFile_property_multi( pi, resCls, pwClsFile, sIndent );
+        else
+            fillClassFile_property_single( pi, resCls, pwClsFile, sIndent );
+
+        pwClsFile.println( sIndent + "// RDFS2Class: end of property " + pi.resProperty.getURI() );
+        pwClsFile.println("\n");
+    }
+
+    protected void fillClassFile_property_single( PropertyInfo pi, Resource resCls, PrintWriter pwClsFile, String sIndent )   throws Exception
+    {
+        String sMethodName = ( resCls.getNameSpace().equals( pi.resProperty.getNameSpace() ) )
+                             ? RDF2Java.makeMethodName( "get", pi.resProperty.getLocalName() )
+                             : RDF2Java.makeMethodName( "get", pi.resProperty.getNameSpace(), pi.resProperty.getLocalName() );
+        pwClsFile.println( sIndent + "public void " + sMethodName + "( Resource p )\n" +
                            sIndent + "{" );
         //TODO
         pwClsFile.println( sIndent + "}" );
-        pwClsFile.println( sIndent + "// RDFS2Class: end of property " + pi.resProperty.getURI() );
+    }
 
-        pwClsFile.println("\n");
+    protected void fillClassFile_property_multi( PropertyInfo pi, Resource resCls, PrintWriter pwClsFile, String sIndent )   throws Exception
+    {
+        String sMethodName = ( resCls.getNameSpace().equals( pi.resProperty.getNameSpace() ) )
+                             ? RDF2Java.makeMethodName( "get", pi.resProperty.getLocalName() )
+                             : RDF2Java.makeMethodName( "get", pi.resProperty.getNameSpace(), pi.resProperty.getLocalName() );
+        pwClsFile.println( sIndent + "public void " + sMethodName + "( Resource p )\n" +
+                           sIndent + "{" );
+        //TODO
+        pwClsFile.println( sIndent + "}" );
     }
 
     
