@@ -24,6 +24,7 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import de.dfki.rdf.util.RDF2Java;
 import de.dfki.rdf.util.RDFTool;
+import de.dfki.util.servlet.SnoopServlet;
 
 
 /**
@@ -75,6 +76,9 @@ public class RDFS2Class
     {
         try
         {
+            if( args.length < 1 )
+                throw new Exception( "RDFS2Class: no parameters" );
+
             boolean bQuiet = false;
 
             int iArg = 0;
@@ -647,17 +651,17 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "/**" );
         pwClsFile.println( sIndent + " * Create a new " + sClsName + " instance including its wrapper" );
         pwClsFile.println( sIndent + " */" );
-        pwClsFile.println( sIndent + "public " + sClsName + "(Model model)" );
+        pwClsFile.println( sIndent + "public " + sClsName + "( Model model )" );
         pwClsFile.println( sIndent + "{" );
-        pwClsFile.println( sIndent + " super(model);" );
+        pwClsFile.println( sIndent + "    super( model );" );
         pwClsFile.println( sIndent + "}" );
 
         pwClsFile.println( sIndent + "/**" );
         pwClsFile.println( sIndent + " * Create a new " + sClsName + " wrapping instance for an existing Jena resource" );
         pwClsFile.println( sIndent + " */" );
-        pwClsFile.println( sIndent + "public " + sClsName + "(Resource res)" );
+        pwClsFile.println( sIndent + "public " + sClsName + "( Resource res )" );
         pwClsFile.println( sIndent + "{" );
-        pwClsFile.println( sIndent + " super(res);" );
+        pwClsFile.println( sIndent + "    super( res );" );
         pwClsFile.println( sIndent + "}" );
 
         // getter and setter properties
@@ -709,7 +713,8 @@ public class RDFS2Class
             if( range.equals( m_resRDFSLiteral ) ) rangeTypeName = "String";
             else
             {
-                rangeTypeName = ((Resource) range).getLocalName();
+                rangeTypeName = getRangeTypeName( (Resource)range );
+                // rangeTypeName = ((Resource) range).getLocalName();
                 rangeIsResource = true;
             }
             rangeIsObject = true;
@@ -800,6 +805,34 @@ public class RDFS2Class
         // pwClsFile.println(sIndent + "// RDFS2Class: end of property "
         // + pi.resProperty.getURI());
         pwClsFile.println( "\n" );
+    }
+
+
+    /**
+     * @param resource
+     * @return
+     */
+    private String getRangeTypeName( Resource resource ) throws Exception
+    {
+        String sResourceNamespace = null;
+        if( resource != null ) sResourceNamespace = resource.getNameSpace();
+        String sResourcePackage = null;
+        for( Iterator it = m_mapNamespaceToPackage.keySet().iterator(); it.hasNext(); )
+        {
+            String sNamespace = (String)it.next();
+            if( sNamespace.equals( sResourceNamespace ) )
+            {
+                sResourcePackage = (String)m_mapNamespaceToPackage.get( sNamespace );
+                break;
+            }
+        }
+        if( sResourcePackage == null )
+        {
+            // use an "untyped" RDF resource
+            warning( "no namespace-to-package mapping for range resource " + resource.getURI() );
+            return "Resource";   // "com.hp.hpl.jena.rdf.model.Resource";
+        }
+        return sResourcePackage + "." + resource.getLocalName();
     }
     
     
