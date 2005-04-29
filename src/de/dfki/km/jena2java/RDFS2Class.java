@@ -594,6 +594,7 @@ public class RDFS2Class
         pwClsFile.println();
         pwClsFile.println( "import com.hp.hpl.jena.rdf.model.Model;" );
         pwClsFile.println( "import com.hp.hpl.jena.rdf.model.Resource;" );
+        pwClsFile.println( "import com.hp.hpl.jena.rdf.model.Property;" );
         pwClsFile.println( "import de.dfki.km.jena2java.JenaResourceWrapper;" );
         if( sSuperClassPkg != null && !sPkg.equals( sSuperClassPkg ) ) 
             pwClsFile.println( "import " + sSuperClassPkg + ".*;" );
@@ -687,7 +688,10 @@ public class RDFS2Class
         // pwClsFile.println(sIndent + "/** RDFS2Class: property "
         // + pi.resProperty.getURI() + " **/");
         String propertyMethodName = RDF2Java.makeMethodName( "", pi.resProperty.getLocalName() );
-
+        
+        String sPropertyConstant = "PROPERTY_" + pi.resProperty.getLocalName();
+        pwClsFile.println( sIndent + "Property " + sPropertyConstant + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + pi.resProperty.getURI() + "\" );" );
+        
         Object range = null;
         if( pi.setResRange.size() == 0 )
         {
@@ -727,16 +731,15 @@ public class RDFS2Class
             if( rangeIsObject )
                 // return (String) readProperty(Constants.NAME_PROPERTY);
                 pwClsFile.println( sIndent + "  return (" + rangeTypeName
-                        + ") getPropertyObject(Constants.PROPERTY_"
-                        + propertyMethodName.toUpperCase() + ");\n"
+                        + ") getPropertyObject( " + sPropertyConstant + " );\n"
                         + sIndent + "}" );
             else
                 // return (float)
                 // readProperty(Constants.CONFIDENCE_PROPERTY)).floatValue();
                 pwClsFile.println( sIndent + "  return ((" + rangeTypeName
-                        + ") getPropertyObject(Constants.PROPERTY_"
-                        + propertyMethodName.toUpperCase() + "))."
-                        + rangeVariableType + "Value();\n" + sIndent + "}" );
+                        + ") getPropertyObject( " + sPropertyConstant + " )."
+                        + rangeVariableType + "Value();\n" 
+                        + sIndent + "}" );
 
             // SETTER
             // public void setConfidence(float confidence)
@@ -745,29 +748,28 @@ public class RDFS2Class
                     + " )\n" + sIndent + "{" );
             if( rangeIsObject )
                 // setProperty(Constants.NAME_PROPERTY, name);
-                pwClsFile.println( sIndent + "  setProperty(Constants.PROPERTY_"
-                        + propertyMethodName.toUpperCase() + ", "
-                        + rangeVariableName + ");\n" + sIndent + "}" );
+                pwClsFile.println( sIndent + "  setProperty( " + sPropertyConstant + ", "
+                        + rangeVariableName + " );\n" 
+                        + sIndent + "}" );
             else
                 // setProperty(Constants.CONFIDENCE_PROPERTY, new
                 // Float(confidence));
                 pwClsFile.println( sIndent
-                        + "  setProperty(Constants.PROPERTY_"
-                        + propertyMethodName.toUpperCase() + ", new "
-                        + rangeTypeName + "(" + rangeVariableName + "));\n"
+                        + "  setProperty( " + sPropertyConstant + ", new "
+                        + rangeTypeName + "(" + rangeVariableName + ") );\n"
                         + sIndent + "}" );
         }
         else   // *** multi value slots ***
         {
             // GETTER
             // public Collection getContainer()
-            pwClsFile.println( sIndent + "public Collection get" + propertyMethodName + "()\n" + sIndent + "{" );
+            pwClsFile.println( sIndent + "public Collection get" + propertyMethodName + "()\n" 
+                    + sIndent + "{" );
             if( rangeIsObject )
                 // return
                 // getPropertyInstanceReferences(Constants.CONTAINER_PROPERTY);
                 pwClsFile.println( sIndent
-                        + "  return getPropertyObjects(Constants.PROPERTY_"
-                        + propertyMethodName.toUpperCase() + ");\n"
+                        + "  return getPropertyObjects( " + sPropertyConstant + " );\n"
                         + sIndent + "}" );
             else
                 throw new RuntimeException( "Multiple non-objects as return values not supported yet." ); //TODO
@@ -780,18 +782,18 @@ public class RDFS2Class
             if( rangeIsObject )
                 // m_res.addProperty(Constants.CONTAINER_PROPERTY, container);
                 pwClsFile.println( sIndent
-                        + "  m_res.addProperty(Constants.PROPERTY_"
-                        + propertyMethodName.toUpperCase() + ", "
-                        + rangeVariableName + ");\n" + sIndent + "}" );
+                        + "  m_res.addProperty( " + sPropertyConstant + ", "
+                        + rangeVariableName + " );\n" 
+                        + sIndent + "}" );
             else
                 throw new RuntimeException( "Multiple non-objects as put values not supported yet." ); //TODO
 
             // CLEARER
             // public void clearContainer ()
-            pwClsFile.println( sIndent + "public void clear" + propertyMethodName + "()\n" + sIndent + "{" );
+            pwClsFile.println( sIndent + "public void clear" + propertyMethodName + "()\n" 
+                    + sIndent + "{" );
             // m_res.removeAll(Constants.CONTAINER_PROPERTY);
-            pwClsFile.println( sIndent + "  m_res.removeAll(Constants.PROPERTY_"
-                            + propertyMethodName.toUpperCase() + ");\n"
+            pwClsFile.println( sIndent + "  m_res.removeAll( " + sPropertyConstant + " );\n"
                             + sIndent + "}" );
         }
 
