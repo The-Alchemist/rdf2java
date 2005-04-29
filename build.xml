@@ -68,4 +68,20 @@
 			<fileset dir="${source.dir}" />
    		</javadoc>
 	</target>
+
+
+	<target name="test.jena2java.rdfs2class_skos">
+		<java classname="de.dfki.km.jena2java.RDFS2Class">			
+			<arg value="test\de\dfki\km\jena2java\skos\skos_gnowsis.rdfs"/>
+			<arg value="test"/>
+			<arg value="http://www.w3.org/2004/02/skos/core#"/>
+			<arg value="de.dfki.km.jena2java.skos.vocabulary"/>
+			<classpath>
+				<path refid="externaljars" />
+			</classpath>
+		</java>
+	</target>	
+
+
+
 </project>
