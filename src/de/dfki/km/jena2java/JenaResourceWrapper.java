@@ -1,8 +1,18 @@
+/**
+ * Copyright 2005 DFKI GmbH
+ * schwarz@dfki.uni-kl.de
+ * kiesel@dfki.uni-kl.de
+ */
 
 package de.dfki.km.jena2java;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.rdf.model.AnonId;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -12,9 +22,6 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDFS;
-
-import de.dfki.rdf.util.RDFTool;
-
 
 /**
  * A JenaResourceWrapper is a wrapper around some real jena resource. The idea
@@ -28,7 +35,6 @@ public class JenaResourceWrapper implements Resource
     protected Resource m_res;
 
     protected static Model m_defaultModel = ModelFactory.createDefaultModel();
-
 
     /**
      * Creates a new JenaResourceWrapper. As a JenaResourceWrapper is just a
@@ -80,6 +86,7 @@ public class JenaResourceWrapper implements Resource
     public JenaResourceWrapper( Resource res )
     {
         m_res = res;
+        ObjectTracker.getInstance().putInstance( res.getURI(), this );
     }
 
     /**
@@ -106,7 +113,7 @@ public class JenaResourceWrapper implements Resource
      */
     public String getRdfsLabel()
     {
-        String sLabel = RDFTool.readValue( m_res, RDFS.label );
+        String sLabel = (String) getPropertyObject( RDFS.label );
         return sLabel;
     }
 
@@ -116,7 +123,53 @@ public class JenaResourceWrapper implements Resource
      */
     public void setRdfsLabel( String label )
     {
-        RDFTool.setSingleValue( m_res, RDFS.label, label );
+        setProperty( RDFS.label, label );
+    }
+
+    /**
+     * Return all instances referenced by a property. Wrapper objects for RDFS
+     * classes will be created automatically if needed.
+     * 
+     * @param p
+     * @return
+     */
+    protected Collection getPropertyObjects( Property p )
+    {
+        Collection result = new LinkedList();
+        StmtIterator si = m_res.listProperties( p );
+        while( si.hasNext() )
+        {
+            // iterate through property statements
+            Statement s = (Statement) si.next();
+            RDFNode o = s.getObject();
+            if( o instanceof Literal ) result.add( ((Literal) o).getValue() );
+            else
+                result.add( ObjectTracker.getInstance().getInstance(
+                        s.getResource() ) );
+        }
+        return result;
+    }
+
+    /**
+     * Gets first literal for a property or null if none
+     */
+    protected Object getPropertyObject( Property p )
+    {
+        Iterator i = getPropertyObjects( p ).iterator();
+        if( i.hasNext() ) return i.next();
+        else
+            return null;
+    }
+
+    /**
+     * Set a property. If it exists, change it. If it does not exist, create it.
+     */
+    protected void setProperty( Property pred, Object value )
+    {
+        Statement st = m_res.getProperty( pred );
+        if( st == null ) m_res.addProperty( pred, value );
+        else
+            st.changeObject( value );
     }
 
     /**
@@ -142,10 +195,9 @@ public class JenaResourceWrapper implements Resource
         return super.toString();
     }
 
-
-    //-------------------------------------------------------------------------
-    //				com.hp.hpl.jena.rdf.model.Resource
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // com.hp.hpl.jena.rdf.model.Resource
+    // -------------------------------------------------------------------------
 
     /*
      * (non-Javadoc)
