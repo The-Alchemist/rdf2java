@@ -46,6 +46,7 @@ public class RDFS2Class
     private static boolean m_bQuiet;
 
     private String m_sRDFSFile;
+    private String m_sJenaConstantsClass;
     private Map m_mapNamespaceToPackage;
     private String m_sClsPath;
 
@@ -117,10 +118,16 @@ public class RDFS2Class
             }
 
             String sRDFSFile = null;
+            String sJenaConstantsClass = null;
             String sOutputSrcDir = null;
+
             if( args.length - iArg > 0 ) sRDFSFile = args[iArg++];
             else
                 throw new Exception( "RDFS2Class: Missing parameter: RDFS file." );
+
+            if( args.length - iArg > 0 ) sJenaConstantsClass = args[iArg++];
+            else
+                throw new Exception( "RDFS2Class: Missing parameter: Jena constants class." );
 
             if( args.length - iArg > 0 ) sOutputSrcDir = args[iArg++];
             else
@@ -131,8 +138,9 @@ public class RDFS2Class
 
             if( !bQuiet )
             {
-                message( "sRDFSFile      : " + sRDFSFile );
-                message( "sOutputSrcDir  : " + sOutputSrcDir );
+                message( "sRDFSFile             : " + sRDFSFile );
+                message( "sJenaConstantsClass   : " + sJenaConstantsClass );
+                message( "sOutputSrcDir         : " + sOutputSrcDir );
                 message( "maping:" );
             }
             HashMap mapNS2Pkg = new HashMap();
@@ -146,7 +154,7 @@ public class RDFS2Class
             if( !bQuiet ) message( "" );
 
             // generate is near!
-            RDFS2Class gen = new RDFS2Class( sRDFSFile, sOutputSrcDir, mapNS2Pkg );
+            RDFS2Class gen = new RDFS2Class( sRDFSFile, sJenaConstantsClass, sOutputSrcDir, mapNS2Pkg );
             gen.setQuiet( bQuiet );
             gen.createClasses();
         }
@@ -156,7 +164,7 @@ public class RDFS2Class
             if( sMsg != null && sMsg.startsWith( "RDFS2Class:" ) )
             {
                 System.out.println( "\n" + sMsg 
-                    + "\nusage: RDFS2Class [options] <file.rdfs> <outputSrcDir> {<namespace> <package>}+\n"
+                    + "\nusage: RDFS2Class [options] <file.rdfs> <JenaConstantsClass> <outputSrcDir> {<namespace> <package>}+\n"
                     + "options:  -q: quiet operation, no output\n"
                     + "          rdfs=<namespace>    : set different RDFS namespace\n"
                     + "          rdf=<namespace>     : set different RDF namespace\n"
@@ -213,9 +221,10 @@ public class RDFS2Class
     }
 
 
-    public RDFS2Class( String sRDFSFile, String sClsPath, Map mapNamespaceToPackage ) throws Exception
+    public RDFS2Class( String sRDFSFile, String sJenaConstantsClass, String sClsPath, Map mapNamespaceToPackage ) throws Exception
     {
         m_sRDFSFile = sRDFSFile;
+        m_sJenaConstantsClass = sJenaConstantsClass;
         m_mapNamespaceToPackage = mapNamespaceToPackage;
         m_sClsPath = sClsPath;
 
@@ -410,6 +419,7 @@ public class RDFS2Class
 
     public void copyPartOfFormerFile_package_imports( PrintWriter pwClsFile )
     {
+        StringBuffer sbWhitespace = new StringBuffer();
         ListIterator it = m_lstFormerFile.listIterator();
         while( it.hasNext() )
         {
@@ -421,12 +431,18 @@ public class RDFS2Class
             String sLine = (String) it.next();
             if( sLine != null && sLine.trim().startsWith( "// RDFS2Class: imports" ) ) break;
             else
-                pwClsFile.println( sLine );
+            {
+                if( sLine.trim().length() <= 0 )
+                    sbWhitespace.append( sLine + "\n" );
+                else
+                    pwClsFile.println( sbWhitespace.toString() + sLine );
+            }
         }
     }
 
     public void copyPartOfFormerFile_imports_class( PrintWriter pwClsFile )
     {
+        StringBuffer sbWhitespace = new StringBuffer();
         ListIterator it = m_lstFormerFile.listIterator();
         while( it.hasNext() )
         {
@@ -438,7 +454,12 @@ public class RDFS2Class
             String sLine = (String) it.next();
             if( sLine != null && sLine.trim().startsWith( "/** RDFS2Class: class" ) ) break;
             else
-                pwClsFile.println( sLine );
+            {
+                if( sLine.trim().length() <= 0 )
+                    sbWhitespace.append( sLine + "\n" );
+                else
+                    pwClsFile.println( sbWhitespace.toString() + sLine );
+            }
         }
     }
 
@@ -465,23 +486,12 @@ public class RDFS2Class
             if( sLine == null ) continue;
             if( sLine.trim().startsWith( "// RDFS2Class: end of class" ) ) break;
 
-            if( sLine.trim().startsWith( "/** RDFS2Class: slot" ) )
-            {
-                if( it.hasNext() ) sLine = (String) it.next(); // over-read next line
-                if( it.hasNext() ) sLine = (String) it.next(); // over-read next line (2nd time now)
-
-                //TODO: separator below is critical!!!  =>  make a class constant or something
-                if(     sLastLine != null && sLastLine.length() != 0
-                        && !sLastLine.trim().equals( SEPARATOR ) ) 
-                    vLines.add( sLastLine );
-                sLastLine = null;
-            }
-            else if( sLine.trim().startsWith( "/** RDFS2Class:" ) )
+            if( sLine.trim().startsWith( "// RDFS2Class: begin" ) )
             {
                 while( it.hasNext() )
                 {
                     sLine = (String) it.next();
-                    if( sLine != null && sLine.trim().startsWith( "// RDFS2Class:" ) ) break;
+                    if( sLine != null && sLine.trim().startsWith( "// RDFS2Class: end" ) ) break;
                 }
                 if(     sLastLine != null && sLastLine.length() != 0
                         && !sLastLine.trim().equals( SEPARATOR ) ) 
@@ -624,30 +634,8 @@ public class RDFS2Class
         String sIndent = "    ";
         String sSeparator = SEPARATOR;
 
-        // /**
-        // * Create a new Container instance (+ wrapper)
-        // */
-        // public Container(Model model) {
-        // super(model);
-        // }
-        //
-        // /**
-        // * Create a new Container instance (+ wrapper)
-        // */
-        // public Container(Model model, String uri) {
-        // super(model, uri);
-        // }
-        //
-        // /**
-        // * Create a new Container wrapping instance for an existing Jena
-        // resource
-        // */
-        // public Container(Resource res) {
-        // super(res);
-        // }
-        //        
-
         // constructors
+        pwClsFile.println( sIndent + "// RDFS2Class: begin constructors" );
         pwClsFile.println( sIndent + "/**" );
         pwClsFile.println( sIndent + " * Create a new " + sClsName + " instance including its wrapper" );
         pwClsFile.println( sIndent + " */" );
@@ -663,6 +651,9 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "{" );
         pwClsFile.println( sIndent + "    super( res );" );
         pwClsFile.println( sIndent + "}" );
+        pwClsFile.println( sIndent + "// RDFS2Class: end constructors" );
+        pwClsFile.println();
+
 
         // getter and setter properties
         Set setProperties = getPropertiesOfClass( resCls );
@@ -689,12 +680,17 @@ public class RDFS2Class
                                            PrintWriter pwClsFile, String sIndent ) 
             throws Exception
     {
-        // pwClsFile.println(sIndent + "/** RDFS2Class: property "
-        // + pi.resProperty.getURI() + " **/");
+        pwClsFile.println( sIndent + "// RDFS2Class: begin property " + pi.resProperty.getURI() );
         String propertyMethodName = RDF2Java.makeMethodName( "", pi.resProperty.getLocalName() );
         
-        String sPropertyConstant = "PROPERTY_" + pi.resProperty.getLocalName();
-        pwClsFile.println( sIndent + "Property " + sPropertyConstant + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + pi.resProperty.getURI() + "\" );" );
+        String sPropertyConstant = null;
+        if( m_sJenaConstantsClass != null )
+            sPropertyConstant = m_sJenaConstantsClass + "." + pi.resProperty.getLocalName();
+        else
+        {
+            sPropertyConstant = "PROPERTY_" + pi.resProperty.getLocalName();
+            pwClsFile.println( sIndent + "Property " + sPropertyConstant + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + pi.resProperty.getURI() + "\" );" );
+        }
         
         Object range = null;
         if( pi.setResRange.size() == 0 )
@@ -735,13 +731,13 @@ public class RDFS2Class
             pwClsFile.println( sIndent + "public " + rangeVariableType + " get" + propertyMethodName + "()\n" + sIndent + "{" );
             if( rangeIsObject )
                 // return (String) readProperty(Constants.NAME_PROPERTY);
-                pwClsFile.println( sIndent + "  return (" + rangeTypeName
+                pwClsFile.println( sIndent + "    return (" + rangeTypeName
                         + ") getPropertyObject( " + sPropertyConstant + " );\n"
                         + sIndent + "}" );
             else
                 // return (float)
                 // readProperty(Constants.CONFIDENCE_PROPERTY)).floatValue();
-                pwClsFile.println( sIndent + "  return ((" + rangeTypeName
+                pwClsFile.println( sIndent + "    return ((" + rangeTypeName
                         + ") getPropertyObject( " + sPropertyConstant + " )."
                         + rangeVariableType + "Value();\n" 
                         + sIndent + "}" );
@@ -753,14 +749,14 @@ public class RDFS2Class
                     + " )\n" + sIndent + "{" );
             if( rangeIsObject )
                 // setProperty(Constants.NAME_PROPERTY, name);
-                pwClsFile.println( sIndent + "  setProperty( " + sPropertyConstant + ", "
+                pwClsFile.println( sIndent + "    setProperty( " + sPropertyConstant + ", "
                         + rangeVariableName + " );\n" 
                         + sIndent + "}" );
             else
                 // setProperty(Constants.CONFIDENCE_PROPERTY, new
                 // Float(confidence));
                 pwClsFile.println( sIndent
-                        + "  setProperty( " + sPropertyConstant + ", new "
+                        + "    setProperty( " + sPropertyConstant + ", new "
                         + rangeTypeName + "(" + rangeVariableName + ") );\n"
                         + sIndent + "}" );
         }
@@ -774,7 +770,7 @@ public class RDFS2Class
                 // return
                 // getPropertyInstanceReferences(Constants.CONTAINER_PROPERTY);
                 pwClsFile.println( sIndent
-                        + "  return getPropertyObjects( " + sPropertyConstant + " );\n"
+                        + "    return getPropertyObjects( " + sPropertyConstant + " );\n"
                         + sIndent + "}" );
             else
                 throw new RuntimeException( "Multiple non-objects as return values not supported yet." ); //TODO
@@ -787,7 +783,7 @@ public class RDFS2Class
             if( rangeIsObject )
                 // m_res.addProperty(Constants.CONTAINER_PROPERTY, container);
                 pwClsFile.println( sIndent
-                        + "  m_res.addProperty( " + sPropertyConstant + ", "
+                        + "    m_res.addProperty( " + sPropertyConstant + ", "
                         + rangeVariableName + " );\n" 
                         + sIndent + "}" );
             else
@@ -798,13 +794,12 @@ public class RDFS2Class
             pwClsFile.println( sIndent + "public void clear" + propertyMethodName + "()\n" 
                     + sIndent + "{" );
             // m_res.removeAll(Constants.CONTAINER_PROPERTY);
-            pwClsFile.println( sIndent + "  m_res.removeAll( " + sPropertyConstant + " );\n"
+            pwClsFile.println( sIndent + "    m_res.removeAll( " + sPropertyConstant + " );\n"
                             + sIndent + "}" );
         }
 
-        // pwClsFile.println(sIndent + "// RDFS2Class: end of property "
-        // + pi.resProperty.getURI());
-        pwClsFile.println( "\n" );
+        pwClsFile.println( sIndent + "// RDFS2Class: end property " + pi.resProperty.getURI() );
+        pwClsFile.println();
     }
 
 
