@@ -76,7 +76,7 @@
 
 
     <target name="call.schemagen">
-  		<echo message="${namespace} --&gt; ${javaclass}"/>
+  		<echo message="schemagen: ${namespace} --&gt; ${javaclass}"/>
     	<mkdir dir="${srcdir}"/>
 	  	<java classname="jena.schemagen" classpathref="externaljars">
 	  		<arg value="--package" /><arg value="${package}" />
@@ -90,17 +90,19 @@
 	
 	<target name="test.jena2java.rdfs2class_skos">
 
+		<!--
         <antcall target="call.schemagen">
-			<param name="rdfsfile" 	value="test/de/dfki/km/jena2java/skos/skos_gnowsis.rdfs" />
+			<param name="rdfsfile" 	value="test/de/dfki/km/jena2java/skos/vocabulary/skos.rdfs" />
             <param name="namespace" value="http://www.w3.org/2004/02/skos/core#"/>
         	<param name="srcdir" 	value="test/de/dfki/km/jena2java/skos/vocabulary" />
         	<param name="package" 	value="de.dfki.km.jena2java.skos.vocabulary" />
             <param name="javaclass" value="SKOS"/>
         </antcall>  
+        -->
 
         <java classpathref="rdf2java.classpath" classname="de.dfki.km.jena2java.RDFS2Class">			
-			<arg value="test/de/dfki/km/jena2java/skos/skos_gnowsis.rdfs"/>
-			<arg value="SKOS"/>
+			<arg value="--gen-constants-class=de.dfki.km.jena2java.skos.vocabulary.SKOS"/>
+			<arg value="test/de/dfki/km/jena2java/skos/vocabulary/skos.rdfs"/>
 			<arg value="test"/>
 			<arg value="http://www.w3.org/2004/02/skos/core#"/>
 			<arg value="de.dfki.km.jena2java.skos.vocabulary"/>

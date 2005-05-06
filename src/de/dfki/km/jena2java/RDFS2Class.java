@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 import de.dfki.rdf.util.RDF2Java;
 import de.dfki.rdf.util.RDFTool;
@@ -43,10 +45,11 @@ public class RDFS2Class
     private static int m_iNrMessages = 0;
     private static int m_iNrWarnings = 0;
     private static int m_iNrErrors = 0;
-    private static boolean m_bQuiet;
+    private static boolean m_bQuiet = false;
 
     private String m_sRDFSFile;
     private String m_sJenaConstantsClass;
+    private boolean m_bGenJenaConstantsClass = false;
     private Map m_mapNamespaceToPackage;
     private String m_sClsPath;
 
@@ -80,82 +83,86 @@ public class RDFS2Class
             if( args.length < 1 )
                 throw new Exception( "RDFS2Class: no parameters" );
 
-            boolean bQuiet = false;
+            final String CHANGE_RDFS_NS     = "rdfs=";
+            final String CHANGE_RDF_NS      = "rdf=";
+            final String CHANGE_PROTEGE_NS  = "protege=";
+
+            RDFS2Class gen = new RDFS2Class();
 
             int iArg = 0;
-            while( args[iArg].startsWith( "-" ) )
+            while( iArg < args.length )
             {
-                String sFlags = args[iArg].substring( 1 );
-                for( int i = 0; i < sFlags.length(); i++ )
+                if( args[iArg].startsWith( "-" ) )
                 {
-                    if( sFlags.charAt( i ) == 'q' ) 
-                        bQuiet = true;
+                    String sOption = args[iArg].substring( 1 );
+                    while( sOption.startsWith( "-" ) ) sOption = sOption.substring( 1 );
+                    
+                    if( sOption.equals( "quiet" ) || sOption.equals( "q" ) ) 
+                        RDFS2Class.m_bQuiet = true;
+                    else if( sOption.startsWith( "use-constants-class=" ) )
+                        gen.m_sJenaConstantsClass = sOption.substring( "use-constants-class=".length() );
+                    else if( sOption.startsWith( "gen-constants-class" ) )
+                    {
+                        if( sOption.startsWith( "gen-constants-class=" ) )
+                            gen.m_sJenaConstantsClass = sOption.substring( "gen-constants-class=".length() );
+                        gen.m_bGenJenaConstantsClass = true;
+                    }
+                    else if( args[iArg].toLowerCase().startsWith( CHANGE_RDFS_NS ) )
+                    {
+                        RDFS_NAMESPACE = args[iArg++].substring( CHANGE_RDFS_NS.length() );
+                        message( "RDFS namespace: " + RDFS_NAMESPACE );
+                    }
+                    else if( args[iArg].toLowerCase().startsWith( CHANGE_RDF_NS ) )
+                    {
+                        RDF_NAMESPACE = args[iArg++].substring( CHANGE_RDF_NS.length() );
+                        message( "RDF namespace : " + RDF_NAMESPACE );
+                    }
+                    else if( args[iArg].toLowerCase().startsWith( CHANGE_PROTEGE_NS ) )
+                    {
+                        PROTEGE_NS = args[iArg++].substring( CHANGE_PROTEGE_NS.length() );
+                        message( "Protege namespace: " + PROTEGE_NS );
+                    }
                     else
-                        throw new Exception( "RDFS2Class: Option '" + sFlags.charAt( i ) + "' unknown." );
+                        throw new Exception( "RDFS2Class: Option '" + sOption + "' unknown." );
+                    iArg++;
                 }
-                iArg++;
+                else
+                {
+                    // no option recognized => finished with options
+                    break;
+                }
             }
 
-            final String CHANGE_RDFS_NS = "rdfs=";
-            if( args[iArg].toLowerCase().startsWith( CHANGE_RDFS_NS ) )
-            {
-                RDFS_NAMESPACE = args[iArg++].substring( CHANGE_RDFS_NS .length() );
-                message( "RDFS namespace: " + RDFS_NAMESPACE );
-            }
-
-            final String CHANGE_RDF_NS = "rdf=";
-            if( args[iArg].toLowerCase().startsWith( CHANGE_RDF_NS ) )
-            {
-                RDF_NAMESPACE = args[iArg++].substring( CHANGE_RDF_NS.length() );
-                message( "RDF namespace : " + RDF_NAMESPACE );
-            }
-
-            final String CHANGE_PROTEGE_NS = "protege=";
-            if( args[iArg].toLowerCase().startsWith( CHANGE_PROTEGE_NS ) )
-            {
-                PROTEGE_NS = args[iArg++].substring( CHANGE_PROTEGE_NS.length() );
-                message( "Protege namespace: " + PROTEGE_NS );
-            }
-
-            String sRDFSFile = null;
-            String sJenaConstantsClass = null;
-            String sOutputSrcDir = null;
-
-            if( args.length - iArg > 0 ) sRDFSFile = args[iArg++];
+            if( args.length - iArg > 0 ) gen.m_sRDFSFile = args[iArg++];
             else
                 throw new Exception( "RDFS2Class: Missing parameter: RDFS file." );
 
-            if( args.length - iArg > 0 ) sJenaConstantsClass = args[iArg++];
-            else
-                throw new Exception( "RDFS2Class: Missing parameter: Jena constants class." );
-
-            if( args.length - iArg > 0 ) sOutputSrcDir = args[iArg++];
+            if( args.length - iArg > 0 ) gen.m_sClsPath = args[iArg++];
             else
                 throw new Exception( "RDFS2Class: Missing parameter: output directory." );
 
             if( args.length - iArg <= 0 ) throw new Exception( "RDFS2Class: Missing mapping parameters." );
             if( ((args.length - iArg) % 2) != 0 ) throw new Exception( "RDFS2Class: Mapping parameters not correct." );
 
-            if( !bQuiet )
+            if( !RDFS2Class.m_bQuiet )
             {
-                message( "sRDFSFile             : " + sRDFSFile );
-                message( "sJenaConstantsClass   : " + sJenaConstantsClass );
-                message( "sOutputSrcDir         : " + sOutputSrcDir );
+                message( "sRDFSFile             : " + gen.m_sRDFSFile );
+                message( "sJenaConstantsClass   : " + gen.m_sJenaConstantsClass );
+                message( "sOutputSrcDir         : " + gen.m_sClsPath );
                 message( "maping:" );
             }
-            HashMap mapNS2Pkg = new HashMap();
             while( iArg < args.length )
             {
                 String sNamespace = args[iArg++];
                 String sPackage = args[iArg++];
-                if( !bQuiet ) message( "  " + sNamespace + " -> " + sPackage );
-                mapNS2Pkg.put( sNamespace, sPackage );
+                if( !RDFS2Class.m_bQuiet ) message( "  " + sNamespace + " -> " + sPackage );
+                gen.m_mapNamespaceToPackage.put( sNamespace, sPackage );
             }
-            if( !bQuiet ) message( "" );
+            if( !RDFS2Class.m_bQuiet ) message( "" );
 
-            // generate is near!
-            RDFS2Class gen = new RDFS2Class( sRDFSFile, sJenaConstantsClass, sOutputSrcDir, mapNS2Pkg );
-            gen.setQuiet( bQuiet );
+            if( gen.m_bGenJenaConstantsClass && (gen.m_sJenaConstantsClass == null || gen.m_sJenaConstantsClass.length() <= 0) )
+                throw new Error( "please specify constants class" );
+            
             gen.createClasses();
         }
         catch( Exception ex )
@@ -164,11 +171,12 @@ public class RDFS2Class
             if( sMsg != null && sMsg.startsWith( "RDFS2Class:" ) )
             {
                 System.out.println( "\n" + sMsg 
-                    + "\nusage: RDFS2Class [options] <file.rdfs> <JenaConstantsClass> <outputSrcDir> {<namespace> <package>}+\n"
-                    + "options:  -q: quiet operation, no output\n"
-                    + "          rdfs=<namespace>    : set different RDFS namespace\n"
-                    + "          rdf=<namespace>     : set different RDF namespace\n"
-                    + "          protege=<namespace> : set different Protege namespace\n" );
+                    + "\nusage: RDFS2Class [options] <file.rdfs> <outputSrcDir> {<namespace> <package>}+\n"
+                    + "options:  --quiet: quiet operation, no output\n"
+                    + "          --gen-constants-class=<JenaConstantsClass> : generate the constants class\n"
+                    + "          --rdfs=<namespace>    : set different RDFS namespace\n"
+                    + "          --rdf=<namespace>     : set different RDF namespace\n"
+                    + "          --protege=<namespace> : set different Protege namespace\n" );
             }
             else
             {
@@ -215,11 +223,10 @@ public class RDFS2Class
         m_iNrErrors++;
     }
 
-    public void setQuiet( boolean bQuiet )
+    private RDFS2Class()
     {
-        m_bQuiet = bQuiet;
+        m_mapNamespaceToPackage = new HashMap();
     }
-
 
     public RDFS2Class( String sRDFSFile, String sJenaConstantsClass, String sClsPath, Map mapNamespaceToPackage ) throws Exception
     {
@@ -227,16 +234,9 @@ public class RDFS2Class
         m_sJenaConstantsClass = sJenaConstantsClass;
         m_mapNamespaceToPackage = mapNamespaceToPackage;
         m_sClsPath = sClsPath;
-
-        FileReader reader = new FileReader( m_sRDFSFile );
-        m_modelRDFS = ModelFactory.createDefaultModel();
-        m_modelRDFS.read( reader, "http://dummy.base.uri/" );
-
-        initRdfsResources();
-        initProtegeUris();
     }
-
-    protected void initRdfsResources() throws Exception
+    
+    private void initRdfsResources() throws Exception
     {
         m_resRDFSClass      = m_modelRDFS.createResource( RDFS_NAMESPACE + "Class" );
         m_resRDFSResource   = m_modelRDFS.createResource( RDFS_NAMESPACE + "Resource" );
@@ -252,7 +252,7 @@ public class RDFS2Class
         m_propRDFPredType        = m_modelRDFS.createProperty( RDF_NAMESPACE  + "type" );
     }
 
-    protected void initProtegeUris() throws Exception
+    private void initProtegeUris() throws Exception
     {
         m_propProtegeMaxCardinality = m_modelRDFS.createProperty( PROTEGE_NS + "maxCardinality" );
         m_propProtegeAllowedClasses = m_modelRDFS.createProperty( PROTEGE_NS + "allowedClasses" );
@@ -264,16 +264,119 @@ public class RDFS2Class
 
     public void createClasses() throws Exception
     {
+        message( "reading RDFS file..." );
+        FileReader reader = new FileReader( m_sRDFSFile );
+        m_modelRDFS = ModelFactory.createDefaultModel();
+        m_modelRDFS.read( reader, "http://dummy.base.uri/" );
+
+        message( "preparing..." );
+        initRdfsResources();
+        initProtegeUris();
+
         message( "examining properties..." );
         examineProperties();
 
-        message( "creating the RDFS classes..." );
+        if( m_bGenJenaConstantsClass )
+        {
+            message( "creating the constants class..." );
+            createConstantsClass();
+        }
+
+        message( "creating the JenaResourceWapper classes..." );
         createTheClasses();
 
         message( "ready." );
     }
 
-    protected void examineProperties() throws Exception
+    
+    private void createConstantsClass()   throws Exception
+    {
+        String sPkg = null;
+        String sPath = ".";
+        String sClass = m_sJenaConstantsClass;
+        int pos = m_sJenaConstantsClass.lastIndexOf( '.' );
+        if( pos >= 0 )
+        {
+            sClass = m_sJenaConstantsClass.substring( pos+1 );
+            sPkg = m_sJenaConstantsClass.substring( 0, pos );
+            sPath = packageToPath( sPkg );
+        }
+        String sFile = sClass + ".java";
+
+        String sAbsolutePath = m_sClsPath + "/" + sPath;
+
+        File fPath = new File( sAbsolutePath );
+        File fFile = new File( sAbsolutePath + "/" + sFile );
+        fPath.mkdirs();
+        fFile.createNewFile();
+        FileWriter fw = new FileWriter( fFile );
+        PrintWriter pw = new PrintWriter( fw );
+        
+        if( sPkg != null )
+            pw.println( "package " + sPkg + ";\n" ); 
+
+        pw.println( "import com.hp.hpl.jena.rdf.model.*;\n" );
+
+        pw.println( "/**\n"
+         + " * Vocabulary definitions from and constants\n" 
+         + " * @author Auto-generated by rdf2java on " + new Date().toString() + "\n"
+         + " */\n" );
+
+        pw.println( "public class " + sClass + "\n{" );
+        
+        pw.println( "    /** <p>The RDF model that holds the vocabulary terms</p> */" );
+        pw.println( "    private static Model m_model = ModelFactory.createDefaultModel();\n" );
+        
+        ResIterator itProp = m_modelRDFS.listSubjectsWithProperty( m_propRDFPredType, m_resRDFResProperty );
+        while( itProp.hasNext() )
+        {
+            Resource resProperty = itProp.nextResource();
+            printJavaDoc( pw, resProperty );
+            pw.println( "    public static final Property " + resProperty.getLocalName() + " = m_model.createProperty( \"" + resProperty.getURI() + "\");\n" ); 
+        }
+        
+        ResIterator itRes = m_modelRDFS.listSubjectsWithProperty( m_propRDFPredType, m_resRDFSClass );
+        while( itRes.hasNext() )
+        {
+            Resource resCls = itRes.nextResource();
+            printJavaDoc( pw, resCls );
+            pw.println( "    public static final Resource " + resCls.getLocalName() + " = m_model.createResource( \"" + resCls.getURI() + "\");\n" ); 
+        }
+        
+        pw.println( "}\n" );
+        pw.close();
+    }
+    
+    private void printJavaDoc( PrintWriter pw, Resource res )
+    {
+        final int MAX_CHARS_PER_LINE = 70;
+        
+        String sComment = RDFTool.readValue( res, RDFS.comment );
+        if( sComment == null ) sComment = RDFTool.readValue( res, RDFS.label );
+        if( sComment == null ) return;
+        
+        boolean bMultipleLines = false;
+        pw.print( "    /** <p>" );                
+        while( sComment.length() > MAX_CHARS_PER_LINE )
+        {
+            int pos = MAX_CHARS_PER_LINE;
+            for( ; pos >= 0; pos-- )
+            {
+                if( " \t\r\n".indexOf( sComment.charAt(pos) ) >= 0 )
+                    break;                       
+            }
+            if( pos == 0 ) break;
+            pw.print( sComment.substring( 0, pos ).trim() + "\n     *  " );
+            bMultipleLines = true;
+            sComment = sComment.substring( pos+1 ).trim();
+        }
+        pw.print( sComment.trim() + "</p>" );
+        if( bMultipleLines ) pw.print( "\n    " );
+        pw.println( " */" );
+    }
+
+
+    private void examineProperties() throws Exception
     {
         m_setProperties = new HashSet();
 
@@ -286,14 +389,16 @@ public class RDFS2Class
         }
     }
 
-    protected class PropertyInfo
+    private class PropertyInfo
     {
         Resource resProperty;
         boolean bMultiple = true;
         Set setResDomain;
         Set setResRange;
+        String sComment;
+        String sRdfsLabel;
 
-        protected PropertyInfo( Resource resProperty )
+        private PropertyInfo( Resource resProperty )
         {
             System.out.println( "PropertyInfo: Resource " + resProperty );
             this.resProperty = resProperty;
@@ -335,12 +440,15 @@ public class RDFS2Class
                 setResRange.add( resRange );
                 System.out.println( "...RDF resRange " + resRange );
             }
+            
+            sRdfsLabel = RDFTool.readValue( resProperty, RDFS.label );
+            sComment = RDFTool.readValue( resProperty, RDFS.comment );
         }
 
     } // end of inner class PropertyInfo
 
 
-    protected void createTheClasses() throws Exception
+    private void createTheClasses() throws Exception
     {
         ResIterator it = m_modelRDFS.listSubjectsWithProperty( m_propRDFPredType, m_resRDFSClass );
         while( it.hasNext() )
@@ -351,7 +459,7 @@ public class RDFS2Class
     }
 
 
-    protected void createClass( Resource resCls ) throws Exception
+    private void createClass( Resource resCls ) throws Exception
     {
         if( resCls.getURI().equals( m_resXMLDateTime.getURI() ) ) 
             return; // omitting xml schema classes
@@ -374,7 +482,7 @@ public class RDFS2Class
     }
 
 
-    protected String packageToPath( String sPkg )
+    private String packageToPath( String sPkg )
     {
         StringBuffer sbPath = new StringBuffer();
         int left = 0;
@@ -391,7 +499,7 @@ public class RDFS2Class
     }
 
 
-    protected void loadInFormerJavaFile( String sPathAndFilename ) throws Exception
+    private void loadInFormerJavaFile( String sPathAndFilename ) throws Exception
     {
         m_lstFormerFile = new LinkedList();
         BufferedReader br = null;
@@ -404,7 +512,7 @@ public class RDFS2Class
         }
     }
 
-    protected PrintWriter createFile( String sPath, String sFile )
+    private PrintWriter createFile( String sPath, String sFile )
             throws Exception
     {
         File fPath = new File( sPath );
@@ -417,7 +525,7 @@ public class RDFS2Class
     }
 
 
-    public void copyPartOfFormerFile_package_imports( PrintWriter pwClsFile )
+    private void copyPartOfFormerFile_package_imports( PrintWriter pwClsFile )
     {
         StringBuffer sbWhitespace = new StringBuffer();
         ListIterator it = m_lstFormerFile.listIterator();
@@ -440,7 +548,7 @@ public class RDFS2Class
         }
     }
 
-    public void copyPartOfFormerFile_imports_class( PrintWriter pwClsFile )
+    private void copyPartOfFormerFile_imports_class( PrintWriter pwClsFile )
     {
         StringBuffer sbWhitespace = new StringBuffer();
         ListIterator it = m_lstFormerFile.listIterator();
@@ -463,7 +571,7 @@ public class RDFS2Class
         }
     }
 
-    public void copyPartOfFormerFile_in_class( PrintWriter pwClsFile )
+    private void copyPartOfFormerFile_in_class( PrintWriter pwClsFile )
     {
         Vector vLines = new Vector();
         ListIterator it = m_lstFormerFile.listIterator();
@@ -533,7 +641,7 @@ public class RDFS2Class
         }
     }
 
-    public void copyPartOfFormerFile_class_EOF( PrintWriter pwClsFile )
+    private void copyPartOfFormerFile_class_EOF( PrintWriter pwClsFile )
     {
         ListIterator it = m_lstFormerFile.listIterator();
         while( it.hasNext() )
@@ -552,7 +660,7 @@ public class RDFS2Class
         }
     }
 
-    protected Set getPropertiesOfClass( Resource resCls )
+    private Set getPropertiesOfClass( Resource resCls )
     {
         HashSet hs = new HashSet();
         Iterator it = m_setProperties.iterator();
@@ -565,7 +673,7 @@ public class RDFS2Class
     }
 
 
-    protected void fillClassFile( Resource resCls, String sPkg,
+    private void fillClassFile( Resource resCls, String sPkg,
                                   String sClsName, PrintWriter pwClsFile ) 
             throws Exception
     {
@@ -676,8 +784,8 @@ public class RDFS2Class
         pwClsFile.println( "// EOF\n" );
     }
 
-    protected void fillClassFile_property( PropertyInfo pi, Resource resCls,
-                                           PrintWriter pwClsFile, String sIndent ) 
+    private void fillClassFile_property( PropertyInfo pi, Resource resCls,
+                                         PrintWriter pwClsFile, String sIndent ) 
             throws Exception
     {
         pwClsFile.println( sIndent + "// RDFS2Class: begin property " + pi.resProperty.getURI() );
@@ -803,10 +911,6 @@ public class RDFS2Class
     }
 
 
-    /**
-     * @param resource
-     * @return
-     */
     private String getRangeTypeName( Resource resource ) throws Exception
     {
         String sResourceNamespace = null;
