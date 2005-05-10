@@ -846,7 +846,7 @@ public class RDFS2Class
                 // return (float)
                 // readProperty(Constants.CONFIDENCE_PROPERTY)).floatValue();
                 pwClsFile.println( sIndent + "    return ((" + rangeTypeName
-                        + ") getPropertyObject( " + sPropertyConstant + " )."
+                        + ") getPropertyObject( " + sPropertyConstant + " ))."
                         + rangeVariableType + "Value();\n" 
                         + sIndent + "}" );
 
