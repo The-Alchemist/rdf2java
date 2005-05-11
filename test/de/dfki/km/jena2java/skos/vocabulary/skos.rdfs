@@ -157,6 +157,7 @@
 		<rdfs:isDefinedBy rdf:resource="http://www.w3.org/2004/02/skos/core"/>
 		<vs:term_status>testing</vs:term_status>
 		<dct:issued>2004-03-26</dct:issued>
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/> <!-- makes things easier for rdf2java -->
 	</rdf:Property>
 	
 	<rdf:Property rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
@@ -168,6 +169,7 @@
 		<rdfs:isDefinedBy rdf:resource="http://www.w3.org/2004/02/skos/core"/>
 		<vs:term_status>testing</vs:term_status>
 		<dct:issued>2004-03-26</dct:issued>
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/> <!-- makes things easier for rdf2java -->
 	</rdf:Property>
 	
 	<rdf:Property rdf:about="http://www.w3.org/2004/02/skos/core#related">
@@ -179,6 +181,7 @@
 		<rdfs:isDefinedBy rdf:resource="http://www.w3.org/2004/02/skos/core"/>
 		<vs:term_status>testing</vs:term_status>
 		<dct:issued>2004-03-26</dct:issued>
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/> <!-- makes things easier for rdf2java -->
 	</rdf:Property>
 	
   <rdf:Property rdf:about="http://www.w3.org/2004/02/skos/core#isSubjectOf">

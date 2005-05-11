@@ -35,6 +35,15 @@ public class JenaResourceWrapper implements Resource
     protected Resource m_res;
 
     protected static Model m_defaultModel = ModelFactory.createDefaultModel();
+    
+    /**
+     * Returns the default model used to create temporary and/or anonymous
+     * Resources. 
+     */
+    public static Model getTheDefaultModel()
+    {
+        return m_defaultModel;
+    }
 
     /**
      * Creates a new JenaResourceWrapper. As a JenaResourceWrapper is just a
@@ -142,10 +151,10 @@ public class JenaResourceWrapper implements Resource
             // iterate through property statements
             Statement s = (Statement) si.next();
             RDFNode o = s.getObject();
-            if( o instanceof Literal ) result.add( ((Literal) o).getValue() );
+            if( o instanceof Literal ) 
+                result.add( ((Literal) o).getValue() );
             else
-                result.add( ObjectTracker.getInstance().getInstance(
-                        s.getResource() ) );
+                result.add( ObjectTracker.getInstance().getInstance( s.getResource() ) );
         }
         return result;
     }
@@ -156,7 +165,8 @@ public class JenaResourceWrapper implements Resource
     protected Object getPropertyObject( Property p )
     {
         Iterator i = getPropertyObjects( p ).iterator();
-        if( i.hasNext() ) return i.next();
+        if( i.hasNext() ) 
+            return i.next();
         else
             return null;
     }
@@ -167,7 +177,8 @@ public class JenaResourceWrapper implements Resource
     protected void setProperty( Property pred, Object value )
     {
         Statement st = m_res.getProperty( pred );
-        if( st == null ) m_res.addProperty( pred, value );
+        if( st == null ) 
+            m_res.addProperty( pred, value );
         else
             st.changeObject( value );
     }
@@ -391,8 +402,8 @@ public class JenaResourceWrapper implements Resource
      */
     public Resource addProperty( Property p, Object o )
     {
-        if( o instanceof JenaResourceWrapper ) m_res.addProperty( p,
-                ((JenaResourceWrapper) o).getResource() );
+        if( o instanceof JenaResourceWrapper )
+            m_res.addProperty( p, ((JenaResourceWrapper) o).getResource() );
         else
             m_res.addProperty( p, o );
         return this;
@@ -406,8 +417,8 @@ public class JenaResourceWrapper implements Resource
      */
     public Resource addProperty( Property p, RDFNode o )
     {
-        if( o instanceof JenaResourceWrapper ) m_res.addProperty( p,
-                ((JenaResourceWrapper) o).getResource() );
+        if( o instanceof JenaResourceWrapper ) 
+            m_res.addProperty( p, ((JenaResourceWrapper) o).getResource() );
         else
             m_res.addProperty( p, o );
         return this;

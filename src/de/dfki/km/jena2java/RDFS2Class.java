@@ -745,11 +745,13 @@ public class RDFS2Class
         // constructors
         pwClsFile.println( sIndent + "// RDFS2Class: begin constructors" );
         pwClsFile.println( sIndent + "/**" );
-        pwClsFile.println( sIndent + " * Create a new " + sClsName + " instance including its wrapper" );
+        pwClsFile.println( sIndent + " * Create a new " + sClsName + " instance including its wrapper." );
+        pwClsFile.println( sIndent + " * A new anonymous Resource will be created in a static Model " );
+        pwClsFile.println( sIndent + " * stored in {@link JenaResourceWrapper JenaResourceWrapper}." );
         pwClsFile.println( sIndent + " */" );
-        pwClsFile.println( sIndent + "public " + sClsName + "( Model model )" );
+        pwClsFile.println( sIndent + "public " + sClsName + "()" );
         pwClsFile.println( sIndent + "{" );
-        pwClsFile.println( sIndent + "    super( model );" );
+        pwClsFile.println( sIndent + "    super();" );
         pwClsFile.println( sIndent + "}" );
 
         pwClsFile.println( sIndent + "/**" );
@@ -759,6 +761,35 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "{" );
         pwClsFile.println( sIndent + "    super( res );" );
         pwClsFile.println( sIndent + "}" );
+
+        pwClsFile.println( sIndent + "/**" );
+        pwClsFile.println( sIndent + " * Create a new " + sClsName + " wrapping instance for a given URI." );
+        pwClsFile.println( sIndent + " * A new Resource with that URI will be created in a static Model " );
+        pwClsFile.println( sIndent + " * stored in {@link JenaResourceWrapper JenaResourceWrapper}." );
+        pwClsFile.println( sIndent + " */" );
+        pwClsFile.println( sIndent + "public " + sClsName + "( String uri )" );
+        pwClsFile.println( sIndent + "{" );
+        pwClsFile.println( sIndent + "    super( uri );" );
+        pwClsFile.println( sIndent + "}" );
+
+        pwClsFile.println( sIndent + "/**" );
+        pwClsFile.println( sIndent + " * Create a new " + sClsName + " instance including its wrapper." );
+        pwClsFile.println( sIndent + " * A new anonymous Resource will be created in the given Model." );
+        pwClsFile.println( sIndent + " */" );
+        pwClsFile.println( sIndent + "public " + sClsName + "( Model model )" );
+        pwClsFile.println( sIndent + "{" );
+        pwClsFile.println( sIndent + "    super( model );" );
+        pwClsFile.println( sIndent + "}" );
+
+        pwClsFile.println( sIndent + "/**" );
+        pwClsFile.println( sIndent + " * Create a new " + sClsName + " wrapping instance for a given URI." );
+        pwClsFile.println( sIndent + " * A new Resource with that URI will be created in the given Model." );
+        pwClsFile.println( sIndent + " */" );
+        pwClsFile.println( sIndent + "public " + sClsName + "( Model model, String uri )" );
+        pwClsFile.println( sIndent + "{" );
+        pwClsFile.println( sIndent + "    super( model, uri );" );
+        pwClsFile.println( sIndent + "}" );
+
         pwClsFile.println( sIndent + "// RDFS2Class: end constructors" );
         pwClsFile.println();
 
@@ -883,8 +914,8 @@ public class RDFS2Class
                 throw new RuntimeException( "Multiple non-objects as return values not supported yet." ); //TODO
 
             // SETTER
-            // public void putContainer(Container container)
-            pwClsFile.println( sIndent + "public void put" + propertyMethodName
+            // public void addContainer(Container container)
+            pwClsFile.println( sIndent + "public void add" + propertyMethodName
                     + "( " + rangeVariableType + " " + rangeVariableName
                     + " )\n" + sIndent + "{" );
             if( rangeIsObject )
@@ -894,7 +925,7 @@ public class RDFS2Class
                         + rangeVariableName + " );\n" 
                         + sIndent + "}" );
             else
-                throw new RuntimeException( "Multiple non-objects as put values not supported yet." ); //TODO
+                throw new RuntimeException( "Adding Multiple non-Object values not supported yet." ); //TODO
 
             // CLEARER
             // public void clearContainer ()
