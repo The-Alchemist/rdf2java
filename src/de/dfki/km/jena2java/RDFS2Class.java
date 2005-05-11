@@ -873,13 +873,19 @@ public class RDFS2Class
                 pwClsFile.println( sIndent + "    return (" + rangeTypeName
                         + ") getPropertyObject( " + sPropertyConstant + " );\n"
                         + sIndent + "}" );
-            else
-                // return (float)
-                // readProperty(Constants.CONFIDENCE_PROPERTY)).floatValue();
-                pwClsFile.println( sIndent + "    return getProperty( " + sPropertyConstant + " ).get"
+            else // range is a primitive type
+            {
+                // int needs special treatment as the method is Statement.getInt(), not Statement.getInteger()
+                // return getProperty(Constants.SOMEINTEGER_PROPERTY).getInt();
+                if (rangeTypeName.equals("Integer"))
+                    pwClsFile.println( sIndent + "    return getProperty( " + sPropertyConstant + " ).getInt();\n" 
+                        + sIndent + "}" );
+                // return getProperty(Constants.CONFIDENCE_PROPERTY).getFloat();
+                else // primitive types != int
+                    pwClsFile.println( sIndent + "    return getProperty( " + sPropertyConstant + " ).get"
                         + rangeTypeName + "();\n" 
                         + sIndent + "}" );
-
+            }
             // SETTER
             // public void setConfidence(float confidence)
             pwClsFile.println( sIndent + "public void set" + propertyMethodName
