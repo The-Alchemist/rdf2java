@@ -135,10 +135,24 @@ public class JenaResourceWrapper implements Resource
     {
         setProperty( RDFS.label, label );
     }
-    
+
+    /**
+     * Sets the rdf:type of this resource. A previously set type will be 
+     * overwritten.
+     */
     public void setRdfType( Resource resRdfType )
     {
         setProperty( RDF.type, resRdfType );
+    }
+
+    /**
+     * Returns the rdf:type of this resource. If no type has been set, null
+     * will be returned.
+     */
+    public Resource getRdfType()
+    {
+        Resource resRdfType = (Resource)getPropertyObject( RDF.type );
+        return resRdfType;
     }
 
     /**
