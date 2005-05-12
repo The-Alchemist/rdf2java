@@ -75,9 +75,9 @@ private Model convert( Model m1 )   throws Exception
 {
 	Model m2 = m_rdfFactory.createModel();
 	NodeFactory nodeFactory2 = m2.getNodeFactory();
-    for( Enumeration enum = m1.elements(); enum.hasMoreElements(); )
+    for( Enumeration en = m1.elements(); en.hasMoreElements(); )
     {
-    	Statement st = (Statement)enum.nextElement(); 
+    	Statement st = (Statement)en.nextElement(); 
 		Resource s = st.subject();
 		Resource p = st.predicate();
 		RDFNode o = st.object();
