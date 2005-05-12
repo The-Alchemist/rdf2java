@@ -718,6 +718,7 @@ public class RDFS2Class
         pwClsFile.println( "import com.hp.hpl.jena.rdf.model.Resource;" );
         pwClsFile.println( "import com.hp.hpl.jena.rdf.model.Property;" );
         pwClsFile.println( "import de.dfki.km.jena2java.JenaResourceWrapper;" );
+        pwClsFile.println( "import de.dfki.km.jena2java.ObjectTracker;" );
         if( sSuperClassPkg != null && !sPkg.equals( sSuperClassPkg ) ) 
             pwClsFile.println( "import " + sSuperClassPkg + ".*;" );
         pwClsFile.println( "// RDFS2Class: end of imports" );
@@ -744,6 +745,16 @@ public class RDFS2Class
 
         // constructors
         pwClsFile.println( sIndent + "// RDFS2Class: begin constructors" );
+
+        String sRdfType = null;
+        if( m_sJenaConstantsClass != null )
+            sRdfType = m_sJenaConstantsClass + "." + resCls.getLocalName();
+        else
+        {
+            sRdfType = "RESOURCE_" + resCls.getLocalName();
+            pwClsFile.println( sIndent + "Property " + sRdfType + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + resCls.getURI() + "\" );" );
+        }
+
         pwClsFile.println( sIndent + "/**" );
         pwClsFile.println( sIndent + " * Create a new " + sClsName + " instance including its wrapper." );
         pwClsFile.println( sIndent + " * A new anonymous Resource will be created in a static Model " );
@@ -752,6 +763,8 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "public " + sClsName + "()" );
         pwClsFile.println( sIndent + "{" );
         pwClsFile.println( sIndent + "    super();" );
+        pwClsFile.println( sIndent + "    setRdfType( " + sRdfType + " );" );
+        pwClsFile.println( sIndent + "    ObjectTracker.getInstance().addClass( " + sRdfType + ".getURI(), getClass() );" );
         pwClsFile.println( sIndent + "}" );
 
         pwClsFile.println( sIndent + "/**" );
@@ -760,6 +773,8 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "public " + sClsName + "( Resource res )" );
         pwClsFile.println( sIndent + "{" );
         pwClsFile.println( sIndent + "    super( res );" );
+        pwClsFile.println( sIndent + "    setRdfType( " + sRdfType + " );" );
+        pwClsFile.println( sIndent + "    ObjectTracker.getInstance().addClass( " + sRdfType + ".getURI(), getClass() );" );
         pwClsFile.println( sIndent + "}" );
 
         pwClsFile.println( sIndent + "/**" );
@@ -770,6 +785,8 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "public " + sClsName + "( String uri )" );
         pwClsFile.println( sIndent + "{" );
         pwClsFile.println( sIndent + "    super( uri );" );
+        pwClsFile.println( sIndent + "    setRdfType( " + sRdfType + " );" );
+        pwClsFile.println( sIndent + "    ObjectTracker.getInstance().addClass( " + sRdfType + ".getURI(), getClass() );" );
         pwClsFile.println( sIndent + "}" );
 
         pwClsFile.println( sIndent + "/**" );
@@ -779,6 +796,8 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "public " + sClsName + "( Model model )" );
         pwClsFile.println( sIndent + "{" );
         pwClsFile.println( sIndent + "    super( model );" );
+        pwClsFile.println( sIndent + "    setRdfType( " + sRdfType + " );" );
+        pwClsFile.println( sIndent + "    ObjectTracker.getInstance().addClass( " + sRdfType + ".getURI(), getClass() );" );
         pwClsFile.println( sIndent + "}" );
 
         pwClsFile.println( sIndent + "/**" );
@@ -788,6 +807,8 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "public " + sClsName + "( Model model, String uri )" );
         pwClsFile.println( sIndent + "{" );
         pwClsFile.println( sIndent + "    super( model, uri );" );
+        pwClsFile.println( sIndent + "    setRdfType( " + sRdfType + " );" );
+        pwClsFile.println( sIndent + "    ObjectTracker.getInstance().addClass( " + sRdfType + ".getURI(), getClass() );" );
         pwClsFile.println( sIndent + "}" );
 
         pwClsFile.println( sIndent + "// RDFS2Class: end constructors" );

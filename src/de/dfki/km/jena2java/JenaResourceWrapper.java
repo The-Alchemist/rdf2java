@@ -21,6 +21,7 @@ import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
@@ -133,6 +134,11 @@ public class JenaResourceWrapper implements Resource
     public void setRdfsLabel( String label )
     {
         setProperty( RDFS.label, label );
+    }
+    
+    public void setRdfType( Resource resRdfType )
+    {
+        setProperty( RDF.type, resRdfType );
     }
 
     /**

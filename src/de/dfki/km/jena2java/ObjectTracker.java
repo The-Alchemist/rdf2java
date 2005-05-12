@@ -30,7 +30,10 @@ public class ObjectTracker {
      * @return The wrapper instance.
      */
     public Object getInstance(Resource r) {
-        Object o = getInstance(r.getURI());
+        String sUri = r.getURI();
+        if( sUri == null ) sUri = r.getId().toString();
+        if( sUri == null ) return null; //TODO: is this O.K.?
+        Object o = getInstance(sUri);
         if (o == null) {
             // no wrapper built for this URI yet: build one
             // first, determine the class we should use for the wrapper
@@ -48,6 +51,7 @@ public class ObjectTracker {
             try {
                 argsConstructor = cls.getConstructor(argsClasses);
                 o = argsConstructor.newInstance(args);
+                uri2instance.put(sUri, o);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
