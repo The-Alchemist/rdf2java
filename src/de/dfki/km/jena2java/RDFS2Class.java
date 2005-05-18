@@ -362,7 +362,7 @@ public class RDFS2Class
         while( itRes.hasNext() )
         {
             Resource resCls = itRes.nextResource();
-            pw.println( "        tracker.addClass(" + resCls.getLocalName() + " , " + resCls.getLocalName() + ".class);");
+            pw.println( "        tracker.addClass(" + resCls.getLocalName() + " , " +  m_mapNamespaceToPackage.get(resCls.getNameSpace())+ "." + resCls.getLocalName() + ".class);");
         }
         if( hasClasses )
             pw.println( "    }"); 
