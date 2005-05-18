@@ -791,7 +791,7 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "    super(tracker, model, " + sRdfType + " );");
         pwClsFile.println( sIndent + "}\n" );
 
-        pwClsFile.println( sIndent + "/**" );
+		pwClsFile.println( sIndent + "/**" );
         pwClsFile.println( sIndent + " * Creates a new instance of the RDFS class <code>" + sClsName + "</code> along with its wrapper and");
         pwClsFile.println( sIndent + " * register it with an {@link ObjectTracker}.");
         pwClsFile.println( sIndent + " * To get wrapper instances for existing Jena resources, use <code>ObjectTracker.getInstance</code>.");
@@ -815,6 +815,15 @@ public class RDFS2Class
         pwClsFile.println( sIndent + "    super(res);");
         pwClsFile.println( sIndent + "}");
 
+		pwClsFile.println( sIndent + "protected " + sClsName + "(ObjectTracker tracker, Model model, Resource resource)" );
+        pwClsFile.println( sIndent + "{" );
+        pwClsFile.println( sIndent + "    super(tracker, model, resource);" );
+        pwClsFile.println( sIndent + "}\n" );
+
+		pwClsFile.println( sIndent + "protected " + sClsName + "(ObjectTracker tracker, Model model, Resource resource, String uri)" );
+        pwClsFile.println( sIndent + "{" );
+        pwClsFile.println( sIndent + "    super(tracker, model, resource, uri);" );
+        pwClsFile.println( sIndent + "}\n" );
 
         pwClsFile.println( sIndent + "// RDFS2Class: end constructors" );
         pwClsFile.println();
