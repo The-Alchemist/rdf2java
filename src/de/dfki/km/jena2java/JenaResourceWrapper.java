@@ -47,56 +47,47 @@ public class JenaResourceWrapper implements Resource
     }
 
     /**
-     * Creates a new JenaResourceWrapper. As a JenaResourceWrapper is just a
-     * wrapper around a jena resource, we've got to create a new internal jena
-     * resource, too, and that's just why we need a jena model to be given here.
+     * Creates a new anonymous instance of an RDFS class along with its wrapper and
+     * register it with an {@link ObjectTracker}.
+     * You should use the constructors of child classes typically.
+     * To get wrapper instances for existing Jena resources, use <code>ObjectTracker.getInstance</code>.
+     * @param tracker The tracker the new instance shall be registered with.
+     * @param model The Jena model to create the new instance in.
+     * @param rdfsClassResource The RDFS classes' Jena resource the new instance shall be created for.
      */
-    public JenaResourceWrapper( Model model )
+    public JenaResourceWrapper( ObjectTracker tracker, Model model, Resource rdfsClassResource )
     {
         m_res = model.createResource( new AnonId() );
+        setRdfType(rdfsClassResource);
+        tracker.putInstance(m_res.getURI(), this);
+    }
+    
+    /**
+     * Using this method is usually a mistake.
+     * Creates a new wrapper for an existing Jena RDF instance.
+     * Registration with an <code>ObjectTracker</code> must be done elsewhere.
+     * Typically this constructor should be called only by the <code>ObjectTracker</code>.
+     * @param res The Jena RDF instance to be wrapped.
+     */
+    public JenaResourceWrapper( Resource res ) {
+        m_res = res;
     }
 
     /**
-     * Creates a new JenaResourceWrapper with the specified URI. As a
-     * JenaResourceWrapper is just a wrapper around a jena resource, we've got
-     * to create a new internal jena resource, too, and that's just why we need
-     * a jena model to be given here.
+     * Creates a new instance of an RDFS class along with its wrapper and
+     * registers it with an {@link ObjectTracker}.
+     * You should use the constructors of child classes typically.
+     * To get wrapper instances for existing Jena resources, use <code>ObjectTracker.getInstance</code>.
+     * @param tracker The tracker the new instance shall be registered with.
+     * @param model The Jena model to create the new instance in.
+     * @param rdfsClassResource The RDFS classes' Jena resource the new instance shall be created for.
+     * @param uri The new instance's URI.
      */
-    public JenaResourceWrapper( Model model, String uri )
+    public JenaResourceWrapper( ObjectTracker tracker, Model model, Resource rdfsClassResource, String uri )
     {
         m_res = model.createResource( uri );
-    }
-
-    /**
-     * Creates a new JenaResourceWrapper. As a JenaResourceWrapper is just a
-     * wrapper around a jena resource, we've got to create a new internal jena
-     * resource, too. That new jena resource is created in the default model
-     * inhere.
-     */
-    public JenaResourceWrapper()
-    {
-        m_res = m_defaultModel.createResource( new AnonId() );
-    }
-
-    /**
-     * Creates a new JenaResourceWrapper with the specified URI. As a
-     * JenaResourceWrapper is just a wrapper around a jena resource, we've got
-     * to create a new internal jena resource, too. That new jena resource is
-     * created in the default model inhere.
-     */
-    public JenaResourceWrapper( String uri )
-    {
-        m_res = m_defaultModel.createResource( uri );
-    }
-
-    /**
-     * Initializes the internal jena resource of this JenaResourceWrapper. Note:
-     * A JenaResourceWrapper is just a wrapper around the real jena resource.
-     */
-    public JenaResourceWrapper( Resource res )
-    {
-        m_res = res;
-        ObjectTracker.getInstance().putInstance( res.getURI(), this );
+        setRdfType(rdfsClassResource);
+        tracker.putInstance(m_res.getURI(), this);
     }
 
     /**

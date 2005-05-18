@@ -40,7 +40,7 @@ public class ObjectTracker {
             Class cls = JenaResourceWrapper.class;
             Statement s = r.getProperty(RDF.type);
             if(s != null) {
-                Class fcls = getClass(s.getResource().getURI());
+                Class fcls = getClass(s.getResource());
                 if(fcls != null) cls = fcls;
             }
             // second, build the wrapping instance
@@ -67,13 +67,14 @@ public class ObjectTracker {
         return instance;
     }
     
-    public HashMap uri2class = new HashMap();
+    public HashMap resource2class = new HashMap();
     
-    public void addClass(String URI, Class cls) {
-        uri2class.put(URI, cls);
+    public void addClass(Resource res, Class cls) {
+        resource2class.put(res, cls);
     }
     
-    public Class getClass(String URI) {
-        return (Class) uri2class.get(URI);
+    public Class getClass(Resource res) {
+        if(resource2class.size() == 0) throw new RuntimeException("RDF2Java ObjectTracker not initialized!");
+        return (Class) resource2class.get(res);
     }
 }
