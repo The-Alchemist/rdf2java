@@ -2,10 +2,6 @@ package de.dfki.rdf.test.staticKnowledgeBase;
 
 import java.util.Iterator;
 
-import com.sun.rsasign.al;
-
-import EDU.oswego.cs.dl.util.concurrent.ThreadFactory;
-
 import junit.framework.TestCase;
 import de.dfki.rdf.util.KnowledgeBase;
 import de.dfki.rdf.util.RDFResource;

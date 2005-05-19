@@ -9,6 +9,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import de.dfki.km.jena2java.JenaResourceWrapper;
+import de.dfki.km.jena2java.ObjectTracker;
 import de.dfki.rdf.util.RDFTool;
 
 
@@ -34,25 +35,27 @@ public class Test
 	{
         String NS   = "http://km.dfki.de/concepts#";
 
+        ObjectTracker OT = ObjectTracker.getInstance();
+        Model model = ModelFactory.createDefaultModel();
         
-        schemeTopics = new ConceptScheme( NS + "TopicsSchmeme" );
+        schemeTopics = new ConceptScheme( OT, model, NS + "TopicsSchmeme" );
         schemeTopics.setRdfsLabel( "TopicsSchmeme" );
         
         
-        cTopics = new Concept( NS + "TOPICS" );
+        cTopics = new Concept( OT, model, NS + "TOPICS" );
         cTopics.setRdfsLabel( "TOPICS" );
         cTopics.addInScheme( schemeTopics );
         schemeTopics.addHasTopConcept( cTopics );
         
-        cDFKI = new Concept();
+        cDFKI = new Concept( OT, model );
         cDFKI.setRdfsLabel( "DFKI" );
         cDFKI.addInScheme( schemeTopics );
         
-        cEPOS = new Concept();
+        cEPOS = new Concept( OT, model );
         cEPOS.setRdfsLabel( "EPOS" );
         cEPOS.addInScheme( schemeTopics );
         
-        cFRODO = new Concept();
+        cFRODO = new Concept( OT, model );
         cFRODO.setRdfsLabel( "FRODO" );
         cFRODO.addInScheme( schemeTopics );
         
