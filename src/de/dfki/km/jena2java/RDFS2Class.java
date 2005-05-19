@@ -87,9 +87,9 @@ public class RDFS2Class
             if( args.length < 1 )
                 throw new Exception( "RDFS2Class: no parameters" );
 
-            final String CHANGE_RDFS_NS     = "rdfs=";
-            final String CHANGE_RDF_NS      = "rdf=";
-            final String CHANGE_PROTEGE_NS  = "protege=";
+            final String CHANGE_RDFS_NS     = "--rdfs=";
+            final String CHANGE_RDF_NS      = "--rdf=";
+            final String CHANGE_PROTEGE_NS  = "--protege=";
 
             RDFS2Class gen = new RDFS2Class();
 
@@ -113,17 +113,17 @@ public class RDFS2Class
                     }
                     else if( args[iArg].toLowerCase().startsWith( CHANGE_RDFS_NS ) )
                     {
-                        RDFS_NAMESPACE = args[iArg++].substring( CHANGE_RDFS_NS.length() );
+                        RDFS_NAMESPACE = args[iArg].substring( CHANGE_RDFS_NS.length() );
                         message( "RDFS namespace: " + RDFS_NAMESPACE );
                     }
                     else if( args[iArg].toLowerCase().startsWith( CHANGE_RDF_NS ) )
                     {
-                        RDF_NAMESPACE = args[iArg++].substring( CHANGE_RDF_NS.length() );
+                        RDF_NAMESPACE = args[iArg].substring( CHANGE_RDF_NS.length() );
                         message( "RDF namespace : " + RDF_NAMESPACE );
                     }
                     else if( args[iArg].toLowerCase().startsWith( CHANGE_PROTEGE_NS ) )
                     {
-                        PROTEGE_NS = args[iArg++].substring( CHANGE_PROTEGE_NS.length() );
+                        PROTEGE_NS = args[iArg].substring( CHANGE_PROTEGE_NS.length() );
                         message( "Protege namespace: " + PROTEGE_NS );
                     }
                     else
@@ -296,7 +296,7 @@ public class RDFS2Class
             {
                 sb.append( " o      " + (String)it.next() + "\n" );
             }
-            System.out.println( sb.toString() + "\n" );
+            message( sb.toString() + "\n" );
         }
         
         message( "ready." );
