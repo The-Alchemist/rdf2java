@@ -195,5 +195,14 @@
   </rdf:Property>
 
 	<!-- N.B. use the foaf:depiction property to attach an image depicting a concept. -->
+
+
+
+	<rdf:Property rdf:about="http://schwarz.km.dfki.de/dummy#dummyProperty">
+	  <rdfs:label>dummy property with alien namespace</rdfs:label>
+		<rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+	</rdf:Property>
+
 		
 </rdf:RDF>

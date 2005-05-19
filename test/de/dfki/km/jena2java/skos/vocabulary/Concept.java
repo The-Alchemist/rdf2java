@@ -69,6 +69,22 @@ public class  Concept
     // RDFS2Class: end constructors
 
     //------------------------------------------------------------------------------
+    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#semanticRelation
+    public Collection getSemanticRelation()
+    {
+        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.semanticRelation );
+    }
+    public void addSemanticRelation( de.dfki.km.jena2java.skos.vocabulary.Concept semanticrelation )
+    {
+        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.semanticRelation, semanticrelation );
+    }
+    public void clearSemanticRelation()
+    {
+        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.semanticRelation );
+    }
+    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#semanticRelation
+
+    //------------------------------------------------------------------------------
     // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#narrower
     public Collection getNarrower()
     {
@@ -115,22 +131,6 @@ public class  Concept
         m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme );
     }
     // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#inScheme
-
-    //------------------------------------------------------------------------------
-    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#semanticRelation
-    public Collection getSemanticRelation()
-    {
-        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.semanticRelation );
-    }
-    public void addSemanticRelation( de.dfki.km.jena2java.skos.vocabulary.Concept semanticrelation )
-    {
-        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.semanticRelation, semanticrelation );
-    }
-    public void clearSemanticRelation()
-    {
-        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.semanticRelation );
-    }
-    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#semanticRelation
 
     //------------------------------------------------------------------------------
     // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#isSubjectOf

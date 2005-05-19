@@ -84,6 +84,22 @@ public class  ConceptScheme
     }
     // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#hasTopConcept
 
+    //------------------------------------------------------------------------------
+    // RDFS2Class: begin property http://schwarz.km.dfki.de/dummy#dummyProperty
+    public Collection getDummy_dummyProperty()
+    {
+        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.dummy_dummyProperty );
+    }
+    public void addDummy_dummyProperty( de.dfki.km.jena2java.skos.vocabulary.Concept dummy_dummyproperty )
+    {
+        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.dummy_dummyProperty, dummy_dummyproperty );
+    }
+    public void clearDummy_dummyProperty()
+    {
+        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.dummy_dummyProperty );
+    }
+    // RDFS2Class: end property http://schwarz.km.dfki.de/dummy#dummyProperty
+
 }
 // RDFS2Class: end of class ConceptScheme
 // EOF
