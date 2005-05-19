@@ -819,12 +819,14 @@ public class RDFS2Class
         // constructors
         pwClsFile.println( sIndent + "// RDFS2Class: begin constructors" );
 
+        String sFieldNameCls = fieldName( resCls, m_defaultNamespace );
+
         String sRdfType = null;
         if( m_sJenaConstantsClass != null )
-            sRdfType = m_sJenaConstantsClass + "." + resCls.getLocalName();
+            sRdfType = m_sJenaConstantsClass + "." + sFieldNameCls;
         else
         {
-            sRdfType = "RESOURCE_" + resCls.getLocalName();
+            sRdfType = "RESOURCE_" + sFieldNameCls;
             pwClsFile.println( sIndent + "Property " + sRdfType + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + resCls.getURI() + "\" );" );
         }
 
