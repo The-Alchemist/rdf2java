@@ -966,7 +966,7 @@ public class RDFS2Class
                                    ? rangeTypeName
                                    : rangeTypeName.toLowerCase();
         if( rangeVariableType.equals( "integer" ) ) rangeVariableType = "int";
-        String rangeVariableName = propertyMethodName.toLowerCase();
+        String rangeVariableName = "_" + propertyMethodName.toLowerCase();
 
         if( !pi.bMultiple )   // *** single value slots ***
         {
