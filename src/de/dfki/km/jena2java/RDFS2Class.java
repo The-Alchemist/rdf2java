@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,6 +85,17 @@ public class RDFS2Class
     private LinkedList m_lstFormerFile; // list of strings (lines) of the former java-file
 
     private final static String SEPARATOR = "//------------------------------------------------------------------------------";
+
+    
+    public final static Collection/*String*/ RESERVED_WORDS = Arrays.asList( new String[]{
+        "public", "protected", "private", "final", "static", 
+        "char", "int", "long", "short", "float", "double",
+        "Character", "Integer", "Long", "Short", "Float", "Double", "Math", "Number", 
+        "Object", "String", "Class", "class", "Process", "Runtime", "Exception", "Boolean", "Byte", 
+        "return",
+        "for", "while", "do", "if", "switch", "case", "enum",
+        "instanceof",
+    });
 
     
     public static void main( String[] args )
@@ -369,9 +381,7 @@ public class RDFS2Class
             Resource resProperty = itProp.nextResource();
             printJavaDoc( pw, resProperty );
             
-            String sFieldName = ( resProperty.getNameSpace().equals( m_defaultNamespace ) )
-                                ? resProperty.getLocalName()
-                                : RDF2Java.namespace2abbrev( resProperty.getNameSpace() ) + '_' + resProperty.getLocalName();
+            String sFieldName = fieldName( resProperty, m_defaultNamespace );
             pw.println( "    public static final Property " + sFieldName + " = m_model.createProperty( \"" + resProperty.getURI() + "\");\n" ); 
         }
         
@@ -411,10 +421,15 @@ public class RDFS2Class
         
     private static String fieldName( Resource res, String defaultNamespace )
     {
+        String sFieldName = null;
         if( res.getNameSpace().equals( defaultNamespace ) )
-            return res.getLocalName();
+            sFieldName = res.getLocalName();
         else
-            return RDF2Java.namespace2abbrev( res.getNameSpace() ) + '_' + res.getLocalName();
+            sFieldName = RDF2Java.namespace2abbrev( res.getNameSpace() ) + '_' + res.getLocalName();
+        if( sFieldName == null ) return null;
+        if( RESERVED_WORDS.contains( sFieldName ) )
+            sFieldName = "_" + sFieldName;
+        return sFieldName;
     }
     
     private void printJavaDoc( PrintWriter pw, Resource res )
