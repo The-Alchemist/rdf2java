@@ -100,6 +100,13 @@ public void putPropertyValue (String sPropertyName, Object value)
         int iHash = sPropertyName.lastIndexOf( '#' );
         if( iHash >= 0 )
             pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName.substring( iHash+1 ) );
+        
+        // HM: added 30.05.2005
+        if( pi == null ) 
+        {
+            System.err.println( "  still unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ") value: " + value );            
+            return;
+        }
     }
     pi.putValue( value );
 }
