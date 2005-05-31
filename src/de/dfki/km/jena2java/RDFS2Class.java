@@ -922,7 +922,7 @@ public class RDFS2Class
             throws Exception
     {
         pwClsFile.println( sIndent + "// RDFS2Class: begin property " + pi.resProperty.getURI() );
-        String propertyMethodName = ( pi.resProperty.getNameSpace().equals( m_defaultNamespace ) )
+        String propertyMethodName = ( pi.resProperty.getNameSpace().equals( resCls.getNameSpace() ) )
                                     ? RDF2Java.makeMethodName( "", pi.resProperty.getLocalName() )
                                     : RDF2Java.makeMethodName( "", pi.resProperty.getNameSpace(), pi.resProperty.getLocalName() );
         
