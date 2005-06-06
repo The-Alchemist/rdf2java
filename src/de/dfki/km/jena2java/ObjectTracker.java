@@ -3,6 +3,7 @@ package de.dfki.km.jena2java;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
+import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.RDF;
@@ -38,10 +39,15 @@ public class ObjectTracker {
             // no wrapper built for this URI yet: build one
             // first, determine the class we should use for the wrapper
             Class cls = JenaResourceWrapper.class;
-            Statement s = r.getProperty(RDF.type);
-            if(s != null) {
-                Class fcls = getClass(s.getResource());
-                if(fcls != null) cls = fcls;
+            for( NodeIterator it = r.getModel().listObjectsOfProperty(r, RDF.type); it.hasNext(); )
+            {
+                Resource resClass = (Resource)it.nextNode();
+                Class fcls = getClass(resClass);
+                if(fcls != null) 
+                {
+                    cls = fcls;
+                    break;
+                }
             }
             // second, build the wrapping instance
             Class jenaResourceWrapperDefinition;
