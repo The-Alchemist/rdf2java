@@ -29,10 +29,13 @@
 
 	<target name="all" depends="rdf2java_jar, apidoc"/>
 	
-	<target name="rdf2java_jar" depends="compile">
+	<target name="rdf2java_jar">
 		<jar destfile="${rdf2java.jar.name}">
 		    <fileset dir="${compile.dir}">
 		    	<filename name="**/*.class"/>
+		    </fileset>
+		    <fileset dir="${source.dir}">
+		    	<filename name="**/*.java"/>
 		    </fileset>
 		</jar>
 	</target>
@@ -45,7 +48,8 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="${compile.dir}" />
-		<javac source="1.5" target="jsr14" destdir="${compile.dir}" includeAntRuntime="no"> <!-- source=${java.version} -->
+		<!-- javac source="1.5" target="jsr14" destdir="${compile.dir}" includeAntRuntime="no" -->
+		<javac source="1.4" target="1.4" destdir="${compile.dir}" includeAntRuntime="no"> <!-- source=${java.version} -->
 			<src path="${source.dir}" />
 			<patternset refid="compile.sources" />
 			<classpath>
