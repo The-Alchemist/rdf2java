@@ -6,7 +6,10 @@
 
 package de.dfki.km.jena2java;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -90,6 +93,47 @@ public class JenaResourceWrapper implements Resource
         tracker.putInstance(m_res.getURI(), this);
     }
 
+    /**
+     * Generates a unique URI using the given namespace.
+     * @param namespace The namespace to be used to generate the new URI.
+     */
+    public static String generateUniqueURI( String namespace )
+    {
+        StringBuffer dummy = new StringBuffer();
+        String dateAsString = date2string( new Date() );
+        String someHash = Integer.toHexString( dummy.hashCode() );
+        String newUri = namespace + dateAsString + "_" + someHash;
+        return newUri;
+    }
+    
+    /** helper function: converts a Date to a String representation */
+    private static String date2string( Date date )
+    {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime( date );
+        int year  = cal.get( Calendar.YEAR );
+        int month = cal.get( Calendar.MONTH ) + 1;
+        int day   = cal.get( Calendar.DAY_OF_MONTH );
+        
+        String sDate = "" + year + "-";
+        if( month < 10 ) sDate += "0";
+        sDate += "" + month + "-";
+        if( day < 10 ) sDate += "0";
+        sDate += "" + day;
+        
+        int hour  = cal.get( Calendar.HOUR_OF_DAY );
+        int min   = cal.get( Calendar.MINUTE );
+        int sec   = cal.get( Calendar.SECOND );
+        
+        sDate += "_" + hour + ".";
+        if( min < 10 ) sDate += "0";
+        sDate += "" + min + ".";
+        if( sec < 10 ) sDate += "0";
+        sDate += "" + sec;
+        
+        return sDate;
+    }
+    
     /**
      * Sets this resource. As a JenaResourceWrapper is just a wrapper around a
      * jena resource, that resource has to be set somewhen.
