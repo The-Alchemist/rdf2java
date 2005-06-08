@@ -367,10 +367,10 @@ public class RDFS2Class
         pw.println( "    /** <p>The RDF model that holds the vocabulary terms</p> */" );
         pw.println( "    private static Model m_model = ModelFactory.createDefaultModel();\n" );
 
-        pw.println( "    /** <p>The namespace of the vocabalary as a string</p> */" );
+        pw.println( "    /** <p>The namespace of the vocabulary as a string</p> */" );
         pw.println( "   public static final String NS = \"" + m_defaultNamespace + "\";\n" );
         
-        pw.println( "    /** <p>The namespace of the vocabalary as a resource</p> */" );
+        pw.println( "    /** <p>The namespace of the vocabulary as a resource</p> */" );
         pw.println( "    public static final Resource NAMESPACE = m_model.createResource( NS );\n" );
         
         
