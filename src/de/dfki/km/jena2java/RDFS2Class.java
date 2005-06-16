@@ -951,7 +951,8 @@ public class RDFS2Class
         boolean rangeIsResource = false;
         if( range instanceof Resource )
         {
-            if( range.equals( m_resRDFSLiteral ) ) rangeTypeName = "String";
+            if( range.equals( m_resRDFSLiteral ) ) 
+                rangeTypeName = "String";
             else
             {
                 rangeTypeName = getRangeTypeName( (Resource)range );
@@ -975,10 +976,15 @@ public class RDFS2Class
             // public float getConfidence()
             pwClsFile.println( sIndent + "public " + rangeVariableType + " get" + propertyMethodName + "()\n" + sIndent + "{" );
             if( rangeIsObject )
+            {
                 // return (String) readProperty(Constants.NAME_PROPERTY);
-                pwClsFile.println( sIndent + "    return (" + rangeTypeName
-                        + ") getPropertyObject( " + sPropertyConstant + " );\n"
+                pwClsFile.print( sIndent + "    return (" + rangeTypeName
+                        + ") getPropertyObject( " + sPropertyConstant );
+                if( rangeIsResource )
+                    pwClsFile.print( ", " + rangeTypeName + ".class" );
+                pwClsFile.println( " );\n"
                         + sIndent + "}" );
+            }
             else // range is a primitive type
             {
                 // int needs special treatment as the method is Statement.getInt(), not Statement.getInteger()

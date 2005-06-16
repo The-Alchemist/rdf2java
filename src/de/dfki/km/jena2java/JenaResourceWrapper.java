@@ -193,11 +193,18 @@ public class JenaResourceWrapper implements Resource
     /**
      * Return all instances referenced by a property. Wrapper objects for RDFS
      * classes will be created automatically if needed.
-     * 
-     * @param p
-     * @return
      */
     protected Collection getPropertyObjects( Property p )
+    {
+        return getPropertyObjects( p, JenaResourceWrapper.class );
+    }
+    
+    /**
+     * Return all instances referenced by a property. Wrapper objects for RDFS
+     * classes will be created automatically if needed;
+     * use defaultClass if rdf:type is not available but needed
+     */
+    protected Collection getPropertyObjects( Property p, Class defaultClass )
     {
         Collection result = new LinkedList();
         StmtIterator si = m_res.listProperties( p );
@@ -209,17 +216,26 @@ public class JenaResourceWrapper implements Resource
             if( o instanceof Literal ) 
                 result.add( ((Literal) o).getValue() );
             else
-                result.add( ObjectTracker.getInstance().getInstance( s.getResource() ) );
+                result.add( ObjectTracker.getInstance().getInstance( s.getResource(), defaultClass ) );
         }
         return result;
     }
 
     /**
-     * Gets first literal for a property or null if none
+     * Gets first value for a property or null if none
      */
     protected Object getPropertyObject( Property p )
     {
-        Iterator i = getPropertyObjects( p ).iterator();
+        return getPropertyObject( p, JenaResourceWrapper.class );
+    }
+    
+    /**
+     * Gets first value for a property or null if none; 
+     * use defaultClass if rdf:type is not available but needed 
+     */
+    protected Object getPropertyObject( Property p, Class defaultClass )
+    {
+        Iterator i = getPropertyObjects( p, defaultClass ).iterator();
         if( i.hasNext() ) 
             return i.next();
         else

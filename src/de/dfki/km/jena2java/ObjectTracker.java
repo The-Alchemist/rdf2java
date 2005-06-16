@@ -16,21 +16,51 @@ import com.hp.hpl.jena.vocabulary.RDF;
  */
 public class ObjectTracker {
     public HashMap uri2instance = new HashMap();
-    
+
+    /**
+     * Register a wrapper instance for a given URI. 
+     * @param URI the URI.
+     * @param o the wrapper instance for given URI.
+     */
     public void putInstance(String URI, Object o) {
         uri2instance.put(URI, o);
     }
     
+    /**
+     * Return a wrapper instance for a resource with the given URI, 
+     * <b>if</b> the object tracker already knows that resource;
+     * if not, null will be returned.
+     * @param URI the URI of the requested resource.
+     * @return a wrapper instance for the given URI; 
+     *         null if that resource is not yet known.
+     */
     public Object getInstance(String URI) {
         return uri2instance.get(URI);
     }
     
     /**
-     * Get the wrapper instance for a resource. Create the wrapper instance if not already existing.
+     * Get the wrapper instance for a resource. Create the wrapper instance
+     * if not already existing.
      * @param r Resource to get the wrapper instance for.
      * @return The wrapper instance.
      */
     public Object getInstance(Resource r) {
+        return getInstance(r, JenaResourceWrapper.class);
+    }
+    
+    /**
+     * Get the wrapper instance for a resource. Create the wrapper instance 
+     * if not already existing.
+     * If there is no rdf:type information available for the resource, the 
+     * <code>defaultClass</code> parameter is used for creating a wrapper.
+     * <br/>
+     * Only use subclasses of <code>JenaResourceWrapper</code>.
+     * @param r Resource to get the wrapper instance for.
+     * @param defaultClass the wrapper class that is used if no <code>rdf:type</code> 
+     *                     information is available 
+     * @return The wrapper instance.
+     */
+    public Object getInstance(Resource r, Class defaultClass) {
         String sUri = r.getURI();
         if( sUri == null ) sUri = r.getId().toString();
         if( sUri == null ) return null; //TODO: is this O.K.?
@@ -38,17 +68,20 @@ public class ObjectTracker {
         if (o == null) {
             // no wrapper built for this URI yet: build one
             // first, determine the class we should use for the wrapper
-            Class cls = JenaResourceWrapper.class;
+            Class cls = null;
             for( NodeIterator it = r.getModel().listObjectsOfProperty(r, RDF.type); it.hasNext(); )
             {
                 Resource resClass = (Resource)it.nextNode();
                 Class fcls = getClass(resClass);
                 if(fcls != null) 
                 {
+                    if(!defaultClass.isAssignableFrom(fcls))
+                        continue;  // bad class
                     cls = fcls;
                     break;
                 }
             }
+            if( cls == null ) cls = defaultClass;
             // second, build the wrapping instance
             Class jenaResourceWrapperDefinition;
             Class[] argsClasses = new Class[] { Resource.class };
@@ -67,7 +100,14 @@ public class ObjectTracker {
     
     public static ObjectTracker instance = null;
 
-    /** This is a hack right now. */
+    /**
+     * Returns "one" instance of the object tracker. 
+     * Theoretically, you can have more than just one, 
+     * but right now, we use this method to work with the
+     * one and only object tracker. 
+     * <br/>   
+     * Well... <i>This is still a hack right now.</i>
+     */
     public static ObjectTracker getInstance() {
         if(instance == null) instance = new ObjectTracker();
         return instance;
@@ -75,10 +115,20 @@ public class ObjectTracker {
     
     public HashMap resource2class = new HashMap();
     
+    /**
+     * Register a wrapper class for a given RDF Schema class (resource)
+     * @param res the resource of an RDF Schema class.
+     * @param cls the wrapper class (this will be a subclass of <code>JenaResourceWrapper</code>).
+     */
     public void addClass(Resource res, Class cls) {
         resource2class.put(res, cls);
     }
     
+    /**
+     * Returns the wrapper class for a given RDF Schema class (resource).
+     * @param res the resource of an RDF Schema class.
+     * @return the wrapper class (this will be a subclass of <code>JenaResourceWrapper</code>).
+     */
     public Class getClass(Resource res) {
         if(resource2class.size() == 0) throw new RuntimeException("RDF2Java ObjectTracker not initialized!");
         return (Class) resource2class.get(res);
