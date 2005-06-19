@@ -78,6 +78,10 @@ public class  ConceptScheme
     {
         m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept, _hastopconcept );
     }
+    public void removeHasTopConcept( de.dfki.km.jena2java.skos.vocabulary.Concept _hastopconcept )
+    {
+        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept, _hastopconcept ) );
+    }
     public void clearHasTopConcept()
     {
         m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept );
@@ -93,6 +97,10 @@ public class  ConceptScheme
     public void addDummy_dummyProperty( de.dfki.km.jena2java.skos.vocabulary.Concept _dummy_dummyproperty )
     {
         m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.dummy_dummyProperty, _dummy_dummyproperty );
+    }
+    public void removeDummy_dummyProperty( de.dfki.km.jena2java.skos.vocabulary.Concept _dummy_dummyproperty )
+    {
+        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.dummy_dummyProperty, _dummy_dummyproperty ) );
     }
     public void clearDummy_dummyProperty()
     {

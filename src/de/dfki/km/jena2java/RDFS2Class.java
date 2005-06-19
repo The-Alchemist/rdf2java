@@ -1031,7 +1031,7 @@ public class RDFS2Class
             else
                 throw new RuntimeException( "Multiple non-objects as return values not supported yet." ); //TODO
 
-            // SETTER
+            // ADDER
             // public void addContainer(Container container)
             pwClsFile.println( sIndent + "public void add" + propertyMethodName
                     + "( " + rangeVariableType + " " + rangeVariableName
@@ -1044,6 +1044,17 @@ public class RDFS2Class
                         + sIndent + "}" );
             else
                 throw new RuntimeException( "Adding Multiple non-Object values not supported yet." ); //TODO
+
+            // REMOVER
+            // public void removeContainer(Container container)
+            pwClsFile.println( sIndent + "public void remove" + propertyMethodName
+                    + "( " + rangeVariableType + " " + rangeVariableName
+                    + " )\n" + sIndent + "{" );
+            // m_res.getModel().remove( m_res.getModel().listStatements( m_res, Constants.CONTAINER_PROPERTY, container ) );
+            pwClsFile.println( sIndent
+                    + "    m_res.getModel().remove( m_res.getModel().listStatements( m_res, " + sPropertyConstant + ", "
+                    + rangeVariableName + " ) );\n" 
+                    + sIndent + "}" );
 
             // CLEARER
             // public void clearContainer ()

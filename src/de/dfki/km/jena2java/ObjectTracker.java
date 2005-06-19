@@ -1,11 +1,15 @@
 package de.dfki.km.jena2java;
 
 import java.lang.reflect.Constructor;
+import java.util.Collection;
 import java.util.HashMap;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 /**
@@ -24,6 +28,16 @@ public class ObjectTracker {
      */
     public void putInstance(String URI, Object o) {
         uri2instance.put(URI, o);
+    }
+    
+    /**
+     * Unregisters a wrapper instance for this object tracker -
+     * no further action is taken regarding the model. Use the
+     * {@link #deleteInstance deleteInstance} if you want to
+     * really delete stuff.
+     */ 
+    public void removeInstance(String URI) {
+        uri2instance.remove(URI);
     }
     
     /**
@@ -96,6 +110,52 @@ public class ObjectTracker {
             }
         }
         return o;
+    }
+    
+    /**
+     * "Delete" or "cut out" a wrapper instance<br/>
+     * All triples containing the given resource (edges to and from) 
+     * are removed. Furthermore, the given resource is unregistered from this 
+     * object tracker.<br/>
+     * After deletion of the wrapper instance, the parameters <code>removedStatements</code>
+     * and <code>neighboringResource</code> contain potentially interesting information:
+     * <ul>
+     * <b>removedStatements</b> a model containing the removed statements.<br/>
+     * <b>neighboringResources</b> a collection of neighboring <code>Resource</code>s.
+     * The neighboring resources can be used to realize some recursive deletion.
+     * </ul>
+     * <b>Note</b> each of both parameters may be null if that respective information 
+     * is not needed.<br/>
+     * <b>Note</b> inverse properties (inverse edges) are removed from the model, too.
+     */
+    public void deleteInstance(Resource r, Model removedStatements, Collection neighboringResources) {
+        if( r instanceof JenaResourceWrapper ) 
+            r = ((JenaResourceWrapper)r).getResource();
+        Model model = r.getModel();
+        
+        Model removeModel = (removedStatements != null) ? removedStatements : ModelFactory.createDefaultModel(); 
+        removeModel.add( model.listStatements( r   , null, (RDFNode)null ) );
+        removeModel.add( model.listStatements( null, null, r             ) );
+        // for( StmtIterator it = removeModel.listStatements(); it.hasNext(); )
+        //     System.out.println( it.nextStatement() );
+        
+        if( neighboringResources != null ) {
+            for( NodeIterator it = removeModel.listObjects(); it.hasNext(); ) {
+                RDFNode o = it.nextNode();
+                if( o.equals( r ) ) continue;
+                if( o instanceof Resource )
+                    neighboringResources.add( o );
+            }
+            for( ResIterator it = removeModel.listSubjects(); it.hasNext(); ) {
+                Resource s = it.nextResource();
+                if( s.equals( r ) ) continue;
+                neighboringResources.add( s );
+            }
+        }
+        
+        model.remove( removeModel );
+        if( r.getURI() != null )
+            removeInstance( r.getURI() );
     }
     
     public static ObjectTracker instance = null;
