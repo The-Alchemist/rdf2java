@@ -9,6 +9,9 @@ import java.util.Set;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 import de.dfki.km.jena2java.ObjectTracker;
 import de.dfki.rdf.util.RDFTool;
@@ -50,6 +53,7 @@ public class Test
         schemeTopics = new ConceptScheme( OT, model, NS + "TopicsSchmeme" );
         schemeTopics.setRdfsLabel( "TopicsSchmeme" );
         
+        // generate some topics using jena2java
         
         cTopics = new Concept( OT, model, NS + "TOPICS" );
         cTopics.setRdfsLabel( "TOPICS" );
@@ -72,7 +76,15 @@ public class Test
         cDFKI.addNarrower( cEPOS );
         cDFKI.addNarrower( cFRODO );        
 
+        // generate a topic using pure jena
         
+        Resource resDecor = model.createResource();
+        resDecor.addProperty( RDF.type, SKOS.Concept );
+        resDecor.addProperty( RDFS.label, "DECOR" );
+        resDecor.addProperty( SKOS.inScheme, schemeTopics.getResource() );
+        cDFKI.getResource().addProperty( SKOS.narrower, resDecor );
+        
+        // generate a topic that will be deleted soon
         
         cBadConcept = new Concept( OT, model );
         cBadConcept.setRdfsLabel( "BAD CONCEPT" );
