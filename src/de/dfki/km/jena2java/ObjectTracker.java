@@ -41,6 +41,13 @@ public class ObjectTracker {
     }
     
     /**
+     * Clears the whole wrapper instance cache.
+     */
+    public void removeAllInstances() {
+        uri2instance.clear();
+    }
+    
+    /**
      * Return a wrapper instance for a resource with the given URI, 
      * <b>if</b> the object tracker already knows that resource;
      * if not, null will be returned.
