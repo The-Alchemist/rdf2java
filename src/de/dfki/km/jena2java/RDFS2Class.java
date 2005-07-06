@@ -980,7 +980,7 @@ public class RDFS2Class
                 // return (String) readProperty(Constants.NAME_PROPERTY);
                 pwClsFile.print( sIndent + "    return (" + rangeTypeName
                         + ") getPropertyObject( " + sPropertyConstant );
-                if( rangeIsResource )
+                if( rangeIsResource && !range.equals( m_resRDFSResource ) )
                     pwClsFile.print( ", " + rangeTypeName + ".class" );
                 pwClsFile.println( " );\n"
                         + sIndent + "}" );
