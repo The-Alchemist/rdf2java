@@ -19,8 +19,21 @@ import com.hp.hpl.jena.vocabulary.RDF;
  * @author kiesel
  */
 public class ObjectTracker {
-    public HashMap uri2instance = new HashMap();
+    protected HashMap uri2instance = new HashMap();
+    protected HashMap resource2class = new HashMap();
 
+    /** Creates a new ObjectTracker.
+     * The map that associates RDF classes with Java classes is taken
+     * (by reference) from another ObjectTracker.
+     * @param tracker The ObjectTracker to take the RDF class to Java class mappings from.
+     */
+    public ObjectTracker(ObjectTracker tracker) {
+        this.resource2class = tracker.resource2class;
+    }
+
+    public ObjectTracker() {
+    }
+    
     /**
      * Register a wrapper instance for a given URI. 
      * @param URI the URI.
@@ -58,7 +71,7 @@ public class ObjectTracker {
     public Object getInstance(String URI) {
         return uri2instance.get(URI);
     }
-    
+
     /**
      * Get the wrapper instance for a resource. Create the wrapper instance
      * if not already existing.
@@ -105,8 +118,8 @@ public class ObjectTracker {
             if( cls == null ) cls = defaultClass;
             // second, build the wrapping instance
             Class jenaResourceWrapperDefinition;
-            Class[] argsClasses = new Class[] { Resource.class };
-            Object[] args = new Object[] { r };
+            Class[] argsClasses = new Class[] { ObjectTracker.class, Resource.class };
+            Object[] args = new Object[] { this, r };
             Constructor argsConstructor;
             try {
                 argsConstructor = cls.getConstructor(argsClasses);
@@ -167,20 +180,12 @@ public class ObjectTracker {
     
     public static ObjectTracker instance = null;
 
-    /**
-     * Returns "one" instance of the object tracker. 
-     * Theoretically, you can have more than just one, 
-     * but right now, we use this method to work with the
-     * one and only object tracker. 
-     * <br/>   
-     * Well... <i>This is still a hack right now.</i>
-     */
+    /** Returns the default ObjectTracker instance. Unless you reuse URIs (by loading
+     * RDF files or some similar thing), it should be safe to use only this instance. */
     public static ObjectTracker getInstance() {
         if(instance == null) instance = new ObjectTracker();
         return instance;
     }
-    
-    public HashMap resource2class = new HashMap();
     
     /**
      * Register a wrapper class for a given RDF Schema class (resource)

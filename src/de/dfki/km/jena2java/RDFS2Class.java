@@ -877,10 +877,11 @@ public class RDFS2Class
         pwClsFile.println( sIndent + " * Registration with an <code>ObjectTracker</code> must be done elsewhere.");
         pwClsFile.println( sIndent + " * Typically this constructor should be called only by the <code>ObjectTracker</code>.");
         pwClsFile.println( sIndent + " * @param res The Jena RDF instance to be wrapped.");
+        pwClsFile.println( sIndent + " * @param tracker The ObjectTracker to associate this wrapper with.");
         pwClsFile.println( sIndent + " */");
-        pwClsFile.println( sIndent + "public " + sClsName + "( Resource res )");
+        pwClsFile.println( sIndent + "public " + sClsName + "( ObjectTracker tracker, Resource resource )");
         pwClsFile.println( sIndent + "{" );
-        pwClsFile.println( sIndent + "    super(res);");
+        pwClsFile.println( sIndent + "    super(tracker, resource);");
         pwClsFile.println( sIndent + "}");
 
 		pwClsFile.println( sIndent + "protected " + sClsName + "(ObjectTracker tracker, Model model, Resource resource)" );

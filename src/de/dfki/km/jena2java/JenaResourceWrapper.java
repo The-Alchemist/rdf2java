@@ -37,6 +37,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 public class JenaResourceWrapper implements Resource
 {
     protected Resource m_res;
+    protected ObjectTracker m_objectTracker;
 
     protected static Model m_defaultModel = ModelFactory.createDefaultModel();
     
@@ -61,6 +62,7 @@ public class JenaResourceWrapper implements Resource
     public JenaResourceWrapper( ObjectTracker tracker, Model model, Resource rdfsClassResource )
     {
         m_res = model.createResource( new AnonId() );
+        m_objectTracker = tracker;
         setRdfType(rdfsClassResource);
         tracker.putInstance(m_res.getURI(), this);
     }
@@ -71,9 +73,11 @@ public class JenaResourceWrapper implements Resource
      * Registration with an <code>ObjectTracker</code> must be done elsewhere.
      * Typically this constructor should be called only by the <code>ObjectTracker</code>.
      * @param res The Jena RDF instance to be wrapped.
+     * @param tracker The ObjectTracker this wrapper gets associated with.
      */
-    public JenaResourceWrapper( Resource res ) {
-        m_res = res;
+    public JenaResourceWrapper( ObjectTracker tracker, Resource resource ) {
+        m_res = resource;
+        m_objectTracker = tracker;
     }
 
     /**
@@ -89,6 +93,7 @@ public class JenaResourceWrapper implements Resource
     public JenaResourceWrapper( ObjectTracker tracker, Model model, Resource rdfsClassResource, String uri )
     {
         m_res = model.createResource( uri );
+        m_objectTracker = tracker;
         setRdfType(rdfsClassResource);
         tracker.putInstance(m_res.getURI(), this);
     }
@@ -216,7 +221,7 @@ public class JenaResourceWrapper implements Resource
             if( o instanceof Literal ) 
                 result.add( ((Literal) o).getValue() );
             else
-                result.add( ObjectTracker.getInstance().getInstance( s.getResource(), defaultClass ) );
+                result.add( m_objectTracker.getInstance( s.getResource(), defaultClass ) );
         }
         return result;
     }
@@ -715,6 +720,22 @@ public class JenaResourceWrapper implements Resource
         return m_res.asNode();
 
     }
+
+//    Jena 2.2
+//    /*
+//     * (non-Javadoc)
+//     * 
+//     * @see com.hp.hpl.jena.graph.FrontsNode#hasUri(java.lang.String)
+//     */
+//    public boolean hasURI(String arg0) {
+//        return m_res.hasURI(arg0);
+//    }
+
+    public ObjectTracker getObjectTracker() {
+        return m_objectTracker;
+    }
+
+    
 
 } // end of class JenaResourceWrapper
 
