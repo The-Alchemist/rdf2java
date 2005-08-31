@@ -51,10 +51,11 @@ public class  ConceptScheme
      * Registration with an <code>ObjectTracker</code> must be done elsewhere.
      * Typically this constructor should be called only by the <code>ObjectTracker</code>.
      * @param res The Jena RDF instance to be wrapped.
+     * @param tracker The ObjectTracker to associate this wrapper with.
      */
-    public ConceptScheme( Resource res )
+    public ConceptScheme( ObjectTracker tracker, Resource resource )
     {
-        super(res);
+        super(tracker, resource);
     }
     protected ConceptScheme(ObjectTracker tracker, Model model, Resource resource)
     {
@@ -67,26 +68,6 @@ public class  ConceptScheme
     }
 
     // RDFS2Class: end constructors
-
-    //------------------------------------------------------------------------------
-    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#hasTopConcept
-    public Collection getHasTopConcept()
-    {
-        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept );
-    }
-    public void addHasTopConcept( de.dfki.km.jena2java.skos.vocabulary.Concept _hastopconcept )
-    {
-        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept, _hastopconcept );
-    }
-    public void removeHasTopConcept( de.dfki.km.jena2java.skos.vocabulary.Concept _hastopconcept )
-    {
-        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept, _hastopconcept ) );
-    }
-    public void clearHasTopConcept()
-    {
-        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept );
-    }
-    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#hasTopConcept
 
     //------------------------------------------------------------------------------
     // RDFS2Class: begin property http://schwarz.km.dfki.de/dummy#dummyProperty
@@ -107,6 +88,26 @@ public class  ConceptScheme
         m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.dummy_dummyProperty );
     }
     // RDFS2Class: end property http://schwarz.km.dfki.de/dummy#dummyProperty
+
+    //------------------------------------------------------------------------------
+    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#hasTopConcept
+    public Collection getHasTopConcept()
+    {
+        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept );
+    }
+    public void addHasTopConcept( de.dfki.km.jena2java.skos.vocabulary.Concept _hastopconcept )
+    {
+        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept, _hastopconcept );
+    }
+    public void removeHasTopConcept( de.dfki.km.jena2java.skos.vocabulary.Concept _hastopconcept )
+    {
+        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept, _hastopconcept ) );
+    }
+    public void clearHasTopConcept()
+    {
+        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.hasTopConcept );
+    }
+    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#hasTopConcept
 
 }
 // RDFS2Class: end of class ConceptScheme

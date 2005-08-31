@@ -51,10 +51,11 @@ public class  Concept
      * Registration with an <code>ObjectTracker</code> must be done elsewhere.
      * Typically this constructor should be called only by the <code>ObjectTracker</code>.
      * @param res The Jena RDF instance to be wrapped.
+     * @param tracker The ObjectTracker to associate this wrapper with.
      */
-    public Concept( Resource res )
+    public Concept( ObjectTracker tracker, Resource resource )
     {
-        super(res);
+        super(tracker, resource);
     }
     protected Concept(ObjectTracker tracker, Model model, Resource resource)
     {
@@ -67,66 +68,6 @@ public class  Concept
     }
 
     // RDFS2Class: end constructors
-
-    //------------------------------------------------------------------------------
-    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#inScheme
-    public Collection getInScheme()
-    {
-        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme );
-    }
-    public void addInScheme( de.dfki.km.jena2java.skos.vocabulary.ConceptScheme _inscheme )
-    {
-        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme, _inscheme );
-    }
-    public void removeInScheme( de.dfki.km.jena2java.skos.vocabulary.ConceptScheme _inscheme )
-    {
-        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme, _inscheme ) );
-    }
-    public void clearInScheme()
-    {
-        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme );
-    }
-    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#inScheme
-
-    //------------------------------------------------------------------------------
-    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#related
-    public Collection getRelated()
-    {
-        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.related );
-    }
-    public void addRelated( Resource _related )
-    {
-        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.related, _related );
-    }
-    public void removeRelated( Resource _related )
-    {
-        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.related, _related ) );
-    }
-    public void clearRelated()
-    {
-        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.related );
-    }
-    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#related
-
-    //------------------------------------------------------------------------------
-    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#narrower
-    public Collection getNarrower()
-    {
-        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower );
-    }
-    public void addNarrower( Resource _narrower )
-    {
-        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower, _narrower );
-    }
-    public void removeNarrower( Resource _narrower )
-    {
-        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower, _narrower ) );
-    }
-    public void clearNarrower()
-    {
-        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower );
-    }
-    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#narrower
 
     //------------------------------------------------------------------------------
     // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#isSubjectOf
@@ -149,6 +90,26 @@ public class  Concept
     // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#isSubjectOf
 
     //------------------------------------------------------------------------------
+    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#inScheme
+    public Collection getInScheme()
+    {
+        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme );
+    }
+    public void addInScheme( de.dfki.km.jena2java.skos.vocabulary.ConceptScheme _inscheme )
+    {
+        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme, _inscheme );
+    }
+    public void removeInScheme( de.dfki.km.jena2java.skos.vocabulary.ConceptScheme _inscheme )
+    {
+        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme, _inscheme ) );
+    }
+    public void clearInScheme()
+    {
+        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.inScheme );
+    }
+    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#inScheme
+
+    //------------------------------------------------------------------------------
     // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#broader
     public Collection getBroader()
     {
@@ -169,6 +130,26 @@ public class  Concept
     // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#broader
 
     //------------------------------------------------------------------------------
+    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#related
+    public Collection getRelated()
+    {
+        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.related );
+    }
+    public void addRelated( Resource _related )
+    {
+        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.related, _related );
+    }
+    public void removeRelated( Resource _related )
+    {
+        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.related, _related ) );
+    }
+    public void clearRelated()
+    {
+        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.related );
+    }
+    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#related
+
+    //------------------------------------------------------------------------------
     // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#semanticRelation
     public Collection getSemanticRelation()
     {
@@ -187,6 +168,26 @@ public class  Concept
         m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.semanticRelation );
     }
     // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#semanticRelation
+
+    //------------------------------------------------------------------------------
+    // RDFS2Class: begin property http://www.w3.org/2004/02/skos/core#narrower
+    public Collection getNarrower()
+    {
+        return getPropertyObjects( de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower );
+    }
+    public void addNarrower( Resource _narrower )
+    {
+        m_res.addProperty( de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower, _narrower );
+    }
+    public void removeNarrower( Resource _narrower )
+    {
+        m_res.getModel().remove( m_res.getModel().listStatements( m_res, de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower, _narrower ) );
+    }
+    public void clearNarrower()
+    {
+        m_res.removeAll( de.dfki.km.jena2java.skos.vocabulary.SKOS.narrower );
+    }
+    // RDFS2Class: end property http://www.w3.org/2004/02/skos/core#narrower
 
 }
 // RDFS2Class: end of class Concept
