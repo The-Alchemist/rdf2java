@@ -94,11 +94,26 @@ private static boolean isClassContainedIn( String sClsName,
         String sAllowedClsName = (String)it.next();
         if ( sAllowedClsName.endsWith( "*" ) )
         {
-            String sMatchString = sAllowedClsName.substring( 0, sAllowedClsName.length()-1 );
-            if ( sClsName.startsWith( sMatchString ) )
-                return true;
+            if( sAllowedClsName.startsWith( "*" ) )
+            {
+                String sMatchString = sAllowedClsName.substring( 1, sAllowedClsName.length()-1 );
+                if ( sClsName.indexOf( sMatchString ) >= 0)
+                    return true;
+            }
+            else 
+            {
+                String sMatchString = sAllowedClsName.substring( 0, sAllowedClsName.length()-1 );
+                if ( sClsName.startsWith( sMatchString ) )
+                    return true;
+            }
         }
         else
+        if( sAllowedClsName.startsWith( "*" ) )
+        {
+            String sMatchString = sAllowedClsName.substring( 1 );
+            if ( sClsName.endsWith( sMatchString ) )
+                return true;
+        }
         if (sAllowedClsName.equals( sClsName ) )
         {
             return true;
