@@ -59,11 +59,12 @@ public PropertyInfo getPropertyInfo(String sPropertyName)
     PropertyInfo pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName );
     if( pi == null )
     {
-        System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
         // second try
         int iHash = sPropertyName.lastIndexOf( '#' );
         if( iHash >= 0 )
             pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName.substring( iHash+1 ) );
+        if( pi == null )
+            System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
     }
     return pi;
 }
@@ -80,11 +81,15 @@ public Object getPropertyValue (String sPropertyName)
     PropertyInfo pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName );
     if( pi == null )
     {
-        System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
         // second try
         int iHash = sPropertyName.lastIndexOf( '#' );
         if( iHash >= 0 )
             pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName.substring( iHash+1 ) );
+        if( pi == null )
+        {
+            System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
+            return null;
+        }
     }
     return pi.getValue();
 }
@@ -95,16 +100,13 @@ public void putPropertyValue (String sPropertyName, Object value)
     PropertyInfo pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName );
     if( pi == null )
     {
-        System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
         // second try
         int iHash = sPropertyName.lastIndexOf( '#' );
         if( iHash >= 0 )
             pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName.substring( iHash+1 ) );
-        
-        // HM: added 30.05.2005
-        if( pi == null ) 
+        if( pi == null )
         {
-            System.err.println( "  still unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ") value: " + value );            
+            System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
             return;
         }
     }
@@ -117,11 +119,15 @@ public void setPropertyValues (String sPropertyName, Collection values)
     PropertyInfo pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName );
     if( pi == null )
     {
-        System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
         // second try
         int iHash = sPropertyName.lastIndexOf( '#' );
         if( iHash >= 0 )
             pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName.substring( iHash+1 ) );
+        if( pi == null )
+        {
+            System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
+            return;
+        }
     }
     pi.setValues( values );
 }
@@ -132,11 +138,15 @@ public void clearPropertyValue (String sPropertyName)
     PropertyInfo pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName );
     if( pi == null )
     {
-        System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
         // second try
         int iHash = sPropertyName.lastIndexOf( '#' );
         if( iHash >= 0 )
             pi = (PropertyInfo)m_mapProperty2Info.get( sPropertyName.substring( iHash+1 ) );
+        if( pi == null )
+        {
+            System.err.println( "unknown property: " + sPropertyName + " (cls: " + m_cls + "; RDFS class: " + m_rdfsClass + ")" );
+            return;
+        }
     }
     pi.clearValue();
 }
