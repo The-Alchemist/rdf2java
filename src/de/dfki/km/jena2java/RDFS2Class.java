@@ -848,7 +848,7 @@ public class RDFS2Class
         else
         {
             sRdfType = "RESOURCE_" + sFieldNameCls;
-            pwClsFile.println( sIndent + "Property " + sRdfType + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + resCls.getURI() + "\" );" );
+            pwClsFile.println( sIndent + "private final static Property " + sRdfType + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + resCls.getURI() + "\" );" );
         }
 
         pwClsFile.println( sIndent + "/**" );
@@ -940,7 +940,7 @@ public class RDFS2Class
         else
         {
             sPropertyConstant = "PROPERTY_" + sFieldName;
-            pwClsFile.println( sIndent + "final static private Property " + sPropertyConstant + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + pi.resProperty.getURI() + "\" );" );
+            pwClsFile.println( sIndent + "private final static Property " + sPropertyConstant + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + pi.resProperty.getURI() + "\" );" );
         }
         
         Object range = null;
