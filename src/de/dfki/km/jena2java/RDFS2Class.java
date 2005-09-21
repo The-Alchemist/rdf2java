@@ -53,6 +53,7 @@ public class RDFS2Class
     private List/*String*/ m_collGeneratedJavaFiles = new LinkedList();
 
     private String m_sRDFSFile;
+    private String m_sRDFSFileLanguage = "RDF/XML";
     private String m_sJenaConstantsClass;
     private boolean m_bGenJenaConstantsClass = false;
     private Map m_mapNamespaceToPackage;
@@ -121,6 +122,8 @@ public class RDFS2Class
                     
                     if( sOption.equals( "quiet" ) || sOption.equals( "q" ) ) 
                         RDFS2Class.m_bQuiet = true;
+                    else if( sOption.startsWith( "lang=" ) )
+                        gen.m_sRDFSFileLanguage = sOption.substring( "lang=".length() );
                     else if( sOption.startsWith( "use-constants-class=" ) )
                         gen.m_sJenaConstantsClass = sOption.substring( "use-constants-class=".length() );
                     else if( sOption.startsWith( "gen-constants-class" ) )
@@ -169,6 +172,7 @@ public class RDFS2Class
             if( !RDFS2Class.m_bQuiet )
             {
                 message( "sRDFSFile             : " + gen.m_sRDFSFile );
+                message( "sRDFSFileLanguage     : " + gen.m_sRDFSFileLanguage );
                 message( "sJenaConstantsClass   : " + gen.m_sJenaConstantsClass );
                 message( "sOutputSrcDir         : " + gen.m_sClsPath );
                 message( "maping:" );
@@ -197,6 +201,7 @@ public class RDFS2Class
                 System.out.println( "\n" + sMsg 
                     + "\nusage: RDFS2Class [options] <file.rdfs> <outputSrcDir> {<namespace> <package>}+\n"
                     + "options:  --quiet: quiet operation, no output\n"
+                    + "          --lang=<RDF language> : possible values: N3, N-TRIPLE, RDF/XML\n"
                     + "          --gen-constants-class=<JenaConstantsClass> : generate the constants class\n"
                     + "          --rdfs=<namespace>    : set different RDFS namespace\n"
                     + "          --rdf=<namespace>     : set different RDF namespace\n"
@@ -291,7 +296,7 @@ public class RDFS2Class
         message( "reading RDFS file..." );
         FileReader reader = new FileReader( m_sRDFSFile );
         m_modelRDFS = ModelFactory.createDefaultModel();
-        m_modelRDFS.read( reader, "http://dummy.base.uri/" );
+        m_modelRDFS.read( reader, "http://dummy.base.uri/", m_sRDFSFileLanguage );
 
         message( "preparing..." );
         initRdfsResources();
