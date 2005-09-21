@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="import/Jena2/jakarta-oro-2.0.5.jar"/>
 	<classpathentry kind="lib" path="import/xml-apis.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="import/Jena2/antlr.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

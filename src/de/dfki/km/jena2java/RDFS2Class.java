@@ -940,7 +940,7 @@ public class RDFS2Class
         else
         {
             sPropertyConstant = "PROPERTY_" + sFieldName;
-            pwClsFile.println( sIndent + "Property " + sPropertyConstant + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + pi.resProperty.getURI() + "\" );" );
+            pwClsFile.println( sIndent + "final static private Property " + sPropertyConstant + " = JenaResourceWrapper.m_defaultModel.createProperty( \"" + pi.resProperty.getURI() + "\" );" );
         }
         
         Object range = null;
