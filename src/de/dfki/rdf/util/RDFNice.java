@@ -160,7 +160,7 @@ public void save( String sFilename )
     try
     {
         createNiceXML();
-        PrintWriter pw = new PrintWriter( new FileOutputStream( sFilename ) );
+        PrintWriter pw = new PrintWriter( new OutputStreamWriter(new FileOutputStream( sFilename ), "UTF-8"));
         serializeTo( pw );
     }
     catch( Exception ex )
