@@ -236,13 +236,13 @@ public class RDFTool
         {
             return getDateTimeFormat().parse( isodate );
         }
-        catch( ParseException e )
+        catch( Throwable e )
         {
             try
             {
                 return getDateFormat().parse( isodate );
             }
-            catch( ParseException e1 )
+            catch( Throwable e1 )
             {
                 return null;
             }
