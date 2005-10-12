@@ -331,7 +331,7 @@ public static void main (String[] args)
        System.out.println( "" + m_iNrErrors + " errors" );
    if( m_iNrWarnings <= 0 && m_iNrErrors <= 0 )
        System.out.println( "ok (no warnings, no errors)" );
-   System.out.println( "" + m_iNrClassesCreated + " classes created" + (m_iNrClassesCreated == 0 ? " - check RDF/RDFS namespace settings" : "") );
+   System.out.println( "" + m_iNrClassesCreated + " classes created" + (m_iNrClassesCreated == 0 ? " - probably RDFS namespace is wrong; add option rdfs=<namespace>" : "") );
    System.out.println();
 
    //// System.exit(0);
