@@ -116,7 +116,7 @@ public Object put (Object objKey, Object objValue)
 public Object put (RDFResource obj)
 {
     String sURI = obj.getURI();
-    if (sURI == null) throw new Error("tried to put an obj in the map w/o URI in dfki.rdf.util.KnowledgeBase . put");
+    if (sURI == null) throw new Error("tried to put an obj in the map w/o URI in dfki.rdf.util.KnowledgeBase . put ('" + obj + "')" );
     return put(sURI, obj);
 }
 
@@ -126,7 +126,7 @@ protected Object put (Object obj)
     if (obj instanceof RDFResource)
         return put( (RDFResource)obj );
     else
-        throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . put; class should have been a subclass dfki.rdf.util.RDFResource");
+        throw new Error("Wrong class in dfki.rdf.util.KnowledgeBase . put; class should have been a subclass dfki.rdf.util.RDFResource ('" + obj + "')");
 }
 
 //---------------------------------------------------------------------------
