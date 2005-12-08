@@ -28,8 +28,8 @@ public final static String DEBUG_MODULE = "rdf2java";
 
 private static Model ms_serializationModel = ModelFactory.createDefaultModel();
 
-private String m_namespace;
-private String m_localName;
+transient private String m_namespace;
+transient private String m_localName;
 private String m_uri;
 private String m_label;         //SS:2004-08-05
 private Resource m_rdfsClass;   //SS:2004-09-21
@@ -56,7 +56,12 @@ protected RDFResource ()
 //----------------------------------------------------------------------------------------------------
 public RDFResource (Resource res)      throws org.w3c.rdf.model.ModelException
 {
-    putURI(res.getNamespace(), res.getLocalName());
+	String ns = res.getNamespace();
+	String local = res.getLocalName();
+	if( ns != null || local != null)
+		putURI(ns, local);
+	else
+		putURI( null );
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -74,26 +79,19 @@ public RDFResource (String uri)
 //----------------------------------------------------------------------------------------------------
 public void putURI (String namespace, String localName)
 {
-    m_namespace = namespace;
-    m_localName = localName;
-    m_uri = ( m_namespace != null  ?  m_namespace + m_localName  :  m_localName );
+	if( namespace == null ) namespace = "";
+	if( localName == null ) localName = "";
+    m_namespace = new String(namespace);
+    m_localName = new String(localName);
+    m_uri = m_namespace + m_localName;
 }
 
 //----------------------------------------------------------------------------------------------------
 public void putURI (String uri)
 {
-    if( uri == null )
-    {
-        putURI( null, null );
-        return;
-    }
-    
-    // guess namespace and localname
-    int pos = uri.indexOf("#");
-    if (pos >= 0)
-        putURI( uri.substring(0, pos+1), uri.substring(pos+1) );
-    else  // no namespace; this should NOT be allowed, really, should it?
-        putURI( null, uri );
+	m_uri = uri;
+	m_namespace = null;
+	m_localName = null;
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -105,13 +103,31 @@ public void putLabel (String label)
 //----------------------------------------------------------------------------------------------------
 public String getNamespace ()
 {
+	if( m_namespace == null && m_uri != null)
+	{
+	    // guess namespace
+	    int pos = m_uri.indexOf("#");
+	    if (pos >= 0)
+	        m_namespace = new String(m_uri.substring(0, pos+1));
+	    else  // no namespace; this should NOT be allowed, really, should it?
+	        m_namespace = "";	
+	}
     return m_namespace;
 }
 
 //----------------------------------------------------------------------------------------------------
 public String getLocalName ()
 {
-    return m_localName;
+	if( m_localName == null && m_uri != null)
+	{
+	    // guess localname
+	    int pos = m_uri.indexOf("#");
+	    if (pos >= 0)
+	        m_localName = new String(m_uri.substring(pos+1));
+	    else  // no namespace; this should NOT be allowed, really, should it?
+	        m_localName = "";
+	}	
+	return m_localName;
 }
 
 //----------------------------------------------------------------------------------------------------
