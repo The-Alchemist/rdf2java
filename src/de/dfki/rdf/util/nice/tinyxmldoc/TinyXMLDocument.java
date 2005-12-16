@@ -1,12 +1,10 @@
 package de.dfki.rdf.util.nice.tinyxmldoc;
 
-import java.util.*;
-
+import java.util.Iterator;
+import java.util.TreeMap;
 
 import de.dfki.rdf.util.nice.TinyXMLSerializer;
 import de.dfki.rdf.util.nice.TinyXMLSerializerImpl;
-import de.dfki.util.rdf.RDF;
-import de.dfki.util.rdfs.RDFS;
 
 
 public class TinyXMLDocument
@@ -30,8 +28,8 @@ public TinyXMLDocument( String sRdfNamespace, String sRdfsNamespace )
         RDF_NAMESPACE     = sRdfNamespace;
         RDFS_NAMESPACE    = sRdfsNamespace;
 
-        if( RDF_NAMESPACE == null )     RDF_NAMESPACE   = RDF.syntax().namespace();;
-        if( RDFS_NAMESPACE == null )    RDFS_NAMESPACE  = RDFS.getURIs().namespace();
+        if( RDF_NAMESPACE == null )     RDF_NAMESPACE   = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+        if( RDFS_NAMESPACE == null )    RDFS_NAMESPACE  = "http://www.w3.org/TR/1999/PR-rdf-schema-19990303#";
 
         declareNamespacePrefix( RDF_NAMESPACE, "rdf" );
         declareNamespacePrefix( RDFS_NAMESPACE, "rdfs" );
