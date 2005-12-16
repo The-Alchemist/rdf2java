@@ -49,7 +49,7 @@
 	<target name="compile" depends="clean">
 		<mkdir dir="${compile.dir}" />
 		<!-- javac source="1.5" target="jsr14" destdir="${compile.dir}" includeAntRuntime="no" -->
-		<javac source="1.4" target="1.4" destdir="${compile.dir}" includeAntRuntime="no"> <!-- source=${java.version} -->
+		<javac debug="true" source="1.4" target="1.4" destdir="${compile.dir}" includeAntRuntime="no"> <!-- source=${java.version} -->
 			<src path="${source.dir}" />
 			<patternset refid="compile.sources" />
 			<classpath>
