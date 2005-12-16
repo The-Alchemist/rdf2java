@@ -73,7 +73,7 @@ public void serialize( TinyXMLSerializer s )
     {
         s.startElement( getDocument().uri2qname( getTagName() ) );
 
-        final String rdf_about = RDF.syntax().namespace() + "about";
+        final String rdf_about = getDocument().RDF_NAMESPACE + "about";
         Object value = getAttributeValue( rdf_about );
         serializeAttr( s, rdf_about, value );
         for( Iterator itAttr = getAttributes().iterator(); itAttr.hasNext(); )
