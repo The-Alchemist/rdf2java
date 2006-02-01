@@ -175,7 +175,7 @@ public class RDFS2Class
                 message( "sRDFSFileLanguage     : " + gen.m_sRDFSFileLanguage );
                 message( "sJenaConstantsClass   : " + gen.m_sJenaConstantsClass );
                 message( "sOutputSrcDir         : " + gen.m_sClsPath );
-                message( "maping:" );
+                message( "mapping:" );
             }
             while( iArg < args.length )
             {
