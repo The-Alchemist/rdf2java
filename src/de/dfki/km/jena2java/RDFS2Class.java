@@ -792,7 +792,7 @@ public class RDFS2Class
                 if( sSuperClassPkg == null ) 
                     throw new Exception( "Namespace '"
                         + sSuperClassNS + "' (class '" + sSuperClassName
-                        + "') mapped to a package" );
+                        + "') not mapped to a package" );
             }
         }
 
