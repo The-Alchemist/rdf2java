@@ -2,9 +2,11 @@
 <project name="rdf2java" default="rdf2java_jar">
 	<property name="lib.dir" value="${basedir}/lib"/>
 	<property name="compile.dir" value="${basedir}/classes" />
+	<property name="compile-minimal.dir" value="${basedir}/build/compile" />
 	<property name="source.dir" value="${basedir}/src" />
 	<property name="apidoc.dir" value="${basedir}/apidoc" />
 	<property name="rdf2java.jar.name" value="${lib.dir}/rdf2java.jar"/>
+	<property name="rdf2java-min.jar.name" value="${lib.dir}/rdf2java-min.jar"/>
 	<property name="rdf2javaApidoc.jar.name" value="${lib.dir}/rdf2javaApidoc.jar"/>
 	<!-- property name="java.version" value="1.4" / -->
 	
@@ -15,7 +17,7 @@
 	<path id="externaljars">
 		<fileset dir="import" includes="*.jar"/>
 		<fileset dir="import/Jena2" includes="*.jar"/>
-    	</path>
+    </path>
 
 	<path id="rdf2java.classpath">
 		<pathelement location="classes" />
@@ -39,10 +41,28 @@
 		    </fileset>
 		</jar>
 	</target>
+	
+	<target name="compile-mininal">
+		<mkdir dir="${compile-minimal.dir}" />
+		<javac srcdir="${source.dir}" classpathref="externaljars" destdir="${compile-minimal.dir}" debug="${debug}">
+			<include name="**" />
+			<exclude name="**/dfki/rdf/util/filter/**"/>
+			<exclude name="**/dfki/rdf/util/gui/**"/>
+		</javac>
+	</target>
+	
+	<target name="rdf2java-minimal_jar" depends="clean, compile-mininal">
+		<jar destfile="${rdf2java-min.jar.name}" update="false">
+		    <fileset dir="${compile-minimal.dir}">
+		    	<filename name="**/*.class"/>
+		    </fileset>
+		</jar>
+	</target>
 			
 	<target name="clean">
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${compile.dir}"></fileset>
+			<fileset dir="${compile-minimal.dir}"></fileset>
 		</delete>
 	</target>
 

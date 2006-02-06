@@ -27,9 +27,8 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
-import de.dfki.rdf.util.RDF2Java;
 import de.dfki.rdf.util.RDFTool;
-import de.dfki.util.servlet.SnoopServlet;
+
 
 
 /**
@@ -544,8 +543,15 @@ public class RDFS2Class
         ResIterator it = m_modelRDFS.listSubjectsWithProperty( m_propRDFPredType, m_resRDFSClass );
         while( it.hasNext() )
         {
-            Resource resCls = it.nextResource();
-            createClass( resCls );
+        	Resource resCls = it.nextResource();
+        	try  
+        	{
+	            createClass( resCls );
+        	} catch (Exception x)
+        	{
+        		warning("creation of class "+resCls+" failed: "+x);
+        		x.printStackTrace();
+        	}
         }
     }
 
