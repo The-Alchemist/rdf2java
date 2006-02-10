@@ -116,6 +116,19 @@ public class ObjectTracker {
                 }
             }
             if( cls == null ) cls = defaultClass;
+            
+            // Problem: what if the class is Jena-Resource? 
+            // This may happen when parts of the ontology are not typed.
+            if (cls.equals(Resource.class))
+            {
+            	uri2instance.put(sUri, r);
+            	return r;
+            	// OR:
+            	// TODO: Leo asks: or just return variable r, is this right?
+            	// I cannot return plain Resoues, so create a simple wrapper.
+            	// cls=JenaResourceWrapper.class;
+            }
+            
             // second, build the wrapping instance
             Class jenaResourceWrapperDefinition;
             Class[] argsClasses = new Class[] { ObjectTracker.class, Resource.class };
