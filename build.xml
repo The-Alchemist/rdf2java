@@ -32,7 +32,7 @@
 
 	<target name="all" depends="rdf2java_jar, apidoc"/>
 	
-	<target name="rdf2java_jar">
+	<target name="rdf2java_jar" depends="compile">
 		<jar destfile="${rdf2java.jar.name}">
 		    <fileset dir="${compile.dir}">
 		    	<filename name="**/*.class"/>

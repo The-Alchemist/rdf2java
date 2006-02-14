@@ -1482,7 +1482,7 @@ private static Debug debug ()
             if (!setResRange.isEmpty())
             {
                 // message("# "+sSlotName+" -> "+setResRange);
-//SS:2003-03-31: wofür war das (hatte was mit heiko's kram zu tun -> wwf/model...)
+//SS:2003-03-31: wofuer war das (hatte was mit heiko's kram zu tun -> wwf/model...)
 //FIXME: das ist der absolute hack hier:
                 if( setResRange.size() == 1 && setResRange.contains( m_resRDFSResource ) )
                     setResRange.clear();
