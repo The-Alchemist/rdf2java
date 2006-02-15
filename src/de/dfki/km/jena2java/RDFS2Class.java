@@ -1,9 +1,12 @@
 package de.dfki.km.jena2java;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collection;
@@ -293,9 +296,10 @@ public class RDFS2Class
     public void createClasses() throws Exception
     {
         message( "reading RDFS file..." );
-        FileReader reader = new FileReader( m_sRDFSFile );
+        // Use InputStream instead of Reader here, as suggested by the Jena apidocs
+        InputStream input = new BufferedInputStream(new FileInputStream( m_sRDFSFile ));
         m_modelRDFS = ModelFactory.createDefaultModel();
-        m_modelRDFS.read( reader, "http://dummy.base.uri/", m_sRDFSFileLanguage );
+        m_modelRDFS.read( input, "http://dummy.base.uri/", m_sRDFSFileLanguage );
 
         message( "preparing..." );
         initRdfsResources();
