@@ -249,6 +249,7 @@ public class JenaResourceWrapper implements Resource
 
     /**
      * Set a property. If it exists, change it. If it does not exist, create it.
+     * If it is already set, do nothing.
      */
     protected void setProperty( Property pred, Object value )
     {
@@ -256,7 +257,10 @@ public class JenaResourceWrapper implements Resource
         if( st == null ) 
             m_res.addProperty( pred, value );
         else
-            st.changeObject( value );
+        {
+        	if (!st.getObject().equals(value))
+        		st.changeObject( value );
+        }
     }
 
     /**
