@@ -643,7 +643,7 @@ protected void fillClassFile (Resource resCls, String sPkg, String sClsName, Pri
             sSuperClassNS = resSuperClass.getNamespace();
             sSuperClassPkg = (String)m_mapNamespaceToPackage.get(sSuperClassNS);
             if (sSuperClassPkg == null)
-                throw new Exception("Namespace '"+sSuperClassNS+"' (class '"+sSuperClassName+"') mapped to a package");
+                throw new Exception("Namespace '"+sSuperClassNS+"' (class '"+sSuperClassName+"') not mapped to a package");
         }
     }
 
