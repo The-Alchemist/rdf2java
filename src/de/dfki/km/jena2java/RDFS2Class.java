@@ -863,7 +863,7 @@ public class RDFS2Class
 
         pwClsFile.println( sIndent + "/**" );
         pwClsFile.println( sIndent + " * Creates a new anonymous instance of the RDFS class <code>" + sClsName + "</code> along with its wrapper and");
-        pwClsFile.println( sIndent + " * register it with an {@link ObjectTracker}.");
+        pwClsFile.println( sIndent + " * registers it with an {@link ObjectTracker}.");
         pwClsFile.println( sIndent + " * To get wrapper instances for existing Jena resources, use <code>ObjectTracker.getInstance</code>.");
         pwClsFile.println( sIndent + " * @param tracker The tracker the new instance shall be registered with.");
         pwClsFile.println( sIndent + " * @param model The Jena model to create the new instance in.");
@@ -875,7 +875,7 @@ public class RDFS2Class
 
 		pwClsFile.println( sIndent + "/**" );
         pwClsFile.println( sIndent + " * Creates a new instance of the RDFS class <code>" + sClsName + "</code> along with its wrapper and");
-        pwClsFile.println( sIndent + " * register it with an {@link ObjectTracker}.");
+        pwClsFile.println( sIndent + " * registers it with an {@link ObjectTracker}.");
         pwClsFile.println( sIndent + " * To get wrapper instances for existing Jena resources, use <code>ObjectTracker.getInstance</code>.");
         pwClsFile.println( sIndent + " * @param tracker The tracker the new instance shall be registered with.");
         pwClsFile.println( sIndent + " * @param model The Jena model to create the new instance in.");
