@@ -113,7 +113,7 @@ public static Object getPropertyValue (THING thing, String sPropertyName)
     try {
         String sMethodNameGet = makeMethodName("get", sPropertyName);
         Method methodGet = getMethod( thing.getClass(), sMethodNameGet, new Class[0] );
-        Object value = methodGet.invoke( thing, null );
+        Object value = methodGet.invoke( thing, (Object[])null );
         return value;
     }
     catch (Exception ex) {
@@ -147,7 +147,7 @@ public static void clearPropertyValues (THING thing, String sPropertyName)
     try {
         String sMethodNameClear = makeMethodName("clear", sPropertyName);
         Method methodClear = getMethod( thing.getClass(), sMethodNameClear, new Class[0] );
-        methodClear.invoke( thing, null );
+        methodClear.invoke( thing, (Object[])null );
     }
     catch (Exception ex) {
         throw new RuntimeException( "Exception " + ex.getClass() + " occurred in RDF2Java.clearPropertyValue: " + ex.getMessage() );

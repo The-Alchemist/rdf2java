@@ -354,7 +354,7 @@ public class RDFExport
                     Object value = null;
                     try
                     {
-                        value = method.invoke( object, null );
+                        value = method.invoke( object, (Object[])null );
                     }
                     catch( Exception e )
                     {

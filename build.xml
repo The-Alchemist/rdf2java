@@ -51,7 +51,7 @@
     </fileset>
 	<path id="minimal.path"><fileset refid="minimal.sources"></fileset></path>
 	
-	<target name="compile-mininal">
+	<target name="compile-minimal">
 		<mkdir dir="${compile-minimal.dir}" />
 		<javac srcdir="${source.dir}" sourcepathref="minimal.path" classpathref="externaljars" destdir="${compile-minimal.dir}" debug="${debug}">
 		</javac>
@@ -62,7 +62,7 @@
 		</javac-->
 	</target>
 	
-	<target name="rdf2java-minimal_jar" depends="clean, compile-mininal">
+	<target name="rdf2java-minimal_jar" depends="clean, compile-minimal">
 		<jar destfile="${rdf2java-min.jar.name}" update="false">
 		    <fileset dir="${compile-minimal.dir}">
 		    </fileset>
