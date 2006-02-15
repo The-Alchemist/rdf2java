@@ -28,7 +28,27 @@ public class JenaResourceWrapper implements Resource
     
     protected static Model m_defaultModel = ModelFactory.createDefaultModel();
     
+    public boolean isLiteral()
+    {
+        return false;
+    }
     
+    public boolean isResource()
+    {
+        return true;
+    }
+    
+    public boolean hasURI(String uri)
+    {
+        // return m_res.hasURI(uri); FIXME: Use this when switching to Jena >= 2.2
+        return uri.equals(getURI());
+    }
+    
+    public boolean isURIResource()
+    {
+        //return m_res.isURIResource();  FIXME: Use this when switching to Jena >= 2.3
+        return !m_res.isAnon();
+    }
     /**
      * Creates a new JenaResourceWrapper.
      * As a JenaResourceWrapper is just a wrapper around a jena resource, 

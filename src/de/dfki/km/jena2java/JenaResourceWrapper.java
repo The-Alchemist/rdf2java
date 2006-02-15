@@ -307,7 +307,7 @@ public class JenaResourceWrapper implements Resource
      */
     public Node getNode()
     {
-        return m_res.getNode();
+        return m_res.asNode();
     }
 
     /*
@@ -320,6 +320,7 @@ public class JenaResourceWrapper implements Resource
         return m_res.getURI();
     }
 
+  
     /*
      * (non-Javadoc)
      * 
@@ -426,6 +427,22 @@ public class JenaResourceWrapper implements Resource
         return this;
     }
 
+    public boolean isLiteral()
+    {
+        return false;
+    }
+    
+    public boolean isResource()
+    {
+        return true;
+    }
+    
+    public boolean isURIResource()
+    {
+        // return m_res.isURIResource();// FIXME: use this when switching to Jena >= 2.3
+        return !m_res.isAnon();
+    }
+    
     /*
      * (non-Javadoc)
      * 
@@ -725,15 +742,15 @@ public class JenaResourceWrapper implements Resource
 
     }
 
-//    Jena 2.2
-//    /*
-//     * (non-Javadoc)
-//     * 
-//     * @see com.hp.hpl.jena.graph.FrontsNode#hasUri(java.lang.String)
-//     */
-//    public boolean hasURI(String arg0) {
-//        return m_res.hasURI(arg0);
-//    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.hp.hpl.jena.graph.FrontsNode#hasUri(java.lang.String)
+     */
+    public boolean hasURI(String uri) {
+        return uri.equals(getURI());
+        // return m_res.hasURI(uri); // FIXME: use this when switching to Jena >= 2.3
+    }
 
     public ObjectTracker getObjectTracker() {
         return m_objectTracker;
