@@ -223,6 +223,7 @@ public class JenaResourceWrapper implements Resource
             else
                 result.add( m_objectTracker.getInstance( s.getResource(), defaultClass ) );
         }
+        si.close();
         return result;
     }
 
@@ -242,7 +243,10 @@ public class JenaResourceWrapper implements Resource
     {
         Iterator i = getPropertyObjects( p, defaultClass ).iterator();
         if( i.hasNext() ) 
-            return i.next();
+        {
+        	Object res = i.next();
+            return res;
+        }
         else
             return null;
     }
