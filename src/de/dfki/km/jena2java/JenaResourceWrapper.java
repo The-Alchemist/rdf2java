@@ -216,7 +216,7 @@ public class JenaResourceWrapper implements Resource
         while( si.hasNext() )
         {
             // iterate through property statements
-            Statement s = (Statement) si.next();
+            Statement s = si.nextStatement();
             RDFNode o = s.getObject();
             if( o instanceof Literal ) 
                 result.add( ((Literal) o).getValue() );

@@ -103,7 +103,9 @@ public class ObjectTracker {
             // no wrapper built for this URI yet: build one
             // first, determine the class we should use for the wrapper
             Class cls = null;
-            for( NodeIterator it = r.getModel().listObjectsOfProperty(r, RDF.type); it.hasNext(); )
+            
+            NodeIterator it = r.getModel().listObjectsOfProperty(r, RDF.type);
+            while (it.hasNext())
             {
                 Resource resClass = (Resource)it.nextNode();
                 Class fcls = getClass(resClass);
@@ -115,6 +117,8 @@ public class ObjectTracker {
                     break;
                 }
             }
+            it.close();
+            
             if( cls == null ) cls = defaultClass;
             
             // Problem: what if the class is Jena-Resource? 
@@ -173,17 +177,22 @@ public class ObjectTracker {
         //     System.out.println( it.nextStatement() );
         
         if( neighboringResources != null ) {
-            for( NodeIterator it = removeModel.listObjects(); it.hasNext(); ) {
+            NodeIterator it = removeModel.listObjects();
+            while (it.hasNext()) {
                 RDFNode o = it.nextNode();
                 if( o.equals( r ) ) continue;
                 if( o instanceof Resource )
                     neighboringResources.add( o );
             }
-            for( ResIterator it = removeModel.listSubjects(); it.hasNext(); ) {
-                Resource s = it.nextResource();
+            it.close();
+            
+            ResIterator rit = removeModel.listSubjects();
+            while (rit.hasNext()) {
+                Resource s = rit.nextResource();
                 if( s.equals( r ) ) continue;
                 neighboringResources.add( s );
             }
+            rit.close();
         }
         
         model.remove( removeModel );
