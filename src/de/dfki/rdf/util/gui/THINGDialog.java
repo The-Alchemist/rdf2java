@@ -108,6 +108,7 @@ private void initialize(KnowledgeBase p_knowledgeBase )
     m_modifiedClasses = new HashSet();
     getContentPane().setLayout(new BorderLayout());
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    setResizable(true);
 }
 
 public void setLocation()
