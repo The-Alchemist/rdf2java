@@ -21,6 +21,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
@@ -224,6 +225,33 @@ public class JenaResourceWrapper implements Resource
                 result.add( m_objectTracker.getInstance( s.getResource(), defaultClass ) );
         }
         si.close();
+        return result;
+    }
+
+    /**
+     * Return all instances referenced inversely by a property. Wrapper objects for RDFS
+     * classes will be created automatically if needed.
+     */
+    protected Collection getPropertySubjects( Property p )
+    {
+        return getPropertySubjects( p, JenaResourceWrapper.class );
+    }
+    
+    /**
+     * Return all instances referenced inversely by a property. Wrapper objects for RDFS
+     * classes will be created automatically if needed;
+     * use defaultClass if rdf:type is not available but needed.
+     */
+    protected Collection getPropertySubjects( Property p, Class defaultClass )
+    {
+        Collection result = new LinkedList();
+        ResIterator resIter = m_res.getModel().listSubjectsWithProperty( p, m_res );
+        while( resIter.hasNext() )
+        {
+            Resource subject = resIter.nextResource();
+            result.add( m_objectTracker.getInstance( subject, defaultClass ) );
+        }
+        resIter.close();
         return result;
     }
 
