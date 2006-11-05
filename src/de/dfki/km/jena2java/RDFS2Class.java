@@ -305,6 +305,9 @@ public class RDFS2Class
         initRdfsResources();
         initProtegeUris();
 
+        message( "looking for meta classes..." );
+        addInstancesOfMetaClasses();
+
         message( "examining properties..." );
         examineProperties();
 
@@ -556,6 +559,25 @@ public class RDFS2Class
         		warning("creation of class "+resCls+" failed: "+x);
         		x.printStackTrace();
         	}
+        }
+    }
+
+
+    private void addInstancesOfMetaClasses()
+    {
+        //System.out.println( "addInstancesOfMetaClasses()" );
+        ResIterator itMetaCls = m_modelRDFS.listSubjectsWithProperty( m_propRDFSPredSubClassOf, m_resRDFSClass );
+        while( itMetaCls.hasNext() )
+        {
+            Resource resMetaCls = itMetaCls.nextResource();
+            message( "meta class found: " + resMetaCls.getURI() );
+            ResIterator itCls = m_modelRDFS.listSubjectsWithProperty( m_propRDFPredType, resMetaCls );
+            while( itCls.hasNext() )
+            {
+                Resource resCls = itCls.nextResource();
+                m_modelRDFS.add( resCls, m_propRDFPredType, m_resRDFSClass );
+                message( "  . added statement: (" + resCls.getURI() + ", " + m_propRDFPredType + ", " + m_resRDFSClass + ")" );
+            }
         }
     }
 
