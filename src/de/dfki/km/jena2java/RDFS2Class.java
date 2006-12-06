@@ -54,7 +54,7 @@ public class RDFS2Class
     
     private List/*String*/ m_collGeneratedJavaFiles = new LinkedList();
 
-    private String m_sRDFSFile;
+    private String m_sRDFSFiles;
     private String m_sRDFSFileLanguage = "RDF/XML";
     private String m_sJenaConstantsClass;
     private boolean m_bGenJenaConstantsClass = false;
@@ -160,7 +160,7 @@ public class RDFS2Class
                 }
             }
 
-            if( args.length - iArg > 0 ) gen.m_sRDFSFile = args[iArg++];
+            if( args.length - iArg > 0 ) gen.m_sRDFSFiles = args[iArg++];
             else
                 throw new Exception( "RDFS2Class: Missing parameter: RDFS file." );
 
@@ -173,7 +173,7 @@ public class RDFS2Class
 
             if( !RDFS2Class.m_bQuiet )
             {
-                message( "sRDFSFile             : " + gen.m_sRDFSFile );
+                message( "sRDFSFile(s)          : " + gen.m_sRDFSFiles );
                 message( "sRDFSFileLanguage     : " + gen.m_sRDFSFileLanguage );
                 message( "sJenaConstantsClass   : " + gen.m_sJenaConstantsClass );
                 message( "sOutputSrcDir         : " + gen.m_sClsPath );
@@ -259,9 +259,9 @@ public class RDFS2Class
         m_mapNamespaceToPackage = new HashMap();
     }
 
-    public RDFS2Class( String sRDFSFile, String sJenaConstantsClass, String sClsPath, Map mapNamespaceToPackage ) throws Exception
+    public RDFS2Class( String sRDFSFiles, String sJenaConstantsClass, String sClsPath, Map mapNamespaceToPackage ) throws Exception
     {
-        m_sRDFSFile = sRDFSFile;
+        m_sRDFSFiles = sRDFSFiles;
         m_sJenaConstantsClass = sJenaConstantsClass;
         m_mapNamespaceToPackage = mapNamespaceToPackage;
         m_sClsPath = sClsPath;
@@ -295,12 +295,34 @@ public class RDFS2Class
 
     public void createClasses() throws Exception
     {
-        message( "reading RDFS file..." );
-        // Use InputStream instead of Reader here, as suggested by the Jena apidocs
-        InputStream input = new BufferedInputStream(new FileInputStream( m_sRDFSFile ));
         m_modelRDFS = ModelFactory.createDefaultModel();
-        m_modelRDFS.read( input, "http://dummy.base.uri/", m_sRDFSFileLanguage );
 
+        String sFiles = m_sRDFSFiles;
+        boolean bFinished = false; 
+        while( !bFinished )
+        {
+            String sFile;
+            int posSeparator = sFiles.indexOf( '|' );
+            if( posSeparator >= 0 )
+            {
+                sFile = sFiles.substring( 0, posSeparator );
+                sFiles = sFiles.substring( posSeparator+1 );
+            }
+            else
+            {
+                sFile = sFiles;
+                bFinished = true;
+            }
+            if( sFile.length() <= 0 ) break;
+            
+            message( "reading RDFS file..." );
+            // Use InputStream instead of Reader here, as suggested by the Jena apidocs
+            InputStream input = new BufferedInputStream(new FileInputStream( sFile ));
+            Model model = ModelFactory.createDefaultModel();
+            model.read( input, "http://dummy.base.uri/", m_sRDFSFileLanguage );
+            m_modelRDFS.add( model );
+        }
+        
         message( "preparing..." );
         initRdfsResources();
         initProtegeUris();
