@@ -277,10 +277,10 @@ public class RDFS2Class
         //TODO: "Property" is a Resource, not a Property ???!!!
         m_resRDFResProperty = m_modelRDFS.createProperty( RDF_NAMESPACE  + "Property" );
 
-        m_propRDFSPredSubClassOf = m_modelRDFS.createProperty( RDFS_NAMESPACE + "subClassOf" );
-        m_propRDFSPredDomain     = m_modelRDFS.createProperty( RDFS_NAMESPACE + "domain" );
-        m_propRDFSPredRange      = m_modelRDFS.createProperty( RDFS_NAMESPACE + "range" );
-        m_propRDFPredType        = m_modelRDFS.createProperty( RDF_NAMESPACE  + "type" );
+        m_propRDFSPredSubClassOf    = m_modelRDFS.createProperty( RDFS_NAMESPACE + "subClassOf" );
+        m_propRDFSPredDomain        = m_modelRDFS.createProperty( RDFS_NAMESPACE + "domain" );
+        m_propRDFSPredRange         = m_modelRDFS.createProperty( RDFS_NAMESPACE + "range" );
+        m_propRDFPredType           = m_modelRDFS.createProperty( RDF_NAMESPACE  + "type" );
     }
 
     private void initProtegeUris() throws Exception
@@ -329,6 +329,9 @@ public class RDFS2Class
 
         message( "looking for meta classes..." );
         addInstancesOfMetaClasses();
+
+        message( "looking for sub properties..." );
+        addInstancesOfSubProperties();
 
         message( "examining properties..." );
         examineProperties();
@@ -599,6 +602,25 @@ public class RDFS2Class
                 Resource resCls = itCls.nextResource();
                 m_modelRDFS.add( resCls, m_propRDFPredType, m_resRDFSClass );
                 message( "  . added statement: (" + resCls.getURI() + ", " + m_propRDFPredType + ", " + m_resRDFSClass + ")" );
+            }
+        }
+    }
+
+
+    private void addInstancesOfSubProperties()
+    {
+        //System.out.println( "addInstancesOfSubProperties()" );
+        ResIterator itSubProperty = m_modelRDFS.listSubjectsWithProperty( m_propRDFSPredSubClassOf, m_resRDFResProperty );
+        while( itSubProperty.hasNext() )
+        {
+            Resource resSubProperty = itSubProperty.nextResource();
+            // message( "sub property found: " + resSubProperty.getURI() );
+            ResIterator itProp = m_modelRDFS.listSubjectsWithProperty( m_propRDFPredType, resSubProperty );
+            while( itProp.hasNext() )
+            {
+                Resource resProp = itProp.nextResource();
+                m_modelRDFS.add( resProp, m_propRDFPredType, m_resRDFResProperty );
+                // message( "  . added statement: (" + resProp.getURI() + ", " + m_propRDFPredType + ", " + m_resRDFSClass + ")" );
             }
         }
     }
