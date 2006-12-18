@@ -71,7 +71,7 @@ public class RDFImport
     // SS:2002.01.22
     public void reinit()
     {
-        m_objects = new HashMap();
+        m_objects.clear();
     }
 
     // RDF basics
