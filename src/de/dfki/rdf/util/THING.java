@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.dfki.util.debug.Debug;
 
@@ -139,9 +141,7 @@ public void addToMap (Map mapObjects, String sNamespace)
     }
     catch (Exception ex)
     {
-        System.out.println("Exception (" + ex.getClass() + ") occurred: "+ex.getMessage());
-        ex.printStackTrace();
-        throw new Error(ex.getMessage());
+    	Logger.getLogger("de.dfki.rdf.util").log(Level.SEVERE, "addToMap", ex);
     }
 }
 
@@ -257,9 +257,7 @@ public void updateRDFResourceSlots (KnowledgeBase kbCachedObjects, long lUpdateN
     }
     catch (Exception ex)
     {
-        System.out.println("dfki.rdf.util.THING . updateRDFResourceSlots: Exception (" + ex.getClass() + ") occurred" + ex);
-        ex.printStackTrace();
-        throw new Error(ex.getMessage());
+    	Logger.getLogger("de.dfki.rdf.util").log(Level.SEVERE, "updateRDFResourceSlots", ex);
     }
 }
 
@@ -306,9 +304,7 @@ public void assign (THING newThing, KnowledgeBase kb)
     }
     catch (Exception ex)
     {
-        System.out.println("Exception (" + ex.getClass() + ") occurred: "+ex.getMessage());
-        ex.printStackTrace();
-        throw new Error(ex.getMessage());
+    	Logger.getLogger("de.dfki.rdf.util").log(Level.SEVERE, "assign", ex);
     }
 }
 
