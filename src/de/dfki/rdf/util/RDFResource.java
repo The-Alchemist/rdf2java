@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.w3c.rdf.model.ModelException;
 import org.w3c.rdf.model.Resource;
@@ -104,15 +106,32 @@ public void putLabel (String label)
 public String getNamespace ()
 {
 	if( m_namespace == null && m_uri != null)
-	{
-	    // guess namespace
-	    int pos = m_uri.indexOf("#");
-	    if (pos >= 0)
-	        m_namespace = new String(m_uri.substring(0, pos+1));
-	    else  // no namespace; this should NOT be allowed, really, should it?
-	        m_namespace = "";	
-	}
+	    guessNamespace();
+
     return m_namespace;
+}
+
+//----------------------------------------------------------------------------------------------------
+private void guessNamespace()
+{
+    int pos = m_uri.lastIndexOf( "#" );
+    if( pos >= 0 )
+        m_namespace = new String( m_uri.substring( 0, pos+1 ) );
+    if( m_namespace == null || m_namespace.length() <= 0 )
+    {
+        pos = m_uri.lastIndexOf( '/' );
+        if( pos >= 0 )
+            m_namespace = new String( m_uri.substring( 0, pos+1 ) );
+    }
+    
+    //TODO: maybe have more heuristics to guess more "difficult" namespaces in "strange" URIs
+    
+    if( m_namespace == null || m_namespace.length() <= 0 )
+    {
+        // no namespace; this should NOT be allowed, really, should it?
+        m_namespace = "";
+        Logger.getLogger("de.dfki.rdf.util").log(Level.SEVERE, "namespace could not be guessed in RDFResource.guessNamespace for URI '" + m_uri + "'" );
+    }
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -120,12 +139,11 @@ public String getLocalName ()
 {
 	if( m_localName == null && m_uri != null)
 	{
-	    // guess localname
-	    int pos = m_uri.indexOf("#");
-	    if (pos >= 0)
-	        m_localName = new String(m_uri.substring(pos+1));
-	    else  // no namespace; this should NOT be allowed, really, should it?
-	        m_localName = "";
+        guessNamespace();
+        int len = m_namespace.length();
+
+        // guess localname: it's just what comes after the namespace
+	    m_localName = m_uri.substring( len );
 	}	
 	return m_localName;
 }
