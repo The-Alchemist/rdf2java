@@ -1,9 +1,14 @@
 package de.dfki.rdf.util;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -208,11 +213,23 @@ public class RDFExport
         exportObjectsToModel( objects );
         try
         {
+            //2007-01-18: sven+ben:hack
+            StringBuffer sb = new StringBuffer();
+            for( Enumeration/*Statement*/ en = m_model.elements(); en.hasMoreElements(); )
+            {
+                Statement stmt = (Statement)en.nextElement();
+                sb.append( stmt.subject().toString() + ";" + stmt.predicate().toString() + ";" + stmt.object().toString() + "\n" ); 
+            }
+            FileWriter filewriter = new FileWriter( "C:\\TEMP\\output.txt" );
+            BufferedWriter writer = new BufferedWriter( filewriter );
+            writer.write( sb.toString() );
+            
             return RDFUtil.dumpModel( m_model, new org.w3c.rdf.implementation.syntax.sirpac.SiRS() );
         }
         catch( Exception e )
         {
-            System.err.println( e );
+            e.printStackTrace();
+            //System.err.println( e );
             return null;
         }
     }
