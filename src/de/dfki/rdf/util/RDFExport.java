@@ -213,16 +213,16 @@ public class RDFExport
         exportObjectsToModel( objects );
         try
         {
-//            //2007-01-18: sven+ben:hack
-//            StringBuffer sb = new StringBuffer();
-//            for( Enumeration/*Statement*/ en = m_model.elements(); en.hasMoreElements(); )
-//            {
-//                Statement stmt = (Statement)en.nextElement();
-//                sb.append( stmt.subject().toString() + ";" + stmt.predicate().toString() + ";" + stmt.object().toString() + "\n" ); 
-//            }
-//            FileWriter filewriter = new FileWriter( "C:\\TEMP\\output.txt" );
-//            BufferedWriter writer = new BufferedWriter( filewriter );
-//            writer.write( sb.toString() );
+            //2007-01-18: sven+ben:hack
+            StringBuffer sb = new StringBuffer();
+            for( Enumeration/*Statement*/ en = m_model.elements(); en.hasMoreElements(); )
+            {
+                Statement stmt = (Statement)en.nextElement();
+                sb.append( stmt.subject().toString() + ";" + stmt.predicate().toString() + ";" + stmt.object().toString() + ";" + stmt.object().getClass().getName() + "\n" ); 
+            }
+            FileWriter filewriter = new FileWriter( "C:\\TEMP\\output.txt" );
+            BufferedWriter writer = new BufferedWriter( filewriter );
+            writer.write( sb.toString() );
             
             return RDFUtil.dumpModel( m_model, new org.w3c.rdf.implementation.syntax.sirpac.SiRS() );
         }
@@ -463,6 +463,11 @@ public class RDFExport
     void exportSimpleValue( Resource subject, Resource property, Object value,
             int actualDepth )
     {
+        if( value == null )
+        {
+            System.err.println( "value == null in RDFExport.exportSimpleValue("+subject+", "+property+", null)" );
+        }
+        
         if( value instanceof String )
         { 
             // rdf:Literal
