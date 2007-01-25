@@ -330,9 +330,10 @@ public void assign (THING thingToAssign, boolean bUpdateResourceSlots)
 {
     long iTimeBeginning = ( MEASURE_TIME  ?  new Date().getTime()  :  0 );
 
-    THING thingOld = (THING)get( thingToAssign.getURI() );
-    if (thingOld != null)
-        thingOld.assign( thingToAssign, this );
+    //By OR
+    RDFResource thingOld = (RDFResource)get( thingToAssign.getURI() );
+    if (thingOld instanceof THING)
+        ((THING)thingOld).assign( thingToAssign, this );
     else
     {
         put( thingToAssign );
