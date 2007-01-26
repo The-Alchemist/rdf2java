@@ -220,9 +220,6 @@ public class RDFExport
                 Statement stmt = (Statement)en.nextElement();
                 sb.append( stmt.subject().toString() + ";" + stmt.predicate().toString() + ";" + stmt.object().toString() + ";" + stmt.object().getClass().getName() + "\n" ); 
             }
-            FileWriter filewriter = new FileWriter( "C:\\TEMP\\output.txt" );
-            BufferedWriter writer = new BufferedWriter( filewriter );
-            writer.write( sb.toString() );
             
             return RDFUtil.dumpModel( m_model, new org.w3c.rdf.implementation.syntax.sirpac.SiRS() );
         }
